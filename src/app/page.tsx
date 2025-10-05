@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Shaun Chikerema - Full-Stack Developer & Software Engineer</title>
+        <title>Shaun Chikerema -  Software Engineer & Fullstack Developer</title>
         <meta name="description" content="Professional portfolio of Shaun Chikerema - Expert Full-Stack Developer specializing in modern web technologies and scalable solutions." />
         <meta name="keywords" content="Shaun Chikerema, Full-Stack Developer, Software Engineer, React, Next.js, TypeScript, Zimbabwe" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

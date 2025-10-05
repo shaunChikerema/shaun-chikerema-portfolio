@@ -2,18 +2,17 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Sun, Moon, Download } from 'lucide-react';
+import { Menu, X, Download, ChevronDown } from 'lucide-react';
 import { PERSONAL_INFO } from '../../lib/constants';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 20);
       
       // Update active section based on scroll position
       const sections = ['home', 'about', 'expertise', 'projects', 'experience', 'contact'];
@@ -32,38 +31,24 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    // Apply dark mode class to document
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [darkMode]);
-
   const navItems = [
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
-    { name: 'Expertise', href: '#expertise' },
+    { name: 'Skills', href: '#expertise' },
     { name: 'Projects', href: '#projects' },
     { name: 'Experience', href: '#experience' },
     { name: 'Contact', href: '#contact' }
   ];
 
-  const handleNavClick = (href: string, name: string) => {
+  const handleNavClick = (href: string) => {
     setIsMobileMenuOpen(false);
-    setActiveSection(name.toLowerCase());
-  };
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
+    const section = href.replace('#', '');
+    setActiveSection(section);
   };
 
   const downloadResume = () => {
-    // Replace with your actual resume URL
-    const resumeUrl = '/resume.pdf';
     const link = document.createElement('a');
-    link.href = resumeUrl;
+    link.href = '/resume.pdf';
     link.download = `${PERSONAL_INFO.name.replace(' ', '_')}_Resume.pdf`;
     document.body.appendChild(link);
     link.click();
@@ -72,91 +57,90 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-lg border-b border-gray-200 dark:border-gray-700'
+          ? 'bg-white/95 backdrop-blur-lg shadow-lg border-b border-gray-100'
           : 'bg-transparent'
       }`}
     >
-      <nav className="container mx-auto px-4 sm:px-6 py-3 md:py-4">
-        <div className="flex items-center justify-between">
+      <nav className="container mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex items-center space-x-2 md:space-x-3"
+            className="flex items-center space-x-3"
           >
-            <div className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">
-              SC
+            <div className="w-8 h-8 lg:w-10 lg:h-10 bg-gradient-to-r from-primary-500 to-blue-500 rounded-xl flex items-center justify-center shadow-lg">
+              <span className="text-white font-bold text-sm lg:text-base">SC</span>
             </div>
-            <div className="hidden sm:block h-4 md:h-6 w-px bg-gray-300 dark:bg-gray-600"></div>
-            <div className="hidden sm:block text-xs md:text-sm text-gray-600 dark:text-gray-400">
-              Portfolio
+            <div className="hidden sm:block">
+              <div className="font-bold text-gray-900 text-sm lg:text-base">
+                {PERSONAL_INFO.name.split(' ')[0]}
+              </div>
+              <div className="text-xs text-gray-500">Developer</div>
             </div>
           </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
+          <div className="hidden lg:flex items-center space-x-1">
             {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
-                onClick={() => handleNavClick(item.href, item.name)}
-                className={`font-medium transition-all duration-300 relative group text-sm lg:text-base ${
-                  activeSection === item.name.toLowerCase()
-                    ? 'text-primary-600 dark:text-primary-400'
-                    : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400'
+                onClick={() => handleNavClick(item.href)}
+                className={`relative px-4 py-2 font-medium transition-all duration-300 text-sm ${
+                  activeSection === item.href.replace('#', '')
+                    ? 'text-primary-600'
+                    : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
                 {item.name}
-                <span
-                  className={`absolute -bottom-1 left-0 h-0.5 bg-primary-600 transition-all duration-300 ${
-                    activeSection === item.name.toLowerCase() ? 'w-full' : 'w-0 group-hover:w-full'
-                  }`}
-                ></span>
+                {activeSection === item.href.replace('#', '') && (
+                  <motion.div
+                    layoutId="activeSection"
+                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary-500 to-blue-500 rounded-full"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
               </a>
             ))}
           </div>
 
           {/* Desktop Actions */}
-          <div className="hidden md:flex items-center space-x-3">
-            {/* Dark Mode Toggle */}
-            <button
-              onClick={toggleDarkMode}
-              className="p-2 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
-              aria-label="Toggle dark mode"
-            >
-              {darkMode ? <Sun size={18} /> : <Moon size={18} />}
-            </button>
-
+          <div className="hidden lg:flex items-center space-x-3">
             {/* Resume Download */}
-            <button
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={downloadResume}
-              className="flex items-center space-x-2 px-3 lg:px-4 py-2 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors duration-300 shadow-lg hover:shadow-xl text-sm"
+              className="flex items-center space-x-2 px-4 py-2.5 bg-gradient-to-r from-primary-500 to-blue-500 text-white rounded-xl font-semibold hover:from-primary-600 hover:to-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl"
             >
-              <Download size={14} />
-              <span>Resume</span>
-            </button>
+              <Download className="w-4 h-4" />
+              <span className="text-sm">Resume</span>
+            </motion.button>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex md:hidden items-center space-x-2">
-            {/* Mobile Dark Mode Toggle */}
-            <button
-              onClick={toggleDarkMode}
-              className="p-2 text-gray-700 dark:text-gray-300 transition-colors duration-300"
-              aria-label="Toggle dark mode"
+          <div className="flex lg:hidden items-center space-x-2">
+            {/* Mobile Resume Download */}
+            <motion.button
+              whileTap={{ scale: 0.95 }}
+              onClick={downloadResume}
+              className="flex items-center space-x-1 px-3 py-2 bg-gradient-to-r from-primary-500 to-blue-500 text-white rounded-lg font-semibold text-sm shadow-lg"
             >
-              {darkMode ? <Sun size={18} /> : <Moon size={18} />}
-            </button>
+              <Download className="w-3 h-3" />
+              <span>CV</span>
+            </motion.button>
 
-            <button
-              className="p-2 text-gray-700 dark:text-gray-300"
+            <motion.button
+              whileTap={{ scale: 0.95 }}
+              className="p-2 text-gray-700 hover:text-primary-600 transition-colors duration-300"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
+            </motion.button>
           </div>
         </div>
 
@@ -168,35 +152,29 @@ export default function Header() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className="md:hidden overflow-hidden"
+              className="lg:hidden overflow-hidden bg-white/95 backdrop-blur-lg border-t border-gray-100"
             >
-              <div className="flex flex-col py-4 border-t border-gray-200 dark:border-gray-700 mt-2">
-                {navItems.map((item) => (
-                  <a
+              <div className="flex flex-col py-4">
+                {navItems.map((item, index) => (
+                  <motion.a
                     key={item.name}
                     href={item.href}
-                    onClick={() => handleNavClick(item.href, item.name)}
-                    className={`px-4 py-3 font-medium transition-colors duration-300 text-sm ${
-                      activeSection === item.name.toLowerCase()
-                        ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
-                        : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-800'
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    onClick={() => handleNavClick(item.href)}
+                    className={`flex items-center justify-between px-4 py-3 font-medium transition-all duration-300 text-sm ${
+                      activeSection === item.href.replace('#', '')
+                        ? 'text-primary-600 bg-primary-50 border-r-2 border-primary-500'
+                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                     }`}
                   >
                     {item.name}
-                  </a>
+                    {activeSection === item.href.replace('#', '') && (
+                      <div className="w-1.5 h-1.5 bg-primary-500 rounded-full" />
+                    )}
+                  </motion.a>
                 ))}
-                
-                {/* Mobile Resume Download */}
-                <button
-                  onClick={() => {
-                    downloadResume();
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="flex items-center space-x-2 px-4 py-3 mx-4 mt-4 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors duration-300 justify-center text-sm"
-                >
-                  <Download size={14} />
-                  <span>Download Resume</span>
-                </button>
               </div>
             </motion.div>
           )}

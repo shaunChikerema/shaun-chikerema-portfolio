@@ -46,7 +46,7 @@ export const SKILLS = {
 
 export const EXPERIENCE = [
   {
-    position: "Full-Stack & Mobile Developer",
+    position: "Software Engineer & Full Stack Developer",
     company: "Freelance & Personal Projects",
     period: "2023 - Present",
     achievements: [
