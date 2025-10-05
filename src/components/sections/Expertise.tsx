@@ -23,14 +23,14 @@ export default function Expertise() {
 
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
-            {/* Frontend Skills */}
+            {/* Frontend & Mobile Skills */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               className="bg-white rounded-xl md:rounded-2xl p-6 shadow-lg border border-gray-100"
             >
-              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6 text-center">Frontend</h3>
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6 text-center">Frontend & Mobile</h3>
               <div className="space-y-3 md:space-y-4">
                 {SKILLS.frontend.map((skill, index) => (
                   <div key={skill.name} className="space-y-2">
@@ -79,16 +79,16 @@ export default function Expertise() {
               </div>
             </motion.div>
 
-            {/* Tools & Technologies */}
+            {/* Mobile Development */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
               className="bg-white rounded-xl md:rounded-2xl p-6 shadow-lg border border-gray-100"
             >
-              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6 text-center">Tools & Tech</h3>
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6 text-center">Mobile Development</h3>
               <div className="space-y-3 md:space-y-4">
-                {SKILLS.tools.map((skill, index) => (
+                {SKILLS.mobile.map((skill, index) => (
                   <div key={skill.name} className="space-y-2">
                     <div className="flex justify-between items-center">
                       <span className="font-medium text-gray-700 text-sm md:text-base">{skill.name}</span>
@@ -107,16 +107,16 @@ export default function Expertise() {
               </div>
             </motion.div>
 
-            {/* Multimedia Skills */}
+            {/* Tools & Technologies */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               className="bg-white rounded-xl md:rounded-2xl p-6 shadow-lg border border-gray-100"
             >
-              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6 text-center">Multimedia</h3>
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6 text-center">Tools & Design</h3>
               <div className="space-y-3 md:space-y-4">
-                {SKILLS.multimedia.map((skill, index) => (
+                {SKILLS.tools.map((skill, index) => (
                   <div key={skill.name} className="space-y-2">
                     <div className="flex justify-between items-center">
                       <span className="font-medium text-gray-700 text-sm md:text-base">{skill.name}</span>

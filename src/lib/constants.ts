@@ -1,7 +1,7 @@
 export const PERSONAL_INFO = {
   name: "Shaun Chikerema",
-  title: "Full-Stack Developer & Software Engineer",
-  bio: "Recent BSc (Hons) Software Engineering with Multimedia graduate from Limkokwing University. Passionate about creating exceptional digital experiences using modern technologies. Specializing in React, Next.js, TypeScript, and full-stack development.",
+  title: "Full-Stack & Mobile Developer",
+  bio: "Recent BSc (Hons) Software Engineering with Multimedia graduate specializing in React, React Native, and full-stack development. Passionate about creating exceptional digital experiences across web and mobile platforms.",
   email: "shaun@example.com",
   location: "Harare, Zimbabwe",
   phone: "+263 XXX XXX XXX",
@@ -16,7 +16,6 @@ export const SKILLS = {
     { name: "JavaScript", level: 92 },
     { name: "Tailwind CSS", level: 88 },
     { name: "HTML/CSS", level: 95 },
-    { name: "Framer Motion", level: 75 }
   ],
   backend: [
     { name: "Node.js", level: 80 },
@@ -27,31 +26,34 @@ export const SKILLS = {
     { name: "Firebase", level: 80 },
     { name: "Supabase", level: 75 }
   ],
+  mobile: [
+    { name: "React Native", level: 82 },
+    { name: "Expo", level: 75 },
+    { name: "Mobile UI/UX", level: 78 },
+    { name: "App Store Deployment", level: 70 },
+    { name: "Native Modules", level: 65 }
+  ],
   tools: [
     { name: "Git", level: 85 },
     { name: "Figma", level: 75 },
     { name: "VS Code", level: 90 },
     { name: "Jest", level: 70 },
     { name: "Webpack", level: 65 },
-    { name: "Docker", level: 60 }
-  ],
-  multimedia: [
-    { name: "UI/UX Design", level: 80 },
-    { name: "Adobe Creative Suite", level: 75 },
-    { name: "Responsive Design", level: 90 },
-    { name: "Animation Principles", level: 70 }
+    { name: "Docker", level: 60 },
+    { name: "Adobe Creative Suite", level: 75 }
   ]
 };
 
 export const EXPERIENCE = [
   {
-    position: "Full-Stack Developer",
+    position: "Full-Stack & Mobile Developer",
     company: "Freelance & Personal Projects",
     period: "2023 - Present",
     achievements: [
       "Developed PolicyBridge - a comprehensive insurance management SaaS platform with automated payslip generation",
       "Built multiple full-stack applications using modern technologies like Next.js, TypeScript, and Supabase",
-      "Implemented responsive designs and smooth animations for enhanced user experiences",
+      "Created cross-platform mobile applications with React Native and Expo",
+      "Implemented responsive designs and smooth animations for enhanced user experiences across web and mobile",
       "Collaborated with clients to understand requirements and deliver tailored solutions"
     ]
   },
@@ -61,9 +63,9 @@ export const EXPERIENCE = [
     period: "2021 - 2024",
     achievements: [
       "Graduated with BSc (Hons) in Software Engineering with Multimedia (November 2024)",
-      "Completed comprehensive coursework in software development, web technologies, and multimedia design",
+      "Completed comprehensive coursework in software development, web technologies, and mobile development",
       "Developed multiple academic projects including web applications, mobile apps, and multimedia presentations",
-      "Gained expertise in both technical development and creative design principles"
+      "Gained expertise in both technical development and creative design principles across multiple platforms"
     ]
   },
   {
@@ -387,6 +389,96 @@ export const PROJECTS = [
         quote: "This task manager improved our team's productivity by 40% with its intuitive interface.",
         author: "Project Manager",
         company: "Tech Startup Inc"
+      }
+    ]
+  },
+  {
+    id: 4,
+    title: "Mobile Fitness Tracker",
+    description: "A React Native fitness tracking app with workout plans, progress analytics, and social features.",
+    longDescription: "A comprehensive fitness tracking mobile application built with React Native and Expo. Features include personalized workout plans, progress tracking, social challenges, and integration with health APIs for a complete fitness experience.",
+    image: "/projects/fitness-tracker.jpg",
+    technologies: ["React Native", "Expo", "Firebase", "Redux", "Chart.js", "Health APIs"],
+    githubUrl: "https://github.com/shaunChikerema/fitness-tracker",
+    liveUrl: "#",
+    featured: false,
+    category: "Mobile Application",
+    status: "In Development",
+    duration: "2 months",
+    teamSize: "Solo Developer",
+    
+    highlights: [
+      "Cross-platform mobile app (iOS & Android)",
+      "Personalized workout plans and tracking",
+      "Progress analytics with charts and insights",
+      "Social challenges and community features",
+      "Health API integration for data sync",
+      "Offline functionality"
+    ],
+    
+    features: [
+      {
+        title: "Workout Plans",
+        description: "Customized workout routines based on fitness goals",
+        icon: "💪"
+      },
+      {
+        title: "Progress Tracking",
+        description: "Visual progress analytics with charts and insights",
+        icon: "📊"
+      },
+      {
+        title: "Social Features",
+        description: "Challenges and community engagement",
+        icon: "👥"
+      },
+      {
+        title: "Health Integration",
+        description: "Sync with device health data and APIs",
+        icon: "❤️"
+      }
+    ],
+
+    challenges: [
+      "Building smooth animations for workout tracking",
+      "Handling offline data synchronization",
+      "Optimizing performance for low-end devices",
+      "Implementing complex gesture controls"
+    ],
+
+    solutions: [
+      "Used Reanimated for smooth animations",
+      "Implemented offline-first architecture",
+      "Optimized bundle size and lazy loading",
+      "Created custom gesture handlers"
+    ],
+
+    metrics: {
+      performance: "60fps animations",
+      reliability: "Offline capable",
+      users: "Beta testing",
+      features: "20+ workout types"
+    },
+
+    techStack: {
+      frontend: ["React Native", "Expo", "Reanimated", "Redux"],
+      backend: ["Firebase", "Node.js", "Express.js"],
+      tools: ["Git", "Expo CLI", "Firebase Console", "VS Code"],
+      integrations: ["Health APIs", "Push Notifications", "Social Auth"]
+    },
+
+    screenshots: [
+      "/projects/fitness-home.jpg",
+      "/projects/fitness-workout.jpg",
+      "/projects/fitness-progress.jpg",
+      "/projects/fitness-social.jpg"
+    ],
+
+    testimonials: [
+      {
+        quote: "The fitness tracker makes staying motivated easy with its beautiful interface and social features.",
+        author: "Beta Tester",
+        company: "Fitness Enthusiast"
       }
     ]
   }
