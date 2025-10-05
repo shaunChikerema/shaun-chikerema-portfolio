@@ -1,11 +1,8 @@
 import './globals.css';
-import { Inter } from 'next/font/google';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'Shaun Chikerema - Full-Stack Developer & Software Engineer',
-  description: 'Professional portfolio of Shaun Chikerema - Expert Full-Stack Developer specializing in modern web technologies and scalable solutions.',
+  title: 'Shaun Chikerema - Full-Stack & Mobile Developer',
+  description: 'Professional portfolio of Shaun Chikerema - Full-Stack & Mobile Developer specializing in React, React Native, Next.js, and modern web technologies.',
 };
 
 export default function RootLayout({
@@ -15,7 +12,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className="font-sans antialiased">
+        {children}
+      </body>
     </html>
   );
 }
