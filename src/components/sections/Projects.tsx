@@ -1,12 +1,9 @@
-//src\components\sections\Projects.tsx
 'use client';
 import { motion } from 'framer-motion';
 import { ExternalLink, Github } from 'lucide-react';
 import { PROJECTS } from '../../lib/constants';
 
 export default function Projects() {
-  const featuredProjects = PROJECTS.filter(project => project.featured);
-
   return (
     <section id="projects" className="py-20 bg-white">
       <div className="container mx-auto px-6">
@@ -20,56 +17,63 @@ export default function Projects() {
             Featured Projects
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            A selection of projects that showcase my skills and expertise
+            A selection of my recent work and personal projects
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {featuredProjects.map((project, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          {PROJECTS.map((project, index) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
               whileHover={{ y: -5 }}
-              className="bg-gray-50 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
+              className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300"
             >
-              <div className="h-48 bg-gradient-to-r from-primary-500 to-primary-600 flex items-center justify-center">
-                <div className="text-white text-center">
-                  <div className="text-2xl font-bold mb-2">{project.title}</div>
-                  <div className="text-primary-100">{project.description}</div>
+              {/* Project Image */}
+              <div className="h-48 bg-gradient-to-br from-primary-500 to-primary-600 relative overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center text-white text-4xl font-bold">
+                  {project.title.split(' ').map(word => word[0]).join('')}
                 </div>
+                {project.featured && (
+                  <div className="absolute top-4 right-4 bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                    Featured
+                  </div>
+                )}
               </div>
-              
+
+              {/* Project Content */}
               <div className="p-6">
-                <p className="text-gray-600 mb-4">
-                  {project.longDescription || project.description}
-                </p>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{project.title}</h3>
+                <p className="text-gray-600 mb-4 line-clamp-3">{project.description}</p>
                 
-                <div className="flex flex-wrap gap-2 mb-6">
+                {/* Technologies */}
+                <div className="flex flex-wrap gap-2 mb-4">
                   {project.technologies.map((tech) => (
                     <span
                       key={tech}
-                      className="bg-white text-gray-700 px-3 py-1 rounded-full text-sm font-medium border border-gray-200"
+                      className="px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-sm font-medium"
                     >
                       {tech}
                     </span>
                   ))}
                 </div>
-                
+
+                {/* Project Links */}
                 <div className="flex space-x-4">
                   <a
-                    href={project.github}
-                    className="flex items-center text-gray-600 hover:text-primary-600 transition-colors duration-300"
+                    href={project.githubUrl}
+                    className="flex items-center text-gray-600 hover:text-gray-900 transition-colors duration-300"
                   >
-                    <Github size={18} className="mr-2" />
+                    <Github size={18} className="mr-1" />
                     Code
                   </a>
                   <a
-                    href={project.live}
+                    href={project.liveUrl}
                     className="flex items-center text-primary-600 hover:text-primary-700 transition-colors duration-300"
                   >
-                    <ExternalLink size={18} className="mr-2" />
+                    <ExternalLink size={18} className="mr-1" />
                     Live Demo
                   </a>
                 </div>

@@ -1,7 +1,6 @@
-//src\components\sections\Expertise.tsx
 'use client';
 import { motion } from 'framer-motion';
-import { EXPERTISE } from '../../lib/constants';
+import { SKILLS } from '../../lib/constants';
 
 export default function Expertise() {
   return (
@@ -14,38 +13,99 @@ export default function Expertise() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Areas of Expertise
+            My Expertise
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Specialized skills and technologies I've mastered through years of professional experience
+            A comprehensive overview of my technical skills and technologies I work with
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {EXPERTISE.map((category, index) => (
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Frontend Skills */}
             <motion.div
-              key={category.category}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-              whileHover={{ y: -5 }}
-              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl border border-gray-100 transition-all duration-300"
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100"
             >
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">
-                {category.category}
-              </h3>
-              <div className="flex flex-wrap gap-3">
-                {category.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="bg-primary-50 text-primary-700 px-4 py-2 rounded-full text-sm font-medium border border-primary-200"
-                  >
-                    {skill}
-                  </span>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Frontend</h3>
+              <div className="space-y-4">
+                {SKILLS.frontend.map((skill, index) => (
+                  <div key={skill.name} className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="font-medium text-gray-700">{skill.name}</span>
+                      <span className="text-sm text-gray-500">{skill.level}%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${skill.level}%` }}
+                        transition={{ duration: 1, delay: index * 0.1 }}
+                        className="bg-primary-600 h-2 rounded-full"
+                      />
+                    </div>
+                  </div>
                 ))}
               </div>
             </motion.div>
-          ))}
+
+            {/* Backend Skills */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100"
+            >
+              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Backend</h3>
+              <div className="space-y-4">
+                {SKILLS.backend.map((skill, index) => (
+                  <div key={skill.name} className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="font-medium text-gray-700">{skill.name}</span>
+                      <span className="text-sm text-gray-500">{skill.level}%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${skill.level}%` }}
+                        transition={{ duration: 1, delay: index * 0.1 }}
+                        className="bg-primary-600 h-2 rounded-full"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Tools & Technologies */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100"
+            >
+              <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Tools & Tech</h3>
+              <div className="space-y-4">
+                {SKILLS.tools.map((skill, index) => (
+                  <div key={skill.name} className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="font-medium text-gray-700">{skill.name}</span>
+                      <span className="text-sm text-gray-500">{skill.level}%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${skill.level}%` }}
+                        transition={{ duration: 1, delay: index * 0.1 }}
+                        className="bg-primary-600 h-2 rounded-full"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>
