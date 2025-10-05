@@ -1,7 +1,7 @@
 //src/components/sections/About.tsx
 'use client';
 import { motion } from 'framer-motion';
-import { EDUCATION, PERSONAL_INFO } from '../../lib/constants';
+import { EDUCATION } from '../../lib/constants';
 
 export default function About() {
   return (
@@ -19,7 +19,7 @@ export default function About() {
           
           <div className="text-base md:text-lg text-gray-600 leading-relaxed space-y-4 md:space-y-6 mb-8 md:mb-12">
             <p>
-              I'm a passionate full-stack developer and recent graduate with a BSc (Hons) in 
+              I&apos;m a passionate full-stack developer and recent graduate with a BSc (Hons) in 
               Software Engineering with Multimedia from Limkokwing University. My education 
               has provided me with a strong foundation in both technical software development 
               and creative multimedia design.
@@ -32,8 +32,8 @@ export default function About() {
             </p>
             
             <p>
-              I'm passionate about building products that solve real-world problems and 
-              provide exceptional user experiences. When I'm not coding, you can find me 
+              I&apos;m passionate about building products that solve real-world problems and 
+              provide exceptional user experiences. When I&apos;m not coding, you can find me 
               exploring new technologies, contributing to open-source projects, or working 
               on personal projects that challenge my skills.
             </p>
