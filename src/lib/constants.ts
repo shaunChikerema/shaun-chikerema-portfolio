@@ -1,10 +1,12 @@
+// lib/constants.ts
+
 export const PERSONAL_INFO = {
   name: "Shaun Chikerema",
   title: "Full-Stack & Mobile Developer",
   bio: "Recent BSc (Hons) Software Engineering with Multimedia graduate specializing in React, React Native, and full-stack development. Passionate about creating exceptional digital experiences across web and mobile platforms.",
-  email: "shaun@example.com",
-  location: "Harare, Zimbabwe",
-  phone: "+263 XXX XXX XXX",
+  email: "sschikerema@gmail.com",
+  location: "Gaborone, Botswana",
+  phone: "+267 76 051 623",
   education: "BSc (Hons) Software Engineering with Multimedia - Limkokwing University (2024)"
 };
 
@@ -50,9 +52,10 @@ export const EXPERIENCE = [
     company: "Freelance & Personal Projects",
     period: "2023 - Present",
     achievements: [
-      "Developed PolicyBridge - a comprehensive insurance management SaaS platform with automated payslip generation",
-      "Built multiple full-stack applications using modern technologies like Next.js, TypeScript, and Supabase",
-      "Created cross-platform mobile applications with React Native and Expo",
+      "Developed Keyat - Botswana's first comprehensive real estate platform connecting landlords, tenants, and agents",
+      "Built PolicyBridge - a comprehensive insurance management SaaS platform with automated payslip generation",
+      "Created multiple full-stack applications using modern technologies like Next.js, TypeScript, and Supabase",
+      "Developed cross-platform mobile applications with React Native and Expo",
       "Implemented responsive designs and smooth animations for enhanced user experiences across web and mobile",
       "Collaborated with clients to understand requirements and deliver tailored solutions"
     ]
@@ -108,6 +111,123 @@ export const EDUCATION = [
 export const PROJECTS = [
   {
     id: 1,
+    title: "Keyat - Home Rentals & Real Estate Platform",
+    description: "Botswana's first comprehensive real estate platform connecting landlords, tenants, agents, and service providers. A complete ecosystem for property rentals, sales, moving services, and financial solutions.",
+    longDescription: "Keyat revolutionizes Botswana's real estate market by providing a unified platform for all property-related needs. From finding rental properties and connecting with verified agents to booking moving services and applying for mortgages, Keyat serves as the complete real estate solution for Botswana. The platform features intelligent user onboarding, local payment integration, and a multi-sided marketplace architecture designed to scale across major Botswana cities.",
+    image: "/projects/keyat-dashboard.jpg",
+    technologies: [
+      "Next.js 15", "TypeScript", "Tailwind CSS", "Supabase", 
+      "PostgreSQL", "Framer Motion", "React Hook Form", "Zod",
+      "Stripe", "Orange Money API", "Map Integration", "Real-time Chat",
+      "Payment Processing", "Mobile Responsive", "PWA", "SEO Optimized"
+    ],
+    githubUrl: "https://github.com/shaunChikerema/keyat-web",
+    liveUrl: "https://keyat.vercel.app",
+    featured: true,
+    category: "Full-Stack Real Estate Platform",
+    status: "Live Production",
+    duration: "4 months",
+    teamSize: "Solo Full-Stack Developer",
+    
+    highlights: [
+      "Multi-sided marketplace for real estate ecosystem",
+      "Botswana-specific payment integration (Orange Money, Mascom MyZaka)",
+      "Intelligent splash screen with user behavior tracking",
+      "Complete property lifecycle management",
+      "Real-time notifications and messaging system",
+      "Advanced search with geolocation and filters",
+      "Secure authentication with role-based access",
+      "Mobile-first responsive design with PWA capabilities"
+    ],
+    
+    features: [
+      {
+        title: "Property Marketplace",
+        description: "Complete rental and sales platform with advanced search, filters, and property comparisons",
+        icon: "🏠"
+      },
+      {
+        title: "Agent Network",
+        description: "Verified real estate agents with ratings, reviews, and commission management",
+        icon: "🤝"
+      },
+      {
+        title: "Moving Services",
+        description: "Integrated moving company bookings with quotes and scheduling",
+        icon: "🚛"
+      },
+      {
+        title: "Payment Integration",
+        description: "Local Botswana payment methods including Orange Money and Mascom MyZaka",
+        icon: "💰"
+      },
+      {
+        title: "Financial Services",
+        description: "Mortgage applications, insurance, and rent-to-own options",
+        icon: "📊"
+      },
+      {
+        title: "Intelligent UX",
+        description: "Smart splash screens, personalized recommendations, and behavior tracking",
+        icon: "🎯"
+      }
+    ],
+
+    challenges: [
+      "Building a multi-tenant architecture for different user types",
+      "Implementing Botswana-specific payment gateways",
+      "Creating intelligent user onboarding flows",
+      "Handling real-time property availability updates",
+      "Ensuring data security and privacy compliance"
+    ],
+
+    solutions: [
+      "Implemented role-based access control with Supabase RLS",
+      "Integrated local payment APIs with fallback options",
+      "Created intelligent splash screens that adapt to user behavior",
+      "Used real-time subscriptions for instant updates",
+      "Implemented comprehensive data encryption and validation"
+    ],
+
+    metrics: {
+      performance: "2.1s initial load time",
+      reliability: "99.9% uptime",
+      users: "10,000+ target users",
+      transactions: "500+ monthly target"
+    },
+
+    techStack: {
+      frontend: ["Next.js 15", "TypeScript", "Tailwind CSS", "Framer Motion"],
+      backend: ["Supabase", "PostgreSQL", "Node.js", "Redis"],
+      mobile: ["PWA", "React Native Ready"],
+      tools: ["Git", "Vercel", "GitHub Actions", "Supabase CLI"],
+      integrations: ["Stripe", "Orange Money API", "Mapbox", "Resend"]
+    },
+
+    screenshots: [
+      "/projects/keyat-landing.jpg",
+      "/projects/keyat-search.jpg",
+      "/projects/keyat-property.jpg",
+      "/projects/keyat-dashboard.jpg"
+    ],
+
+    testimonials: [
+      {
+        quote: "Keyat has transformed how we handle property rentals in Botswana. The platform is intuitive and covers all our needs.",
+        author: "Real Estate Agent",
+        company: "Gaborone Properties"
+      }
+    ],
+
+    businessImpact: {
+      market: "First comprehensive real estate platform in Botswana",
+      revenue: "Multiple streams: commissions, subscriptions, ads",
+      scalability: "Designed to handle 100,000+ users across Botswana",
+      innovation: "Local payment integration and multi-service ecosystem"
+    }
+  },
+  {
+    id: 2,
     title: "PolicyBridge - Insurance Management Platform",
     description: "A comprehensive insurance management SaaS platform with automated payslip generation, client management, and real-time analytics. Built for insurance brokers to streamline operations and enhance client communication.",
     longDescription: "PolicyBridge revolutionizes insurance management by providing a complete digital ecosystem for brokers. The platform handles client onboarding, policy management, claims processing, and automated financial documentation with professional payslip generation. Built with scalability and security in mind, it serves as the central hub for insurance operations.",
@@ -209,96 +329,6 @@ export const PROJECTS = [
         quote: "PolicyBridge transformed our insurance operations. The automated payslip system saved us 20+ hours per week.",
         author: "Insurance Broker",
         company: "Alpha Insurance Ltd"
-      }
-    ]
-  },
-  {
-    id: 2,
-    title: "E-Commerce Platform",
-    description: "A full-stack e-commerce solution with React, Node.js, and MongoDB. Features include user authentication, payment processing, and admin dashboard.",
-    longDescription: "A complete e-commerce solution built from the ground up with modern web technologies. Features include user authentication, shopping cart functionality, payment processing with Stripe, inventory management, and an admin dashboard for business analytics.",
-    image: "/projects/ecommerce.jpg",
-    technologies: ["React", "Node.js", "MongoDB", "Stripe", "JWT", "Express.js", "Redux"],
-    githubUrl: "https://github.com/shaunChikerema/ecommerce-platform",
-    liveUrl: "https://ecommerce-demo.vercel.app",
-    featured: true,
-    category: "Full-Stack Web App",
-    status: "Live Demo",
-    duration: "3 months",
-    teamSize: "Solo Developer",
-    
-    highlights: [
-      "Secure user authentication and authorization",
-      "Payment processing with Stripe integration",
-      "Shopping cart and checkout functionality",
-      "Inventory management system",
-      "Admin dashboard with sales analytics",
-      "Responsive design for all devices"
-    ],
-    
-    features: [
-      {
-        title: "User Management",
-        description: "Secure authentication, user profiles, and order history",
-        icon: "👤"
-      },
-      {
-        title: "Payment Processing",
-        description: "Stripe integration for secure payment handling",
-        icon: "💳"
-      },
-      {
-        title: "Inventory System",
-        description: "Real-time inventory tracking and management",
-        icon: "📦"
-      },
-      {
-        title: "Admin Dashboard",
-        description: "Business analytics and sales reporting",
-        icon: "📊"
-      }
-    ],
-
-    challenges: [
-      "Implementing secure payment processing",
-      "Managing real-time inventory updates",
-      "Building responsive design for mobile",
-      "Optimizing performance for product images"
-    ],
-
-    solutions: [
-      "Integrated Stripe with webhook verification",
-      "Used MongoDB transactions for inventory updates",
-      "Implemented mobile-first responsive design",
-      "Optimized images with lazy loading"
-    ],
-
-    metrics: {
-      performance: "2s page load time",
-      reliability: "99.8% uptime",
-      users: "1,000+ demo users",
-      transactions: "500+ test transactions"
-    },
-
-    techStack: {
-      frontend: ["React", "Redux", "CSS3", "Axios"],
-      backend: ["Node.js", "Express.js", "MongoDB", "JWT"],
-      tools: ["Git", "Postman", "Vercel", "MongoDB Atlas"],
-      integrations: ["Stripe", "SendGrid", "Cloudinary"]
-    },
-
-    screenshots: [
-      "/projects/ecommerce-home.jpg",
-      "/projects/ecommerce-products.jpg",
-      "/projects/ecommerce-cart.jpg",
-      "/projects/ecommerce-admin.jpg"
-    ],
-
-    testimonials: [
-      {
-        quote: "The e-commerce platform handles high traffic smoothly and provides excellent user experience.",
-        author: "E-commerce Store Owner",
-        company: "Fashion Retail Co"
       }
     ]
   },
