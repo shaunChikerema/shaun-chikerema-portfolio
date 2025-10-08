@@ -1,168 +1,162 @@
 //src/components/sections/Expertise.tsx
 'use client';
 import { motion } from 'framer-motion';
-import { SKILLS } from '../../lib/constants';
-import { Code, Server, Smartphone, Palette, Zap } from 'lucide-react';
+import { Code2, Server, Smartphone, Database, Zap, Cpu, GitBranch, Cloud } from 'lucide-react';
 
 export default function Expertise() {
-  const skillCategories = [
+  const expertiseAreas = [
     {
-      title: "Frontend",
-      icon: Code,
-      skills: SKILLS.frontend,
-      color: "from-blue-500 to-cyan-500",
-      bgColor: "bg-blue-50",
-      borderColor: "border-blue-200"
+      title: "Full-Stack Architecture",
+      icon: Cpu,
+      description: "End-to-end system design and implementation",
+      technologies: ["Next.js 15", "TypeScript", "Node.js", "PostgreSQL", "Supabase"],
+      applications: [
+        "Multi-tenant SaaS platforms",
+        "Real-time applications", 
+        "API design & integration",
+        "Database architecture"
+      ],
+      projects: ["Keyat", "PolicyBridge"]
     },
     {
-      title: "Backend", 
+      title: "Production Deployment",
+      icon: Cloud,
+      description: "Scalable infrastructure and DevOps",
+      technologies: ["Vercel", "Docker", "GitHub Actions", "AWS", "Redis"],
+      applications: [
+        "CI/CD pipeline setup",
+        "Performance optimization",
+        "Monitoring & analytics",
+        "Security implementation"
+      ],
+      projects: ["Keyat", "PolicyBridge", "Task Manager"]
+    },
+    {
+      title: "Frontend Engineering",
+      icon: Code2,
+      description: "Modern, responsive user interfaces",
+      technologies: ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "React Native"],
+      applications: [
+        "Component architecture",
+        "State management",
+        "Performance optimization",
+        "Mobile-responsive design"
+      ],
+      projects: ["Keyat", "PolicyBridge", "Fitness Tracker"]
+    },
+    {
+      title: "Backend Systems",
       icon: Server,
-      skills: SKILLS.backend,
-      color: "from-green-500 to-emerald-500",
-      bgColor: "bg-green-50",
-      borderColor: "border-green-200"
-    },
-    {
-      title: "Mobile",
-      icon: Smartphone,
-      skills: SKILLS.mobile,
-      color: "from-purple-500 to-pink-500",
-      bgColor: "bg-purple-50",
-      borderColor: "border-purple-200"
-    },
-    {
-      title: "Tools",
-      icon: Palette,
-      skills: SKILLS.tools,
-      color: "from-orange-500 to-red-500",
-      bgColor: "bg-orange-50",
-      borderColor: "border-orange-200"
+      description: "Robust server-side solutions",
+      technologies: ["Node.js", "Express", "PostgreSQL", "Firebase", "REST APIs"],
+      applications: [
+        "API development",
+        "Database design",
+        "Authentication systems",
+        "Third-party integrations"
+      ],
+      projects: ["PolicyBridge", "Keyat", "Task Manager"]
     }
   ];
 
   return (
-    <section id="expertise" className="py-16 lg:py-20 bg-gradient-to-b from-white to-gray-50/50">
+    <section id="expertise" className="py-20 lg:py-28 bg-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-16 lg:mb-20"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center px-4 py-2 rounded-full bg-primary-50 border border-primary-200 text-primary-700 text-sm font-medium mb-6"
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center px-4 py-2 rounded-full bg-gray-50 border border-gray-200 text-gray-700 text-sm font-medium mb-6"
           >
             <Zap className="w-4 h-4 mr-2" />
-            Technical Proficiency
+            Technical Capabilities
           </motion.div>
           
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Technical Skills
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 mb-6">
+            Engineering Expertise
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Technologies and tools I work with to build amazing products
+          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            How I architect, build, and deploy production-ready applications
           </p>
         </motion.div>
 
-        {/* Skills Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-          {skillCategories.map((category, categoryIndex) => (
+        {/* Expertise Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          {expertiseAreas.map((area, areaIndex) => (
             <motion.div
-              key={category.title}
+              key={area.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
-              whileHover={{ y: -5 }}
-              className="group"
+              transition={{ duration: 0.6, delay: areaIndex * 0.1 }}
+              className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300"
             >
-              <div className={`bg-white rounded-xl p-5 border ${category.borderColor} shadow-sm hover:shadow-xl transition-all duration-300 h-full`}>
-                {/* Header */}
-                <div className="flex items-center space-x-3 mb-4">
-                  <motion.div 
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    className={`w-10 h-10 bg-gradient-to-r ${category.color} rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300`}
-                  >
-                    <category.icon className="w-5 h-5 text-white" />
-                  </motion.div>
-                  <h3 className="font-semibold text-gray-900 group-hover:text-gray-800 transition-colors duration-300">
-                    {category.title}
-                  </h3>
+              {/* Header */}
+              <div className="flex items-start space-x-4 mb-6">
+                <div className="flex-shrink-0 w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center">
+                  <area.icon className="w-6 h-6 text-white" />
                 </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    {area.title}
+                  </h3>
+                  <p className="text-gray-600">
+                    {area.description}
+                  </p>
+                </div>
+              </div>
 
-                {/* Skills List */}
-                <div className="space-y-3">
-                  {category.skills.map((skill, skillIndex) => (
-                    <motion.div 
-                      key={skill.name}
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.4, delay: (categoryIndex * 0.1) + (skillIndex * 0.05) }}
-                      className="space-y-1 group/skill"
+              {/* Technologies */}
+              <div className="mb-6">
+                <h4 className="text-sm font-semibold text-gray-900 mb-3 uppercase tracking-wide">
+                  Core Technologies
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {area.technologies.map((tech, techIndex) => (
+                    <span
+                      key={tech}
+                      className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium border border-gray-200"
                     >
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm font-medium text-gray-700 group-hover/skill:text-gray-900 transition-colors duration-300">
-                          {skill.name}
-                        </span>
-                        <motion.span 
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          whileInView={{ opacity: 1, scale: 1 }}
-                          transition={{ duration: 0.4, delay: (categoryIndex * 0.1) + (skillIndex * 0.05) + 0.3 }}
-                          className="text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-1 rounded-full"
-                        >
-                          {skill.level}%
-                        </motion.span>
-                      </div>
-                      <div className="w-full bg-gray-200 rounded-full h-1.5 overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${skill.level}%` }}
-                          transition={{ 
-                            duration: 1.2, 
-                            delay: (categoryIndex * 0.1) + (skillIndex * 0.05),
-                            ease: "easeOut"
-                          }}
-                          className={`h-1.5 rounded-full bg-gradient-to-r ${category.color} relative overflow-hidden`}
-                        >
-                          {/* Shimmer Effect */}
-                          <motion.div
-                            animate={{ x: [-100, 100] }}
-                            transition={{ 
-                              duration: 2, 
-                              repeat: Infinity, 
-                              delay: skillIndex * 0.2,
-                              repeatDelay: 3
-                            }}
-                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                          />
-                        </motion.div>
-                      </div>
-                      
-                      {/* Skill Level Indicator */}
-                      <div className="flex justify-between items-center mt-1">
-                        <span className="text-xs text-gray-400">
-                          {skill.level >= 90 && "Expert"}
-                          {skill.level >= 70 && skill.level < 90 && "Advanced"}
-                          {skill.level >= 50 && skill.level < 70 && "Proficient"}
-                          {skill.level < 50 && "Learning"}
-                        </span>
-                        <div className="flex space-x-1">
-                          {[...Array(5)].map((_, levelIndex) => (
-                            <div
-                              key={levelIndex}
-                              className={`w-1 h-1 rounded-full ${
-                                levelIndex < Math.floor(skill.level / 20) 
-                                  ? `bg-gradient-to-r ${category.color}` 
-                                  : 'bg-gray-300'
-                              }`}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    </motion.div>
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Applications */}
+              <div className="mb-6">
+                <h4 className="text-sm font-semibold text-gray-900 mb-3 uppercase tracking-wide">
+                  Applications
+                </h4>
+                <ul className="space-y-2">
+                  {area.applications.map((app, appIndex) => (
+                    <li key={app} className="flex items-start">
+                      <div className="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                      <span className="text-gray-600 text-sm">{app}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Project Applications */}
+              <div>
+                <h4 className="text-sm font-semibold text-gray-900 mb-3 uppercase tracking-wide">
+                  Applied In
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {area.projects.map((project, projectIndex) => (
+                    <span
+                      key={project}
+                      className="px-3 py-1 bg-gray-50 text-gray-600 rounded-full text-sm font-medium border border-gray-300"
+                    >
+                      {project}
+                    </span>
                   ))}
                 </div>
               </div>
@@ -170,21 +164,39 @@ export default function Expertise() {
           ))}
         </div>
 
-        {/* Summary Section */}
+        {/* Methodology Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-12"
+          className="mt-16 max-w-4xl mx-auto"
         >
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200 shadow-sm max-w-2xl mx-auto">
-            <h3 className="font-semibold text-gray-900 mb-2">
-              Continuously Learning & Growing
+          <div className="bg-gray-50 rounded-2xl p-8 border border-gray-200">
+            <h3 className="text-2xl font-semibold text-gray-900 mb-6 text-center">
+              Engineering Methodology
             </h3>
-            <p className="text-gray-600 text-sm">
-              Technology evolves rapidly, and I'm committed to staying current with the latest 
-              tools and best practices in the industry.
-            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                {
+                  title: "Production-First",
+                  description: "Build for real users from day one with scalability and maintainability in mind"
+                },
+                {
+                  title: "System Design",
+                  description: "Architect solutions that handle growth and complexity without breaking"
+                },
+                {
+                  title: "Local Context",
+                  description: "Integrate Botswana-specific solutions and understand emerging market dynamics"
+                }
+              ].map((principle, index) => (
+                <div key={index} className="text-center">
+                  <div className="w-3 h-3 bg-gray-900 rounded-full mx-auto mb-3"></div>
+                  <h4 className="font-semibold text-gray-900 mb-2">{principle.title}</h4>
+                  <p className="text-gray-600 text-sm">{principle.description}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>
