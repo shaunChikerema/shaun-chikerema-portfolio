@@ -26,25 +26,22 @@ export default function Hero() {
   };
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative bg-gradient-to-br from-slate-50 via-white to-blue-50/30 overflow-hidden pt-20 lg:pt-24">
-      {/* Subtle Background Pattern */}
-      <div className="absolute inset-0 bg-grid-slate-100 [mask-image:radial-gradient(ellipse_at_center,white,transparent_70%)]" />
-      
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          {/* Left Column - Content */}
+    <section id="home" className="min-h-screen flex items-center justify-center relative bg-white overflow-hidden pt-20 lg:pt-24">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* CONTENT COLUMN - DOMINANT (66.6%) */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="lg:col-span-7 text-center lg:text-left"
+            className="lg:col-span-8 text-center lg:text-left order-2 lg:order-1"
           >
             {/* Professional Badge */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
-              className="inline-flex items-center px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-green-200 text-green-700 text-sm font-medium mb-8 mt-8 lg:mt-0"
+              className="inline-flex items-center px-4 py-2 rounded-full bg-gray-50 border border-gray-200 text-gray-700 text-sm font-medium mb-8"
             >
               <div className="relative mr-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-ping absolute"></div>
@@ -53,12 +50,12 @@ export default function Hero() {
               Available for new projects
             </motion.div>
 
-            {/* Name - PROFESSIONAL SOLID TEXT */}
+            {/* Name - Clean Professional */}
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-gray-900 mb-6 leading-tight"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-semibold text-gray-900 mb-6 leading-tight"
             >
               {PERSONAL_INFO.name}
             </motion.h1>
@@ -73,23 +70,20 @@ export default function Hero() {
               Software Engineer & Founder
             </motion.p>
 
-            {/* Tech Stack Micro Animation */}
+            {/* Tech Stack - Clean Badges */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
-              className="flex flex-wrap gap-3 text-sm text-gray-500 mb-6 justify-center lg:justify-start"
+              className="flex flex-wrap gap-2 text-sm mb-6 justify-center lg:justify-start"
             >
-              <span className="font-medium">React/Next.js</span>
-              <span>•</span>
-              <span className="font-medium">TypeScript</span>
-              <span>•</span>
-              <span className="font-medium">Node.js</span>
-              <span>•</span>
-              <span className="font-medium">PostgreSQL</span>
+              <span className="font-medium bg-gray-100 text-gray-700 px-3 py-1.5 rounded-lg border border-gray-200">React/Next.js</span>
+              <span className="font-medium bg-gray-100 text-gray-700 px-3 py-1.5 rounded-lg border border-gray-200">TypeScript</span>
+              <span className="font-medium bg-gray-100 text-gray-700 px-3 py-1.5 rounded-lg border border-gray-200">Node.js</span>
+              <span className="font-medium bg-gray-100 text-gray-700 px-3 py-1.5 rounded-lg border border-gray-200">PostgreSQL</span>
             </motion.div>
 
-            {/* Bio */}
+            {/* Bio - Crystal Clear */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -99,7 +93,7 @@ export default function Hero() {
               Software Engineer & Founder building BITROOT technology ecosystem. Architecting scalable production applications including Keyat (Botswana's first real estate platform) and PolicyBridge (insurance SaaS). Strong foundation in system design and full-stack development.
             </motion.p>
 
-            {/* CTA Buttons */}
+            {/* CTA Buttons - PERFECTED CONTRAST */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -110,10 +104,9 @@ export default function Hero() {
                 onClick={scrollToProjects}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="group relative bg-gradient-to-r from-primary-600 to-primary-700 text-white px-8 py-4 rounded-xl font-semibold hover:from-primary-700 hover:to-primary-800 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center"
+                className="group relative bg-gray-950 text-white px-8 py-4 rounded-xl font-semibold hover:bg-gray-900 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center border border-gray-800"
               >
                 <span className="relative z-10">See My Projects</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-primary-700 to-primary-800 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </motion.button>
               
               <motion.button 
@@ -121,19 +114,19 @@ export default function Hero() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 disabled={isDownloading}
-                className="group relative bg-white text-gray-700 px-8 py-4 rounded-xl font-semibold border-2 border-gray-200 hover:border-primary-300 hover:text-primary-600 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="group relative bg-white text-gray-700 px-8 py-4 rounded-xl font-semibold border-2 border-gray-300 hover:border-gray-400 hover:text-gray-900 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Download className={`w-5 h-5 ${isDownloading ? 'animate-spin' : ''}`} />
                 <span>{isDownloading ? 'Downloading...' : 'Download Resume'}</span>
               </motion.button>
             </motion.div>
 
-            {/* Social Links */}
+            {/* Social Links - PERFECTED SPACING */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.9 }}
-              className="flex justify-center lg:justify-start space-x-4 mb-12"
+              className="flex justify-center lg:justify-start space-x-4"
             >
               {[
                 { icon: Github, href: "https://github.com/shaunChikerema", label: "GitHub" },
@@ -148,28 +141,29 @@ export default function Hero() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.9 + index * 0.1 }}
                   whileHover={{ scale: 1.1, y: -2 }}
-                  className="group p-3 bg-white/80 backdrop-blur-sm text-gray-600 hover:text-primary-600 transition-all duration-300 rounded-xl shadow-lg hover:shadow-xl border border-gray-100 hover:border-primary-200"
+                  className="group p-3 bg-white text-gray-600 hover:text-gray-900 transition-all duration-300 rounded-lg shadow-sm hover:shadow-md border border-gray-200 hover:border-gray-300"
                   aria-label={label}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Icon className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+                  <Icon className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
                 </motion.a>
               ))}
             </motion.div>
           </motion.div>
 
-          {/* Right Column - PROFESSIONAL PHOTO */}
+          {/* PHOTO COLUMN - SUPPORTING (33.3%) */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="lg:col-span-5 flex justify-center lg:justify-end"
+            className="lg:col-span-4 flex justify-center order-1 lg:order-2"
           >
-            <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
+            {/* PERFECTED PHOTO CONTAINER */}
+            <div className="relative w-56 h-56 sm:w-64 sm:h-64 lg:w-80 lg:h-80">
               
               {/* MAIN HEADSHOT */}
-              <div className="absolute inset-0 bg-white rounded-3xl shadow-2xl border-2 border-white overflow-hidden">
+              <div className="absolute inset-0 bg-white rounded-3xl shadow-lg border border-gray-200 overflow-hidden">
                 <Image 
                   src="/images/shaun-profile.png" 
                   alt="Shaun Chikerema - Software Engineer & Founder"
@@ -179,18 +173,18 @@ export default function Hero() {
                 />
               </div>
               
-              {/* LOCATION BADGE - Bottom Right */}
-              <div className="absolute -bottom-4 -right-4 bg-gradient-to-r from-primary-600 to-blue-600 text-white px-4 py-3 rounded-xl font-semibold shadow-lg border-2 border-white">
+              {/* LOCATION BADGE - PERFECTED */}
+              <div className="absolute -bottom-3 -right-3 bg-gray-900 text-white px-3 py-2 rounded-lg font-medium shadow-lg border border-gray-800 text-sm">
                 <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4" />
+                  <MapPin className="w-3 h-3" />
                   <span>Gaborone, Botswana</span>
                 </div>
               </div>
 
-              {/* STATUS BADGE - Top Left */}
-              <div className="absolute -top-4 -left-4 bg-primary-600 text-white px-3 py-2 rounded-lg font-medium text-sm shadow-lg border-2 border-white">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+              {/* STATUS BADGE - PERFECTED */}
+              <div className="absolute -top-3 -left-3 bg-green-700 text-white px-2 py-1 rounded-lg font-medium text-xs shadow-lg border border-green-800">
+                <div className="flex items-center gap-1">
+                  <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
                   <span>Available</span>
                 </div>
               </div>
