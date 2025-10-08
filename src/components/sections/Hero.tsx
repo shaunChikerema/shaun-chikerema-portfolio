@@ -1,9 +1,10 @@
 //src/components/sections/Hero.tsx
 'use client';
 import { motion } from 'framer-motion';
-import { ArrowDown, Github, Linkedin, Mail, Download } from 'lucide-react';
+import { ArrowDown, Github, Linkedin, Mail, Download, MapPin } from 'lucide-react';
 import { PERSONAL_INFO } from '../../lib/constants';
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function Hero() {
   const [isDownloading, setIsDownloading] = useState(false);
@@ -28,8 +29,6 @@ export default function Hero() {
     <section id="home" className="min-h-screen flex items-center justify-center relative bg-gradient-to-br from-slate-50 via-white to-blue-50/30 overflow-hidden pt-20 lg:pt-24">
       {/* Subtle Background Pattern */}
       <div className="absolute inset-0 bg-grid-slate-100 [mask-image:radial-gradient(ellipse_at_center,white,transparent_70%)]" />
-      
-      {/* Removed distracting gradient orbs */}
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -143,7 +142,7 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Right Column - Simplified Visual */}
+          {/* Right Column - PROFESSIONAL PHOTO */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -151,38 +150,34 @@ export default function Hero() {
             className="lg:col-span-5 flex justify-center lg:justify-end"
           >
             <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
-              {/* Clean, professional background */}
-              <div className="absolute inset-0 bg-slate-50 rounded-3xl border border-slate-200 shadow-lg"></div>
               
-              {/* Center Content */}
-              <div className="absolute inset-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-white shadow-xl flex items-center justify-center">
-                <div className="text-center p-6">
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.6, type: "spring" }}
-                    className="w-20 h-20 bg-gradient-to-r from-primary-600 to-primary-700 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg"
-                  >
-                    <span className="text-white text-2xl font-bold">SC</span>
-                  </motion.div>
-                  <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.8 }}
-                    className="text-gray-600 text-sm font-medium"
-                  >
-                    Software Engineer & Founder
-                  </motion.p>
-                  <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1 }}
-                    className="text-gray-400 text-xs mt-2"
-                  >
-                    React • Next.js • TypeScript
-                  </motion.p>
+              {/* MAIN HEADSHOT */}
+              <div className="absolute inset-0 bg-white rounded-3xl shadow-2xl border-4 border-white overflow-hidden">
+                <Image 
+                  src="/images/shaun-profile.png" 
+                  alt="Shaun Chikerema - Software Engineer & Founder"
+                  fill
+                  className="object-cover rounded-2xl"
+                  priority
+                />
+              </div>
+              
+              {/* LOCATION BADGE - Bottom Right */}
+              <div className="absolute -bottom-4 -right-4 bg-gradient-to-r from-primary-600 to-blue-600 text-white px-4 py-3 rounded-xl font-semibold shadow-lg border-2 border-white">
+                <div className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4" />
+                  <span>Gaborone, Botswana</span>
                 </div>
               </div>
+
+              {/* STATUS BADGE - Top Left */}
+              <div className="absolute -top-4 -left-4 bg-green-500 text-white px-3 py-2 rounded-lg font-medium text-sm shadow-lg border-2 border-white">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                  <span>Available</span>
+                </div>
+              </div>
+
             </div>
           </motion.div>
         </div>
