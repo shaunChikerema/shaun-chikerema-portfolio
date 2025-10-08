@@ -1,7 +1,7 @@
 //src/components/sections/Hero.tsx
 'use client';
 import { motion } from 'framer-motion';
-import { ArrowDown, Github, Linkedin, Mail, Download, MapPin, ExternalLink } from 'lucide-react';
+import { Github, Linkedin, Mail, Download, MapPin, ExternalLink } from 'lucide-react';
 import { PERSONAL_INFO } from '../../lib/constants';
 import { useState } from 'react';
 import Image from 'next/image';
@@ -53,12 +53,12 @@ export default function Hero() {
               Available for new projects
             </motion.div>
 
-            {/* Name with Professional Gradient */}
+            {/* Name - PROFESSIONAL SOLID TEXT */}
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold bg-gradient-to-r from-gray-900 to-primary-600 bg-clip-text text-transparent mb-6 leading-tight"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-gray-900 mb-6 leading-tight"
             >
               {PERSONAL_INFO.name}
             </motion.h1>
@@ -89,7 +89,7 @@ export default function Hero() {
               <span className="font-medium">PostgreSQL</span>
             </motion.div>
 
-            {/* Bio - UPDATED */}
+            {/* Bio */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -128,7 +128,7 @@ export default function Hero() {
               </motion.button>
             </motion.div>
 
-            {/* Social Links - UPDATED */}
+            {/* Social Links */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -168,7 +168,7 @@ export default function Hero() {
           >
             <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
               
-              {/* MAIN HEADSHOT - UPDATED BORDER */}
+              {/* MAIN HEADSHOT */}
               <div className="absolute inset-0 bg-white rounded-3xl shadow-2xl border-2 border-white overflow-hidden">
                 <Image 
                   src="/images/shaun-profile.png" 
@@ -187,7 +187,7 @@ export default function Hero() {
                 </div>
               </div>
 
-              {/* STATUS BADGE - Top Left - UPDATED COLOR */}
+              {/* STATUS BADGE - Top Left */}
               <div className="absolute -top-4 -left-4 bg-primary-600 text-white px-3 py-2 rounded-lg font-medium text-sm shadow-lg border-2 border-white">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
