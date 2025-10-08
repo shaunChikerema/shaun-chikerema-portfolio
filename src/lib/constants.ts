@@ -63,7 +63,7 @@ export const EXPERIENCE = [
   {
     position: "Software Engineering Student",
     company: "Limkokwing University of Creative Technology",
-    period: "2021 - 2024",
+    period: "2020 - 2024",
     achievements: [
       "Graduated with BSc (Hons) in Software Engineering with Multimedia (November 2024)",
       "Completed comprehensive coursework in software development, web technologies, and mobile development",
@@ -89,7 +89,7 @@ export const EDUCATION = [
     degree: "BSc (Hons) Software Engineering with Multimedia",
     institution: "Limkokwing University of Creative Technology",
     period: "2021 - 2024",
-    location: "Cyberjaya, Malaysia & Harare, Zimbabwe",
+    location: "Cyberjaya, Malaysia & Gaborone, Botswana",
     achievements: [
       "Graduated November 2024",
       "Specialized in full-stack web development and multimedia integration",
