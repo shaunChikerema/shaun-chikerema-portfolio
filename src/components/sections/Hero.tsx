@@ -1,7 +1,7 @@
 //src/components/sections/Hero.tsx
 'use client';
 import { motion } from 'framer-motion';
-import { ArrowDown, Github, Linkedin, Mail, Download, Sparkles } from 'lucide-react';
+import { ArrowDown, Github, Linkedin, Mail, Download } from 'lucide-react';
 import { PERSONAL_INFO } from '../../lib/constants';
 import { useState } from 'react';
 
@@ -15,8 +15,8 @@ export default function Hero() {
   const downloadResume = () => {
     setIsDownloading(true);
     const link = document.createElement('a');
-    link.href = '/resume.pdf';
-    link.download = `${PERSONAL_INFO.name.replace(' ', '_')}_Resume.pdf`;
+    link.href = '/shaun-chikerema-resume.pdf';
+    link.download = 'Shaun_Chikerema_Resume.pdf';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -26,12 +26,10 @@ export default function Hero() {
 
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative bg-gradient-to-br from-slate-50 via-white to-blue-50/30 overflow-hidden pt-20 lg:pt-24">
-      {/* Enhanced Background Elements */}
+      {/* Subtle Background Pattern */}
       <div className="absolute inset-0 bg-grid-slate-100 [mask-image:radial-gradient(ellipse_at_center,white,transparent_70%)]" />
       
-      {/* Professional Gradient Orbs */}
-      <div className="absolute top-1/4 -left-10 w-72 h-72 bg-gradient-to-r from-primary-100 to-blue-100 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-1/4 -right-10 w-96 h-96 bg-gradient-to-l from-slate-100 to-blue-50 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+      {/* Removed distracting gradient orbs */}
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -42,12 +40,12 @@ export default function Hero() {
             transition={{ duration: 0.8 }}
             className="lg:col-span-7 text-center lg:text-left"
           >
-            {/* Professional Badge with Green Blinker - Moved further down */}
+            {/* Professional Badge */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
-              className="inline-flex items-center px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-green-200 text-green-700 text-sm font-medium mb-8 shadow-lg mt-8 lg:mt-0"
+              className="inline-flex items-center px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-green-200 text-green-700 text-sm font-medium mb-8 mt-8 lg:mt-0"
             >
               <div className="relative mr-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-ping absolute"></div>
@@ -66,14 +64,14 @@ export default function Hero() {
               {PERSONAL_INFO.name}
             </motion.h1>
             
-            {/* Title */}
+            {/* Title - UPDATED */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
               className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-6 max-w-2xl leading-relaxed"
             >
-              {PERSONAL_INFO.title}
+              Software Engineer & Founder
             </motion.p>
 
             {/* Bio */}
@@ -145,7 +143,7 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Right Column - Visual Element */}
+          {/* Right Column - Simplified Visual */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -153,12 +151,11 @@ export default function Hero() {
             className="lg:col-span-5 flex justify-center lg:justify-end"
           >
             <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
-              {/* Abstract Shape */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary-50 to-blue-50 rounded-3xl rotate-6 border border-primary-100"></div>
-              <div className="absolute inset-0 bg-gradient-to-tr from-slate-50 to-blue-50 rounded-3xl -rotate-6 border border-blue-100"></div>
+              {/* Clean, professional background */}
+              <div className="absolute inset-0 bg-slate-50 rounded-3xl border border-slate-200 shadow-lg"></div>
               
               {/* Center Content */}
-              <div className="absolute inset-4 bg-white/70 backdrop-blur-sm rounded-2xl border border-white/40 shadow-2xl flex items-center justify-center">
+              <div className="absolute inset-4 bg-white/80 backdrop-blur-sm rounded-2xl border border-white shadow-xl flex items-center justify-center">
                 <div className="text-center p-6">
                   <motion.div
                     initial={{ scale: 0 }}
@@ -174,7 +171,7 @@ export default function Hero() {
                     transition={{ delay: 0.8 }}
                     className="text-gray-600 text-sm font-medium"
                   >
-                    Full-Stack & Mobile Developer
+                    Software Engineer & Founder
                   </motion.p>
                   <motion.p
                     initial={{ opacity: 0 }}
@@ -182,7 +179,7 @@ export default function Hero() {
                     transition={{ delay: 1 }}
                     className="text-gray-400 text-xs mt-2"
                   >
-                    React • Next.js • React Native
+                    React • Next.js • TypeScript
                   </motion.p>
                 </div>
               </div>

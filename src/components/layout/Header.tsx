@@ -48,8 +48,8 @@ export default function Header() {
 
   const downloadResume = () => {
     const link = document.createElement('a');
-    link.href = '/resume.pdf';
-    link.download = `${PERSONAL_INFO.name.replace(' ', '_')}_Resume.pdf`;
+    link.href = '/shaun-chikerema-resume.pdf';
+    link.download = 'Shaun_Chikerema_Resume.pdf';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
