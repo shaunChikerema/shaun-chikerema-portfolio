@@ -2,8 +2,8 @@
 
 export const PERSONAL_INFO = {
   name: "Shaun Chikerema",
-  title: "Full-Stack & Mobile Developer",
-  bio: "Recent BSc (Hons) Software Engineering with Multimedia graduate specializing in React, React Native, and full-stack development. Passionate about creating exceptional digital experiences across web and mobile platforms.",
+  title: "Software Engineer & Founder",
+  bio: "Software Engineer & Founder building BITROOT technology ecosystem. Architecting scalable production applications including Keyat (Botswana's first real estate platform) and PolicyBridge (insurance SaaS). Strong foundation in system design and full-stack development.",
   email: "sschikerema@gmail.com",
   location: "Gaborone, Botswana",
   phone: "+267 76 051 623",
@@ -48,16 +48,24 @@ export const SKILLS = {
 
 export const EXPERIENCE = [
   {
-    position: "Software Engineer & Full Stack Developer",
-    company: "Freelance & Personal Projects",
+    position: "Founder & Lead Engineer",
+    company: "BITROOT - Technology Ecosystem",
     period: "2023 - Present",
     achievements: [
-      "Developed Keyat - Botswana's first comprehensive real estate platform connecting landlords, tenants, and agents",
-      "Built PolicyBridge - a comprehensive insurance management SaaS platform with automated payslip generation",
-      "Created multiple full-stack applications using modern technologies like Next.js, TypeScript, and Supabase",
-      "Developed cross-platform mobile applications with React Native and Expo",
-      "Implemented responsive designs and smooth animations for enhanced user experiences across web and mobile",
-      "Collaborated with clients to understand requirements and deliver tailored solutions"
+      "Founded and architecting BITROOT technology ecosystem housing multiple SaaS products",
+      "Leading development of Keyat (real estate platform) and PolicyBridge (insurance SaaS)",
+      "Designing unified platform architecture for scalable multi-product infrastructure",
+      "Building foundational systems serving 10,000+ target users across Botswana"
+    ]
+  },
+  {
+    position: "Software Development Intern",
+    company: "Local Tech Startup",
+    period: "Summer 2023",
+    achievements: [
+      "Contributed to React-based web applications implementing responsive UI components",
+      "Participated in agile development workflows and code review processes",
+      "Gained experience with professional software development methodologies"
     ]
   },
   {
@@ -69,17 +77,6 @@ export const EXPERIENCE = [
       "Completed comprehensive coursework in software development, web technologies, and mobile development",
       "Developed multiple academic projects including web applications, mobile apps, and multimedia presentations",
       "Gained expertise in both technical development and creative design principles across multiple platforms"
-    ]
-  },
-  {
-    position: "Web Development Intern",
-    company: "Local Tech Startup",
-    period: "Summer 2023",
-    achievements: [
-      "Assisted in developing responsive web applications using React and Node.js",
-      "Implemented UI components and ensured cross-browser compatibility",
-      "Participated in agile development processes and code reviews",
-      "Gained practical experience in real-world software development workflows"
     ]
   }
 ];

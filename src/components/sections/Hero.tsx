@@ -1,7 +1,7 @@
 //src/components/sections/Hero.tsx
 'use client';
 import { motion } from 'framer-motion';
-import { ArrowDown, Github, Linkedin, Mail, Download, MapPin } from 'lucide-react';
+import { ArrowDown, Github, Linkedin, Mail, Download, MapPin, ExternalLink } from 'lucide-react';
 import { PERSONAL_INFO } from '../../lib/constants';
 import { useState } from 'react';
 import Image from 'next/image';
@@ -58,36 +58,52 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-gray-900 to-primary-600 bg-clip-text text-transparent mb-6 leading-tight"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold bg-gradient-to-r from-gray-900 to-primary-600 bg-clip-text text-transparent mb-6 leading-tight"
             >
               {PERSONAL_INFO.name}
             </motion.h1>
             
-            {/* Title - UPDATED */}
+            {/* Title */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-6 max-w-2xl leading-relaxed"
+              className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-4 max-w-2xl leading-relaxed"
             >
               Software Engineer & Founder
             </motion.p>
 
-            {/* Bio */}
+            {/* Tech Stack Micro Animation */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="flex flex-wrap gap-3 text-sm text-gray-500 mb-6 justify-center lg:justify-start"
+            >
+              <span className="font-medium">React/Next.js</span>
+              <span>•</span>
+              <span className="font-medium">TypeScript</span>
+              <span>•</span>
+              <span className="font-medium">Node.js</span>
+              <span>•</span>
+              <span className="font-medium">PostgreSQL</span>
+            </motion.div>
+
+            {/* Bio - UPDATED */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="text-base sm:text-lg text-gray-500 mb-8 max-w-2xl leading-relaxed"
+              transition={{ delay: 0.6 }}
+              className="text-base sm:text-lg text-gray-600 mb-8 max-w-2xl leading-relaxed"
             >
-              {PERSONAL_INFO.bio}
+              Software Engineer & Founder building BITROOT technology ecosystem. Architecting scalable production applications including Keyat (Botswana's first real estate platform) and PolicyBridge (insurance SaaS). Strong foundation in system design and full-stack development.
             </motion.p>
 
             {/* CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
+              transition={{ delay: 0.7 }}
               className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8"
             >
               <motion.button 
@@ -96,7 +112,7 @@ export default function Hero() {
                 whileTap={{ scale: 0.98 }}
                 className="group relative bg-gradient-to-r from-primary-600 to-primary-700 text-white px-8 py-4 rounded-xl font-semibold hover:from-primary-700 hover:to-primary-800 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center"
               >
-                <span className="relative z-10">View My Work</span>
+                <span className="relative z-10">See My Projects</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-primary-700 to-primary-800 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </motion.button>
               
@@ -112,16 +128,17 @@ export default function Hero() {
               </motion.button>
             </motion.div>
 
-            {/* Social Links */}
+            {/* Social Links - UPDATED */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
+              transition={{ delay: 0.9 }}
               className="flex justify-center lg:justify-start space-x-4 mb-12"
             >
               {[
                 { icon: Github, href: "https://github.com/shaunChikerema", label: "GitHub" },
                 { icon: Linkedin, href: "https://linkedin.com/in/shaunchikerema", label: "LinkedIn" },
+                { icon: ExternalLink, href: "https://shaunchikerema.vercel.app", label: "Portfolio" },
                 { icon: Mail, href: `mailto:${PERSONAL_INFO.email}`, label: "Email" }
               ].map(({ icon: Icon, href, label }, index) => (
                 <motion.a
@@ -129,7 +146,7 @@ export default function Hero() {
                   href={href}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8 + index * 0.1 }}
+                  transition={{ delay: 0.9 + index * 0.1 }}
                   whileHover={{ scale: 1.1, y: -2 }}
                   className="group p-3 bg-white/80 backdrop-blur-sm text-gray-600 hover:text-primary-600 transition-all duration-300 rounded-xl shadow-lg hover:shadow-xl border border-gray-100 hover:border-primary-200"
                   aria-label={label}
@@ -151,8 +168,8 @@ export default function Hero() {
           >
             <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
               
-              {/* MAIN HEADSHOT */}
-              <div className="absolute inset-0 bg-white rounded-3xl shadow-2xl border-4 border-white overflow-hidden">
+              {/* MAIN HEADSHOT - UPDATED BORDER */}
+              <div className="absolute inset-0 bg-white rounded-3xl shadow-2xl border-2 border-white overflow-hidden">
                 <Image 
                   src="/images/shaun-profile.png" 
                   alt="Shaun Chikerema - Software Engineer & Founder"
@@ -170,8 +187,8 @@ export default function Hero() {
                 </div>
               </div>
 
-              {/* STATUS BADGE - Top Left */}
-              <div className="absolute -top-4 -left-4 bg-green-500 text-white px-3 py-2 rounded-lg font-medium text-sm shadow-lg border-2 border-white">
+              {/* STATUS BADGE - Top Left - UPDATED COLOR */}
+              <div className="absolute -top-4 -left-4 bg-primary-600 text-white px-3 py-2 rounded-lg font-medium text-sm shadow-lg border-2 border-white">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
                   <span>Available</span>
@@ -181,24 +198,6 @@ export default function Hero() {
             </div>
           </motion.div>
         </div>
-
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="flex flex-col items-center text-gray-400 hover:text-primary-600 transition-colors duration-300 cursor-pointer"
-            onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            <span className="text-sm mb-2 font-medium">Scroll to explore</span>
-            <ArrowDown className="w-6 h-6" />
-          </motion.div>
-        </motion.div>
       </div>
     </section>
   );
