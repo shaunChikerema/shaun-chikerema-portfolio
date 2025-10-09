@@ -1,7 +1,7 @@
 //src/components/sections/Contact.tsx
 'use client';
 import { motion } from 'framer-motion';
-import { Mail, MapPin, Phone, Send, MessageCircle, Clock } from 'lucide-react';
+import { Mail, MapPin, Phone, Send, Building2, Calendar, Zap } from 'lucide-react';
 import { PERSONAL_INFO } from '../../lib/constants';
 import { useState } from 'react';
 
@@ -9,266 +9,344 @@ export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    company: '',
+    projectType: '',
     message: ''
   });
-
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.id]: e.target.value
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Handle form submission here
-    const mailtoLink = `mailto:${PERSONAL_INFO.email}?subject=Contact from ${formData.name}&body=${encodeURIComponent(formData.message + '\n\nFrom: ' + formData.email)}`;
-    window.location.href = mailtoLink;
-    
-    // Reset form after a delay
-    setTimeout(() => {
-      setFormData({ name: '', email: '', message: '' });
+    try {
+      // In production, replace with your form submission service
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', company: '', projectType: '', message: '' });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+    } finally {
       setIsSubmitting(false);
-    }, 2000);
+      setTimeout(() => setSubmitStatus('idle'), 5000);
+    }
   };
 
   const contactMethods = [
     {
       icon: Mail,
-      href: `mailto:${PERSONAL_INFO.email}`,
-      label: 'Email',
-      value: 'sschikerema@gmail.com',
-      color: 'text-primary-600',
-      bgColor: 'bg-primary-50',
-      borderColor: 'border-primary-200',
-      iconBg: 'from-primary-500 to-blue-500'
+      href: `mailto:${PERSONAL_INFO.email}?subject=Project Inquiry - ${PERSONAL_INFO.name}`,
+      label: 'Email Directly',
+      value: PERSONAL_INFO.email,
+      description: 'For detailed project discussions'
     },
     {
-      icon: Phone,
-      href: 'tel:+26776051623',
-      label: 'Phone',
-      value: '+267 76051623',
-      color: 'text-green-600',
-      bgColor: 'bg-green-50',
-      borderColor: 'border-green-200',
-      iconBg: 'from-green-500 to-emerald-500'
+      icon: Calendar,
+      href: 'https://cal.com/shaunchikerema',
+      label: 'Schedule Call',
+      value: '30-min consultation',
+      description: 'Discuss your project live'
     },
     {
-      icon: MapPin,
+      icon: Building2,
       href: '#',
-      label: 'Location',
+      label: 'Based In',
       value: 'Gaborone, Botswana',
-      color: 'text-orange-600',
-      bgColor: 'bg-orange-50',
-      borderColor: 'border-orange-200',
-      iconBg: 'from-orange-500 to-red-500'
+      description: 'Available locally & remotely'
     }
   ];
 
+  const projectTypes = [
+    'Full-Stack Web Application',
+    'Mobile App Development',
+    'SaaS Platform',
+    'E-commerce Solution',
+    'Real Estate Technology',
+    'Insurance Technology',
+    'Startup MVP',
+    'Technical Consultation',
+    'Other'
+  ];
+
   return (
-    <section id="contact" className="py-16 lg:py-20 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-white to-transparent z-10"></div>
-      <div className="absolute -top-20 -right-20 w-80 h-80 bg-primary-100/20 rounded-full blur-3xl"></div>
-      <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-blue-100/20 rounded-full blur-3xl"></div>
-      
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Header */}
+    <section id="contact" className="py-20 lg:py-28 bg-white">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header - Founder Positioning */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-16 lg:mb-20"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center px-4 py-2 rounded-full bg-primary-50 border border-primary-200 text-primary-700 text-sm font-medium mb-6"
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center px-4 py-2 rounded-full bg-gray-50 border border-gray-200 text-gray-700 text-sm font-medium mb-6"
           >
-            <MessageCircle className="w-4 h-4 mr-2" />
-            Get In Touch
+            <Zap className="w-4 h-4 mr-2" />
+            Founder-Led Development
           </motion.div>
           
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Let's Connect
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 mb-6">
+            Build Your Vision<br />with Production Expertise
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Ready to bring your ideas to life? Let's discuss your next project and create something amazing together.
+          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Let's architect scalable solutions for Botswana's market. From concept to production, 
+            I bring founder-level thinking to every project.
           </p>
         </motion.div>
 
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-            {/* Contact Information - 2 columns */}
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
+            {/* Strategic Contact Information */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               className="lg:col-span-2"
             >
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 lg:p-8 shadow-lg border border-gray-100 h-full hover:shadow-xl transition-all duration-500">
-                <div className="flex items-center space-x-3 mb-6">
-                  <div className="w-10 h-10 bg-gradient-to-r from-primary-500 to-blue-500 rounded-xl flex items-center justify-center shadow-lg">
-                    <MessageCircle className="w-5 h-5 text-white" />
+              <div className="bg-white rounded-2xl p-6 lg:p-8 border border-gray-200 h-full">
+                <div className="flex items-center space-x-3 mb-8">
+                  <div className="w-10 h-10 bg-gray-900 rounded-lg flex items-center justify-center">
+                    <Building2 className="w-5 h-5 text-white" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900">Contact Information</h3>
+                  <h3 className="text-xl font-semibold text-gray-900">Strategic Partnerships</h3>
                 </div>
                 
-                <div className="space-y-4">
+                <div className="space-y-4 mb-8">
                   {contactMethods.map((method, index) => (
-                    <motion.a
+                    <a
                       key={method.label}
                       href={method.href}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                      whileHover={{ scale: 1.02, y: -2 }}
-                      className={`flex items-center p-4 ${method.bgColor} rounded-xl hover:shadow-md transition-all duration-300 group border ${method.borderColor}`}
+                      className="flex items-start p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-gray-300 transition-colors duration-300 group"
                     >
-                      <div className={`w-12 h-12 bg-gradient-to-r ${method.iconBg} rounded-xl flex items-center justify-center mr-4 border border-white/20 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                      <div className="w-10 h-10 bg-gray-900 rounded-lg flex items-center justify-center mr-4 mt-1 flex-shrink-0">
                         <method.icon className="w-5 h-5 text-white" />
                       </div>
                       <div className="flex-1">
-                        <p className="text-gray-600 text-xs font-medium mb-1">{method.label}</p>
-                        <p className="text-gray-900 font-semibold text-sm">{method.value}</p>
+                        <p className="font-semibold text-gray-900 text-sm mb-1">{method.label}</p>
+                        <p className="text-gray-600 text-sm mb-1">{method.value}</p>
+                        <p className="text-gray-500 text-xs">{method.description}</p>
                       </div>
-                    </motion.a>
+                    </a>
                   ))}
                 </div>
 
-                {/* Response Time */}
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                  className="mt-6 p-4 bg-gradient-to-r from-primary-50 to-blue-50 rounded-xl border border-primary-100"
-                >
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-primary-100 rounded-lg flex items-center justify-center">
-                      <Clock className="w-4 h-4 text-primary-600" />
+                {/* Response Guarantee */}
+                <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                  <div className="flex items-center space-x-3 mb-2">
+                    <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                      <div className="w-2 h-2 bg-white rounded-full"></div>
                     </div>
-                    <div>
-                      <p className="text-primary-700 text-sm font-semibold">Quick Response</p>
-                      <p className="text-primary-600 text-xs">Typically reply within 24 hours</p>
-                    </div>
+                    <span className="font-semibold text-gray-900 text-sm">24-Hour Response</span>
                   </div>
-                </motion.div>
+                  <p className="text-gray-600 text-xs">
+                    Get a detailed response within one business day. Founder-level attention guaranteed.
+                  </p>
+                </div>
               </div>
             </motion.div>
 
-            {/* Contact Form - 3 columns */}
+            {/* Strategic Project Form */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               className="lg:col-span-3"
             >
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 lg:p-8 shadow-lg border border-gray-100 h-full hover:shadow-xl transition-all duration-500">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: 0.1 }}
-                    >
-                      <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                        Your Name *
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        required
-                        value={formData.name}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300 text-sm bg-white/50 hover:bg-white/80 focus:bg-white"
-                        placeholder="John Doe"
-                      />
-                    </motion.div>
-                    
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: 0.2 }}
-                    >
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                        Email Address *
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        required
-                        value={formData.email}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300 text-sm bg-white/50 hover:bg-white/80 focus:bg-white"
-                        placeholder="john@example.com"
-                      />
-                    </motion.div>
-                  </div>
-                  
+              <div className="bg-white rounded-2xl p-6 lg:p-8 border border-gray-200 h-full">
+                {submitStatus === 'success' ? (
                   <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.3 }}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="text-center py-12"
                   >
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                      Your Message *
-                    </label>
-                    <textarea
-                      id="message"
-                      rows={6}
-                      required
-                      value={formData.message}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300 text-sm bg-white/50 hover:bg-white/80 focus:bg-white resize-none"
-                      placeholder="Tell me about your project, timeline, and budget..."
-                    ></textarea>
+                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                        <div className="w-3 h-3 bg-white rounded-full"></div>
+                      </div>
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Message Sent</h3>
+                    <p className="text-gray-600 mb-6">
+                      I'll review your project details and get back to you within 24 hours.
+                    </p>
+                    <button
+                      onClick={() => setSubmitStatus('idle')}
+                      className="text-gray-900 font-medium hover:text-gray-700 transition-colors duration-300"
+                    >
+                      Send another message
+                    </button>
                   </motion.div>
-                  
-                  <motion.button
-                    type="submit"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    disabled={isSubmitting}
-                    className="w-full bg-gradient-to-r from-primary-600 to-blue-600 text-white py-4 px-6 rounded-xl font-semibold hover:from-primary-700 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <Send className={`w-5 h-5 ${isSubmitting ? 'animate-pulse' : ''}`} />
-                    <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
-                  </motion.button>
+                ) : (
+                  <>
+                    <div className="flex items-center space-x-3 mb-6">
+                      <div className="w-10 h-10 bg-gray-900 rounded-lg flex items-center justify-center">
+                        <Send className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-semibold text-gray-900">Project Inquiry</h3>
+                        <p className="text-gray-600 text-sm">Describe your project for a detailed proposal</p>
+                      </div>
+                    </div>
 
-                  <motion.p
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    className="text-gray-500 text-xs text-center"
-                  >
-                    * Required fields. Your information is secure and will never be shared with third parties.
-                  </motion.p>
-                </form>
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                            Your Name *
+                          </label>
+                          <input
+                            type="text"
+                            id="name"
+                            required
+                            value={formData.name}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-300 text-sm"
+                            placeholder="John Doe"
+                          />
+                        </div>
+                        
+                        <div>
+                          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                            Work Email *
+                          </label>
+                          <input
+                            type="email"
+                            id="email"
+                            required
+                            value={formData.email}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-300 text-sm"
+                            placeholder="john@company.com"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
+                            Company / Organization
+                          </label>
+                          <input
+                            type="text"
+                            id="company"
+                            value={formData.company}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-300 text-sm"
+                            placeholder="Your company name"
+                          />
+                        </div>
+
+                        <div>
+                          <label htmlFor="projectType" className="block text-sm font-medium text-gray-700 mb-2">
+                            Project Type *
+                          </label>
+                          <select
+                            id="projectType"
+                            required
+                            value={formData.projectType}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-300 text-sm bg-white"
+                          >
+                            <option value="">Select project type</option>
+                            {projectTypes.map(type => (
+                              <option key={type} value={type}>{type}</option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                          Project Details *
+                        </label>
+                        <textarea
+                          id="message"
+                          rows={5}
+                          required
+                          value={formData.message}
+                          onChange={handleChange}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-300 text-sm resize-none"
+                          placeholder="Describe your project goals, timeline, budget, and any specific Botswana market requirements..."
+                        ></textarea>
+                      </div>
+                      
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="w-full bg-gray-900 text-white py-4 px-6 rounded-lg font-semibold hover:bg-gray-800 transition-all duration-300 flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <Send className="w-4 h-4" />
+                        <span>{isSubmitting ? 'Sending...' : 'Get Detailed Proposal'}</span>
+                      </button>
+
+                      {submitStatus === 'error' && (
+                        <motion.p
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          className="text-red-600 text-sm text-center"
+                        >
+                          Something went wrong. Please email directly at {PERSONAL_INFO.email}
+                        </motion.p>
+                      )}
+
+                      <p className="text-gray-500 text-xs text-center">
+                        Your information is secure. No spam, just professional communication about your project.
+                      </p>
+                    </form>
+                  </>
+                )}
               </div>
             </motion.div>
           </div>
         </div>
 
-        {/* Enhanced Call to Action */}
+        {/* Botswana Market Focus */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-center mt-12"
+          className="mt-16 max-w-4xl mx-auto"
         >
-          <div className="bg-gradient-to-r from-primary-50 to-blue-50 rounded-2xl p-6 border border-primary-100 max-w-2xl mx-auto hover:shadow-lg transition-all duration-300">
-            <h3 className="font-semibold text-gray-900 mb-2">Open for New Opportunities</h3>
-            <p className="text-gray-600 text-sm">
-              Currently available for freelance projects, contract work, and full-time positions in Gaborone or remote roles.
+          <div className="bg-gray-50 rounded-2xl p-8 border border-gray-200 text-center">
+            <h3 className="text-2xl font-semibold text-gray-900 mb-4">Botswana Market Expertise</h3>
+            <p className="text-gray-600 leading-relaxed mb-6">
+              Building solutions specifically designed for Botswana's unique market dynamics, including 
+              local payment integrations, mobile-first design, and understanding of regulatory requirements.
             </p>
+            <div className="flex flex-wrap justify-center gap-6">
+              {[
+                "Local Payment Integration",
+                "Mobile-First Strategy", 
+                "Regulatory Compliance",
+                "Scalable Infrastructure"
+              ].map((feature, index) => (
+                <div key={index} className="flex items-center space-x-2">
+                  <div className="w-2 h-2 bg-gray-900 rounded-full"></div>
+                  <span className="text-sm text-gray-700 font-medium">{feature}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>
