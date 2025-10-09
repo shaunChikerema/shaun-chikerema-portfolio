@@ -1,4 +1,4 @@
-import Head from 'next/head';
+// src/app/page.tsx - CORRECT VERSION
 import Header from '../components/layout/Header';
 import Hero from '../components/sections/Hero';
 import About from '../components/sections/About';
@@ -10,27 +10,9 @@ import Footer from '../components/layout/Footer';
 
 export default function Home() {
   return (
-    <>
-      <Head>
-        <title>Shaun Chikerema -  Software Engineer & Fullstack Developer</title>
-        <meta name="description" content="Professional portfolio of Shaun Chikerema - Expert Full-Stack Developer specializing in modern web technologies and scalable solutions." />
-        <meta name="keywords" content="Shaun Chikerema, Full-Stack Developer, Software Engineer, React, Next.js, TypeScript, Zimbabwe" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="Shaun Chikerema - Full-Stack Developer" />
-        <meta property="og:description" content="Professional portfolio showcasing expert software development skills and projects" />
-        <meta property="og:type" content="website" />
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Shaun Chikerema - Full-Stack Developer" />
-        <meta name="twitter:description" content="Professional portfolio of an expert software developer" />
-      </Head>
-
+    <div className="min-h-screen overflow-x-hidden">
       <Header />
-      <main>
+      <main className="overflow-x-hidden">
         <Hero />
         <About />
         <Expertise />
@@ -39,6 +21,6 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
-    </>
+    </div>
   );
-} 
+}
