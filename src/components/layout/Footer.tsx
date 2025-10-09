@@ -1,6 +1,6 @@
 //src/components/layout/Footer.tsx
 'use client';
-import { Github, Linkedin, Mail, Heart, ArrowUp, Code } from 'lucide-react';
+import { Github, Linkedin, Mail, ArrowUp, Building2 } from 'lucide-react';
 import { PERSONAL_INFO } from '../../lib/constants';
 import { motion } from 'framer-motion';
 
@@ -16,32 +16,34 @@ export default function Footer() {
       icon: Github,
       href: "https://github.com/shaunChikerema",
       label: "GitHub",
-      color: "hover:text-gray-400"
     },
     {
-      icon: Linkedin,
-      href: "https://linkedin.com/in/shaunchikerema", 
+      icon: Linkedin, 
+      href: "https://linkedin.com/in/shaunchikerema",
       label: "LinkedIn",
-      color: "hover:text-blue-400"
     },
     {
       icon: Mail,
-      href: `mailto:${PERSONAL_INFO.email}`,
+      href: `mailto:${PERSONAL_INFO.email}?subject=Project Inquiry - ${PERSONAL_INFO.name}`,
       label: "Email",
-      color: "hover:text-red-400"
     }
   ];
 
+  const quickLinks = [
+    { name: 'Home', href: '#home' },
+    { name: 'About', href: '#about' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Experience', href: '#experience' },
+    { name: 'Contact', href: '#contact' }
+  ];
+
   return (
-    <footer className="bg-gradient-to-b from-gray-900 to-gray-950 text-white relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:20px_20px]"></div>
-      
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <footer className="bg-white border-t border-gray-200">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Content */}
         <div className="py-12 lg:py-16">
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-12">
-            {/* Brand Section */}
+            {/* Brand & Mission */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -49,35 +51,47 @@ export default function Footer() {
               className="lg:col-span-2"
             >
               <div className="flex items-center space-x-3 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-r from-primary-500 to-blue-500 rounded-xl flex items-center justify-center shadow-lg">
-                  <span className="text-white font-bold text-lg">SC</span>
+                <div className="w-10 h-10 bg-gray-900 rounded-lg flex items-center justify-center">
+                  <Building2 className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white">{PERSONAL_INFO.name}</h3>
-                  <p className="text-gray-400 text-sm">{PERSONAL_INFO.title}</p>
+                  <h3 className="text-xl font-semibold text-gray-900">{PERSONAL_INFO.name}</h3>
+                  <p className="text-gray-600 text-sm">Founder & Software Engineer</p>
                 </div>
               </div>
-              <p className="text-gray-400 leading-relaxed max-w-md">
-                Full-stack developer passionate about creating exceptional digital experiences. 
-                Let's build something amazing together.
+              <p className="text-gray-600 leading-relaxed max-w-md text-sm">
+                Building the BITROOT technology ecosystem to solve real problems in Botswana's digital landscape. 
+                Founder-led development with production expertise.
               </p>
+              
+              {/* Tech Stack */}
+              <div className="mt-4 flex flex-wrap gap-2">
+                {['Next.js', 'TypeScript', 'Node.js', 'PostgreSQL', 'React Native'].map((tech) => (
+                  <span 
+                    key={tech}
+                    className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs font-medium border border-gray-200"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
             </motion.div>
 
-            {/* Quick Links */}
+            {/* Navigation */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              <h4 className="font-semibold text-white mb-4 text-lg">Quick Links</h4>
+              <h4 className="font-semibold text-gray-900 mb-4 text-sm uppercase tracking-wide">Navigation</h4>
               <div className="space-y-2">
-                {['Home', 'About', 'Projects', 'Contact'].map((item) => (
+                {quickLinks.map((link) => (
                   <a
-                    key={item}
-                    href={`#${item.toLowerCase()}`}
-                    className="block text-gray-400 hover:text-white transition-colors duration-300 text-sm"
+                    key={link.name}
+                    href={link.href}
+                    className="block text-gray-600 hover:text-gray-900 transition-colors duration-300 text-sm"
                   >
-                    {item}
+                    {link.name}
                   </a>
                 ))}
               </div>
@@ -89,74 +103,86 @@ export default function Footer() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <h4 className="font-semibold text-white mb-4 text-lg">Let's Connect</h4>
+              <h4 className="font-semibold text-gray-900 mb-4 text-sm uppercase tracking-wide">Connect</h4>
               <div className="space-y-3">
                 {socialLinks.map((social) => (
-                  <motion.a
+                  <a
                     key={social.label}
                     href={social.href}
-                    whileHover={{ x: 5 }}
-                    className={`flex items-center space-x-3 text-gray-400 ${social.color} transition-all duration-300 group text-sm`}
+                    className="flex items-center space-x-3 text-gray-600 hover:text-gray-900 transition-colors duration-300 text-sm group"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <social.icon className="w-4 h-4" />
                     <span>{social.label}</span>
-                  </motion.a>
+                  </a>
                 ))}
+              </div>
+
+              {/* Location */}
+              <div className="mt-6 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                <p className="text-gray-600 text-xs font-medium mb-1">Based in</p>
+                <p className="text-gray-900 text-sm font-semibold">Gaborone, Botswana</p>
+                <p className="text-gray-500 text-xs">Available for local & remote projects</p>
               </div>
             </motion.div>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-800 py-6">
+        <div className="border-t border-gray-200 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             {/* Copyright */}
             <div className="text-center md:text-left">
-              <p className="text-gray-400 text-sm">
-                © {currentYear} {PERSONAL_INFO.name}. All rights reserved.
+              <p className="text-gray-600 text-sm">
+                © {currentYear} {PERSONAL_INFO.name}. Building Botswana's digital future.
               </p>
             </div>
 
-            {/* Made with love */}
+            {/* Built With */}
             <div className="flex items-center space-x-4">
-              <motion.p
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.6 }}
-                className="text-gray-400 flex items-center text-sm"
-              >
-                Crafted with <Heart className="w-4 h-4 text-red-500 mx-1" /> using
-              </motion.p>
-              <div className="flex items-center space-x-2 bg-gray-800 px-3 py-1 rounded-lg">
-                <Code className="w-3 h-3 text-primary-400" />
-                <span className="text-gray-300 text-xs">Next.js</span>
-              </div>
-              <div className="flex items-center space-x-2 bg-gray-800 px-3 py-1 rounded-lg">
-                <Code className="w-3 h-3 text-cyan-400" />
-                <span className="text-gray-300 text-xs">Tailwind</span>
+              <p className="text-gray-500 text-sm">
+                Built with
+              </p>
+              <div className="flex items-center space-x-2">
+                <div className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs font-medium border border-gray-200">
+                  Next.js
+                </div>
+                <div className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs font-medium border border-gray-200">
+                  TypeScript
+                </div>
+                <div className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs font-medium border border-gray-200">
+                  Tailwind
+                </div>
               </div>
             </div>
 
             {/* Back to Top */}
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={scrollToTop}
-              className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors duration-300 text-sm group"
+              className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors duration-300 text-sm"
             >
               <span>Back to top</span>
-              <ArrowUp className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform duration-300" />
+              <ArrowUp className="w-4 h-4" />
             </motion.button>
           </div>
         </div>
-      </div>
 
-      {/* Floating Elements */}
-      <div className="absolute bottom-10 left-10 w-2 h-2 bg-primary-500 rounded-full opacity-50"></div>
-      <div className="absolute top-20 right-20 w-1 h-1 bg-blue-400 rounded-full opacity-30"></div>
-      <div className="absolute top-40 left-1/4 w-1 h-1 bg-primary-400 rounded-full opacity-40"></div>
+        {/* BITROOT Ecosystem Note */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mt-6 pt-6 border-t border-gray-200 text-center"
+        >
+          <p className="text-gray-500 text-xs">
+            Part of the <span className="font-semibold text-gray-700">BITROOT</span> technology ecosystem — 
+            architecting scalable solutions for Botswana and beyond.
+          </p>
+        </motion.div>
+      </div>
     </footer>
   );
 }

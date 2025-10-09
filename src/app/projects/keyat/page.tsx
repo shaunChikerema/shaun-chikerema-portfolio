@@ -1,7 +1,6 @@
-//src\app\projects\keyat\page.tsx
+// src/app/projects/keyat/page.tsx - BATTLE-READY FOUNDER CASE STUDY
 'use client';
-import { motion } from 'framer-motion';
-import { ArrowLeft, ExternalLink, Github, Star, Calendar, Users, Folder, Zap, CheckCircle, MapPin, Building, Shield } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Github, Building2, MapPin, Users, Database, Shield, Zap, Calendar, Target, Lightbulb, Rocket } from 'lucide-react';
 import Link from 'next/link';
 import { PROJECTS } from '../../../lib/constants';
 
@@ -9,35 +8,48 @@ export default function KeyatProjectPage() {
   const project = PROJECTS.find(p => p.id === 1);
 
   if (!project) {
-    return <div>Project not found</div>;
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-semibold text-gray-900 mb-4">Project Not Found</h1>
+          <Link href="/" className="text-gray-600 hover:text-gray-900">
+            Return to Portfolio
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
+    <div className="min-h-screen bg-white">
+      {/* Strategic Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div className="container mx-auto px-6 py-4">
+        <div className="container mx-auto px-4 sm:px-6 py-4">
           <div className="flex items-center justify-between">
             <Link 
               href="/#projects" 
-              className="flex items-center text-gray-600 hover:text-gray-900 transition-colors"
+              className="flex items-center text-gray-600 hover:text-gray-900 transition-colors text-sm font-medium"
             >
-              <ArrowLeft size={20} className="mr-2" />
-              Back to Projects
+              <ArrowLeft size={16} className="mr-2" />
+              Back to Portfolio
             </Link>
-            <div className="flex space-x-4">
+            <div className="flex space-x-3">
               <a
                 href={project.liveUrl}
-                className="bg-primary-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-primary-700 transition-colors duration-300 flex items-center"
+                className="bg-gray-900 text-white px-4 py-2 rounded-lg font-medium hover:bg-gray-800 transition-colors duration-300 flex items-center text-sm"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <ExternalLink size={18} className="mr-2" />
-                Live Demo
+                <ExternalLink size={16} className="mr-2" />
+                Live Platform
               </a>
               <a
                 href={project.githubUrl}
-                className="border border-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:border-primary-300 hover:text-primary-600 transition-all duration-300 flex items-center"
+                className="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg font-medium hover:border-gray-400 hover:text-gray-900 transition-all duration-300 flex items-center text-sm"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                <Github size={18} className="mr-2" />
+                <Github size={16} className="mr-2" />
                 Source Code
               </a>
             </div>
@@ -45,360 +57,285 @@ export default function KeyatProjectPage() {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-orange-600 via-orange-700 to-red-800 text-white py-20">
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
-          >
-            <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-medium mb-6">
-              <Star size={16} className="mr-2 fill-current" />
-              Flagship Project
+      {/* Hero Section - Strategic Positioning */}
+      <section className="bg-gradient-to-br from-gray-50 to-white py-16 border-b border-gray-200">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="max-w-4xl">
+            <div className="flex items-center space-x-2 text-sm text-gray-600 mb-4">
+              <Building2 size={16} />
+              <span className="font-medium">BITROOT Technology Ecosystem</span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">{project.title}</h1>
-            <p className="text-xl md:text-2xl text-orange-100 max-w-3xl mx-auto leading-relaxed">
-              {project.longDescription}
+            
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 mb-6 leading-tight">
+              Transforming Botswana's<br />Real Estate Market
+            </h1>
+            
+            <p className="text-xl text-gray-600 leading-relaxed mb-8 max-w-3xl">
+              Founder-led development of Botswana's first comprehensive real estate platform, 
+              architecting a unified ecosystem that connects property seekers, verified agents, 
+              and service providers through scalable multi-tenant infrastructure.
             </p>
-          </motion.div>
+            
+            {/* Strategic Metrics */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-gray-900 mb-1">{project.metrics.users}</div>
+                <div className="text-sm text-gray-600">Target Users</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-gray-900 mb-1">{project.metrics.transactions}</div>
+                <div className="text-sm text-gray-600">Monthly Transactions</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-gray-900 mb-1">{project.metrics.performance}</div>
+                <div className="text-sm text-gray-600">Load Time</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-gray-900 mb-1">{project.metrics.reliability}</div>
+                <div className="text-sm text-gray-600">Uptime</div>
+              </div>
+            </div>
+
+            {/* Project Context */}
+            <div className="flex flex-wrap gap-4 text-sm">
+              <div className="flex items-center text-gray-600 bg-white px-3 py-2 rounded-lg border border-gray-200">
+                <Calendar size={16} className="mr-2" />
+                {project.duration}
+              </div>
+              <div className="flex items-center text-gray-600 bg-white px-3 py-2 rounded-lg border border-gray-200">
+                <Users size={16} className="mr-2" />
+                {project.teamSize}
+              </div>
+              <div className="flex items-center text-gray-600 bg-white px-3 py-2 rounded-lg border border-gray-200">
+                <MapPin size={16} className="mr-2" />
+                Botswana Market Focus
+              </div>
+              <div className="flex items-center text-green-600 font-medium bg-green-50 px-3 py-2 rounded-lg border border-green-200">
+                <Zap size={16} className="mr-2" />
+                {project.status}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Project Overview */}
+      {/* Strategic Business Impact */}
       <section className="py-16 bg-white">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Project Stats */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              className="lg:col-span-1"
-            >
-              <div className="bg-gray-50 rounded-2xl p-6 space-y-6">
-                <div className="flex items-center space-x-3">
-                  <Calendar className="text-orange-600" size={24} />
-                  <div>
-                    <div className="text-sm text-gray-600">Duration</div>
-                    <div className="font-semibold text-gray-900">{project.duration}</div>
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="max-w-4xl">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-semibold text-gray-900 mb-4">Market Transformation</h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Solving fundamental challenges in Botswana's real estate landscape through technology and local market integration
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Target className="w-8 h-8 text-blue-600" />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-3">Market Position</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  First comprehensive platform serving Botswana's 2.3M population with complete property lifecycle management
+                </p>
+              </div>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Rocket className="w-8 h-8 text-green-600" />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-3">Scalability</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Multi-tenant architecture designed for 10,000+ concurrent users across major Botswana cities
+                </p>
+              </div>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Lightbulb className="w-8 h-8 text-purple-600" />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-3">Innovation</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Orange Money integration + USSD fallback for 100% Botswana market coverage
+                </p>
+              </div>
+            </div>
+
+            {/* Botswana-Specific Value Proposition */}
+            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-200">
+              <h3 className="text-2xl font-semibold text-gray-900 mb-4">Built for Botswana's Unique Market</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-3">Local Payment Ecosystem</h4>
+                  <p className="text-gray-600 mb-4">
+                    Deep integration with Orange Money and Mascom MyZaka APIs, combined with traditional banking 
+                    to serve 100% of Botswana's payment preferences with secure transaction processing.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="px-3 py-1 bg-white text-blue-700 rounded-full text-sm font-medium border border-blue-200">Orange Money API</span>
+                    <span className="px-3 py-1 bg-white text-blue-700 rounded-full text-sm font-medium border border-blue-200">Bank Integration</span>
+                    <span className="px-3 py-1 bg-white text-blue-700 rounded-full text-sm font-medium border border-blue-200">Secure Escrow</span>
                   </div>
                 </div>
-                <div className="flex items-center space-x-3">
-                  <Users className="text-orange-600" size={24} />
-                  <div>
-                    <div className="text-sm text-gray-600">Team</div>
-                    <div className="font-semibold text-gray-900">{project.teamSize}</div>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Folder className="text-orange-600" size={24} />
-                  <div>
-                    <div className="text-sm text-gray-600">Category</div>
-                    <div className="font-semibold text-gray-900">{project.category}</div>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Zap className="text-orange-600" size={24} />
-                  <div>
-                    <div className="text-sm text-gray-600">Status</div>
-                    <div className="font-semibold text-green-600">{project.status}</div>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <MapPin className="text-orange-600" size={24} />
-                  <div>
-                    <div className="text-sm text-gray-600">Market</div>
-                    <div className="font-semibold text-gray-900">Botswana</div>
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-3">Mobile-First Accessibility</h4>
+                  <p className="text-gray-600 mb-4">
+                    Progressive Web App optimized for Botswana's 85% smartphone penetration, with offline 
+                    functionality for areas with intermittent connectivity and USSD fallback options.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="px-3 py-1 bg-white text-blue-700 rounded-full text-sm font-medium border border-blue-200">PWA Technology</span>
+                    <span className="px-3 py-1 bg-white text-blue-700 rounded-full text-sm font-medium border border-blue-200">Offline Support</span>
+                    <span className="px-3 py-1 bg-white text-blue-700 rounded-full text-sm font-medium border border-blue-200">USSD Integration</span>
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Project Description */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              className="lg:col-span-2"
-            >
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">Project Overview</h2>
-              <div className="prose prose-lg text-gray-600">
-                <p className="text-lg leading-relaxed mb-6">
-                  Keyat is Botswana's first comprehensive real estate super app, designed to transform 
-                  the property market by connecting landlords, tenants, agents, and service providers 
-                  in a unified ecosystem. The platform addresses the unique challenges of Botswana's 
-                  real estate landscape with localized solutions.
+      {/* Technical Architecture - Founder's Perspective */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="max-w-4xl">
+            <h2 className="text-3xl font-semibold text-gray-900 mb-8">Technical Architecture</h2>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+              <div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Foundational Decisions</h3>
+                <p className="text-gray-600 leading-relaxed mb-6">
+                  Built with a multi-tenant architecture using Supabase Row Level Security to ensure complete 
+                  data isolation between different user types while maintaining real-time collaboration capabilities.
                 </p>
-                <p className="text-lg leading-relaxed mb-6">
-                  From property search and agent verification to moving services and financial solutions, 
-                  Keyat provides end-to-end services tailored for the Botswana market, including 
-                  integration with local payment methods like Orange Money and Mascom MyZaka.
-                </p>
-                <div className="bg-orange-50 border border-orange-200 rounded-xl p-6">
-                  <h4 className="font-semibold text-orange-900 mb-2">Market Innovation</h4>
-                  <p className="text-orange-800">
-                    First platform to offer a complete real estate ecosystem in Botswana, combining 
-                    property listings, verified agents, moving services, and financial solutions.
+                <div className="space-y-4">
+                  <div className="flex items-start">
+                    <Database className="w-5 h-5 text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <div className="font-medium text-gray-900">Real-time Database</div>
+                      <div className="text-gray-600 text-sm">PostgreSQL with real-time subscriptions for live updates</div>
+                    </div>
+                  </div>
+                  <div className="flex items-start">
+                    <Shield className="w-5 h-5 text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <div className="font-medium text-gray-900">Security First</div>
+                      <div className="text-gray-600 text-sm">End-to-end encryption and role-based access control</div>
+                    </div>
+                  </div>
+                  <div className="flex items-start">
+                    <Zap className="w-5 h-5 text-gray-400 mr-3 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <div className="font-medium text-gray-900">Performance Optimized</div>
+                      <div className="text-gray-600 text-sm">PWA with offline functionality and intelligent caching</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-white rounded-xl p-6 border border-gray-200">
+                <h4 className="font-semibold text-gray-900 mb-4">Key Technical Decisions</h4>
+                <ul className="space-y-3">
+                  <li className="flex items-start">
+                    <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                    <span className="text-gray-600">Next.js 15 App Router for optimal performance and SEO</span>
+                  </li>
+                  <li className="flex items-start">
+                    <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                    <span className="text-gray-600">Supabase for authentication, real-time features, and data isolation</span>
+                  </li>
+                  <li className="flex items-start">
+                    <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                    <span className="text-gray-600">TypeScript for type safety and maintainability at scale</span>
+                  </li>
+                  <li className="flex items-start">
+                    <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                    <span className="text-gray-600">Tailwind CSS for consistent, responsive design system</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Technical Challenges & Founder Solutions */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="max-w-4xl">
+            <h2 className="text-3xl font-semibold text-gray-900 mb-12">Technical Challenges & Solutions</h2>
+            
+            <div className="space-y-8">
+              {project.challenges.map((challenge: string, index: number) => (
+                <div key={index} className="border-l-4 border-blue-600 pl-6 py-2">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                    {challenge}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    {project.solutions[index]}
                   </p>
                 </div>
-              </div>
-            </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Platform Features</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Comprehensive real estate ecosystem designed for Botswana's market
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {project.features?.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300"
-              >
-                <div className="text-3xl mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{feature.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{feature.description}</p>
-              </motion.div>
-            ))}
+      {/* Complete Technology Stack */}
+      <section className="py-16 bg-gray-50 border-t border-gray-200">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="max-w-4xl">
+            <h2 className="text-3xl font-semibold text-gray-900 mb-8">Technology Stack</h2>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {Object.entries(project.techStack).map(([category, technologies]) => (
+                <div key={category} className="bg-white rounded-lg p-4 border border-gray-200">
+                  <h3 className="font-semibold text-gray-900 mb-3 text-sm uppercase tracking-wide">
+                    {category}
+                  </h3>
+                  <ul className="space-y-2">
+                    {technologies.slice(0, 4).map((tech: string, index: number) => (
+                      <li key={index} className="text-sm text-gray-600">
+                        {tech}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Technology Stack */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Technology Stack</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Modern, scalable architecture built for performance and growth
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {Object.entries(project.techStack || {}).map(([category, technologies], categoryIndex) => (
-              <motion.div
-                key={category}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
-                className="bg-gray-50 rounded-xl p-6"
-              >
-                <h3 className="font-semibold text-gray-900 mb-4 capitalize">{category}</h3>
-                <ul className="space-y-2">
-                  {technologies.map((tech, techIndex) => (
-                    <li key={techIndex} className="flex items-center text-gray-600">
-                      <CheckCircle size={16} className="text-orange-600 mr-2 flex-shrink-0" />
-                      {tech}
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Botswana-Specific Features */}
-      <section className="py-16 bg-orange-50">
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl font-bold text-orange-900 mb-4">Botswana Market Integration</h2>
-            <p className="text-xl text-orange-800 max-w-2xl mx-auto">
-              Tailored specifically for Botswana's unique market needs
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="bg-white rounded-xl p-6 text-center"
-            >
-              <div className="text-3xl mb-4">💰</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Local Payments</h3>
-              <p className="text-gray-600">Orange Money & Mascom MyZaka integration</p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="bg-white rounded-xl p-6 text-center"
-            >
-              <div className="text-3xl mb-4">🏠</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Local Market</h3>
-              <p className="text-gray-600">Tailored for Botswana cities & property types</p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="bg-white rounded-xl p-6 text-center"
-            >
-              <div className="text-3xl mb-4">🤝</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Verified Agents</h3>
-              <p className="text-gray-600">Local agent network with Botswana credentials</p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Challenges & Solutions */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">Challenges</h2>
-              <ul className="space-y-4">
-                {project.challenges?.map((challenge, index) => (
-                  <li key={index} className="flex items-start">
-                    <div className="w-2 h-2 bg-red-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                    <span className="text-gray-600">{challenge}</span>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">Solutions</h2>
-              <ul className="space-y-4">
-                {project.solutions?.map((solution, index) => (
-                  <li key={index} className="flex items-start">
-                    <div className="w-2 h-2 bg-green-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                    <span className="text-gray-600">{solution}</span>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Business Impact */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Business Impact</h2>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6 }}
-              className="text-center p-6"
-            >
-              <Building className="w-12 h-12 text-orange-600 mx-auto mb-4" />
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Market Position</h3>
-              <p className="text-gray-600">{project.businessImpact?.market}</p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-center p-6"
-            >
-              <Zap className="w-12 h-12 text-orange-600 mx-auto mb-4" />
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Revenue Model</h3>
-              <p className="text-gray-600">{project.businessImpact?.revenue}</p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-center p-6"
-            >
-              <Users className="w-12 h-12 text-orange-600 mx-auto mb-4" />
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Scalability</h3>
-              <p className="text-gray-600">{project.businessImpact?.scalability}</p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-center p-6"
-            >
-              <Shield className="w-12 h-12 text-orange-600 mx-auto mb-4" />
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Innovation</h3>
-              <p className="text-gray-600">{project.businessImpact?.innovation}</p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 bg-orange-600 text-white">
-        <div className="container mx-auto px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Experience Botswana's Real Estate Revolution</h2>
-            <p className="text-xl text-orange-100 mb-8 max-w-2xl mx-auto">
-              Explore the platform that's transforming how Botswana finds, rents, and manages properties.
+      {/* Strategic CTA */}
+      <section className="py-16 bg-gray-900 text-white">
+        <div className="container mx-auto px-4 sm:px-6 text-center">
+          <div className="max-w-2xl mx-auto">
+            <h2 className="text-3xl font-semibold mb-4">Experience the Platform</h2>
+            <p className="text-gray-300 mb-8 text-lg">
+              Explore Botswana's first comprehensive real estate ecosystem built with scalable architecture 
+              and deep local market integration.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
                 href={project.liveUrl}
-                className="bg-white text-orange-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300 shadow-lg hover:shadow-xl"
+                className="bg-white text-gray-900 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                View Live Demo
+                View Live Platform
               </a>
               <a
                 href={project.githubUrl}
-                className="border border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-orange-600 transition-all duration-300"
+                className="border border-gray-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-gray-800 transition-all duration-300"
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 Explore Source Code
               </a>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
     </div>

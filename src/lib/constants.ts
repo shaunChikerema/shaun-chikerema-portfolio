@@ -1,5 +1,67 @@
 // lib/constants.ts - COMPLETE BATTLE-READY VERSION
 
+// TYPE DEFINITIONS - CRITICAL FOR TYPE SAFETY
+export interface BusinessImpact {
+  market: string;
+  scalability: string;
+  innovation: string;
+}
+
+export interface ProjectFeature {
+  title: string;
+  description: string;
+  icon: string;
+}
+
+export interface ProjectMetrics {
+  performance: string;
+  reliability: string;
+  users: string;
+  transactions?: string;
+  documents?: string;
+  tasks?: string;
+  features?: string;
+}
+
+export interface TechStack {
+  frontend: string[];
+  backend: string[];
+  mobile?: string[];
+  infrastructure: string[];
+  tools: string[];
+  integrations: string[];
+}
+
+export interface Project {
+  id: number;
+  title: string;
+  description: string;
+  longDescription: string;
+  image: string;
+  technologies: string[];
+  githubUrl: string;
+  liveUrl: string;
+  featured: boolean;
+  category: string;
+  status: string;
+  duration: string;
+  teamSize: string;
+  highlights: string[];
+  features: ProjectFeature[];
+  businessImpact: BusinessImpact;
+  challenges: string[];
+  solutions: string[];
+  metrics: ProjectMetrics;
+  techStack: TechStack;
+  screenshots: string[];
+  testimonials: Array<{
+    quote: string;
+    author: string;
+    company: string;
+  }>;
+}
+
+// PERSONAL INFO - UNCHANGED
 export const PERSONAL_INFO = {
   name: "Shaun Chikerema",
   title: "Software Engineer & Founder",
@@ -10,6 +72,7 @@ export const PERSONAL_INFO = {
   education: "BSc (Hons) Software Engineering with Multimedia - Limkokwing University (2024)"
 };
 
+// SKILLS - UNCHANGED
 export const SKILLS = {
   frontend: [
     { name: "React", level: 90 },
@@ -46,6 +109,7 @@ export const SKILLS = {
   ]
 };
 
+// EXPERIENCE - UNCHANGED
 export const EXPERIENCE = [
   {
     position: "Founder & Lead Engineer",
@@ -87,11 +151,12 @@ export const EXPERIENCE = [
   }
 ];
 
+// EDUCATION - UNCHANGED
 export const EDUCATION = [
   {
     degree: "BSc (Hons) Software Engineering with Multimedia",
     institution: "Limkokwing University of Creative Technology",
-    period: "2020 - 2024", // FIXED: Changed from 2021-2024 to 2020-2024
+    period: "2020 - 2024",
     location: "Cyberjaya, Malaysia & Gaborone, Botswana",
     achievements: [
       "Graduated November 2024 with Honors",
@@ -115,7 +180,8 @@ export const EDUCATION = [
   }
 ];
 
-export const PROJECTS = [
+// BATTLE-READY PROJECTS WITH COMPLETE DATA
+export const PROJECTS: Project[] = [
   {
     id: 1,
     title: "Keyat - Botswana Real Estate Platform",
@@ -180,7 +246,6 @@ export const PROJECTS = [
       }
     ],
 
-    // ADDED: Complete business impact data for Projects component
     businessImpact: {
       market: "First comprehensive real estate platform serving Botswana's 2.3M population",
       scalability: "Architected for 10,000+ simultaneous users with local payment integration", 
@@ -295,7 +360,6 @@ export const PROJECTS = [
       }
     ],
 
-    // ADDED: Complete business impact data
     businessImpact: {
       market: "Digital transformation for Botswana's $200M insurance industry",
       scalability: "Multi-tenant SaaS serving 500+ insurance brokers nationwide",
@@ -393,7 +457,6 @@ export const PROJECTS = [
       }
     ],
 
-    // ADDED: Business impact data
     businessImpact: {
       market: "Productivity tool for distributed teams in Botswana's growing tech sector",
       scalability: "Designed for teams of 5-50 members with real-time collaboration",
@@ -491,7 +554,6 @@ export const PROJECTS = [
       }
     ],
 
-    // ADDED: Business impact data
     businessImpact: {
       market: "Health & fitness app for Botswana's growing wellness-conscious population",
       scalability: "Cross-platform mobile app supporting 10,000+ active users",
