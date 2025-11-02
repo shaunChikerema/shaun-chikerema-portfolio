@@ -1,8 +1,6 @@
-//src/components/sections/Hero.tsx
 'use client';
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, Download, MapPin, ExternalLink } from 'lucide-react';
-import { PERSONAL_INFO } from '../../lib/constants';
+import { Github, Linkedin, Mail, Download, ArrowRight, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import Image from 'next/image';
 
@@ -21,174 +19,187 @@ export default function Hero() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    
     setTimeout(() => setIsDownloading(false), 1500);
   };
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative bg-white overflow-hidden pt-20 lg:pt-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          {/* CONTENT COLUMN - DOMINANT (66.6%) */}
+    <section className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20 lg:pt-24 bg-gradient-to-br from-white via-gray-50 to-gray-100">
+      {/* Subtle grid pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#e5e7eb_1px,transparent_1px),linear-gradient(to_bottom,#e5e7eb_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-30"></div>
+      
+      {/* Gradient orb */}
+      <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-gradient-to-br from-gray-200 to-gray-300 rounded-full blur-3xl opacity-20"></div>
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          {/* CONTENT COLUMN */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="lg:col-span-8 text-center lg:text-left order-2 lg:order-1"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="lg:col-span-7 text-center lg:text-left"
           >
-            {/* Professional Badge */}
+            {/* Availability Badge */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
-              className="inline-flex items-center px-4 py-2 rounded-full bg-gray-50 border border-gray-200 text-gray-700 text-sm font-medium mb-8"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-medium mb-6 shadow-sm"
             >
-              <div className="relative mr-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-ping absolute"></div>
-                <div className="w-2 h-2 bg-green-500 rounded-full relative"></div>
-              </div>
+              <Sparkles className="w-3 h-3" />
               Available for new projects
             </motion.div>
 
-            {/* Name - Clean Professional */}
+            {/* Name - MASSIVE */}
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-semibold text-gray-900 mb-6 leading-tight"
+              transition={{ delay: 0.3, duration: 0.8 }}
+              className="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-bold text-gray-950 mb-6 leading-[0.9] tracking-tight"
             >
-              {PERSONAL_INFO.name}
+              Shaun<br />Chikerema
             </motion.h1>
             
-            {/* Title */}
+            {/* Title - Subtle */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-4 max-w-2xl leading-relaxed"
+              className="text-xl sm:text-2xl text-gray-600 font-light mb-8 max-w-xl"
             >
               Software Engineer & Founder
             </motion.p>
 
-            {/* Tech Stack - Clean Badges */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="flex flex-wrap gap-2 text-sm mb-6 justify-center lg:justify-start"
-            >
-              <span className="font-medium bg-gray-100 text-gray-700 px-3 py-1.5 rounded-lg border border-gray-200">React/Next.js</span>
-              <span className="font-medium bg-gray-100 text-gray-700 px-3 py-1.5 rounded-lg border border-gray-200">TypeScript</span>
-              <span className="font-medium bg-gray-100 text-gray-700 px-3 py-1.5 rounded-lg border border-gray-200">Node.js</span>
-              <span className="font-medium bg-gray-100 text-gray-700 px-3 py-1.5 rounded-lg border border-gray-200">PostgreSQL</span>
-            </motion.div>
-
-            {/* Bio - Crystal Clear */}
+            {/* Bio - Concise */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="text-base sm:text-lg text-gray-600 mb-8 max-w-2xl leading-relaxed"
+              transition={{ delay: 0.5 }}
+              className="text-base sm:text-lg text-gray-600 mb-10 max-w-xl leading-relaxed opacity-90"
             >
-              Software Engineer & Founder building BITROOT technology ecosystem. Architecting scalable production applications including Keyat (Botswana's first real estate platform) and PolicyBridge (insurance SaaS). Strong foundation in system design and full-stack development.
+              Building <span className="font-semibold text-gray-900">BITROOT</span> — production applications serving Botswana's digital economy. Keyat (real estate) and PolicyBridge (insurance SaaS) in production.
             </motion.p>
 
-            {/* CTA Buttons - PERFECTED CONTRAST */}
+            {/* CTAs - CLEAR HIERARCHY */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8"
+              transition={{ delay: 0.6 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-10"
             >
+              {/* Primary CTA - DOMINANT */}
               <motion.button 
                 onClick={scrollToProjects}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="group relative bg-gray-950 text-white px-8 py-4 rounded-xl font-semibold hover:bg-gray-900 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center border border-gray-800"
+                className="group relative bg-gray-950 text-white px-10 py-4 rounded-2xl font-semibold hover:bg-gray-900 transition-all duration-300 shadow-2xl hover:shadow-3xl flex items-center justify-center gap-2 active:scale-95 focus:ring-4 focus:ring-gray-300 focus:outline-none"
               >
-                <span className="relative z-10">See My Projects</span>
+                <span>See My Work</span>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </motion.button>
               
+              {/* Secondary CTA - SUBTLE */}
               <motion.button 
                 onClick={downloadResume}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 disabled={isDownloading}
-                className="group relative bg-white text-gray-700 px-8 py-4 rounded-xl font-semibold border-2 border-gray-300 hover:border-gray-400 hover:text-gray-900 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="group relative bg-transparent text-gray-700 px-10 py-4 rounded-2xl font-medium border border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 focus:ring-4 focus:ring-gray-200 focus:outline-none"
               >
-                <Download className={`w-5 h-5 ${isDownloading ? 'animate-spin' : ''}`} />
-                <span>{isDownloading ? 'Downloading...' : 'Download Resume'}</span>
+                <Download className={`w-4 h-4 ${isDownloading ? 'animate-bounce' : ''}`} />
+                <span>{isDownloading ? 'Downloading...' : 'Resume'}</span>
               </motion.button>
             </motion.div>
 
-            {/* Social Links - PERFECTED SPACING */}
+            {/* Social Links - PRIORITIZED */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.9 }}
-              className="flex justify-center lg:justify-start space-x-4"
+              transition={{ delay: 0.7 }}
+              className="flex justify-center lg:justify-start gap-3"
             >
-              {[
-                { icon: Github, href: "https://github.com/shaunChikerema", label: "GitHub" },
-                { icon: Linkedin, href: "https://linkedin.com/in/shaunchikerema", label: "LinkedIn" },
-                { icon: ExternalLink, href: "https://shaunchikerema.vercel.app", label: "Portfolio" },
-                { icon: Mail, href: `mailto:${PERSONAL_INFO.email}`, label: "Email" }
-              ].map(({ icon: Icon, href, label }, index) => (
-                <motion.a
-                  key={label}
-                  href={href}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.9 + index * 0.1 }}
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  className="group p-3 bg-white text-gray-600 hover:text-gray-900 transition-all duration-300 rounded-lg shadow-sm hover:shadow-md border border-gray-200 hover:border-gray-300"
-                  aria-label={label}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Icon className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
-                </motion.a>
+              {/* Primary - GitHub & LinkedIn */}
+              <motion.a
+                href="https://github.com/shaunChikerema"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                className="p-3 bg-gray-950 text-white rounded-xl hover:bg-gray-900 transition-all duration-300 shadow-lg hover:shadow-xl active:scale-90 focus:ring-4 focus:ring-gray-300 focus:outline-none"
+                aria-label="GitHub"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Github className="w-5 h-5" />
+              </motion.a>
+              
+              <motion.a
+                href="https://linkedin.com/in/shaunchikerema"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                className="p-3 bg-gray-950 text-white rounded-xl hover:bg-gray-900 transition-all duration-300 shadow-lg hover:shadow-xl active:scale-90 focus:ring-4 focus:ring-gray-300 focus:outline-none"
+                aria-label="LinkedIn"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Linkedin className="w-5 h-5" />
+              </motion.a>
+
+              {/* Secondary - Email */}
+              <motion.a
+                href="mailto:sschikerema@gmail.com"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                className="p-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-all duration-300 shadow-sm hover:shadow-md active:scale-90 focus:ring-4 focus:ring-gray-200 focus:outline-none"
+                aria-label="Email"
+              >
+                <Mail className="w-5 h-5" />
+              </motion.a>
+            </motion.div>
+
+            {/* Tech Stack - MINIMAL */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8 }}
+              className="flex flex-wrap gap-2 text-xs mt-8 justify-center lg:justify-start opacity-60"
+            >
+              {['Next.js', 'TypeScript', 'PostgreSQL', 'React Native'].map((tech) => (
+                <span key={tech} className="text-gray-600 font-medium">
+                  {tech}
+                </span>
               ))}
             </motion.div>
           </motion.div>
 
-          {/* PHOTO COLUMN - SUPPORTING (33.3%) */}
+          {/* PHOTO COLUMN - WITH REAL IMAGE */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="lg:col-span-4 flex justify-center order-1 lg:order-2"
+            className="lg:col-span-5 flex justify-center"
           >
-            {/* PERFECTED PHOTO CONTAINER */}
-            <div className="relative w-56 h-56 sm:w-64 sm:h-64 lg:w-80 lg:h-80">
-              
-              {/* MAIN HEADSHOT */}
-              <div className="absolute inset-0 bg-white rounded-3xl shadow-lg border border-gray-200 overflow-hidden">
+            <div className="relative w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
+              {/* Photo with Next.js Image */}
+              <div className="absolute inset-0 rounded-3xl overflow-hidden shadow-2xl border-2 border-white">
                 <Image 
                   src="/images/shaun-profile.png" 
                   alt="Shaun Chikerema - Software Engineer & Founder"
                   fill
-                  className="object-cover rounded-2xl"
+                  className="object-cover"
                   priority
+                  sizes="(max-width: 768px) 288px, (max-width: 1024px) 320px, 384px"
                 />
               </div>
               
-              {/* LOCATION BADGE - PERFECTED */}
-              <div className="absolute -bottom-3 -right-3 bg-gray-900 text-white px-3 py-2 rounded-lg font-medium shadow-lg border border-gray-800 text-sm">
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-3 h-3" />
-                  <span>Gaborone, Botswana</span>
-                </div>
-              </div>
-
-              {/* STATUS BADGE - PERFECTED */}
-              <div className="absolute -top-3 -left-3 bg-green-700 text-white px-2 py-1 rounded-lg font-medium text-xs shadow-lg border border-green-800">
-                <div className="flex items-center gap-1">
-                  <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
-                  <span>Available</span>
-                </div>
-              </div>
-
+              {/* Single Subtle Badge */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9 }}
+                className="absolute bottom-6 left-6 bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full text-xs font-medium text-gray-700 shadow-xl border border-gray-200"
+              >
+                📍 Gaborone, Botswana
+              </motion.div>
             </div>
           </motion.div>
         </div>
