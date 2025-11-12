@@ -54,11 +54,21 @@ export default function Hero() {
       aria-label="Shaun Chikerema - Full Stack Engineer"
       id="home"
     >
-      {/* Subtle background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/50 via-black to-black pointer-events-none" aria-hidden="true" />
+      {/* Animated Gradient Background - Vercel Style */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '4s' }} />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-emerald-500/15 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '6s', animationDelay: '1s' }} />
+        <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '2s' }} />
+      </div>
+
+      {/* Grid Pattern - Vercel Style */}
+      <div 
+        className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:64px_64px]"
+        aria-hidden="true"
+      />
       
-      {/* Subtle accent orb */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-500/10 to-transparent rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
+      {/* Radial Gradient Overlay */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,black_70%)]" aria-hidden="true" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
@@ -69,24 +79,26 @@ export default function Hero() {
               {/* Badge */}
               <motion.div
                 {...getAnimationProps(0)}
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-800/50 border border-zinc-700/50 text-zinc-300 text-sm font-medium mb-6"
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-zinc-300 text-sm font-medium mb-6 hover:bg-white/10 transition-colors"
               >
-                <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
+                <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
                 <span>Available for new projects</span>
               </motion.div>
 
-              {/* Name */}
+              {/* Name with Gradient */}
               <motion.h1
                 {...getAnimationProps(STAGGER)}
-                className="text-5xl sm:text-6xl lg:text-7xl font-semibold text-white mb-6 tracking-tight"
+                className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 tracking-tight"
               >
-                Shaun Chikerema
+                <span className="bg-gradient-to-r from-white via-white to-zinc-400 bg-clip-text text-transparent">
+                  Shaun Chikerema
+                </span>
               </motion.h1>
               
               {/* Title */}
               <motion.p
                 {...getAnimationProps(STAGGER * 2)}
-                className="text-xl sm:text-2xl text-zinc-400 mb-6"
+                className="text-xl sm:text-2xl bg-gradient-to-r from-zinc-400 to-zinc-500 bg-clip-text text-transparent mb-6"
               >
                 Full Stack Engineer & Founder
               </motion.p>
@@ -96,29 +108,39 @@ export default function Hero() {
                 {...getAnimationProps(STAGGER * 3)}
                 className="text-lg text-zinc-400 mb-8 max-w-xl leading-relaxed"
               >
-                Building <span className="font-medium text-white">BITROOT</span> — production-ready SaaS platforms serving 500+ users. I design systems that scale, from database architecture to deployment.
+                Building <span className="font-semibold text-white">BITROOT</span> — production-ready SaaS platforms serving 500+ users. I design systems that scale, from database architecture to deployment.
               </motion.p>
 
-              {/* Stats */}
+              {/* Stats with Glow Effect */}
               <motion.div
                 {...getAnimationProps(STAGGER * 4)}
-                className="grid grid-cols-3 gap-6 mb-10"
+                className="grid grid-cols-3 gap-4 mb-10"
               >
-                <div className="bg-zinc-900/50 border border-zinc-800 rounded-lg p-4">
-                  <div className="text-3xl font-semibold text-white mb-1">2</div>
-                  <div className="text-sm text-zinc-500">Live products</div>
-                </div>
-                <div className="bg-zinc-900/50 border border-zinc-800 rounded-lg p-4">
-                  <div className="text-3xl font-semibold text-white mb-1">500+</div>
-                  <div className="text-sm text-zinc-500">Active users</div>
-                </div>
-                <div className="bg-zinc-900/50 border border-zinc-800 rounded-lg p-4">
-                  <div className="text-3xl font-semibold text-white mb-1">4-6</div>
-                  <div className="text-sm text-zinc-500">Weeks to MVP</div>
-                </div>
+                {[
+                  { value: '2', label: 'Live products' },
+                  { value: '500+', label: 'Active users' },
+                  { value: '4-6', label: 'Weeks to MVP' }
+                ].map((stat, index) => (
+                  <motion.div
+                    key={stat.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 + index * 0.1 }}
+                    whileHover={{ y: -2, transition: { duration: 0.2 } }}
+                    className="relative group"
+                  >
+                    {/* Glow effect on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-blue-500/20 to-emerald-500/0 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    
+                    <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg p-4 group-hover:border-white/20 transition-colors">
+                      <div className="text-3xl font-bold text-white mb-1">{stat.value}</div>
+                      <div className="text-sm text-zinc-500">{stat.label}</div>
+                    </div>
+                  </motion.div>
+                ))}
               </motion.div>
 
-              {/* CTAs */}
+              {/* CTAs with Gradient */}
               <motion.div
                 {...getAnimationProps(STAGGER * 5)}
                 className="flex flex-col sm:flex-row gap-4 mb-8"
@@ -127,10 +149,18 @@ export default function Hero() {
                   onClick={scrollToProjects}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="group bg-white text-black px-6 py-3 rounded-lg font-medium hover:bg-zinc-100 transition-colors duration-200 flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-black"
+                  className="group relative px-6 py-3 rounded-lg font-medium overflow-hidden"
                 >
-                  <span>View projects</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                  {/* Gradient background */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 transition-transform group-hover:scale-105" />
+                  
+                  {/* Glow effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 blur-xl opacity-50 group-hover:opacity-75 transition-opacity" />
+                  
+                  <span className="relative flex items-center justify-center gap-2 text-white">
+                    <span>View projects</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </span>
                 </motion.button>
                 
                 <motion.button 
@@ -138,14 +168,14 @@ export default function Hero() {
                   disabled={isDownloading}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="group bg-zinc-900 text-white px-6 py-3 rounded-lg font-medium border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800 transition-colors duration-200 flex items-center justify-center gap-2 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-zinc-700 focus:ring-offset-2 focus:ring-offset-black"
+                  className="group px-6 py-3 bg-white/5 backdrop-blur-sm text-white rounded-lg font-medium border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50"
                 >
                   <Download className={`w-4 h-4 ${isDownloading ? 'animate-bounce' : ''}`} />
                   <span>{isDownloading ? 'Downloading...' : 'Download resume'}</span>
                 </motion.button>
               </motion.div>
 
-              {/* Social links */}
+              {/* Social links with hover glow */}
               <motion.div
                 {...getAnimationProps(STAGGER * 6)}
                 className="flex gap-4"
@@ -159,26 +189,31 @@ export default function Hero() {
                     key={href}
                     href={href}
                     whileHover={{ y: -2 }}
-                    className="p-2 text-zinc-500 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-zinc-700 focus:ring-offset-2 focus:ring-offset-black rounded-lg"
+                    className="relative group p-3 bg-white/5 backdrop-blur-sm border border-white/10 text-zinc-400 rounded-lg hover:text-white hover:border-white/20 transition-all duration-200"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
                   >
-                    <Icon className="w-5 h-5" />
+                    {/* Hover glow */}
+                    <div className="absolute inset-0 bg-white/5 rounded-lg opacity-0 group-hover:opacity-100 blur-xl transition-opacity" />
+                    <Icon className="w-5 h-5 relative z-10" />
                   </motion.a>
                 ))}
               </motion.div>
             </div>
 
-            {/* Image */}
+            {/* Image with Glow */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
               className="lg:col-span-5 flex justify-center lg:justify-end"
             >
-              <div className="relative">
-                <div className="relative w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-2xl overflow-hidden bg-zinc-900 shadow-2xl shadow-black/50 ring-1 ring-zinc-800">
+              <div className="relative group">
+                {/* Glow effect behind image */}
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/30 to-blue-500/30 rounded-2xl blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                <div className="relative w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-2xl overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 shadow-2xl">
                   <Image 
                     src="/images/shaun-profile.png" 
                     alt="Shaun Chikerema"
@@ -188,14 +223,17 @@ export default function Hero() {
                     className="w-full h-full object-cover"
                     sizes="(max-width: 640px) 288px, (max-width: 1024px) 320px, 384px"
                   />
+                  
+                  {/* Gradient overlay on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
                 
-                {/* Location badge */}
+                {/* Location badge with glass effect */}
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.8, duration: 0.4 }}
-                  className="absolute -bottom-4 left-6 bg-zinc-900 border border-zinc-800 px-4 py-2 rounded-lg text-sm text-zinc-300 shadow-xl"
+                  className="absolute -bottom-4 left-6 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-lg text-sm text-white shadow-xl"
                 >
                   Gaborone, Botswana
                 </motion.div>
