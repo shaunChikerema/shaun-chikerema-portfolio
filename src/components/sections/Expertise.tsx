@@ -59,8 +59,20 @@ export default function Expertise() {
   ];
 
   return (
-    <section id="expertise" className="py-24 lg:py-32 bg-black border-t border-zinc-900">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="expertise" className="py-24 lg:py-32 bg-black relative overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/3 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
+      </div>
+
+      {/* Grid Pattern */}
+      <div 
+        className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-[size:64px_64px]"
+        aria-hidden="true"
+      />
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -69,13 +81,16 @@ export default function Expertise() {
           transition={{ duration: 0.5 }}
           className="mb-20"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-800/50 border border-zinc-700/50 text-zinc-400 text-sm font-medium mb-6">
-            <Zap className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-zinc-300 text-sm font-medium mb-6">
+            <Zap className="w-3.5 h-3.5 text-cyan-400" />
             <span>Technical Capabilities</span>
           </div>
           
-          <h2 className="text-4xl md:text-5xl font-semibold text-white mb-6 max-w-3xl">
-            Engineering Expertise
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 max-w-3xl">
+            <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-emerald-400 bg-clip-text text-transparent">
+              Engineering
+            </span>
+            {' '}Expertise
           </h2>
           <p className="text-xl text-zinc-400 max-w-3xl leading-relaxed">
             How I architect, build, and deploy production-ready applications
@@ -84,80 +99,92 @@ export default function Expertise() {
 
         {/* Expertise Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto mb-20">
-          {expertiseAreas.map((area, areaIndex) => (
-            <motion.div
-              key={area.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: areaIndex * 0.1 }}
-              className="bg-zinc-900/50 rounded-xl p-6 border border-zinc-800 hover:border-zinc-700 transition-colors duration-300"
-            >
-              {/* Header */}
-              <div className="flex items-start gap-4 mb-6">
-                <div className="flex-shrink-0 w-10 h-10 bg-white rounded-lg flex items-center justify-center">
-                  <area.icon className="w-5 h-5 text-black" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-white mb-1">
-                    {area.title}
-                  </h3>
-                  <p className="text-zinc-400 text-sm">
-                    {area.description}
-                  </p>
-                </div>
-              </div>
+          {expertiseAreas.map((area, areaIndex) => {
+            const Icon = area.icon;
+            return (
+              <motion.div
+                key={area.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: areaIndex * 0.1 }}
+                className="group relative"
+              >
+                {/* Glow effect on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 via-blue-500/10 to-emerald-500/0 rounded-xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                <div className="relative bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 group-hover:border-cyan-500/30 transition-all duration-300">
+                  {/* Header */}
+                  <div className="flex items-start gap-4 mb-6">
+                    <div className="relative flex-shrink-0">
+                      {/* Icon glow */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-blue-400 rounded-lg blur-md opacity-50" />
+                      <div className="relative w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-400 rounded-lg flex items-center justify-center">
+                        <Icon className="w-5 h-5 text-black" />
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-white mb-1 group-hover:text-cyan-400 transition-colors">
+                        {area.title}
+                      </h3>
+                      <p className="text-zinc-400 text-sm">
+                        {area.description}
+                      </p>
+                    </div>
+                  </div>
 
-              {/* Technologies */}
-              <div className="mb-6">
-                <h4 className="text-xs font-semibold text-zinc-500 mb-3 uppercase tracking-wider">
-                  Core Technologies
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {area.technologies.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-3 py-1 bg-zinc-800 text-zinc-300 rounded-md text-xs font-medium border border-zinc-700"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
+                  {/* Technologies */}
+                  <div className="mb-6">
+                    <h4 className="text-xs font-semibold text-zinc-500 mb-3 uppercase tracking-wider">
+                      Core Technologies
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {area.technologies.map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-3 py-1 bg-white/5 text-zinc-300 rounded-md text-xs font-medium border border-white/10 hover:border-cyan-500/30 hover:bg-white/10 transition-all duration-200"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
 
-              {/* Applications */}
-              <div className="mb-6">
-                <h4 className="text-xs font-semibold text-zinc-500 mb-3 uppercase tracking-wider">
-                  Applications
-                </h4>
-                <ul className="space-y-2">
-                  {area.applications.map((app) => (
-                    <li key={app} className="flex items-start">
-                      <div className="w-1 h-1 bg-zinc-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                      <span className="text-zinc-400 text-sm">{app}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                  {/* Applications */}
+                  <div className="mb-6">
+                    <h4 className="text-xs font-semibold text-zinc-500 mb-3 uppercase tracking-wider">
+                      Applications
+                    </h4>
+                    <ul className="space-y-2">
+                      {area.applications.map((app) => (
+                        <li key={app} className="flex items-start group/item">
+                          <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                          <span className="text-zinc-400 text-sm group-hover/item:text-zinc-300 transition-colors">{app}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
-              {/* Project Applications */}
-              <div>
-                <h4 className="text-xs font-semibold text-zinc-500 mb-3 uppercase tracking-wider">
-                  Applied In
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {area.projects.map((project) => (
-                    <span
-                      key={project}
-                      className="px-3 py-1 bg-zinc-800/50 text-zinc-400 rounded-md text-xs font-medium border border-zinc-800"
-                    >
-                      {project}
-                    </span>
-                  ))}
+                  {/* Project Applications */}
+                  <div>
+                    <h4 className="text-xs font-semibold text-zinc-500 mb-3 uppercase tracking-wider">
+                      Applied In
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {area.projects.map((project) => (
+                        <span
+                          key={project}
+                          className="px-3 py-1 bg-white/5 text-zinc-400 rounded-md text-xs font-medium border border-white/10 hover:text-cyan-400 hover:border-cyan-500/30 transition-all duration-200"
+                        >
+                          {project}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* Methodology Section */}
@@ -168,31 +195,44 @@ export default function Expertise() {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="max-w-4xl mx-auto"
         >
-          <div className="bg-zinc-900/50 rounded-xl p-8 border border-zinc-800">
-            <h3 className="text-xl font-semibold text-white mb-8 text-center">
-              Engineering Methodology
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                {
-                  title: "Production-First",
-                  description: "Build for real users from day one with scalability and maintainability in mind"
-                },
-                {
-                  title: "System Design",
-                  description: "Architect solutions that handle growth and complexity without breaking"
-                },
-                {
-                  title: "Local Context",
-                  description: "Integrate Botswana-specific solutions and understand emerging market dynamics"
-                }
-              ].map((principle, index) => (
-                <div key={index} className="text-center">
-                  <div className="w-2 h-2 bg-white rounded-full mx-auto mb-3"></div>
-                  <h4 className="font-semibold text-white mb-2 text-sm">{principle.title}</h4>
-                  <p className="text-zinc-500 text-sm leading-relaxed">{principle.description}</p>
-                </div>
-              ))}
+          <div className="relative group">
+            {/* Glow effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-blue-500/10 to-cyan-500/0 rounded-xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            
+            <div className="relative bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-white/10 group-hover:border-white/20 transition-all duration-300">
+              <h3 className="text-xl font-semibold text-white mb-8 text-center">
+                Engineering Methodology
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {[
+                  {
+                    title: "Production-First",
+                    description: "Build for real users from day one with scalability and maintainability in mind"
+                  },
+                  {
+                    title: "System Design",
+                    description: "Architect solutions that handle growth and complexity without breaking"
+                  },
+                  {
+                    title: "Local Context",
+                    description: "Integrate Botswana-specific solutions and understand emerging market dynamics"
+                  }
+                ].map((principle, index) => (
+                  <div key={index} className="text-center group/principle">
+                    <div className="relative inline-block mb-3">
+                      {/* Dot glow */}
+                      <div className="absolute inset-0 bg-cyan-400 rounded-full blur-md opacity-0 group-hover/principle:opacity-50 transition-opacity" />
+                      <div className="relative w-2 h-2 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full"></div>
+                    </div>
+                    <h4 className="font-semibold text-white mb-2 text-sm group-hover/principle:text-cyan-400 transition-colors">
+                      {principle.title}
+                    </h4>
+                    <p className="text-zinc-500 text-sm leading-relaxed">
+                      {principle.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </motion.div>
