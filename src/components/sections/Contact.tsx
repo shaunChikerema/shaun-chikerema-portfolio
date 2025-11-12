@@ -1,9 +1,12 @@
-//src/components/sections/Contact.tsx
 'use client';
 import { motion } from 'framer-motion';
-import { Mail, MapPin, Phone, Send, Building2, Calendar, Zap } from 'lucide-react';
-import { PERSONAL_INFO } from '../../lib/constants';
+import { Mail, MapPin, Calendar, Send, Zap } from 'lucide-react';
 import { useState } from 'react';
+
+// Mock constant - replace with your actual import
+const PERSONAL_INFO = {
+  email: 'sschikerema@gmail.com'
+};
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -28,7 +31,6 @@ export default function Contact() {
     setIsSubmitting(true);
     
     try {
-      // In production, replace with your form submission service
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
@@ -54,166 +56,159 @@ export default function Contact() {
   const contactMethods = [
     {
       icon: Mail,
-      href: `mailto:${PERSONAL_INFO.email}?subject=Project Inquiry - ${PERSONAL_INFO.name}`,
-      label: 'Email Directly',
+      href: `mailto:${PERSONAL_INFO.email}?subject=Project Inquiry`,
+      label: 'Email',
       value: PERSONAL_INFO.email,
-      description: 'For detailed project discussions'
+      description: 'Best for detailed discussions'
     },
     {
       icon: Calendar,
       href: 'https://cal.com/shaunchikerema',
       label: 'Schedule Call',
-      value: '30-min consultation',
+      value: '30-min chat',
       description: 'Discuss your project live'
     },
     {
-      icon: Building2,
+      icon: MapPin,
       href: '#',
-      label: 'Based In',
+      label: 'Location',
       value: 'Gaborone, Botswana',
-      description: 'Available locally & remotely'
+      description: 'Available locally & remote'
     }
   ];
 
   const projectTypes = [
-    'Full-Stack Web Application',
-    'Mobile App Development',
+    'Full-Stack Web App',
+    'Mobile App (React Native)',
     'SaaS Platform',
-    'E-commerce Solution',
-    'Real Estate Technology',
-    'Insurance Technology',
-    'Startup MVP',
-    'Technical Consultation',
+    'Real Estate Tech',
+    'Insurance Tech',
+    'MVP Development',
+    'Technical Consulting',
     'Other'
   ];
 
   return (
-    <section id="contact" className="py-20 lg:py-28 bg-white">
+    <section id="contact" className="py-24 lg:py-32 bg-black border-t border-zinc-900">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header - Founder Positioning */}
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16 lg:mb-20"
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mb-20"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center px-4 py-2 rounded-full bg-gray-50 border border-gray-200 text-gray-700 text-sm font-medium mb-6"
-          >
-            <Zap className="w-4 h-4 mr-2" />
-            Founder-Led Development
-          </motion.div>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-800/50 border border-zinc-700/50 text-zinc-400 text-sm font-medium mb-6">
+            <Zap className="w-3.5 h-3.5" />
+            <span>Let's Work Together</span>
+          </div>
           
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 mb-6">
-            Build Your Vision<br />with Production Expertise
+          <h2 className="text-4xl md:text-5xl font-semibold text-white mb-6 max-w-3xl">
+            Have a Project?
           </h2>
-          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Let's architect scalable solutions for Botswana's market. From concept to production, 
-            I bring founder-level thinking to every project.
+          <p className="text-xl text-zinc-400 max-w-3xl leading-relaxed">
+            I build production SaaS platforms from architecture to deployment. Based in Gaborone, working with clients across Botswana.
           </p>
         </motion.div>
 
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
-            {/* Strategic Contact Information */}
+            {/* Contact Info */}
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
+              initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
               className="lg:col-span-2"
             >
-              <div className="bg-white rounded-2xl p-6 lg:p-8 border border-gray-200 h-full">
-                <div className="flex items-center space-x-3 mb-8">
-                  <div className="w-10 h-10 bg-gray-900 rounded-lg flex items-center justify-center">
-                    <Building2 className="w-5 h-5 text-white" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900">Strategic Partnerships</h3>
-                </div>
+              <div className="bg-zinc-900/50 rounded-xl p-6 lg:p-8 border border-zinc-800 h-full">
+                <h3 className="text-xl font-semibold text-white mb-6">Get In Touch</h3>
                 
                 <div className="space-y-4 mb-8">
-                  {contactMethods.map((method, index) => (
+                  {contactMethods.map((method) => (
                     <a
                       key={method.label}
                       href={method.href}
-                      className="flex items-start p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-gray-300 transition-colors duration-300 group"
+                      className="flex items-start p-4 bg-zinc-900 rounded-lg border border-zinc-800 hover:border-zinc-700 transition-colors duration-200 group"
+                      target={method.href.startsWith('http') ? '_blank' : undefined}
+                      rel={method.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                     >
-                      <div className="w-10 h-10 bg-gray-900 rounded-lg flex items-center justify-center mr-4 mt-1 flex-shrink-0">
-                        <method.icon className="w-5 h-5 text-white" />
+                      <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
+                        <method.icon className="w-5 h-5 text-black" />
                       </div>
                       <div className="flex-1">
-                        <p className="font-semibold text-gray-900 text-sm mb-1">{method.label}</p>
-                        <p className="text-gray-600 text-sm mb-1">{method.value}</p>
-                        <p className="text-gray-500 text-xs">{method.description}</p>
+                        <p className="font-semibold text-white text-sm mb-1">{method.label}</p>
+                        <p className="text-zinc-300 text-sm mb-1">{method.value}</p>
+                        <p className="text-zinc-500 text-xs">{method.description}</p>
                       </div>
                     </a>
                   ))}
                 </div>
 
-                {/* Response Guarantee */}
-                <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                  <div className="flex items-center space-x-3 mb-2">
+                {/* Response Time */}
+                <div className="bg-zinc-900 rounded-lg p-4 border border-zinc-800">
+                  <div className="flex items-center gap-3 mb-2">
                     <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
                       <div className="w-2 h-2 bg-white rounded-full"></div>
                     </div>
-                    <span className="font-semibold text-gray-900 text-sm">24-Hour Response</span>
+                    <span className="font-semibold text-white text-sm">24-Hour Response</span>
                   </div>
-                  <p className="text-gray-600 text-xs">
-                    Get a detailed response within one business day. Founder-level attention guaranteed.
+                  <p className="text-zinc-400 text-xs">
+                    I respond to all inquiries within one business day.
                   </p>
                 </div>
               </div>
             </motion.div>
 
-            {/* Strategic Project Form */}
+            {/* Contact Form */}
             <motion.div
-              initial={{ opacity: 0, x: 30 }}
+              initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
               className="lg:col-span-3"
             >
-              <div className="bg-white rounded-2xl p-6 lg:p-8 border border-gray-200 h-full">
+              <div className="bg-zinc-900/50 rounded-xl p-6 lg:p-8 border border-zinc-800 h-full">
                 {submitStatus === 'success' ? (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     className="text-center py-12"
                   >
-                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-green-500/20">
                       <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
                         <div className="w-3 h-3 bg-white rounded-full"></div>
                       </div>
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Message Sent</h3>
-                    <p className="text-gray-600 mb-6">
-                      I'll review your project details and get back to you within 24 hours.
+                    <h3 className="text-xl font-semibold text-white mb-2">Message Sent!</h3>
+                    <p className="text-zinc-400 mb-6">
+                      I'll get back to you within 24 hours.
                     </p>
                     <button
                       onClick={() => setSubmitStatus('idle')}
-                      className="text-gray-900 font-medium hover:text-gray-700 transition-colors duration-300"
+                      className="text-white font-medium hover:text-zinc-300 transition-colors duration-200"
                     >
                       Send another message
                     </button>
                   </motion.div>
                 ) : (
                   <>
-                    <div className="flex items-center space-x-3 mb-6">
-                      <div className="w-10 h-10 bg-gray-900 rounded-lg flex items-center justify-center">
-                        <Send className="w-5 h-5 text-white" />
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
+                        <Send className="w-5 h-5 text-black" />
                       </div>
                       <div>
-                        <h3 className="text-xl font-semibold text-gray-900">Project Inquiry</h3>
-                        <p className="text-gray-600 text-sm">Describe your project for a detailed proposal</p>
+                        <h3 className="text-xl font-semibold text-white">Project Inquiry</h3>
+                        <p className="text-zinc-400 text-sm">Tell me about your project</p>
                       </div>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="space-y-6" onSubmit={handleSubmit}>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                            Your Name *
+                          <label htmlFor="name" className="block text-sm font-medium text-zinc-300 mb-2">
+                            Name *
                           </label>
                           <input
                             type="text"
@@ -221,14 +216,14 @@ export default function Contact() {
                             required
                             value={formData.name}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-300 text-sm"
+                            className="w-full px-4 py-3 bg-zinc-900 border border-zinc-800 text-white rounded-lg focus:ring-2 focus:ring-white focus:border-transparent transition-all duration-200 text-sm placeholder:text-zinc-600"
                             placeholder="John Doe"
                           />
                         </div>
                         
                         <div>
-                          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                            Work Email *
+                          <label htmlFor="email" className="block text-sm font-medium text-zinc-300 mb-2">
+                            Email *
                           </label>
                           <input
                             type="email"
@@ -236,29 +231,29 @@ export default function Contact() {
                             required
                             value={formData.email}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-300 text-sm"
-                            placeholder="john@company.com"
+                            className="w-full px-4 py-3 bg-zinc-900 border border-zinc-800 text-white rounded-lg focus:ring-2 focus:ring-white focus:border-transparent transition-all duration-200 text-sm placeholder:text-zinc-600"
+                            placeholder="john@example.com"
                           />
                         </div>
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-2">
-                            Company / Organization
+                          <label htmlFor="company" className="block text-sm font-medium text-zinc-300 mb-2">
+                            Company (Optional)
                           </label>
                           <input
                             type="text"
                             id="company"
                             value={formData.company}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-300 text-sm"
-                            placeholder="Your company name"
+                            className="w-full px-4 py-3 bg-zinc-900 border border-zinc-800 text-white rounded-lg focus:ring-2 focus:ring-white focus:border-transparent transition-all duration-200 text-sm placeholder:text-zinc-600"
+                            placeholder="Your company"
                           />
                         </div>
 
                         <div>
-                          <label htmlFor="projectType" className="block text-sm font-medium text-gray-700 mb-2">
+                          <label htmlFor="projectType" className="block text-sm font-medium text-zinc-300 mb-2">
                             Project Type *
                           </label>
                           <select
@@ -266,9 +261,9 @@ export default function Contact() {
                             required
                             value={formData.projectType}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-300 text-sm bg-white"
+                            className="w-full px-4 py-3 bg-zinc-900 border border-zinc-800 text-white rounded-lg focus:ring-2 focus:ring-white focus:border-transparent transition-all duration-200 text-sm"
                           >
-                            <option value="">Select project type</option>
+                            <option value="">Select type</option>
                             {projectTypes.map(type => (
                               <option key={type} value={type}>{type}</option>
                             ))}
@@ -277,7 +272,7 @@ export default function Contact() {
                       </div>
                       
                       <div>
-                        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label htmlFor="message" className="block text-sm font-medium text-zinc-300 mb-2">
                           Project Details *
                         </label>
                         <textarea
@@ -286,34 +281,31 @@ export default function Contact() {
                           required
                           value={formData.message}
                           onChange={handleChange}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-300 text-sm resize-none"
-                          placeholder="Describe your project goals, timeline, budget, and any specific Botswana market requirements..."
+                          className="w-full px-4 py-3 bg-zinc-900 border border-zinc-800 text-white rounded-lg focus:ring-2 focus:ring-white focus:border-transparent transition-all duration-200 text-sm resize-none placeholder:text-zinc-600"
+                          placeholder="Describe your project, timeline, and any specific requirements..."
                         ></textarea>
                       </div>
                       
                       <button
-                        type="submit"
+                        type="button"
+                        onClick={handleSubmit}
                         disabled={isSubmitting}
-                        className="w-full bg-gray-900 text-white py-4 px-6 rounded-lg font-semibold hover:bg-gray-800 transition-all duration-300 flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full bg-white text-black py-4 px-6 rounded-lg font-semibold hover:bg-zinc-100 transition-all duration-200 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <Send className="w-4 h-4" />
-                        <span>{isSubmitting ? 'Sending...' : 'Get Detailed Proposal'}</span>
+                        <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
                       </button>
 
                       {submitStatus === 'error' && (
                         <motion.p
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
-                          className="text-red-600 text-sm text-center"
+                          className="text-red-400 text-sm text-center"
                         >
-                          Something went wrong. Please email directly at {PERSONAL_INFO.email}
+                          Something went wrong. Please email me directly at {PERSONAL_INFO.email}
                         </motion.p>
                       )}
-
-                      <p className="text-gray-500 text-xs text-center">
-                        Your information is secure. No spam, just professional communication about your project.
-                      </p>
-                    </form>
+                    </div>
                   </>
                 )}
               </div>
@@ -321,29 +313,30 @@ export default function Contact() {
           </div>
         </div>
 
-        {/* Botswana Market Focus */}
+        {/* Bottom Context */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
           className="mt-16 max-w-4xl mx-auto"
         >
-          <div className="bg-gray-50 rounded-2xl p-8 border border-gray-200 text-center">
-            <h3 className="text-2xl font-semibold text-gray-900 mb-4">Botswana Market Expertise</h3>
-            <p className="text-gray-600 leading-relaxed mb-6">
-              Building solutions specifically designed for Botswana's unique market dynamics, including 
-              local payment integrations, mobile-first design, and understanding of regulatory requirements.
+          <div className="bg-zinc-900/50 rounded-xl p-8 border border-zinc-800 text-center">
+            <h3 className="text-xl font-semibold text-white mb-4">Working Across Botswana</h3>
+            <p className="text-zinc-400 leading-relaxed mb-6">
+              Local expertise with global standards. I understand Botswana's market dynamics, integrate local payment systems, 
+              and build mobile-first solutions for our market.
             </p>
             <div className="flex flex-wrap justify-center gap-6">
               {[
                 "Local Payment Integration",
-                "Mobile-First Strategy", 
-                "Regulatory Compliance",
-                "Scalable Infrastructure"
+                "Mobile-First Design", 
+                "Fast Shipping (4-6 weeks)",
+                "Post-Launch Support"
               ].map((feature, index) => (
-                <div key={index} className="flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-gray-900 rounded-full"></div>
-                  <span className="text-sm text-gray-700 font-medium">{feature}</span>
+                <div key={index} className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-white rounded-full"></div>
+                  <span className="text-sm text-zinc-300 font-medium">{feature}</span>
                 </div>
               ))}
             </div>

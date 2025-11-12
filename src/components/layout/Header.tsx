@@ -1,9 +1,12 @@
-//src/components/layout/Header.tsx
 'use client';
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Download } from 'lucide-react';
-import { PERSONAL_INFO } from '../../lib/constants';
+
+// Mock constant - replace with your actual import
+const PERSONAL_INFO = {
+  name: 'Shaun Chikerema'
+};
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -13,15 +16,35 @@ export default function Header() {
 
   // Throttled scroll handler
   const handleScroll = useCallback(() => {
-    setIsScrolled(window.scrollY > 10);
-  }, []);
+    const scrolled = window.scrollY > 10;
+    setIsScrolled(scrolled);
+
+    // Active section detection based on scroll position
+    const scrollPosition = window.scrollY + 100;
+    
+    const sections = ['home', 'about', 'expertise', 'projects', 'experience', 'contact'];
+    
+    let currentActive = 'home';
+    
+    for (let i = sections.length - 1; i >= 0; i--) {
+      const section = document.getElementById(sections[i]);
+      if (section && section.offsetTop <= scrollPosition) {
+        currentActive = sections[i];
+        break;
+      }
+    }
+
+    if (currentActive !== activeSection && !isNavigating) {
+      setActiveSection(currentActive);
+    }
+  }, [activeSection, isNavigating]);
 
   // Smooth scroll function
   const smoothScrollTo = useCallback((elementId: string) => {
     const element = document.getElementById(elementId);
     if (!element) return;
 
-    const headerHeight = 80; // Approximate header height
+    const headerHeight = 80;
     const elementPosition = element.getBoundingClientRect().top;
     const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
 
@@ -39,50 +62,19 @@ export default function Header() {
     setIsMobileMenuOpen(false);
     setActiveSection(section);
 
-    // Update URL without page reload
     if (history.pushState) {
       history.pushState(null, '', href);
     }
 
-    // Smooth scroll to section
     setTimeout(() => {
       smoothScrollTo(section);
-      setIsNavigating(false);
+      setTimeout(() => {
+        setIsNavigating(false);
+      }, 800);
     }, 100);
   }, [smoothScrollTo]);
 
-  // Active section detection with Intersection Observer
-  useEffect(() => {
-    const sections = ['home', 'about', 'expertise', 'projects', 'experience', 'contact'];
-    
-    const observers = sections.map(section => {
-      const element = document.getElementById(section);
-      if (!element) return null;
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting && !isNavigating) {
-              setActiveSection(section);
-            }
-          });
-        },
-        { 
-          rootMargin: '-20% 0px -70% 0px',
-          threshold: 0.1
-        }
-      );
-
-      observer.observe(element);
-      return observer;
-    }).filter(Boolean);
-
-    return () => {
-      observers.forEach(observer => observer?.disconnect());
-    };
-  }, [isNavigating]);
-
-  // Scroll event listener with throttle
+  // Scroll event listener
   useEffect(() => {
     let ticking = false;
     
@@ -97,6 +89,8 @@ export default function Header() {
     };
 
     window.addEventListener('scroll', throttledScroll, { passive: true });
+    handleScroll();
+    
     return () => window.removeEventListener('scroll', throttledScroll);
   }, [handleScroll]);
 
@@ -104,15 +98,12 @@ export default function Header() {
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden';
-      document.body.style.paddingRight = '0px';
     } else {
       document.body.style.overflow = 'unset';
-      document.body.style.paddingRight = '0px';
     }
     
     return () => {
       document.body.style.overflow = 'unset';
-      document.body.style.paddingRight = '0px';
     };
   }, [isMobileMenuOpen]);
 
@@ -129,6 +120,17 @@ export default function Header() {
       return () => document.removeEventListener('keydown', handleEscape);
     }
   }, [isMobileMenuOpen]);
+
+  // Handle initial hash URL
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '');
+    if (hash && ['about', 'expertise', 'projects', 'experience', 'contact'].includes(hash)) {
+      setActiveSection(hash);
+      setTimeout(() => {
+        smoothScrollTo(hash);
+      }, 500);
+    }
+  }, [smoothScrollTo]);
 
   const navItems = [
     { name: 'Home', href: '#home' },
@@ -157,7 +159,7 @@ export default function Header() {
       history.pushState(null, '', '#home');
     }
     
-    setTimeout(() => setIsNavigating(false), 100);
+    setTimeout(() => setIsNavigating(false), 1000);
   };
 
   return (
@@ -165,8 +167,8 @@ export default function Header() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? 'bg-white/95 backdrop-blur-lg shadow-lg border-b border-gray-100'
-            : 'bg-white/80 backdrop-blur-md border-b border-gray-100/50'
+            ? 'bg-black/95 backdrop-blur-lg border-b border-zinc-800'
+            : 'bg-black/80 backdrop-blur-md border-b border-zinc-900'
         }`}
       >
         <nav className="container mx-auto px-4 sm:px-6">
@@ -175,31 +177,30 @@ export default function Header() {
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="flex items-center space-x-3 group cursor-pointer"
+              className="flex items-center gap-3 group cursor-pointer"
               onClick={scrollToTop}
               role="button"
               tabIndex={0}
               onKeyDown={(e) => e.key === 'Enter' && scrollToTop()}
             >
               <div className="relative">
-                <div className="w-10 h-10 bg-gradient-to-br from-gray-900 to-gray-700 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
-                  <span className="text-white font-bold text-lg">S</span>
+                <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
+                  <span className="text-black font-bold text-lg">S</span>
                 </div>
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-white/10 to-transparent pointer-events-none"></div>
               </div>
               
               <div className="hidden sm:block">
-                <div className="font-bold text-gray-900 text-base group-hover:text-gray-700 transition-colors duration-300">
+                <div className="font-bold text-white text-base group-hover:text-zinc-300 transition-colors duration-300">
                   {PERSONAL_INFO.name.split(' ')[0]}
                 </div>
-                <div className="text-xs text-gray-500 font-medium">
+                <div className="text-xs text-zinc-500 font-medium">
                   Software Engineer
                 </div>
               </div>
             </motion.div>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-1">
+            <div className="hidden lg:flex items-center gap-1">
               {navItems.map((item) => (
                 <a
                   key={item.name}
@@ -208,18 +209,18 @@ export default function Header() {
                     e.preventDefault();
                     handleNavigation(item.href);
                   }}
-                  className={`relative px-5 py-3 font-medium transition-all duration-300 text-sm rounded-lg mx-1 ${
+                  className={`relative px-5 py-3 font-medium transition-all duration-300 text-sm rounded-lg ${
                     activeSection === item.href.replace('#', '')
-                      ? 'text-gray-900 bg-gray-100'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                  } ${isNavigating ? 'pointer-events-none' : ''}`}
+                      ? 'text-white bg-zinc-800'
+                      : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+                  } ${isNavigating ? 'pointer-events-none opacity-70' : ''}`}
                   aria-current={activeSection === item.href.replace('#', '') ? 'page' : undefined}
                 >
                   {item.name}
                   {activeSection === item.href.replace('#', '') && (
                     <motion.div
                       layoutId="desktopActiveSection"
-                      className="absolute bottom-2 left-4 right-4 h-0.5 bg-gray-900 rounded-full"
+                      className="absolute bottom-2 left-4 right-4 h-0.5 bg-white rounded-full"
                       transition={{ type: "spring", stiffness: 300, damping: 30 }}
                     />
                   )}
@@ -228,12 +229,12 @@ export default function Header() {
             </div>
 
             {/* Desktop Actions */}
-            <div className="hidden lg:flex items-center space-x-3">
+            <div className="hidden lg:flex items-center gap-3">
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={downloadResume}
-                className="flex items-center space-x-2 px-5 py-3 bg-gray-900 text-white rounded-xl font-semibold hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl border border-gray-800"
+                className="flex items-center gap-2 px-5 py-3 bg-white text-black rounded-xl font-semibold hover:bg-zinc-100 transition-all duration-300 shadow-lg"
               >
                 <Download className="w-4 h-4" />
                 <span className="text-sm">Resume</span>
@@ -241,11 +242,11 @@ export default function Header() {
             </div>
 
             {/* Mobile Menu Button */}
-            <div className="flex lg:hidden items-center space-x-2">
+            <div className="flex lg:hidden items-center gap-2">
               <motion.button
                 whileTap={{ scale: 0.95 }}
                 onClick={downloadResume}
-                className="flex items-center space-x-1 px-3 py-2 bg-gray-900 text-white rounded-lg font-semibold text-sm shadow-lg hover:bg-gray-800 transition-colors duration-300"
+                className="flex items-center gap-1 px-3 py-2 bg-white text-black rounded-lg font-semibold text-sm shadow-lg hover:bg-zinc-100 transition-colors duration-300"
               >
                 <Download className="w-3 h-3" />
                 <span>Resume</span>
@@ -253,7 +254,7 @@ export default function Header() {
 
               <motion.button
                 whileTap={{ scale: 0.95 }}
-                className="p-2 text-gray-700 hover:text-gray-900 transition-colors duration-300 rounded-lg hover:bg-gray-100"
+                className="p-2 text-zinc-400 hover:text-white transition-colors duration-300 rounded-lg hover:bg-zinc-900"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label="Toggle menu"
                 aria-expanded={isMobileMenuOpen}
@@ -275,7 +276,7 @@ export default function Header() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="lg:hidden fixed inset-0 bg-black/30 backdrop-blur-sm z-[60]"
+              className="lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[60]"
               onClick={() => setIsMobileMenuOpen(false)}
             />
             
@@ -285,29 +286,29 @@ export default function Header() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="lg:hidden fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-[70] flex flex-col"
+              className="lg:hidden fixed top-0 right-0 h-full w-80 bg-zinc-900 shadow-2xl z-[70] flex flex-col border-l border-zinc-800"
               role="dialog"
               aria-modal="true"
               aria-label="Main navigation"
             >
               {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b border-gray-200 bg-white shrink-0">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-gray-900 to-gray-700 rounded-xl flex items-center justify-center shadow-lg">
-                    <span className="text-white font-bold text-lg">S</span>
+              <div className="flex items-center justify-between p-6 border-b border-zinc-800 bg-zinc-900 shrink-0">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg">
+                    <span className="text-black font-bold text-lg">S</span>
                   </div>
                   <div>
-                    <div className="font-bold text-gray-900 text-base">
+                    <div className="font-bold text-white text-base">
                       {PERSONAL_INFO.name.split(' ')[0]}
                     </div>
-                    <div className="text-xs text-gray-500 font-medium">
+                    <div className="text-xs text-zinc-500 font-medium">
                       Software Engineer
                     </div>
                   </div>
                 </div>
                 <motion.button
                   whileTap={{ scale: 0.95 }}
-                  className="p-2 text-gray-500 hover:text-gray-700 transition-colors duration-200 rounded-lg hover:bg-gray-100"
+                  className="p-2 text-zinc-400 hover:text-white transition-colors duration-200 rounded-lg hover:bg-zinc-800"
                   onClick={() => setIsMobileMenuOpen(false)}
                   aria-label="Close menu"
                 >
@@ -332,8 +333,8 @@ export default function Header() {
                         }}
                         className={`flex items-center justify-between w-full px-4 py-4 font-medium transition-all duration-300 text-base rounded-xl ${
                           activeSection === item.href.replace('#', '')
-                            ? 'text-gray-900 bg-gray-100 border-2 border-gray-200'
-                            : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50 border-2 border-transparent'
+                            ? 'text-white bg-zinc-800 border-2 border-zinc-700'
+                            : 'text-zinc-400 hover:text-white hover:bg-zinc-800 border-2 border-transparent'
                         } ${isNavigating ? 'pointer-events-none opacity-70' : ''}`}
                         aria-current={activeSection === item.href.replace('#', '') ? 'page' : undefined}
                       >
@@ -342,7 +343,7 @@ export default function Header() {
                           <motion.div
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
-                            className="w-2 h-2 bg-gray-900 rounded-full"
+                            className="w-2 h-2 bg-white rounded-full"
                           />
                         )}
                       </motion.a>
@@ -355,17 +356,17 @@ export default function Header() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: navItems.length * 0.1 + 0.2 }}
-                  className="mt-6 p-4 bg-gray-50 rounded-xl border border-gray-200"
+                  className="mt-6 p-4 bg-zinc-800 rounded-xl border border-zinc-700"
                 >
                   <motion.button
                     whileTap={{ scale: 0.98 }}
                     onClick={downloadResume}
-                    className="w-full flex items-center justify-center space-x-2 px-4 py-3 bg-gray-900 text-white rounded-lg font-semibold text-sm shadow-lg hover:bg-gray-800 transition-colors duration-300"
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white text-black rounded-lg font-semibold text-sm shadow-lg hover:bg-zinc-100 transition-colors duration-300"
                   >
                     <Download className="w-4 h-4" />
                     <span>Download Resume</span>
                   </motion.button>
-                  <p className="text-xs text-gray-500 text-center mt-2">
+                  <p className="text-xs text-zinc-500 text-center mt-2">
                     Updated: {new Date().toLocaleDateString()}
                   </p>
                 </motion.div>
@@ -377,10 +378,10 @@ export default function Header() {
                   transition={{ delay: navItems.length * 0.1 + 0.4 }}
                   className="mt-6 p-4 text-center"
                 >
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-zinc-500">
                     Based in Gaborone, Botswana
                   </p>
-                  <p className="text-xs text-gray-400 mt-1">
+                  <p className="text-xs text-zinc-600 mt-1">
                     Available for new projects
                   </p>
                 </motion.div>
