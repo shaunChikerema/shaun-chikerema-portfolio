@@ -167,8 +167,8 @@ export default function Header() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? 'bg-black/95 backdrop-blur-lg border-b border-zinc-800'
-            : 'bg-black/80 backdrop-blur-md border-b border-zinc-900'
+            ? 'bg-black/95 backdrop-blur-lg border-b border-white/10'
+            : 'bg-black/80 backdrop-blur-md border-b border-white/5'
         }`}
       >
         <nav className="container mx-auto px-4 sm:px-6">
@@ -184,13 +184,15 @@ export default function Header() {
               onKeyDown={(e) => e.key === 'Enter' && scrollToTop()}
             >
               <div className="relative">
-                <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
+                {/* Logo glow */}
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-blue-400 rounded-xl blur-md opacity-0 group-hover:opacity-50 transition-opacity" />
+                <div className="relative w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-400 rounded-xl flex items-center justify-center shadow-lg">
                   <span className="text-black font-bold text-lg">S</span>
                 </div>
               </div>
               
               <div className="hidden sm:block">
-                <div className="font-bold text-white text-base group-hover:text-zinc-300 transition-colors duration-300">
+                <div className="font-bold text-white text-base group-hover:text-cyan-400 transition-colors duration-300">
                   {PERSONAL_INFO.name.split(' ')[0]}
                 </div>
                 <div className="text-xs text-zinc-500 font-medium">
@@ -211,8 +213,8 @@ export default function Header() {
                   }}
                   className={`relative px-5 py-3 font-medium transition-all duration-300 text-sm rounded-lg ${
                     activeSection === item.href.replace('#', '')
-                      ? 'text-white bg-zinc-800'
-                      : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+                      ? 'text-white bg-white/10'
+                      : 'text-zinc-400 hover:text-white hover:bg-white/5'
                   } ${isNavigating ? 'pointer-events-none opacity-70' : ''}`}
                   aria-current={activeSection === item.href.replace('#', '') ? 'page' : undefined}
                 >
@@ -220,7 +222,7 @@ export default function Header() {
                   {activeSection === item.href.replace('#', '') && (
                     <motion.div
                       layoutId="desktopActiveSection"
-                      className="absolute bottom-2 left-4 right-4 h-0.5 bg-white rounded-full"
+                      className="absolute bottom-2 left-4 right-4 h-0.5 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full"
                       transition={{ type: "spring", stiffness: 300, damping: 30 }}
                     />
                   )}
@@ -234,10 +236,18 @@ export default function Header() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={downloadResume}
-                className="flex items-center gap-2 px-5 py-3 bg-white text-black rounded-xl font-semibold hover:bg-zinc-100 transition-all duration-300 shadow-lg"
+                className="group relative px-5 py-3 rounded-xl font-semibold overflow-hidden"
               >
-                <Download className="w-4 h-4" />
-                <span className="text-sm">Resume</span>
+                {/* Gradient background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 transition-transform group-hover:scale-105" />
+                
+                {/* Glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 blur-xl opacity-50 group-hover:opacity-75 transition-opacity" />
+                
+                <span className="relative flex items-center gap-2 text-white text-sm">
+                  <Download className="w-4 h-4" />
+                  <span>Resume</span>
+                </span>
               </motion.button>
             </div>
 
@@ -246,15 +256,20 @@ export default function Header() {
               <motion.button
                 whileTap={{ scale: 0.95 }}
                 onClick={downloadResume}
-                className="flex items-center gap-1 px-3 py-2 bg-white text-black rounded-lg font-semibold text-sm shadow-lg hover:bg-zinc-100 transition-colors duration-300"
+                className="group relative px-3 py-2 rounded-lg font-semibold text-sm overflow-hidden"
               >
-                <Download className="w-3 h-3" />
-                <span>Resume</span>
+                {/* Gradient background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 transition-transform group-hover:scale-105" />
+                
+                <span className="relative flex items-center gap-1 text-white">
+                  <Download className="w-3 h-3" />
+                  <span>Resume</span>
+                </span>
               </motion.button>
 
               <motion.button
                 whileTap={{ scale: 0.95 }}
-                className="p-2 text-zinc-400 hover:text-white transition-colors duration-300 rounded-lg hover:bg-zinc-900"
+                className="p-2 text-zinc-400 hover:text-white transition-colors duration-300 rounded-lg hover:bg-white/5"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label="Toggle menu"
                 aria-expanded={isMobileMenuOpen}
@@ -286,16 +301,19 @@ export default function Header() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="lg:hidden fixed top-0 right-0 h-full w-80 bg-zinc-900 shadow-2xl z-[70] flex flex-col border-l border-zinc-800"
+              className="lg:hidden fixed top-0 right-0 h-full w-80 bg-black/95 backdrop-blur-xl shadow-2xl z-[70] flex flex-col border-l border-white/10"
               role="dialog"
               aria-modal="true"
               aria-label="Main navigation"
             >
               {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b border-zinc-800 bg-zinc-900 shrink-0">
+              <div className="flex items-center justify-between p-6 border-b border-white/10 shrink-0">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg">
-                    <span className="text-black font-bold text-lg">S</span>
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-blue-400 rounded-xl blur-md opacity-50" />
+                    <div className="relative w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-400 rounded-xl flex items-center justify-center shadow-lg">
+                      <span className="text-black font-bold text-lg">S</span>
+                    </div>
                   </div>
                   <div>
                     <div className="font-bold text-white text-base">
@@ -308,7 +326,7 @@ export default function Header() {
                 </div>
                 <motion.button
                   whileTap={{ scale: 0.95 }}
-                  className="p-2 text-zinc-400 hover:text-white transition-colors duration-200 rounded-lg hover:bg-zinc-800"
+                  className="p-2 text-zinc-400 hover:text-white transition-colors duration-200 rounded-lg hover:bg-white/5"
                   onClick={() => setIsMobileMenuOpen(false)}
                   aria-label="Close menu"
                 >
@@ -333,8 +351,8 @@ export default function Header() {
                         }}
                         className={`flex items-center justify-between w-full px-4 py-4 font-medium transition-all duration-300 text-base rounded-xl ${
                           activeSection === item.href.replace('#', '')
-                            ? 'text-white bg-zinc-800 border-2 border-zinc-700'
-                            : 'text-zinc-400 hover:text-white hover:bg-zinc-800 border-2 border-transparent'
+                            ? 'text-white bg-white/10 border-2 border-cyan-500/30'
+                            : 'text-zinc-400 hover:text-white hover:bg-white/5 border-2 border-transparent'
                         } ${isNavigating ? 'pointer-events-none opacity-70' : ''}`}
                         aria-current={activeSection === item.href.replace('#', '') ? 'page' : undefined}
                       >
@@ -343,7 +361,7 @@ export default function Header() {
                           <motion.div
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
-                            className="w-2 h-2 bg-white rounded-full"
+                            className="w-2 h-2 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full"
                           />
                         )}
                       </motion.a>
@@ -356,15 +374,23 @@ export default function Header() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: navItems.length * 0.1 + 0.2 }}
-                  className="mt-6 p-4 bg-zinc-800 rounded-xl border border-zinc-700"
+                  className="mt-6 p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10"
                 >
                   <motion.button
                     whileTap={{ scale: 0.98 }}
                     onClick={downloadResume}
-                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white text-black rounded-lg font-semibold text-sm shadow-lg hover:bg-zinc-100 transition-colors duration-300"
+                    className="group relative w-full px-4 py-3 rounded-lg font-semibold text-sm overflow-hidden"
                   >
-                    <Download className="w-4 h-4" />
-                    <span>Download Resume</span>
+                    {/* Gradient background */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 transition-transform group-hover:scale-105" />
+                    
+                    {/* Glow effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 blur-xl opacity-50 group-hover:opacity-75 transition-opacity" />
+                    
+                    <span className="relative flex items-center justify-center gap-2 text-white">
+                      <Download className="w-4 h-4" />
+                      <span>Download Resume</span>
+                    </span>
                   </motion.button>
                   <p className="text-xs text-zinc-500 text-center mt-2">
                     Updated: {new Date().toLocaleDateString()}
