@@ -88,9 +88,9 @@ export default function PolicyBridgePage() {
             {/* Metrics */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
               {[
-                { value: '500+', label: 'Policies Processed' },
-                { value: '10K+', label: 'Documents/Month' },
-                { value: '60%', label: 'Faster Processing' },
+                { value: '1000s', label: 'Built to Process' },
+                { value: '60%', label: 'Efficiency Gain' },
+                { value: 'Enterprise', label: 'Security' },
                 { value: '99.9%', label: 'Uptime' }
               ].map((metric, index) => (
                 <motion.div
@@ -117,7 +117,7 @@ export default function PolicyBridgePage() {
                 { icon: Calendar, text: 'Built in 3 months', color: 'cyan' },
                 { icon: Users, text: 'Solo founder-engineer', color: 'blue' },
                 { icon: FileText, text: 'Insurance SaaS', color: 'cyan' },
-                { icon: Zap, text: 'Live in Production', color: 'emerald', special: true }
+                { icon: Zap, text: 'Production Ready', color: 'blue', special: true }
               ].map((item, index) => {
                 const Icon = item.icon;
                 return (
@@ -125,7 +125,7 @@ export default function PolicyBridgePage() {
                     key={index}
                     className={`flex items-center px-3 py-2 rounded-lg border ${
                       item.special 
-                        ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20 font-medium' 
+                        ? 'text-blue-400 bg-blue-500/10 border-blue-500/20 font-medium' 
                         : 'text-zinc-400 bg-white/5 backdrop-blur-sm border-white/10'
                     }`}
                   >
@@ -154,8 +154,8 @@ export default function PolicyBridgePage() {
               {[
                 { icon: Clock, color: 'blue', title: 'Time Saved', desc: 'Designed to save brokers 20+ hours/week on manual tasks' },
                 { icon: TrendingUp, color: 'emerald', title: 'Faster', desc: '60% faster than manual document processing' },
-                { icon: BarChart3, color: 'cyan', title: 'Scale', desc: 'Handles 10K+ documents monthly' },
-                { icon: Target, color: 'blue', title: 'Multi-tenant', desc: 'Designed for 500+ concurrent brokers' }
+                { icon: BarChart3, color: 'cyan', title: 'Scale', desc: 'Built to handle 10K+ documents monthly' },
+                { icon: Target, color: 'blue', title: 'Multi-tenant', desc: 'Architected for 500+ concurrent brokers' }
               ].map((item, index) => {
                 const Icon = item.icon;
                 return (
@@ -168,10 +168,18 @@ export default function PolicyBridgePage() {
                     className="text-center group"
                   >
                     <div className="relative inline-block mb-4">
-                      {/* Icon glow */}
-                      <div className={`absolute inset-0 bg-${item.color}-400 rounded-2xl blur-xl opacity-0 group-hover:opacity-50 transition-opacity`} />
-                      <div className={`relative w-12 h-12 bg-${item.color}-500/10 rounded-2xl flex items-center justify-center border border-${item.color}-500/20`}>
-                        <Icon className={`w-6 h-6 text-${item.color}-400`} />
+                      {/* Icon glow - Using fixed Tailwind classes */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-blue-400 rounded-2xl blur-xl opacity-0 group-hover:opacity-50 transition-opacity" />
+                      <div className={`relative w-12 h-12 ${
+                        item.color === 'blue' ? 'bg-blue-500/10 border-blue-500/20' :
+                        item.color === 'emerald' ? 'bg-emerald-500/10 border-emerald-500/20' :
+                        'bg-cyan-500/10 border-cyan-500/20'
+                      } rounded-2xl flex items-center justify-center border`}>
+                        <Icon className={`w-6 h-6 ${
+                          item.color === 'blue' ? 'text-blue-400' :
+                          item.color === 'emerald' ? 'text-emerald-400' :
+                          'text-cyan-400'
+                        }`} />
                       </div>
                     </div>
                     <h3 className="font-semibold text-white mb-2 text-sm group-hover:text-cyan-400 transition-colors">{item.title}</h3>
@@ -210,7 +218,7 @@ export default function PolicyBridgePage() {
                   <div>
                     <h4 className="font-semibold text-white mb-3">Document Automation</h4>
                     <p className="text-zinc-400 mb-4 text-sm leading-relaxed">
-                      Queue-based PDF generation. Handles 10K+ payslips monthly with custom templates, bulk processing, and automated email distribution.
+                      Queue-based PDF generation system. Built to handle 10K+ payslips monthly with custom templates, bulk processing, and automated email distribution.
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {['PDF Engine', 'Bulk Processing', 'Email Auto'].map((tag) => (
@@ -271,7 +279,7 @@ export default function PolicyBridgePage() {
                 <h4 className="font-semibold text-white mb-4">Tech Stack</h4>
                 <ul className="space-y-3">
                   {[
-                    'Next.js 14 for SEO and performance',
+                    'Next.js 15 for SEO and performance',
                     'Supabase RLS for secure multi-tenancy',
                     'Puppeteer for PDF generation at scale',
                     'TypeScript for data integrity',
@@ -302,10 +310,10 @@ export default function PolicyBridgePage() {
             
             <div className="space-y-6">
               {[
-                { title: 'Bulk PDF Generation at Scale', desc: 'Built a queue system with Puppeteer to generate 10K+ payslips monthly. Each PDF is rendered server-side, validated, then stored in Supabase Storage. Handles concurrent requests without timeouts.' },
+                { title: 'Bulk PDF Generation at Scale', desc: 'Built a queue system with Puppeteer designed to generate 10K+ payslips monthly. Each PDF is rendered server-side, validated, then stored in Supabase Storage. Architected to handle concurrent requests without timeouts.' },
                 { title: 'Multi-Tenant Data Isolation', desc: 'Used Supabase Row Level Security to ensure brokers can only see their own clients\' data. Each policy, document, and transaction is tied to a broker_id with strict RLS policies.' },
-                { title: 'Compliance & Audit Trails', desc: 'Every action (policy created, document generated, payment processed) is logged with timestamps, user IDs, and IP addresses. Meets Botswana\'s insurance regulatory requirements.' },
-                { title: 'Real-Time Notifications', desc: 'Firebase Cloud Messaging for instant notifications when documents are ready, policies expire, or payments are due. Works on web and mobile.' }
+                { title: 'Compliance & Audit Trails', desc: 'Every action (policy created, document generated, payment processed) is logged with timestamps, user IDs, and IP addresses. Built to meet Botswana\'s insurance regulatory requirements.' },
+                { title: 'Real-Time Notifications', desc: 'Firebase Cloud Messaging integration for instant notifications when documents are ready, policies expire, or payments are due. Designed to work on web and mobile.' }
               ].map((item, index) => (
                 <motion.div
                   key={index}
@@ -376,9 +384,9 @@ export default function PolicyBridgePage() {
             viewport={{ once: true }}
             className="max-w-2xl mx-auto"
           >
-            <h2 className="text-3xl font-bold text-white mb-4">See It Live</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">See the Platform</h2>
             <p className="text-zinc-400 mb-8 text-lg">
-              Explore the insurance management platform built for Botswana's brokers. Automated document processing, compliance tracking, real-time analytics.
+              Explore the insurance management platform built for Botswana's brokers. See automated workflows, compliance features, and document processing in action.
             </p>
             <a
               href={project.liveUrl}

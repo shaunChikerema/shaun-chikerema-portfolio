@@ -88,9 +88,9 @@ export default function KeyatProjectPage() {
             {/* Metrics */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
               {[
-                { value: '500+', label: 'Active Listings' },
-                { value: '10K+', label: 'Monthly Searches' },
-                { value: '<200ms', label: 'Search Time' },
+                { value: '10K+', label: 'Built to Handle' },
+                { value: '<200ms', label: 'Search Speed' },
+                { value: 'Multi-tenant', label: 'Architecture' },
                 { value: '99.9%', label: 'Uptime' }
               ].map((metric, index) => (
                 <motion.div
@@ -117,7 +117,7 @@ export default function KeyatProjectPage() {
                 { icon: Calendar, text: 'Built in 4 months', color: 'cyan' },
                 { icon: Users, text: 'Solo founder-engineer', color: 'blue' },
                 { icon: MapPin, text: 'Gaborone, Botswana', color: 'cyan' },
-                { icon: Zap, text: 'Live in Production', color: 'emerald', special: true }
+                { icon: Zap, text: 'Production Ready', color: 'blue', special: true }
               ].map((item, index) => {
                 const Icon = item.icon;
                 return (
@@ -125,7 +125,7 @@ export default function KeyatProjectPage() {
                     key={index}
                     className={`flex items-center px-3 py-2 rounded-lg border ${
                       item.special 
-                        ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20 font-medium' 
+                        ? 'text-blue-400 bg-blue-500/10 border-blue-500/20 font-medium' 
                         : 'text-zinc-400 bg-white/5 backdrop-blur-sm border-white/10'
                     }`}
                   >
@@ -167,10 +167,18 @@ export default function KeyatProjectPage() {
                     className="text-center group"
                   >
                     <div className="relative inline-block mb-4">
-                      {/* Icon glow */}
-                      <div className={`absolute inset-0 bg-${item.color}-400 rounded-2xl blur-xl opacity-0 group-hover:opacity-50 transition-opacity`} />
-                      <div className={`relative w-16 h-16 bg-${item.color}-500/10 rounded-2xl flex items-center justify-center border border-${item.color}-500/20`}>
-                        <Icon className={`w-8 h-8 text-${item.color}-400`} />
+                      {/* Icon glow - Using fixed Tailwind classes */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-blue-400 rounded-2xl blur-xl opacity-0 group-hover:opacity-50 transition-opacity" />
+                      <div className={`relative w-16 h-16 ${
+                        item.color === 'blue' ? 'bg-blue-500/10 border-blue-500/20' :
+                        item.color === 'emerald' ? 'bg-emerald-500/10 border-emerald-500/20' :
+                        'bg-cyan-500/10 border-cyan-500/20'
+                      } rounded-2xl flex items-center justify-center border`}>
+                        <Icon className={`w-8 h-8 ${
+                          item.color === 'blue' ? 'text-blue-400' :
+                          item.color === 'emerald' ? 'text-emerald-400' :
+                          'text-cyan-400'
+                        }`} />
                       </div>
                     </div>
                     <h3 className="font-semibold text-white mb-3 group-hover:text-cyan-400 transition-colors">{item.title}</h3>
@@ -302,8 +310,8 @@ export default function KeyatProjectPage() {
             <div className="space-y-6">
               {[
                 { title: 'Multi-tenant Data Isolation', desc: 'Used Supabase Row Level Security policies to ensure complete data separation between landlords, agents, and tenants. Each user only sees their own data, even though it\'s in shared tables.' },
-                { title: 'Fast Search at Scale', desc: 'Implemented PostgreSQL full-text search with proper indexing. Searches across 10K+ properties return in under 200ms. Added filters for location, price, property type.' },
-                { title: 'Local Payment Integration', desc: 'Integrated Orange Money API with custom webhook handlers. Handles payment verification, escrow deposits, and automated refunds. Built USSD fallback for users without smartphones.' },
+                { title: 'Fast Search at Scale', desc: 'Implemented PostgreSQL full-text search with proper indexing. Built to search across 10K+ properties in under 200ms. Added filters for location, price, property type.' },
+                { title: 'Local Payment Integration', desc: 'Integrated Orange Money API with custom webhook handlers. Designed to handle payment verification, escrow deposits, and automated refunds. Built USSD fallback for users without smartphones.' },
                 { title: 'Mobile Performance', desc: 'Optimized for Botswana\'s mobile networks. Image compression, lazy loading, service workers for offline mode. PWA can be installed on home screen.' }
               ].map((item, index) => (
                 <motion.div
@@ -375,9 +383,9 @@ export default function KeyatProjectPage() {
             viewport={{ once: true }}
             className="max-w-2xl mx-auto"
           >
-            <h2 className="text-3xl font-bold text-white mb-4">See It Live</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">See the Platform</h2>
             <p className="text-zinc-400 mb-8 text-lg">
-              Explore Botswana's first comprehensive real estate platform. Browse properties, check agent profiles, see how it works.
+              Explore the real estate platform built for Botswana. See the architecture, design, and features in action.
             </p>
             <a
               href={project.liveUrl}

@@ -42,8 +42,8 @@ export default function About() {
       icon: Code2,
       items: [
         { label: "Multi-tenant SaaS platforms", desc: "Secure data isolation with role-based access" },
-        { label: "Real estate tech", desc: "Property search across 500+ listings" },
-        { label: "Insurance automation", desc: "Saves brokers 20+ hours per week" },
+        { label: "Real estate tech", desc: "Built to search across 10K+ property listings" },
+        { label: "Insurance automation", desc: "Designed to save brokers 20+ hours per week" },
         { label: "Mobile applications", desc: "Cross-platform iOS & Android" }
       ]
     },
@@ -138,7 +138,7 @@ export default function About() {
             </div>
             
             <p className="text-xl text-zinc-400 max-w-3xl leading-relaxed">
-              Two live SaaS platforms. Real users. Real revenue. I handle the full stack—from database design to deployment pipelines to user support.
+              Two production SaaS platforms built for Botswana's market. Full-stack architecture designed for scale, ready for launch.
             </p>
           </motion.div>
 
