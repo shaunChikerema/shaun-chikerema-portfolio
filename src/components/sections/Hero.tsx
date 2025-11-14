@@ -9,6 +9,7 @@ const STAGGER = 0.08;
 
 export default function HeroHonest() {
   const [isDownloading, setIsDownloading] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const downloadLinkRef = useRef<HTMLAnchorElement | null>(null);
   const prefersReducedMotion = useReducedMotion();
 
@@ -35,6 +36,8 @@ export default function HeroHonest() {
       setTimeout(() => setIsDownloading(false), 1500);
     } catch (error) {
       setIsDownloading(false);
+      console.error('Resume download failed:', error);
+      // Optional: Add toast notification here
     }
   };
 
@@ -52,6 +55,8 @@ export default function HeroHonest() {
     <section 
       className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16 sm:pt-20 lg:pt-24 bg-black"
       id="home"
+      itemScope
+      itemType="https://schema.org/Person"
     >
       {/* Animated Gradient Background - Optimized for mobile */}
       <div className="absolute inset-0 overflow-hidden">
@@ -118,6 +123,7 @@ export default function HeroHonest() {
               <motion.h1
                 {...getAnimationProps(STAGGER)}
                 className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-4 sm:mb-6 tracking-tight"
+                itemProp="name"
               >
                 <span className="bg-gradient-to-r from-white via-white to-zinc-400 bg-clip-text text-transparent">
                   Shaun Chikerema
@@ -128,6 +134,7 @@ export default function HeroHonest() {
               <motion.p
                 {...getAnimationProps(STAGGER * 2)}
                 className="text-lg sm:text-xl lg:text-2xl bg-gradient-to-r from-zinc-400 to-zinc-500 bg-clip-text text-transparent mb-6 sm:mb-8"
+                itemProp="jobTitle"
               >
                 Full Stack Engineer & Founder
               </motion.p>
@@ -136,6 +143,7 @@ export default function HeroHonest() {
               <motion.p
                 {...getAnimationProps(STAGGER * 3)}
                 className="text-base sm:text-lg text-zinc-400 mb-8 sm:mb-10 max-w-xl leading-relaxed"
+                itemProp="description"
               >
                 Building software that solves real problems for Botswana's real estate and insurance markets. Full-stack engineer with live products in production.
               </motion.p>
@@ -233,8 +241,12 @@ export default function HeroHonest() {
                 <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-2xl overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 shadow-2xl">
                   <img 
                     src="/images/shaun-profile.png" 
-                    alt="Shaun Chikerema - Full Stack Engineer & Founder"
-                    className="w-full h-full object-cover"
+                    alt="Shaun Chikerema, Full Stack Engineer and Founder of BITROOT, based in Gaborone, Botswana"
+                    className={`w-full h-full object-cover transition-opacity duration-300 ${
+                      imageLoaded ? 'opacity-100' : 'opacity-0'
+                    }`}
+                    onLoad={() => setImageLoaded(true)}
+                    itemProp="image"
                   />
                   
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -245,6 +257,7 @@ export default function HeroHonest() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.8, duration: 0.4 }}
                   className="absolute -bottom-4 left-4 sm:left-6 bg-white/10 backdrop-blur-md border border-white/20 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm text-white shadow-xl"
+                  itemProp="address"
                 >
                   Gaborone, Botswana
                 </motion.div>
