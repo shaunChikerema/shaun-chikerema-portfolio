@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from 'framer-motion';
 import { Github, Linkedin, Mail, Download, ArrowRight, Calendar } from 'lucide-react';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 const ANIMATION_DURATION = 0.6;
 const STAGGER = 0.08;
@@ -12,6 +12,21 @@ export default function HeroHonest() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const downloadLinkRef = useRef<HTMLAnchorElement | null>(null);
   const prefersReducedMotion = useReducedMotion();
+  const [imgSrc, setImgSrc] = useState('/images/shaun-profile-optimized.jpg');
+
+  useEffect(() => {
+    // Force image reload on component mount
+    const img = new Image();
+    img.src = '/images/shaun-profile-optimized.jpg';
+    img.onload = () => {
+      console.log('Image preloaded successfully');
+      setImageLoaded(true);
+    };
+    img.onerror = () => {
+      console.warn('Image not found at /images/, trying root directory...');
+      setImgSrc('/shaun-profile-optimized.jpg');
+    };
+  }, []);
 
   const scrollToProjects = () => {
     const projectsSection = document.getElementById('projects');
@@ -37,7 +52,6 @@ export default function HeroHonest() {
     } catch (error) {
       setIsDownloading(false);
       console.error('Resume download failed:', error);
-      // Optional: Add toast notification here
     }
   };
 
@@ -58,7 +72,7 @@ export default function HeroHonest() {
       itemScope
       itemType="https://schema.org/Person"
     >
-      {/* Animated Gradient Background - Optimized for mobile */}
+      {/* Animated Gradient Background */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div 
           className="absolute top-0 left-1/4 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 bg-cyan-500/20 rounded-full blur-2xl sm:blur-3xl"
@@ -119,7 +133,7 @@ export default function HeroHonest() {
                 <span className="whitespace-nowrap">Available for projects</span>
               </motion.div>
 
-              {/* Name - Mobile-first sizing */}
+              {/* Name */}
               <motion.h1
                 {...getAnimationProps(STAGGER)}
                 className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-4 sm:mb-6 tracking-tight"
@@ -130,7 +144,7 @@ export default function HeroHonest() {
                 </span>
               </motion.h1>
               
-              {/* Title - Mobile-first sizing */}
+              {/* Title */}
               <motion.p
                 {...getAnimationProps(STAGGER * 2)}
                 className="text-lg sm:text-xl lg:text-2xl bg-gradient-to-r from-zinc-400 to-zinc-500 bg-clip-text text-transparent mb-6 sm:mb-8"
@@ -139,7 +153,7 @@ export default function HeroHonest() {
                 Full Stack Engineer & Founder
               </motion.p>
 
-              {/* Bio - Mobile-first sizing */}
+              {/* Bio */}
               <motion.p
                 {...getAnimationProps(STAGGER * 3)}
                 className="text-base sm:text-lg text-zinc-400 mb-8 sm:mb-10 max-w-xl leading-relaxed"
@@ -148,7 +162,7 @@ export default function HeroHonest() {
                 Building software that solves real problems for Botswana's real estate and insurance markets. Full-stack engineer with live products in production.
               </motion.p>
 
-              {/* CTAs - Mobile-first: Better spacing */}
+              {/* CTAs */}
               <motion.div
                 {...getAnimationProps(STAGGER * 4)}
                 className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-10"
@@ -192,7 +206,7 @@ export default function HeroHonest() {
                 </motion.button>
               </motion.div>
 
-              {/* Social links - Mobile-first: Better touch targets */}
+              {/* Social links */}
               <motion.div
                 {...getAnimationProps(STAGGER * 5)}
                 className="flex gap-3 sm:gap-4"
@@ -218,7 +232,7 @@ export default function HeroHonest() {
               </motion.div>
             </div>
 
-            {/* Image - Mobile-first: Smaller base size */}
+            {/* OPTIMIZED IMAGE SECTION */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -239,13 +253,33 @@ export default function HeroHonest() {
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/30 to-blue-500/30 rounded-2xl blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
                 <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-2xl overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 shadow-2xl">
+                  {/* OPTIMIZED IMAGE WITH FALLBACK */}
+                  {!imageLoaded ? (
+                    // Loading placeholder
+                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-900/20 to-blue-900/20 flex items-center justify-center">
+                      <div className="w-12 h-12 border-4 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin"></div>
+                    </div>
+                  ) : null}
+                  
                   <img 
-                    src="/images/shaun-profile.png" 
-                    alt="Shaun Chikerema, Full Stack Engineer and Founder of BITROOT, based in Gaborone, Botswana"
-                    className={`w-full h-full object-cover transition-opacity duration-300 ${
+                    src={imgSrc}
+                    alt="Shaun Chikerema, Full Stack Engineer and Founder based in Gaborone, Botswana"
+                    width={600}
+                    height={600}
+                    loading="eager"
+                    decoding="async"
+                    className={`w-full h-full object-cover transition-opacity duration-500 ${
                       imageLoaded ? 'opacity-100' : 'opacity-0'
                     }`}
-                    onLoad={() => setImageLoaded(true)}
+                    onLoad={() => {
+                      console.log('Image loaded successfully');
+                      setImageLoaded(true);
+                    }}
+                    onError={() => {
+                      console.error('Image failed to load, using fallback');
+                      setImgSrc('https://placehold.co/600x600/0ea5e9/ffffff?text=SC&font=arial');
+                      setImageLoaded(true);
+                    }}
                     itemProp="image"
                   />
                   
