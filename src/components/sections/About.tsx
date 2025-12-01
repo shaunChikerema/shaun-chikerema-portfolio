@@ -304,7 +304,7 @@ export default function About() {
                     Education
                   </div>
                   <div className="font-semibold text-white mb-1">BSc Software Engineering with Multimedia</div>
-                  <div className="text-sm text-zinc-400">Botho University · 2019-2023</div>
+                  <div className="text-sm text-zinc-400">Limkokwing University of Creative Technology · 2019-2024</div>
                 </div>
                 <div className="text-sm text-zinc-500 md:text-right">
                   Gaborone, Botswana
