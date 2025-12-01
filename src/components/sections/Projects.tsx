@@ -13,7 +13,7 @@ const PROJECTS = [
     category: "Real Estate",
     duration: "4 months",
     featured: true,
-    liveUrl: "https://keyat.co.bw",
+    liveUrl: "https://keyat.vercel.app",
     githubUrl: "https://github.com/shaunChikerema",
     capabilities: [
       { label: "Handles 10K+ listings", desc: "Built for scale" },
@@ -39,7 +39,7 @@ const PROJECTS = [
     category: "InsurTech",
     duration: "3 months",
     featured: true,
-    liveUrl: "https://policybridge.co.bw",
+    liveUrl: "https://policybridge.vercel.app",
     githubUrl: "https://github.com/shaunChikerema",
     capabilities: [
       { label: "Bulk processing", desc: "1000s of documents" },
