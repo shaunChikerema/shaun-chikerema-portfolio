@@ -1,6 +1,6 @@
 'use client';
 import { motion } from 'framer-motion';
-import { ExternalLink, Github, Building2, Code2, Rocket, ArrowRight } from 'lucide-react';
+import { ExternalLink, Building2, Code2, Rocket, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
 const PROJECTS = [
@@ -8,26 +8,22 @@ const PROJECTS = [
     id: 1,
     title: "Keyat",
     tagline: "Real Estate Platform for Botswana",
-    description: "Full-stack property marketplace connecting buyers, sellers, and agents. Multi-tenant architecture with local payment integration.",
-    status: "Production Ready",
+    description: "Full-stack property marketplace connecting buyers, sellers, and agents. Multi-tenant architecture with secure data isolation.",
+    status: "Live",
     category: "Real Estate",
-    duration: "4 months",
     featured: true,
     liveUrl: "https://keyat.vercel.app",
-    githubUrl: "https://github.com/shaunChikerema",
     capabilities: [
-      { label: "Handles 10K+ listings", desc: "Built for scale" },
-      { label: "Sub-200ms search", desc: "Optimized queries" },
-      { label: "Multi-tenant", desc: "Complete data isolation" }
+      { label: "Property listings", desc: "Search and filter" },
+      { label: "Multi-tenant", desc: "Data isolation" },
+      { label: "Fast", desc: "Optimized queries" }
     ],
-    techHighlights: ["Next.js 15", "PostgreSQL", "Supabase", "Orange Money"],
+    techHighlights: ["Next.js", "PostgreSQL", "TypeScript"],
     features: [
-      "Advanced property search with filters",
-      "Orange Money payment integration",
-      "Role-based access (agents, buyers, sellers)",
-      "Mobile-responsive PWA design",
-      "Secure authentication with Auth0",
-      "Real-time listing updates"
+      "Property search with filters",
+      "Role-based access control",
+      "Mobile-responsive design",
+      "Secure authentication"
     ]
   },
   {
@@ -35,25 +31,21 @@ const PROJECTS = [
     title: "PolicyBridge",
     tagline: "Insurance Automation Platform",
     description: "Enterprise SaaS for insurance brokers. Automates policy processing, document generation, and compliance tracking.",
-    status: "Production Ready",
-    category: "InsurTech",
-    duration: "3 months",
+    status: "Live",
+    category: "Insurance",
     featured: true,
     liveUrl: "https://policybridge.vercel.app",
-    githubUrl: "https://github.com/shaunChikerema",
     capabilities: [
-      { label: "Bulk processing", desc: "1000s of documents" },
-      { label: "Automated workflows", desc: "Designed to save 20+ hrs/week" },
-      { label: "Enterprise security", desc: "Audit trails + encryption" }
+      { label: "Document automation", desc: "Policy generation" },
+      { label: "Workflow tools", desc: "Process tracking" },
+      { label: "Analytics", desc: "Broker dashboard" }
     ],
-    techHighlights: ["Next.js 15", "PostgreSQL", "Node.js", "Puppeteer"],
+    techHighlights: ["Next.js", "PostgreSQL", "Node.js"],
     features: [
-      "Automated policy document generation",
-      "AI-powered policy recommendations",
-      "Real-time broker analytics dashboard",
-      "Automated renewal reminders",
-      "Regulatory compliance tracking",
-      "Client self-service portal"
+      "Automated policy documents",
+      "Broker analytics dashboard",
+      "Renewal tracking",
+      "Client portal"
     ]
   }
 ];
@@ -91,12 +83,12 @@ export default function Projects() {
           
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6 max-w-3xl">
             <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-emerald-400 bg-clip-text text-transparent">
-              Production
+              Live
             </span>
-            {' '}Platforms
+            {' '}Projects
           </h2>
           <p className="text-base sm:text-xl text-zinc-400 max-w-3xl leading-relaxed">
-            Two full-stack SaaS platforms built for Botswana's market. Production-grade architecture, deployed and ready for users.
+            Two web applications deployed and functional.
           </p>
         </motion.div>
 
@@ -111,7 +103,6 @@ export default function Projects() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="group relative"
             >
-              {/* Glow effect on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 via-blue-500/5 to-emerald-500/0 rounded-xl blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
               <div className="relative bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 group-hover:border-cyan-500/30 overflow-hidden transition-all duration-300">
@@ -119,7 +110,6 @@ export default function Projects() {
                   {/* Header */}
                   <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mb-6 sm:mb-8">
                     <div className="flex-1">
-                      {/* Title & Tagline */}
                       <div className="mb-4">
                         <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">
                           {project.title}
@@ -133,16 +123,12 @@ export default function Projects() {
                         {project.description}
                       </p>
                       
-                      {/* Metadata */}
                       <div className="flex flex-wrap gap-2">
                         <span className="px-3 py-1 bg-blue-500/10 text-blue-400 rounded-md text-xs sm:text-sm font-medium border border-blue-500/20">
                           {project.status}
                         </span>
                         <span className="px-3 py-1 bg-cyan-500/10 text-cyan-400 rounded-md text-xs sm:text-sm font-medium border border-cyan-500/20">
                           {project.category}
-                        </span>
-                        <span className="px-3 py-1 bg-white/5 text-zinc-400 rounded-md text-xs sm:text-sm font-medium border border-white/10">
-                          Built in {project.duration}
                         </span>
                       </div>
                     </div>
@@ -170,17 +156,7 @@ export default function Projects() {
                           rel="noopener noreferrer"
                         >
                           <ExternalLink className="w-4 h-4 mr-2" />
-                          <span className="hidden sm:inline">Live Site</span>
-                          <span className="sm:hidden">Live</span>
-                        </a>
-                        <a
-                          href={project.githubUrl}
-                          className="flex items-center justify-center flex-1 sm:flex-none px-4 py-2 border border-white/10 text-zinc-300 rounded-lg font-medium hover:border-cyan-500/30 hover:text-cyan-400 hover:bg-white/5 transition-all duration-200 text-sm"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <Github className="w-4 h-4 mr-2" />
-                          Code
+                          <span>View Live</span>
                         </a>
                       </div>
                     </div>
@@ -188,7 +164,7 @@ export default function Projects() {
 
                   {/* Capabilities */}
                   <div className="mb-6 sm:mb-8">
-                    <h4 className="text-xs font-semibold text-zinc-500 mb-3 uppercase tracking-wider">Built to Scale</h4>
+                    <h4 className="text-xs font-semibold text-zinc-500 mb-3 uppercase tracking-wider">Key Features</h4>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                       {project.capabilities.map((capability, idx) => (
                         <div key={idx} className="bg-white/5 backdrop-blur-sm rounded-lg p-4 border border-white/10 hover:border-cyan-500/30 transition-all group/cap">
@@ -220,7 +196,7 @@ export default function Projects() {
 
                   {/* Core Features */}
                   <div>
-                    <h4 className="text-xs font-semibold text-zinc-500 mb-3 uppercase tracking-wider">Core Features</h4>
+                    <h4 className="text-xs font-semibold text-zinc-500 mb-3 uppercase tracking-wider">What It Does</h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                       {project.features.map((feature, featureIndex) => (
                         <div key={featureIndex} className="flex items-start group/feature">
@@ -258,19 +234,18 @@ export default function Projects() {
               </div>
               
               <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-4">
-                Production-Ready Architecture
+                Shared Infrastructure
               </h3>
               
               <p className="text-sm sm:text-base text-zinc-400 leading-relaxed mb-6 max-w-2xl mx-auto">
-                Both platforms share core infrastructure: unified authentication, local payment integration (Orange Money + banking APIs), 
-                multi-tenant data isolation, and real-time synchronization. Built to scale from day one.
+                Both platforms use shared infrastructure with multi-tenant data isolation. Built with Next.js and PostgreSQL, deployed on Vercel.
               </p>
               
               <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
                 {[
                   { icon: Code2, label: "Full-Stack", value: "Next.js + PostgreSQL" },
-                  { icon: Building2, label: "Multi-Tenant", value: "Secure isolation" },
-                  { icon: Rocket, label: "Deployed", value: "Vercel (99.9% uptime)" }
+                  { icon: Building2, label: "Multi-Tenant", value: "Data isolation" },
+                  { icon: Rocket, label: "Live", value: "Deployed on Vercel" }
                 ].map((item, index) => {
                   const Icon = item.icon;
                   return (

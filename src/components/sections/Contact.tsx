@@ -1,9 +1,8 @@
 'use client';
 import { motion } from 'framer-motion';
-import { Mail, MapPin, Calendar, Send, Zap } from 'lucide-react';
+import { Mail, MapPin, Send, Zap } from 'lucide-react';
 import { useState } from 'react';
 
-// Mock constant - replace with your actual import
 const PERSONAL_INFO = {
   email: 'sschikerema@gmail.com'
 };
@@ -62,18 +61,18 @@ export default function Contact() {
       description: 'Best for detailed discussions'
     },
     {
-      icon: Calendar,
-      href: 'https://cal.com/shaunchikerema',
-      label: 'Schedule Call',
-      value: '30-min chat',
-      description: 'Discuss your project live'
+      icon: Send,
+      href: 'https://wa.me/26776051622',
+      label: 'WhatsApp',
+      value: '+267 76 051 622',
+      description: 'Message me directly'
     },
     {
       icon: MapPin,
       href: '#',
       label: 'Location',
       value: 'Gaborone, Botswana',
-      description: 'Available locally & remote'
+      description: 'Remote work worldwide'
     }
   ];
 
@@ -90,13 +89,7 @@ export default function Contact() {
 
   return (
     <section id="contact" className="py-24 lg:py-32 bg-black relative overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 right-1/3 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
-      </div>
-
-      {/* Grid Pattern */}
+      {/* Grid Pattern Only - No Orbs */}
       <div 
         className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-[size:64px_64px]"
         aria-hidden="true"
@@ -123,7 +116,7 @@ export default function Contact() {
             </span>
           </h2>
           <p className="text-xl text-zinc-400 max-w-3xl leading-relaxed">
-            I build production SaaS platforms from architecture to deployment. Based in Gaborone, working with clients across Botswana.
+            Full-stack engineer building web applications. Based in Gaborone, working with clients globally.
           </p>
         </motion.div>
 
@@ -138,7 +131,6 @@ export default function Contact() {
               className="lg:col-span-2"
             >
               <div className="relative group">
-                {/* Glow effect */}
                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 via-blue-500/5 to-emerald-500/0 rounded-xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
                 <div className="relative bg-white/5 backdrop-blur-sm rounded-xl p-6 lg:p-8 border border-white/10 group-hover:border-white/20 transition-all h-full">
@@ -154,7 +146,6 @@ export default function Contact() {
                         rel={method.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                       >
                         <div className="relative mr-4 flex-shrink-0">
-                          {/* Icon glow */}
                           <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-blue-400 rounded-lg blur-md opacity-0 group-hover/method:opacity-50 transition-opacity" />
                           <div className="relative w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-400 rounded-lg flex items-center justify-center">
                             <method.icon className="w-5 h-5 text-black" />
@@ -197,7 +188,6 @@ export default function Contact() {
               className="lg:col-span-3"
             >
               <div className="relative group">
-                {/* Glow effect */}
                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 via-blue-500/5 to-emerald-500/0 rounded-xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
                 <div className="relative bg-white/5 backdrop-blur-sm rounded-xl p-6 lg:p-8 border border-white/10 group-hover:border-white/20 transition-all h-full">
@@ -329,10 +319,7 @@ export default function Contact() {
                           disabled={isSubmitting}
                           className="group/btn relative w-full py-4 px-6 rounded-lg font-semibold overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
                         >
-                          {/* Gradient background */}
                           <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 transition-transform group-hover/btn:scale-105" />
-                          
-                          {/* Glow effect */}
                           <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 blur-xl opacity-50 group-hover/btn:opacity-75 transition-opacity" />
                           
                           <span className="relative flex items-center justify-center gap-3 text-white">
@@ -368,20 +355,18 @@ export default function Contact() {
           className="mt-16 max-w-4xl mx-auto"
         >
           <div className="relative group">
-            {/* Glow effect */}
             <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-blue-500/10 to-cyan-500/0 rounded-xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             
             <div className="relative bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-white/10 group-hover:border-white/20 transition-all text-center">
-              <h3 className="text-xl font-bold text-white mb-4">Working Across Botswana</h3>
+              <h3 className="text-xl font-bold text-white mb-4">Remote-First Development</h3>
               <p className="text-zinc-400 leading-relaxed mb-6">
-                Local expertise with global standards. I understand Botswana's market dynamics, integrate local payment systems, 
-                and build mobile-first solutions for our market.
+                Based in Gaborone, working globally. I build production-ready web applications with modern technologies and provide ongoing support for all projects.
               </p>
               <div className="flex flex-wrap justify-center gap-6">
                 {[
-                  "Local Payment Integration",
+                  "Full-Stack Development",
                   "Mobile-First Design", 
-                  "Fast Shipping (4-6 weeks)",
+                  "4-6 Week Delivery",
                   "Post-Launch Support"
                 ].map((feature, index) => (
                   <div key={index} className="flex items-center gap-2 group/feature">

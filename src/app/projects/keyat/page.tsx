@@ -1,9 +1,8 @@
 'use client';
-import { ArrowLeft, ExternalLink, Building2, MapPin, Users, Database, Shield, Zap, Calendar, Target, Lightbulb, Rocket } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Building2, Database, Shield, Zap, Target, Lightbulb, Rocket } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
-// Mock project data - replace with your actual import
 const project = {
   id: 1,
   title: "Keyat",
@@ -12,7 +11,7 @@ const project = {
     Frontend: ["Next.js 15", "TypeScript", "Tailwind CSS"],
     Backend: ["Supabase", "PostgreSQL", "REST APIs"],
     Infrastructure: ["Vercel", "GitHub Actions"],
-    Services: ["Orange Money", "Auth0"]
+    Auth: ["Supabase Auth"]
   }
 };
 
@@ -40,15 +39,12 @@ export default function KeyatProjectPage() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              {/* Gradient background */}
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 transition-transform group-hover:scale-105" />
-              
-              {/* Glow effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 blur-xl opacity-50 group-hover:opacity-75 transition-opacity" />
               
               <span className="relative flex items-center gap-2 text-white">
                 <ExternalLink size={16} />
-                View Live Platform
+                View Live
               </span>
             </a>
           </div>
@@ -57,13 +53,11 @@ export default function KeyatProjectPage() {
 
       {/* Hero */}
       <section className="relative py-20 overflow-hidden border-b border-white/10">
-        {/* Background Effects */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl" />
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/15 rounded-full blur-3xl" />
         </div>
 
-        {/* Grid Pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:64px_64px]" />
 
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
@@ -74,50 +68,21 @@ export default function KeyatProjectPage() {
           >
             <div className="flex items-center gap-2 text-sm text-cyan-400 mb-4">
               <Building2 size={16} />
-              <span className="font-medium">BITROOT Ecosystem</span>
+              <span className="font-medium">Real Estate Platform</span>
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-              Keyat: <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-emerald-400 bg-clip-text text-transparent">Real Estate Platform</span><br />for Botswana
+              Keyat: <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-emerald-400 bg-clip-text text-transparent">Real Estate</span><br />Marketplace
             </h1>
             
             <p className="text-xl text-zinc-400 leading-relaxed mb-8 max-w-3xl">
-              I built Botswana's first comprehensive real estate platform. Multi-tenant architecture connecting property seekers, agents, and landlords with local payment integration.
+              A full-stack property marketplace connecting buyers, sellers, and agents. Multi-tenant architecture with role-based access and real-time listings.
             </p>
-            
-            {/* Metrics */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-              {[
-                { value: '10K+', label: 'Built to Handle' },
-                { value: '<200ms', label: 'Search Speed' },
-                { value: 'Multi-tenant', label: 'Architecture' },
-                { value: '99.9%', label: 'Uptime' }
-              ].map((metric, index) => (
-                <motion.div
-                  key={metric.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 + index * 0.1 }}
-                  className="relative group"
-                >
-                  {/* Glow on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-blue-500/20 to-cyan-500/0 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  
-                  <div className="relative text-center bg-white/5 backdrop-blur-sm rounded-lg p-4 border border-white/10 group-hover:border-cyan-500/30 transition-all">
-                    <div className="text-2xl font-bold text-white mb-1">{metric.value}</div>
-                    <div className="text-sm text-zinc-500">{metric.label}</div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
 
             {/* Context */}
             <div className="flex flex-wrap gap-3 text-sm">
               {[
-                { icon: Calendar, text: 'Built in 4 months', color: 'cyan' },
-                { icon: Users, text: 'Solo founder-engineer', color: 'blue' },
-                { icon: MapPin, text: 'Gaborone, Botswana', color: 'cyan' },
-                { icon: Zap, text: 'Production Ready', color: 'blue', special: true }
+                { icon: Zap, text: 'Live & Deployed', color: 'blue', special: true }
               ].map((item, index) => {
                 const Icon = item.icon;
                 return (
@@ -139,7 +104,7 @@ export default function KeyatProjectPage() {
         </div>
       </section>
 
-      {/* Business Impact */}
+      {/* What I Built */}
       <section className="py-20 bg-black relative">
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div 
@@ -152,9 +117,9 @@ export default function KeyatProjectPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
               {[
-                { icon: Target, color: 'blue', title: 'First in Market', desc: 'First comprehensive platform serving Botswana\'s property market with verified listings and agent profiles' },
-                { icon: Rocket, color: 'emerald', title: 'Built to Scale', desc: 'Multi-tenant architecture designed to handle 10K+ concurrent users across Botswana\'s cities' },
-                { icon: Lightbulb, color: 'cyan', title: 'Local Integration', desc: 'Orange Money + bank API integration with USSD fallback for complete Botswana coverage' }
+                { icon: Target, color: 'blue', title: 'Property Search', desc: 'Search and filter system for property listings with location, price, and type filters' },
+                { icon: Rocket, color: 'emerald', title: 'Multi-tenant', desc: 'Separate data isolation for buyers, sellers, and agents with role-based permissions' },
+                { icon: Lightbulb, color: 'cyan', title: 'Mobile-First', desc: 'Responsive design optimized for mobile users with fast performance' }
               ].map((item, index) => {
                 const Icon = item.icon;
                 return (
@@ -167,7 +132,6 @@ export default function KeyatProjectPage() {
                     className="text-center group"
                   >
                     <div className="relative inline-block mb-4">
-                      {/* Icon glow - Using fixed Tailwind classes */}
                       <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-blue-400 rounded-2xl blur-xl opacity-0 group-hover:opacity-50 transition-opacity" />
                       <div className={`relative w-16 h-16 ${
                         item.color === 'blue' ? 'bg-blue-500/10 border-blue-500/20' :
@@ -188,26 +152,25 @@ export default function KeyatProjectPage() {
               })}
             </div>
 
-            {/* Botswana-Specific Features */}
+            {/* Key Features */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               className="relative group"
             >
-              {/* Card glow */}
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 via-blue-500/10 to-emerald-500/0 rounded-2xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
               <div className="relative bg-gradient-to-br from-cyan-500/10 to-blue-500/10 rounded-2xl p-8 border border-cyan-500/20 backdrop-blur-sm">
-                <h3 className="text-2xl font-bold text-white mb-6">Built for Botswana</h3>
+                <h3 className="text-2xl font-bold text-white mb-6">Platform Features</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
-                    <h4 className="font-semibold text-white mb-3">Local Payments</h4>
+                    <h4 className="font-semibold text-white mb-3">For Property Seekers</h4>
                     <p className="text-zinc-400 mb-4 text-sm">
-                      Orange Money and Mascom MyZaka integration with traditional banking fallbacks. Covers 100% of Botswana's payment preferences.
+                      Search properties by location, price range, and type. Save favorites, contact agents directly, and schedule viewings.
                     </p>
                     <div className="flex flex-wrap gap-2">
-                      {['Orange Money', 'Bank APIs', 'Secure Escrow'].map((tag) => (
+                      {['Search & Filter', 'Save Listings', 'Contact Agents'].map((tag) => (
                         <span key={tag} className="px-3 py-1 bg-white/10 backdrop-blur-sm text-cyan-300 rounded-md text-sm font-medium border border-cyan-500/20">
                           {tag}
                         </span>
@@ -215,12 +178,12 @@ export default function KeyatProjectPage() {
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-white mb-3">Mobile-First</h4>
+                    <h4 className="font-semibold text-white mb-3">For Agents</h4>
                     <p className="text-zinc-400 mb-4 text-sm">
-                      PWA optimized for Botswana's 85% smartphone penetration. Works offline, syncs when connected. USSD backup for feature phones.
+                      Create and manage property listings. Track inquiries, update availability, and manage client communications.
                     </p>
                     <div className="flex flex-wrap gap-2">
-                      {['PWA', 'Offline Mode', 'USSD'].map((tag) => (
+                      {['Listing Management', 'Client Tracking', 'Analytics'].map((tag) => (
                         <span key={tag} className="px-3 py-1 bg-white/10 backdrop-blur-sm text-cyan-300 rounded-md text-sm font-medium border border-cyan-500/20">
                           {tag}
                         </span>
@@ -236,7 +199,6 @@ export default function KeyatProjectPage() {
 
       {/* Technical Architecture */}
       <section className="py-20 bg-black border-t border-white/10 relative">
-        {/* Grid Pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-[size:64px_64px]" />
         
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
@@ -252,13 +214,13 @@ export default function KeyatProjectPage() {
               <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
                 <h3 className="text-xl font-semibold text-white mb-4">Key Decisions</h3>
                 <p className="text-zinc-400 leading-relaxed mb-6 text-sm">
-                  Multi-tenant architecture using Supabase Row Level Security. Complete data isolation between users while maintaining real-time updates.
+                  Multi-tenant architecture using Supabase Row Level Security for complete data isolation between users while maintaining real-time updates.
                 </p>
                 <div className="space-y-4">
                   {[
                     { icon: Database, title: 'Real-time Database', desc: 'PostgreSQL with live subscriptions' },
-                    { icon: Shield, title: 'Security First', desc: 'Encryption + role-based access' },
-                    { icon: Zap, title: 'Performance', desc: 'PWA with intelligent caching' }
+                    { icon: Shield, title: 'Secure Access', desc: 'Role-based permissions & encryption' },
+                    { icon: Zap, title: 'Fast Performance', desc: 'Optimized queries & caching' }
                   ].map((item, index) => {
                     const Icon = item.icon;
                     return (
@@ -278,11 +240,11 @@ export default function KeyatProjectPage() {
                 <h4 className="font-semibold text-white mb-4">Tech Stack</h4>
                 <ul className="space-y-3">
                   {[
-                    'Next.js 15 for performance and SEO',
-                    'Supabase for auth and real-time data',
-                    'TypeScript for type safety at scale',
+                    'Next.js 15 for server-side rendering',
+                    'Supabase for auth and database',
+                    'TypeScript for type safety',
                     'Tailwind CSS for responsive design',
-                    'Vercel for deployment (99.9% uptime)'
+                    'Vercel for deployment'
                   ].map((item, index) => (
                     <li key={index} className="flex items-start group/tech">
                       <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
@@ -296,7 +258,7 @@ export default function KeyatProjectPage() {
         </div>
       </section>
 
-      {/* Challenges & Solutions */}
+      {/* Problems Solved */}
       <section className="py-20 bg-black">
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div 
@@ -305,14 +267,14 @@ export default function KeyatProjectPage() {
             viewport={{ once: true }}
             className="max-w-4xl"
           >
-            <h2 className="text-3xl font-bold text-white mb-12">Problems I Solved</h2>
+            <h2 className="text-3xl font-bold text-white mb-12">Technical Challenges</h2>
             
             <div className="space-y-6">
               {[
-                { title: 'Multi-tenant Data Isolation', desc: 'Used Supabase Row Level Security policies to ensure complete data separation between landlords, agents, and tenants. Each user only sees their own data, even though it\'s in shared tables.' },
-                { title: 'Fast Search at Scale', desc: 'Implemented PostgreSQL full-text search with proper indexing. Built to search across 10K+ properties in under 200ms. Added filters for location, price, property type.' },
-                { title: 'Local Payment Integration', desc: 'Integrated Orange Money API with custom webhook handlers. Designed to handle payment verification, escrow deposits, and automated refunds. Built USSD fallback for users without smartphones.' },
-                { title: 'Mobile Performance', desc: 'Optimized for Botswana\'s mobile networks. Image compression, lazy loading, service workers for offline mode. PWA can be installed on home screen.' }
+                { title: 'Multi-tenant Data Isolation', desc: 'Implemented Supabase Row Level Security policies to ensure complete data separation between landlords, agents, and tenants. Each user only sees their own data.' },
+                { title: 'Search Performance', desc: 'Built PostgreSQL full-text search with proper indexing. Optimized queries to handle property searches with multiple filters efficiently.' },
+                { title: 'Role-Based Access', desc: 'Created a flexible permission system allowing different capabilities for buyers, sellers, and agents while maintaining security.' },
+                { title: 'Mobile Responsiveness', desc: 'Designed mobile-first interface with Tailwind CSS. Optimized images and implemented lazy loading for better performance on mobile networks.' }
               ].map((item, index) => (
                 <motion.div
                   key={index}
@@ -322,7 +284,6 @@ export default function KeyatProjectPage() {
                   transition={{ delay: index * 0.1 }}
                   className="relative group"
                 >
-                  {/* Glow effect */}
                   <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-400 via-blue-400 to-cyan-400 rounded-full opacity-50 group-hover:opacity-100 transition-opacity" />
                   
                   <div className="border-l-4 border-cyan-500/30 group-hover:border-cyan-500 pl-6 py-2 transition-colors">
@@ -340,7 +301,7 @@ export default function KeyatProjectPage() {
         </div>
       </section>
 
-      {/* Full Tech Stack */}
+      {/* Tech Stack */}
       <section className="py-20 bg-black border-t border-white/10">
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div 
@@ -373,7 +334,6 @@ export default function KeyatProjectPage() {
 
       {/* CTA */}
       <section className="py-20 bg-gradient-to-br from-black via-zinc-900 to-black relative overflow-hidden">
-        {/* Background glow */}
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-cyan-500/10 blur-3xl" />
         
         <div className="container mx-auto px-4 sm:px-6 text-center relative z-10">
@@ -383,9 +343,9 @@ export default function KeyatProjectPage() {
             viewport={{ once: true }}
             className="max-w-2xl mx-auto"
           >
-            <h2 className="text-3xl font-bold text-white mb-4">See the Platform</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">Explore the Platform</h2>
             <p className="text-zinc-400 mb-8 text-lg">
-              Explore the real estate platform built for Botswana. See the architecture, design, and features in action.
+              See the property marketplace in action. Browse listings, test the search, and explore the features.
             </p>
             <a
               href={project.liveUrl}
@@ -393,10 +353,7 @@ export default function KeyatProjectPage() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              {/* Gradient background */}
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 transition-transform group-hover:scale-105" />
-              
-              {/* Glow effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 blur-xl opacity-50 group-hover:opacity-75 transition-opacity" />
               
               <span className="relative text-white">View Live Platform</span>

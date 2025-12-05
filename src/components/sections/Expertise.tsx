@@ -1,6 +1,6 @@
 'use client';
 import { motion } from 'framer-motion';
-import { Code2, Server, Smartphone, Database, Zap, Cpu, GitBranch, Cloud } from 'lucide-react';
+import { Code2, Server, Zap, Cpu, Cloud } from 'lucide-react';
 
 export default function Expertise() {
   const expertiseAreas = [
@@ -28,7 +28,7 @@ export default function Expertise() {
         "Monitoring & analytics",
         "Security implementation"
       ],
-      projects: ["Keyat", "PolicyBridge", "Task Manager"]
+      projects: ["Keyat", "PolicyBridge"]
     },
     {
       title: "Frontend Engineering",
@@ -41,7 +41,7 @@ export default function Expertise() {
         "Performance optimization",
         "Mobile-responsive design"
       ],
-      projects: ["Keyat", "PolicyBridge", "Fitness Tracker"]
+      projects: ["Keyat", "PolicyBridge"]
     },
     {
       title: "Backend Systems",
@@ -54,19 +54,13 @@ export default function Expertise() {
         "Authentication systems",
         "Third-party integrations"
       ],
-      projects: ["PolicyBridge", "Keyat", "Task Manager"]
+      projects: ["PolicyBridge", "Keyat"]
     }
   ];
 
   return (
     <section id="expertise" className="py-24 lg:py-32 bg-black relative overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/3 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
-      </div>
-
-      {/* Grid Pattern */}
+      {/* Grid Pattern Only - No Orbs */}
       <div 
         className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-[size:64px_64px]"
         aria-hidden="true"
@@ -110,14 +104,12 @@ export default function Expertise() {
                 transition={{ duration: 0.5, delay: areaIndex * 0.1 }}
                 className="group relative"
               >
-                {/* Glow effect on hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 via-blue-500/10 to-emerald-500/0 rounded-xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
                 <div className="relative bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 group-hover:border-cyan-500/30 transition-all duration-300">
                   {/* Header */}
                   <div className="flex items-start gap-4 mb-6">
                     <div className="relative flex-shrink-0">
-                      {/* Icon glow */}
                       <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-blue-400 rounded-lg blur-md opacity-50" />
                       <div className="relative w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-400 rounded-lg flex items-center justify-center">
                         <Icon className="w-5 h-5 text-black" />
@@ -196,7 +188,6 @@ export default function Expertise() {
           className="max-w-4xl mx-auto"
         >
           <div className="relative group">
-            {/* Glow effect */}
             <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-blue-500/10 to-cyan-500/0 rounded-xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             
             <div className="relative bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-white/10 group-hover:border-white/20 transition-all duration-300">
@@ -220,7 +211,6 @@ export default function Expertise() {
                 ].map((principle, index) => (
                   <div key={index} className="text-center group/principle">
                     <div className="relative inline-block mb-3">
-                      {/* Dot glow */}
                       <div className="absolute inset-0 bg-cyan-400 rounded-full blur-md opacity-0 group-hover/principle:opacity-50 transition-opacity" />
                       <div className="relative w-2 h-2 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full"></div>
                     </div>

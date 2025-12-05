@@ -1,9 +1,8 @@
 'use client';
-import { ArrowLeft, ExternalLink, Building2, Calendar, Users, FileText, Shield, Zap, Database, Target, TrendingUp, Clock, BarChart3 } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Building2, FileText, Shield, Zap, Database, Target, TrendingUp, Clock } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
-// Mock project data - replace with your actual import
 const project = {
   id: 2,
   title: "PolicyBridge",
@@ -12,7 +11,7 @@ const project = {
     Frontend: ["Next.js 15", "React", "Tailwind CSS"],
     Backend: ["Supabase", "PostgreSQL", "Node.js"],
     Infrastructure: ["Vercel", "Redis"],
-    Services: ["Stripe", "SendGrid"]
+    Tools: ["Puppeteer"]
   }
 };
 
@@ -40,15 +39,12 @@ export default function PolicyBridgePage() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              {/* Gradient background */}
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 transition-transform group-hover:scale-105" />
-              
-              {/* Glow effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 blur-xl opacity-50 group-hover:opacity-75 transition-opacity" />
               
               <span className="relative flex items-center gap-2 text-white">
                 <ExternalLink size={16} />
-                View Live Platform
+                View Live
               </span>
             </a>
           </div>
@@ -57,13 +53,11 @@ export default function PolicyBridgePage() {
 
       {/* Hero */}
       <section className="relative py-20 overflow-hidden border-b border-white/10">
-        {/* Background Effects */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl" />
           <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-cyan-500/15 rounded-full blur-3xl" />
         </div>
 
-        {/* Grid Pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:64px_64px]" />
 
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
@@ -74,50 +68,22 @@ export default function PolicyBridgePage() {
           >
             <div className="flex items-center gap-2 text-sm text-cyan-400 mb-4">
               <Building2 size={16} />
-              <span className="font-medium">BITROOT Ecosystem</span>
+              <span className="font-medium">Insurance Platform</span>
             </div>
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-              PolicyBridge: <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-emerald-400 bg-clip-text text-transparent">Insurance Management</span><br />SaaS
+              PolicyBridge: <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-emerald-400 bg-clip-text text-transparent">Insurance Automation</span><br />Platform
             </h1>
             
             <p className="text-xl text-zinc-400 leading-relaxed mb-8 max-w-3xl">
-              I built an enterprise insurance management platform for Botswana's brokers. Automates policy processing, document generation, and compliance tracking.
+              An insurance management platform for brokers. Automates policy processing, document generation, and client tracking.
             </p>
-            
-            {/* Metrics */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-              {[
-                { value: '1000s', label: 'Built to Process' },
-                { value: '60%', label: 'Efficiency Gain' },
-                { value: 'Enterprise', label: 'Security' },
-                { value: '99.9%', label: 'Uptime' }
-              ].map((metric, index) => (
-                <motion.div
-                  key={metric.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 + index * 0.1 }}
-                  className="relative group"
-                >
-                  {/* Glow on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-blue-500/20 to-cyan-500/0 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  
-                  <div className="relative text-center bg-white/5 backdrop-blur-sm rounded-lg p-4 border border-white/10 group-hover:border-cyan-500/30 transition-all">
-                    <div className="text-2xl font-bold text-white mb-1">{metric.value}</div>
-                    <div className="text-sm text-zinc-500">{metric.label}</div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
 
             {/* Context */}
             <div className="flex flex-wrap gap-3 text-sm">
               {[
-                { icon: Calendar, text: 'Built in 3 months', color: 'cyan' },
-                { icon: Users, text: 'Solo founder-engineer', color: 'blue' },
                 { icon: FileText, text: 'Insurance SaaS', color: 'cyan' },
-                { icon: Zap, text: 'Production Ready', color: 'blue', special: true }
+                { icon: Zap, text: 'Live & Deployed', color: 'blue', special: true }
               ].map((item, index) => {
                 const Icon = item.icon;
                 return (
@@ -139,7 +105,7 @@ export default function PolicyBridgePage() {
         </div>
       </section>
 
-      {/* Business Impact */}
+      {/* What I Built */}
       <section className="py-20 bg-black relative">
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div 
@@ -148,14 +114,13 @@ export default function PolicyBridgePage() {
             viewport={{ once: true }}
             className="max-w-4xl"
           >
-            <h2 className="text-3xl font-bold text-white mb-12">What It Does</h2>
+            <h2 className="text-3xl font-bold text-white mb-12">What I Built</h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
               {[
-                { icon: Clock, color: 'blue', title: 'Time Saved', desc: 'Designed to save brokers 20+ hours/week on manual tasks' },
-                { icon: TrendingUp, color: 'emerald', title: 'Faster', desc: '60% faster than manual document processing' },
-                { icon: BarChart3, color: 'cyan', title: 'Scale', desc: 'Built to handle 10K+ documents monthly' },
-                { icon: Target, color: 'blue', title: 'Multi-tenant', desc: 'Architected for 500+ concurrent brokers' }
+                { icon: Clock, color: 'blue', title: 'Automation', desc: 'Reduces manual data entry and document processing time' },
+                { icon: TrendingUp, color: 'emerald', title: 'Workflow Tools', desc: 'Track policies from quote to renewal' },
+                { icon: Target, color: 'cyan', title: 'Multi-tenant', desc: 'Data isolation for multiple brokers' }
               ].map((item, index) => {
                 const Icon = item.icon;
                 return (
@@ -168,22 +133,21 @@ export default function PolicyBridgePage() {
                     className="text-center group"
                   >
                     <div className="relative inline-block mb-4">
-                      {/* Icon glow - Using fixed Tailwind classes */}
                       <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-blue-400 rounded-2xl blur-xl opacity-0 group-hover:opacity-50 transition-opacity" />
-                      <div className={`relative w-12 h-12 ${
+                      <div className={`relative w-16 h-16 ${
                         item.color === 'blue' ? 'bg-blue-500/10 border-blue-500/20' :
                         item.color === 'emerald' ? 'bg-emerald-500/10 border-emerald-500/20' :
                         'bg-cyan-500/10 border-cyan-500/20'
                       } rounded-2xl flex items-center justify-center border`}>
-                        <Icon className={`w-6 h-6 ${
+                        <Icon className={`w-8 h-8 ${
                           item.color === 'blue' ? 'text-blue-400' :
                           item.color === 'emerald' ? 'text-emerald-400' :
                           'text-cyan-400'
                         }`} />
                       </div>
                     </div>
-                    <h3 className="font-semibold text-white mb-2 text-sm group-hover:text-cyan-400 transition-colors">{item.title}</h3>
-                    <p className="text-zinc-400 text-xs leading-relaxed">{item.desc}</p>
+                    <h3 className="font-semibold text-white mb-3 group-hover:text-cyan-400 transition-colors">{item.title}</h3>
+                    <p className="text-zinc-400 text-sm leading-relaxed">{item.desc}</p>
                   </motion.div>
                 );
               })}
@@ -196,19 +160,18 @@ export default function PolicyBridgePage() {
               viewport={{ once: true }}
               className="relative group"
             >
-              {/* Card glow */}
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 via-blue-500/10 to-emerald-500/0 rounded-2xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
               <div className="relative bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-2xl p-8 border border-blue-500/20 backdrop-blur-sm">
-                <h3 className="text-2xl font-bold text-white mb-6">Built for Botswana's Insurance Industry</h3>
+                <h3 className="text-2xl font-bold text-white mb-6">Platform Features</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
-                    <h4 className="font-semibold text-white mb-3">Compliance First</h4>
+                    <h4 className="font-semibold text-white mb-3">For Brokers</h4>
                     <p className="text-zinc-400 mb-4 text-sm leading-relaxed">
-                      Built-in audit trails, data encryption, and role-based access for Botswana's insurance regulations. Every action is logged and traceable.
+                      Manage policies, generate documents, and track renewals. Built-in audit trails and role-based access control.
                     </p>
                     <div className="flex flex-wrap gap-2">
-                      {['Audit Trails', 'Encryption', 'RBAC'].map((tag) => (
+                      {['Policy Management', 'Audit Trails', 'RBAC'].map((tag) => (
                         <span key={tag} className="px-3 py-1 bg-white/10 backdrop-blur-sm text-cyan-300 rounded-md text-sm font-medium border border-cyan-500/20">
                           {tag}
                         </span>
@@ -216,12 +179,12 @@ export default function PolicyBridgePage() {
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-white mb-3">Document Automation</h4>
+                    <h4 className="font-semibold text-white mb-3">Document Generation</h4>
                     <p className="text-zinc-400 mb-4 text-sm leading-relaxed">
-                      Queue-based PDF generation system. Built to handle 10K+ payslips monthly with custom templates, bulk processing, and automated email distribution.
+                      Automated PDF generation using Puppeteer. Custom templates for policies, quotes, and reports with bulk processing capability.
                     </p>
                     <div className="flex flex-wrap gap-2">
-                      {['PDF Engine', 'Bulk Processing', 'Email Auto'].map((tag) => (
+                      {['PDF Engine', 'Templates', 'Bulk Processing'].map((tag) => (
                         <span key={tag} className="px-3 py-1 bg-white/10 backdrop-blur-sm text-cyan-300 rounded-md text-sm font-medium border border-cyan-500/20">
                           {tag}
                         </span>
@@ -237,7 +200,6 @@ export default function PolicyBridgePage() {
 
       {/* Technical Architecture */}
       <section className="py-20 bg-black border-t border-white/10 relative">
-        {/* Grid Pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-[size:64px_64px]" />
         
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
@@ -251,15 +213,15 @@ export default function PolicyBridgePage() {
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
               <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
-                <h3 className="text-xl font-semibold text-white mb-4">Enterprise Security</h3>
+                <h3 className="text-xl font-semibold text-white mb-4">Key Decisions</h3>
                 <p className="text-zinc-400 leading-relaxed mb-6 text-sm">
-                  Multi-tenant architecture with Supabase Row Level Security. Complete data isolation between brokers while maintaining real-time updates and audit capabilities.
+                  Multi-tenant architecture with Supabase Row Level Security for complete data isolation between brokers and their clients.
                 </p>
                 <div className="space-y-4">
                   {[
-                    { icon: Shield, title: 'Bank-Grade Security', desc: 'Encryption + compliance auditing' },
+                    { icon: Shield, title: 'Secure Architecture', desc: 'Encryption and audit logging' },
                     { icon: FileText, title: 'PDF Generation', desc: 'Puppeteer-based automation' },
-                    { icon: Database, title: 'Real-Time Analytics', desc: 'Live business intelligence' }
+                    { icon: Database, title: 'Real-Time Updates', desc: 'Live policy tracking' }
                   ].map((item, index) => {
                     const Icon = item.icon;
                     return (
@@ -279,11 +241,11 @@ export default function PolicyBridgePage() {
                 <h4 className="font-semibold text-white mb-4">Tech Stack</h4>
                 <ul className="space-y-3">
                   {[
-                    'Next.js 15 for SEO and performance',
-                    'Supabase RLS for secure multi-tenancy',
-                    'Puppeteer for PDF generation at scale',
-                    'TypeScript for data integrity',
-                    'Firebase for real-time notifications'
+                    'Next.js 15 for server-side rendering',
+                    'Supabase for auth and database',
+                    'Puppeteer for PDF generation',
+                    'TypeScript for type safety',
+                    'Redis for caching'
                   ].map((item, index) => (
                     <li key={index} className="flex items-start group/tech">
                       <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
@@ -297,7 +259,7 @@ export default function PolicyBridgePage() {
         </div>
       </section>
 
-      {/* Challenges & Solutions */}
+      {/* Problems Solved */}
       <section className="py-20 bg-black">
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div 
@@ -306,14 +268,14 @@ export default function PolicyBridgePage() {
             viewport={{ once: true }}
             className="max-w-4xl"
           >
-            <h2 className="text-3xl font-bold text-white mb-12">Problems I Solved</h2>
+            <h2 className="text-3xl font-bold text-white mb-12">Technical Challenges</h2>
             
             <div className="space-y-6">
               {[
-                { title: 'Bulk PDF Generation at Scale', desc: 'Built a queue system with Puppeteer designed to generate 10K+ payslips monthly. Each PDF is rendered server-side, validated, then stored in Supabase Storage. Architected to handle concurrent requests without timeouts.' },
-                { title: 'Multi-Tenant Data Isolation', desc: 'Used Supabase Row Level Security to ensure brokers can only see their own clients\' data. Each policy, document, and transaction is tied to a broker_id with strict RLS policies.' },
-                { title: 'Compliance & Audit Trails', desc: 'Every action (policy created, document generated, payment processed) is logged with timestamps, user IDs, and IP addresses. Built to meet Botswana\'s insurance regulatory requirements.' },
-                { title: 'Real-Time Notifications', desc: 'Firebase Cloud Messaging integration for instant notifications when documents are ready, policies expire, or payments are due. Designed to work on web and mobile.' }
+                { title: 'PDF Generation Pipeline', desc: 'Built a queue system with Puppeteer to generate policy documents server-side. Each PDF is rendered, validated, then stored in Supabase Storage.' },
+                { title: 'Multi-Tenant Data Isolation', desc: 'Implemented Supabase Row Level Security to ensure brokers can only access their own clients\' data. Every policy and document is tied to a broker_id with strict RLS policies.' },
+                { title: 'Audit Trail System', desc: 'Every action (policy created, document generated, status changed) is logged with timestamps and user IDs for compliance tracking.' },
+                { title: 'Workflow Automation', desc: 'Automated renewal reminders and policy expiration notifications using scheduled database functions and email triggers.' }
               ].map((item, index) => (
                 <motion.div
                   key={index}
@@ -323,7 +285,6 @@ export default function PolicyBridgePage() {
                   transition={{ delay: index * 0.1 }}
                   className="relative group"
                 >
-                  {/* Glow effect */}
                   <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-400 via-blue-400 to-cyan-400 rounded-full opacity-50 group-hover:opacity-100 transition-opacity" />
                   
                   <div className="border-l-4 border-cyan-500/30 group-hover:border-cyan-500 pl-6 py-2 transition-colors">
@@ -341,7 +302,7 @@ export default function PolicyBridgePage() {
         </div>
       </section>
 
-      {/* Full Tech Stack */}
+      {/* Tech Stack */}
       <section className="py-20 bg-black border-t border-white/10">
         <div className="container mx-auto px-4 sm:px-6">
           <motion.div 
@@ -374,7 +335,6 @@ export default function PolicyBridgePage() {
 
       {/* CTA */}
       <section className="py-20 bg-gradient-to-br from-black via-zinc-900 to-black relative overflow-hidden">
-        {/* Background glow */}
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-cyan-500/10 blur-3xl" />
         
         <div className="container mx-auto px-4 sm:px-6 text-center relative z-10">
@@ -384,9 +344,9 @@ export default function PolicyBridgePage() {
             viewport={{ once: true }}
             className="max-w-2xl mx-auto"
           >
-            <h2 className="text-3xl font-bold text-white mb-4">See the Platform</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">Explore the Platform</h2>
             <p className="text-zinc-400 mb-8 text-lg">
-              Explore the insurance management platform built for Botswana's brokers. See automated workflows, compliance features, and document processing in action.
+              See the insurance management platform in action. Explore automated workflows and document processing features.
             </p>
             <a
               href={project.liveUrl}
@@ -394,10 +354,7 @@ export default function PolicyBridgePage() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              {/* Gradient background */}
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 transition-transform group-hover:scale-105" />
-              
-              {/* Glow effect */}
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 blur-xl opacity-50 group-hover:opacity-75 transition-opacity" />
               
               <span className="relative text-white">View Live Platform</span>

@@ -4,20 +4,19 @@ import { Layers, Sparkles, Code2, Zap } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 export default function About() {
-  // Animated experience counter
-  const [yearsExp, setYearsExp] = useState(0);
+  const [projectCount, setProjectCount] = useState(0);
   
   useEffect(() => {
-    const target = 5; // 2019-2024 = 5 years
-    const duration = 2000;
-    const steps = 50;
+    const target = 2;
+    const duration = 1500;
+    const steps = 30;
     const interval = duration / steps;
     
     let step = 0;
     const timer = setInterval(() => {
       step++;
       const progress = step / steps;
-      setYearsExp(Math.floor(target * progress));
+      setProjectCount(Math.floor(target * progress));
       
       if (step === steps) clearInterval(timer);
     }, interval);
@@ -30,7 +29,7 @@ export default function About() {
     { name: "TypeScript", category: "Language", projects: ["Keyat", "PolicyBridge"] },
     { name: "PostgreSQL", category: "Database", projects: ["Keyat", "PolicyBridge"] },
     { name: "Supabase", category: "Backend", projects: ["Keyat", "PolicyBridge"] },
-    { name: "React Native", category: "Mobile", projects: ["Keyat Mobile"] },
+    { name: "React Native", category: "Mobile", projects: ["Learning"] },
     { name: "Tailwind", category: "Styling", projects: ["Keyat", "PolicyBridge"] },
     { name: "Vercel", category: "Infrastructure", projects: ["Keyat", "PolicyBridge"] },
     { name: "Firebase", category: "Services", projects: ["PolicyBridge"] }
@@ -41,20 +40,20 @@ export default function About() {
       title: "What I build",
       icon: Code2,
       items: [
-        { label: "Multi-tenant SaaS platforms", desc: "Secure data isolation with role-based access" },
-        { label: "Real estate tech", desc: "Built to search across 10K+ property listings" },
-        { label: "Insurance automation", desc: "Designed to save brokers 20+ hours per week" },
-        { label: "Mobile applications", desc: "Cross-platform iOS & Android" }
+        { label: "Full-stack web apps", desc: "End-to-end development" },
+        { label: "Real estate platforms", desc: "Property search and listings" },
+        { label: "Business automation", desc: "Workflow management tools" },
+        { label: "Mobile-first design", desc: "Responsive applications" }
       ]
     },
     {
       title: "How I work",
       icon: Zap,
       items: [
-        { label: "Ship fast, iterate faster", desc: "MVPs in 4-6 weeks with real feedback loops" },
-        { label: "Built to scale", desc: "Architecture that grows without rewrites" },
-        { label: "Local integration", desc: "Orange Money & Botswana banking APIs" },
-        { label: "Mobile-first design", desc: "Optimized for mobile-dominant markets" }
+        { label: "Production-focused", desc: "Building for real users" },
+        { label: "Self-taught approach", desc: "Learning by building" },
+        { label: "Modern tech stack", desc: "Next.js, TypeScript, PostgreSQL" },
+        { label: "Remote-first mindset", desc: "Global collaboration" }
       ]
     }
   ];
@@ -63,35 +62,7 @@ export default function About() {
 
   return (
     <section id="about" className="py-24 lg:py-32 bg-black relative overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div 
-          className="absolute top-1/4 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"
-          animate={{
-            x: [0, -50, 0],
-            y: [0, 50, 0],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div 
-          className="absolute bottom-1/4 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"
-          animate={{
-            x: [0, 50, 0],
-            y: [0, -50, 0],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-      </div>
-
-      {/* Grid Pattern */}
+      {/* Grid Pattern Only */}
       <div 
         className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-[size:64px_64px]"
         aria-hidden="true"
@@ -107,7 +78,7 @@ export default function About() {
             transition={{ duration: 0.5 }}
             className="mb-20"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-zinc-300 text-sm font-medium mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-zinc-200 text-sm font-medium mb-6">
               <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
               <span>About</span>
             </div>
@@ -121,7 +92,7 @@ export default function About() {
                 {' '}that scales
               </h2>
               
-              {/* Years Experience Counter */}
+              {/* Projects Counter */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -131,18 +102,18 @@ export default function About() {
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-6 py-4 text-center">
-                  <div className="text-3xl font-bold text-white mb-1">{yearsExp}+</div>
-                  <div className="text-sm text-zinc-500">Years Experience</div>
+                  <div className="text-3xl font-bold text-white mb-1">{projectCount}</div>
+                  <div className="text-sm text-zinc-400">Live Projects</div>
                 </div>
               </motion.div>
             </div>
             
-            <p className="text-xl text-zinc-400 max-w-3xl leading-relaxed">
-              Two production SaaS platforms built for Botswana's market. Full-stack architecture designed for scale, ready for launch.
+            <p className="text-xl text-zinc-200 max-w-3xl leading-relaxed">
+              Software engineering graduate with hands-on experience building and deploying full-stack platforms. Learning through real-world projects and production deployments.
             </p>
           </motion.div>
 
-          {/* Tech Stack with Enhanced Stagger */}
+          {/* Tech Stack */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -174,15 +145,13 @@ export default function About() {
                   onHoverEnd={() => setHoveredTech(null)}
                   className="group relative"
                 >
-                  {/* Glow effect on hover */}
                   <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-blue-500/30 to-cyan-500/0 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
                   <div className="relative px-4 py-2 bg-white/5 backdrop-blur-sm hover:bg-white/10 border border-white/10 hover:border-cyan-500/40 rounded-lg transition-all duration-200">
                     <div className="font-medium text-white text-sm">{tech.name}</div>
-                    <div className="text-xs text-zinc-500 mt-0.5">{tech.category}</div>
+                    <div className="text-xs text-zinc-400 mt-0.5">{tech.category}</div>
                   </div>
                   
-                  {/* Tooltip - Projects using this tech */}
                   {hoveredTech === tech.name && (
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
@@ -193,13 +162,12 @@ export default function About() {
                         <div className="text-xs text-cyan-400 font-medium mb-1">Used in:</div>
                         <div className="flex flex-wrap gap-1">
                           {tech.projects.map((project) => (
-                            <span key={project} className="text-xs text-zinc-300 bg-white/5 px-2 py-0.5 rounded">
+                            <span key={project} className="text-xs text-zinc-200 bg-white/5 px-2 py-0.5 rounded">
                               {project}
                             </span>
                           ))}
                         </div>
                       </div>
-                      {/* Arrow */}
                       <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-black/95 border-l border-t border-cyan-500/30 rotate-45"></div>
                     </motion.div>
                   )}
@@ -236,7 +204,6 @@ export default function About() {
                   transition={{ duration: 0.4, delay: sectionIndex * 0.1 }}
                   className="group relative"
                 >
-                  {/* Card glow on hover */}
                   <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 via-blue-500/5 to-emerald-500/0 rounded-2xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
                   <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 group-hover:border-white/20 rounded-2xl p-8 transition-all duration-300">
@@ -267,7 +234,7 @@ export default function About() {
                               <div className="font-medium text-white mb-1 group-hover/item:text-cyan-400 transition-colors">
                                 {item.label}
                               </div>
-                              <div className="text-sm text-zinc-500 leading-relaxed">
+                              <div className="text-sm text-zinc-400 leading-relaxed">
                                 {item.desc}
                               </div>
                             </div>
@@ -289,13 +256,12 @@ export default function About() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="relative group"
           >
-            {/* Glow effect */}
             <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-blue-500/5 to-cyan-500/0 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             
             <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 group-hover:border-white/20 rounded-xl p-8 transition-all duration-300">
               <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                 <div>
-                  <div className="text-sm text-zinc-500 mb-3 flex items-center gap-2">
+                  <div className="text-sm text-zinc-400 mb-3 flex items-center gap-2">
                     <motion.div 
                       className="w-1 h-1 bg-cyan-400 rounded-full"
                       animate={{ scale: [1, 1.5, 1] }}
@@ -304,9 +270,9 @@ export default function About() {
                     Education
                   </div>
                   <div className="font-semibold text-white mb-1">BSc Software Engineering with Multimedia</div>
-                  <div className="text-sm text-zinc-400">Limkokwing University of Creative Technology · 2019-2024</div>
+                  <div className="text-sm text-zinc-300">Limkokwing University of Creative Technology · 2019-2024</div>
                 </div>
-                <div className="text-sm text-zinc-500 md:text-right">
+                <div className="text-sm text-zinc-400 md:text-right">
                   Gaborone, Botswana
                 </div>
               </div>
