@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from 'framer-motion';
-import { Github, Linkedin, Mail, Download, ArrowRight } from 'lucide-react';
+import { Github, Linkedin, Mail, Download, ArrowRight, ChevronDown } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 
 const ANIMATION_DURATION = 0.6;
@@ -65,17 +65,70 @@ export default function Hero() {
       itemScope
       itemType="https://schema.org/Person"
     >
-      {/* Background - Grid with better visibility */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:64px_64px]" />
+      {/* Enhanced Background Grid */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:64px_64px]" />
       
-      {/* Atmospheric Lighting Orbs - Stronger but still neutral */}
-      <div className="absolute top-1/4 right-1/4 w-[700px] h-[700px] bg-white/[0.06] rounded-full blur-[150px] animate-pulse" style={{animationDuration: '6s'}} />
+      {/* Strategic Atmospheric Orbs */}
+      {/* Main spotlight - behind photo area */}
+      <motion.div 
+        className="absolute top-1/4 right-1/4 w-[800px] h-[800px] bg-cyan-500/[0.08] rounded-full blur-[160px]"
+        animate={{
+          scale: [1, 1.1, 1],
+          opacity: [0.08, 0.12, 0.08]
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
       
-      {/* Secondary orb - adds depth on the left */}
-      <div className="absolute bottom-1/4 left-1/5 w-[600px] h-[600px] bg-slate-400/[0.04] rounded-full blur-[140px]" />
+      {/* Secondary depth - behind text content */}
+      <motion.div 
+        className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-blue-500/[0.06] rounded-full blur-[140px]"
+        animate={{
+          scale: [1, 1.15, 1],
+          opacity: [0.06, 0.09, 0.06]
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 1
+        }}
+      />
       
-      {/* Subtle warm accent near the content area */}
-      <div className="absolute top-1/3 left-1/2 w-[500px] h-[500px] bg-slate-300/[0.03] rounded-full blur-[130px]" />
+      {/* Accent glow - bottom for depth */}
+      <motion.div 
+        className="absolute bottom-1/4 left-1/2 w-[500px] h-[500px] bg-emerald-500/[0.05] rounded-full blur-[130px]"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.05, 0.08, 0.05]
+        }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 2
+        }}
+      />
+
+      {/* Subtle moving gradient overlay */}
+      <motion.div
+        className="absolute inset-0 opacity-30"
+        animate={{
+          background: [
+            'radial-gradient(circle at 20% 50%, rgba(6, 182, 212, 0.03) 0%, transparent 50%)',
+            'radial-gradient(circle at 80% 50%, rgba(6, 182, 212, 0.03) 0%, transparent 50%)',
+            'radial-gradient(circle at 20% 50%, rgba(6, 182, 212, 0.03) 0%, transparent 50%)',
+          ]
+        }}
+        transition={{
+          duration: 15,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
 
       <div className="container mx-auto px-3 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
@@ -86,9 +139,20 @@ export default function Hero() {
               {/* Badge */}
               <motion.div
                 {...getAnimationProps(0)}
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] backdrop-blur-xl border border-white/10 text-zinc-300 text-xs sm:text-sm font-medium mb-6 sm:mb-8 hover:bg-white/[0.06] transition-colors shadow-lg"
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] backdrop-blur-xl border border-white/10 text-zinc-300 text-xs sm:text-sm font-medium mb-6 sm:mb-8 hover:bg-white/[0.06] transition-colors shadow-lg"
               >
-                <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
+                <motion.div 
+                  className="w-1.5 h-1.5 bg-emerald-400 rounded-full"
+                  animate={{
+                    scale: [1, 1.3, 1],
+                    opacity: [1, 0.7, 1]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
                 <span className="whitespace-nowrap">Available for remote work</span>
               </motion.div>
 
@@ -110,33 +174,40 @@ export default function Hero() {
                 Software Engineer
               </motion.p>
 
-              {/* Value Prop - BOLD & SPECIFIC */}
+              {/* Value Prop - Enhanced */}
               <motion.div
                 {...getAnimationProps(STAGGER * 3)}
                 className="mb-8 sm:mb-10 max-w-xl"
               >
-                <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 leading-tight">
-                  Built and shipped two production platforms
+                <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 leading-tight">
+                  Built and shipped{' '}
+                  <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-emerald-400 bg-clip-text text-transparent">
+                    two production
+                  </span>
+                  {' '}platforms
                 </p>
-                {/* UPDATED: Lighter text color from zinc-400 to zinc-300 */}
                 <p className="text-base sm:text-lg text-zinc-300 leading-relaxed">
                   Real estate search + Insurance automation SaaS
                 </p>
               </motion.div>
 
-              {/* UPDATED: Tech Stack with gap-3 and glassmorphism */}
+              {/* Tech Stack with enhanced hover */}
               <motion.div
                 {...getAnimationProps(STAGGER * 3.5)}
                 className="flex flex-wrap gap-3 mb-8 sm:mb-10 max-w-xl"
               >
-                {['React', 'Next.js', 'TypeScript', 'PostgreSQL', 'Node.js'].map((tech) => (
+                {['React', 'Next.js', 'TypeScript', 'PostgreSQL', 'Node.js'].map((tech, index) => (
                   <motion.span 
                     key={tech}
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={{ 
+                      scale: 1.05,
+                      boxShadow: '0 0 20px rgba(6, 182, 212, 0.3)'
+                    }}
                     transition={{ duration: 0.2 }}
-                    className="px-3 py-1.5 text-xs sm:text-sm bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-lg text-zinc-300 font-medium hover:bg-cyan-500/10 hover:border-cyan-500/30 hover:text-cyan-300 transition-all duration-200 cursor-default shadow-lg"
+                    className="px-3 py-1.5 text-xs sm:text-sm bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-lg text-zinc-300 font-medium hover:bg-cyan-500/10 hover:border-cyan-500/30 hover:text-cyan-300 transition-all duration-200 cursor-default shadow-lg relative group"
                   >
-                    {tech}
+                    <span className="relative z-10">{tech}</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/10 to-cyan-500/0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity" />
                   </motion.span>
                 ))}
               </motion.div>
@@ -150,9 +221,9 @@ export default function Hero() {
                   onClick={scrollToProjects}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="group relative px-6 sm:px-8 py-3.5 sm:py-4 rounded-lg font-semibold overflow-hidden bg-emerald-500/20 backdrop-blur-xl border border-emerald-400/40 hover:border-emerald-300/60 text-white transition-all duration-200 shadow-xl shadow-emerald-500/25 hover:shadow-emerald-400/30"
+                  className="group relative px-6 sm:px-8 py-3.5 sm:py-4 rounded-lg font-semibold overflow-hidden bg-gradient-to-r from-cyan-600 to-blue-600 text-white transition-all duration-200 shadow-xl shadow-cyan-500/25 hover:shadow-cyan-400/40"
                 >
-                  <div className="absolute inset-0 bg-emerald-400/[0.15] opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                   
                   <span className="relative flex items-center justify-center gap-2 text-sm sm:text-base font-bold">
                     <span>View Projects</span>
@@ -165,15 +236,15 @@ export default function Hero() {
                   disabled={isDownloading}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="group relative px-6 sm:px-8 py-3.5 sm:py-4 bg-white/[0.03] backdrop-blur-xl text-white rounded-lg font-semibold border border-white/10 hover:border-white/20 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 text-sm sm:text-base overflow-hidden shadow-lg"
+                  className="group relative px-6 sm:px-8 py-3.5 sm:py-4 bg-white/[0.04] backdrop-blur-xl text-white rounded-lg font-semibold border border-white/10 hover:border-white/20 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 text-sm sm:text-base overflow-hidden shadow-lg"
                 >
-                  <div className="absolute inset-0 bg-white/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 bg-white/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <Download className={`w-4 h-4 relative z-10 ${isDownloading ? 'animate-bounce' : ''}`} />
                   <span className="relative z-10">{isDownloading ? 'Downloading...' : 'Resume'}</span>
                 </motion.button>
               </motion.div>
 
-              {/* UPDATED: Social links with glassmorphism */}
+              {/* Social links */}
               <motion.div
                 {...getAnimationProps(STAGGER * 5)}
                 className="flex gap-3 sm:gap-4"
@@ -187,7 +258,7 @@ export default function Hero() {
                     key={href}
                     href={href}
                     whileHover={{ y: -2 }}
-                    className="relative group p-3 bg-white/[0.03] backdrop-blur-xl border border-white/10 text-zinc-400 rounded-lg hover:text-white hover:border-cyan-500/30 hover:bg-white/[0.06] transition-all duration-200 shadow-lg"
+                    className="relative group p-3 bg-white/[0.04] backdrop-blur-xl border border-white/10 text-zinc-400 rounded-lg hover:text-white hover:border-cyan-500/30 hover:bg-white/[0.06] transition-all duration-200 shadow-lg"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
@@ -217,10 +288,20 @@ export default function Hero() {
                   ease: "easeInOut"
                 }}
               >
-                {/* Subtle glow - only on hover, more controlled */}
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-600/10 to-blue-600/10 rounded-2xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                {/* Enhanced glow on hover */}
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-2xl blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                  animate={{
+                    scale: [1, 1.05, 1]
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
                 
-                <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-2xl overflow-hidden bg-white/[0.03] backdrop-blur-xl border border-white/15 group-hover:border-cyan-500/30 shadow-2xl transition-all duration-300">
+                <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-2xl overflow-hidden bg-white/[0.04] backdrop-blur-xl border border-white/20 group-hover:border-cyan-500/40 shadow-2xl transition-all duration-300">
                   {!imageLoaded ? (
                     <div className="absolute inset-0 bg-gradient-to-br from-cyan-900/20 to-blue-900/20 backdrop-blur-xl flex items-center justify-center">
                       <div className="w-12 h-12 border-4 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin"></div>
@@ -252,6 +333,25 @@ export default function Hero() {
           </div>
         </div>
       </div>
+
+      {/* Scroll Indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 0.5 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
+      >
+        <motion.button
+          onClick={scrollToProjects}
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="flex flex-col items-center gap-2 text-zinc-500 hover:text-cyan-400 transition-colors group"
+          aria-label="Scroll to projects"
+        >
+          <span className="text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">Explore</span>
+          <ChevronDown className="w-5 h-5" />
+        </motion.button>
+      </motion.div>
     </section>
   );
 }
