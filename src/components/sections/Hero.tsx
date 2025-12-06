@@ -65,8 +65,17 @@ export default function Hero() {
       itemScope
       itemType="https://schema.org/Person"
     >
-      {/* Subtle Grid Pattern Only */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:64px_64px]" />
+      {/* Background - Grid with better visibility */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:64px_64px]" />
+      
+      {/* Atmospheric Lighting Orbs - Stronger but still neutral */}
+      <div className="absolute top-1/4 right-1/4 w-[700px] h-[700px] bg-white/[0.06] rounded-full blur-[150px] animate-pulse" style={{animationDuration: '6s'}} />
+      
+      {/* Secondary orb - adds depth on the left */}
+      <div className="absolute bottom-1/4 left-1/5 w-[600px] h-[600px] bg-slate-400/[0.04] rounded-full blur-[140px]" />
+      
+      {/* Subtle warm accent near the content area */}
+      <div className="absolute top-1/3 left-1/2 w-[500px] h-[500px] bg-slate-300/[0.03] rounded-full blur-[130px]" />
 
       <div className="container mx-auto px-3 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
@@ -77,16 +86,16 @@ export default function Hero() {
               {/* Badge */}
               <motion.div
                 {...getAnimationProps(0)}
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-zinc-200 text-xs sm:text-sm font-medium mb-6 sm:mb-8 hover:bg-white/10 transition-colors"
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] backdrop-blur-xl border border-white/10 text-zinc-300 text-xs sm:text-sm font-medium mb-6 sm:mb-8 hover:bg-white/[0.06] transition-colors shadow-lg"
               >
                 <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
-                <span className="whitespace-nowrap">Open to remote opportunities</span>
+                <span className="whitespace-nowrap">Available for remote work</span>
               </motion.div>
 
               {/* Name */}
               <motion.h1
                 {...getAnimationProps(STAGGER)}
-                className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-4 sm:mb-6 tracking-tight text-white"
+                className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-3 sm:mb-4 tracking-tight text-white"
                 itemProp="name"
               >
                 Shaun Chikerema
@@ -95,52 +104,57 @@ export default function Hero() {
               {/* Title */}
               <motion.p
                 {...getAnimationProps(STAGGER * 2)}
-                className="text-lg sm:text-xl lg:text-2xl text-zinc-200 font-medium mb-6 sm:mb-8"
+                className="text-lg sm:text-xl lg:text-2xl text-zinc-400 font-medium mb-8 sm:mb-10"
                 itemProp="jobTitle"
               >
                 Software Engineer
               </motion.p>
 
-              {/* Hook - PROFESSIONAL & CLEAN */}
-              <motion.p
+              {/* Value Prop - BOLD & SPECIFIC */}
+              <motion.div
                 {...getAnimationProps(STAGGER * 3)}
-                className="text-base sm:text-lg text-zinc-200 mb-6 sm:mb-8 max-w-xl leading-relaxed"
-                itemProp="description"
+                className="mb-8 sm:mb-10 max-w-xl"
               >
-                Software engineer specializing in full-stack web applications.{' '}
-                <span className="text-white font-medium">Two live production platforms.</span>
-              </motion.p>
+                <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 leading-tight">
+                  Built and shipped two production platforms
+                </p>
+                {/* UPDATED: Lighter text color from zinc-400 to zinc-300 */}
+                <p className="text-base sm:text-lg text-zinc-300 leading-relaxed">
+                  Real estate search + Insurance automation SaaS
+                </p>
+              </motion.div>
 
-              {/* Tech Stack */}
+              {/* UPDATED: Tech Stack with gap-3 and glassmorphism */}
               <motion.div
                 {...getAnimationProps(STAGGER * 3.5)}
-                className="flex flex-wrap gap-2 mb-8 sm:mb-10 max-w-xl"
+                className="flex flex-wrap gap-3 mb-8 sm:mb-10 max-w-xl"
               >
                 {['React', 'Next.js', 'TypeScript', 'PostgreSQL', 'Node.js'].map((tech) => (
-                  <span 
-                    key={tech} 
-                    className="px-3 py-1.5 text-xs sm:text-sm bg-cyan-500/10 border border-cyan-500/20 rounded-lg text-cyan-200 font-medium hover:bg-cyan-500/20 transition-colors"
+                  <motion.span 
+                    key={tech}
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.2 }}
+                    className="px-3 py-1.5 text-xs sm:text-sm bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-lg text-zinc-300 font-medium hover:bg-cyan-500/10 hover:border-cyan-500/30 hover:text-cyan-300 transition-all duration-200 cursor-default shadow-lg"
                   >
                     {tech}
-                  </span>
+                  </motion.span>
                 ))}
               </motion.div>
 
               {/* CTAs */}
               <motion.div
                 {...getAnimationProps(STAGGER * 4)}
-                className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-10"
+                className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-12"
               >
                 <motion.button 
                   onClick={scrollToProjects}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="group relative px-5 sm:px-6 py-3 rounded-lg font-medium overflow-hidden"
+                  className="group relative px-6 sm:px-8 py-3.5 sm:py-4 rounded-lg font-semibold overflow-hidden bg-emerald-500/20 backdrop-blur-xl border border-emerald-400/40 hover:border-emerald-300/60 text-white transition-all duration-200 shadow-xl shadow-emerald-500/25 hover:shadow-emerald-400/30"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 transition-transform group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 blur-xl opacity-50 group-hover:opacity-75 transition-opacity" />
+                  <div className="absolute inset-0 bg-emerald-400/[0.15] opacity-0 group-hover:opacity-100 transition-opacity" />
                   
-                  <span className="relative flex items-center justify-center gap-2 text-white text-sm sm:text-base">
+                  <span className="relative flex items-center justify-center gap-2 text-sm sm:text-base font-bold">
                     <span>View Projects</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </span>
@@ -151,14 +165,15 @@ export default function Hero() {
                   disabled={isDownloading}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="group px-5 sm:px-6 py-3 bg-white/5 backdrop-blur-sm text-white rounded-lg font-medium border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 text-sm sm:text-base"
+                  className="group relative px-6 sm:px-8 py-3.5 sm:py-4 bg-white/[0.03] backdrop-blur-xl text-white rounded-lg font-semibold border border-white/10 hover:border-white/20 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 text-sm sm:text-base overflow-hidden shadow-lg"
                 >
-                  <Download className={`w-4 h-4 ${isDownloading ? 'animate-bounce' : ''}`} />
-                  <span>{isDownloading ? 'Downloading...' : 'Resume'}</span>
+                  <div className="absolute inset-0 bg-white/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <Download className={`w-4 h-4 relative z-10 ${isDownloading ? 'animate-bounce' : ''}`} />
+                  <span className="relative z-10">{isDownloading ? 'Downloading...' : 'Resume'}</span>
                 </motion.button>
               </motion.div>
 
-              {/* Social links */}
+              {/* UPDATED: Social links with glassmorphism */}
               <motion.div
                 {...getAnimationProps(STAGGER * 5)}
                 className="flex gap-3 sm:gap-4"
@@ -172,12 +187,12 @@ export default function Hero() {
                     key={href}
                     href={href}
                     whileHover={{ y: -2 }}
-                    className="relative group p-3 bg-white/5 backdrop-blur-sm border border-white/10 text-zinc-300 rounded-lg hover:text-white hover:border-white/20 transition-all duration-200"
+                    className="relative group p-3 bg-white/[0.03] backdrop-blur-xl border border-white/10 text-zinc-400 rounded-lg hover:text-white hover:border-cyan-500/30 hover:bg-white/[0.06] transition-all duration-200 shadow-lg"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
                   >
-                    <div className="absolute inset-0 bg-white/5 rounded-lg opacity-0 group-hover:opacity-100 blur-xl transition-opacity" />
+                    <div className="absolute inset-0 bg-cyan-500/5 rounded-lg opacity-0 group-hover:opacity-100 blur-xl transition-opacity" />
                     <Icon className="w-5 h-5 relative z-10" />
                   </motion.a>
                 ))}
@@ -202,12 +217,12 @@ export default function Hero() {
                   ease: "easeInOut"
                 }}
               >
-                {/* Subtle glow on hover only */}
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-2xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                {/* Subtle glow - only on hover, more controlled */}
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-600/10 to-blue-600/10 rounded-2xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                 
-                <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-2xl overflow-hidden bg-white/5 backdrop-blur-sm border border-white/10 shadow-2xl">
+                <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-2xl overflow-hidden bg-white/[0.03] backdrop-blur-xl border border-white/15 group-hover:border-cyan-500/30 shadow-2xl transition-all duration-300">
                   {!imageLoaded ? (
-                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-900/20 to-blue-900/20 flex items-center justify-center">
+                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-900/20 to-blue-900/20 backdrop-blur-xl flex items-center justify-center">
                       <div className="w-12 h-12 border-4 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin"></div>
                     </div>
                   ) : null}
@@ -230,7 +245,7 @@ export default function Hero() {
                     itemProp="image"
                   />
                   
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
               </motion.div>
             </motion.div>

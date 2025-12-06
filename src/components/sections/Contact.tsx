@@ -62,7 +62,7 @@ export default function Contact() {
     },
     {
       icon: Send,
-      href: 'https://wa.me/26776051622',
+      href: 'https://wa.me/26776051652',
       label: 'WhatsApp',
       value: '+267 76 051 622',
       description: 'Message me directly'

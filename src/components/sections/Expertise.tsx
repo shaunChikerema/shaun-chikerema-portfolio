@@ -5,7 +5,7 @@ import { Code2, Server, Zap, Cpu, Cloud } from 'lucide-react';
 export default function Expertise() {
   const expertiseAreas = [
     {
-      title: "Full-Stack Architecture",
+      title: "Full-Stack Development",
       icon: Cpu,
       description: "End-to-end system design and implementation",
       technologies: ["Next.js 15", "TypeScript", "Node.js", "PostgreSQL", "Supabase"],
@@ -18,9 +18,9 @@ export default function Expertise() {
       projects: ["Keyat", "PolicyBridge"]
     },
     {
-      title: "Production Deployment",
+      title: "Cloud Infrastructure",
       icon: Cloud,
-      description: "Scalable infrastructure and DevOps",
+      description: "Scalable deployment and DevOps",
       technologies: ["Vercel", "Docker", "GitHub Actions", "AWS", "Redis"],
       applications: [
         "CI/CD pipeline setup",
@@ -60,7 +60,7 @@ export default function Expertise() {
 
   return (
     <section id="expertise" className="py-24 lg:py-32 bg-black relative overflow-hidden">
-      {/* Grid Pattern Only - No Orbs */}
+      {/* Grid Pattern Only */}
       <div 
         className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-[size:64px_64px]"
         aria-hidden="true"
@@ -75,19 +75,19 @@ export default function Expertise() {
           transition={{ duration: 0.5 }}
           className="mb-20"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-zinc-300 text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 text-zinc-200 text-sm font-medium mb-6">
             <Zap className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Technical Capabilities</span>
+            <span>Technical Skills</span>
           </div>
           
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 max-w-3xl">
             <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-emerald-400 bg-clip-text text-transparent">
-              Engineering
+              Technical
             </span>
             {' '}Expertise
           </h2>
-          <p className="text-xl text-zinc-400 max-w-3xl leading-relaxed">
-            How I architect, build, and deploy production-ready applications
+          <p className="text-xl text-zinc-200 max-w-3xl leading-relaxed">
+            Building and deploying production-ready applications
           </p>
         </motion.div>
 
@@ -119,7 +119,7 @@ export default function Expertise() {
                       <h3 className="text-lg font-semibold text-white mb-1 group-hover:text-cyan-400 transition-colors">
                         {area.title}
                       </h3>
-                      <p className="text-zinc-400 text-sm">
+                      <p className="text-zinc-300 text-sm">
                         {area.description}
                       </p>
                     </div>
@@ -127,14 +127,14 @@ export default function Expertise() {
 
                   {/* Technologies */}
                   <div className="mb-6">
-                    <h4 className="text-xs font-semibold text-zinc-500 mb-3 uppercase tracking-wider">
-                      Core Technologies
+                    <h4 className="text-xs font-semibold text-zinc-400 mb-3 uppercase tracking-wider">
+                      Technologies
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {area.technologies.map((tech) => (
                         <span
                           key={tech}
-                          className="px-3 py-1 bg-white/5 text-zinc-300 rounded-md text-xs font-medium border border-white/10 hover:border-cyan-500/30 hover:bg-white/10 transition-all duration-200"
+                          className="px-3 py-1 bg-white/5 text-zinc-200 rounded-md text-xs font-medium border border-white/10 hover:border-cyan-500/30 hover:bg-white/10 transition-all duration-200"
                         >
                           {tech}
                         </span>
@@ -144,14 +144,14 @@ export default function Expertise() {
 
                   {/* Applications */}
                   <div className="mb-6">
-                    <h4 className="text-xs font-semibold text-zinc-500 mb-3 uppercase tracking-wider">
+                    <h4 className="text-xs font-semibold text-zinc-400 mb-3 uppercase tracking-wider">
                       Applications
                     </h4>
                     <ul className="space-y-2">
                       {area.applications.map((app) => (
                         <li key={app} className="flex items-start group/item">
                           <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                          <span className="text-zinc-400 text-sm group-hover/item:text-zinc-300 transition-colors">{app}</span>
+                          <span className="text-zinc-300 text-sm group-hover/item:text-zinc-200 transition-colors">{app}</span>
                         </li>
                       ))}
                     </ul>
@@ -159,14 +159,14 @@ export default function Expertise() {
 
                   {/* Project Applications */}
                   <div>
-                    <h4 className="text-xs font-semibold text-zinc-500 mb-3 uppercase tracking-wider">
-                      Applied In
+                    <h4 className="text-xs font-semibold text-zinc-400 mb-3 uppercase tracking-wider">
+                      Projects
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {area.projects.map((project) => (
                         <span
                           key={project}
-                          className="px-3 py-1 bg-white/5 text-zinc-400 rounded-md text-xs font-medium border border-white/10 hover:text-cyan-400 hover:border-cyan-500/30 transition-all duration-200"
+                          className="px-3 py-1 bg-white/5 text-zinc-300 rounded-md text-xs font-medium border border-white/10 hover:text-cyan-400 hover:border-cyan-500/30 transition-all duration-200"
                         >
                           {project}
                         </span>
@@ -192,21 +192,21 @@ export default function Expertise() {
             
             <div className="relative bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-white/10 group-hover:border-white/20 transition-all duration-300">
               <h3 className="text-xl font-semibold text-white mb-8 text-center">
-                Engineering Methodology
+                Development Approach
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {[
                   {
-                    title: "Production-First",
-                    description: "Build for real users from day one with scalability and maintainability in mind"
+                    title: "User-Focused",
+                    description: "Building applications with real-world users and scalability in mind"
                   },
                   {
-                    title: "System Design",
-                    description: "Architect solutions that handle growth and complexity without breaking"
+                    title: "Modern Stack",
+                    description: "Using current technologies and best practices for maintainable code"
                   },
                   {
-                    title: "Local Context",
-                    description: "Integrate Botswana-specific solutions and understand emerging market dynamics"
+                    title: "Production-Ready",
+                    description: "Delivering deployed applications with monitoring and performance optimization"
                   }
                 ].map((principle, index) => (
                   <div key={index} className="text-center group/principle">
@@ -217,7 +217,7 @@ export default function Expertise() {
                     <h4 className="font-semibold text-white mb-2 text-sm group-hover/principle:text-cyan-400 transition-colors">
                       {principle.title}
                     </h4>
-                    <p className="text-zinc-500 text-sm leading-relaxed">
+                    <p className="text-zinc-400 text-sm leading-relaxed">
                       {principle.description}
                     </p>
                   </div>
