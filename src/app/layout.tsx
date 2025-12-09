@@ -1,12 +1,10 @@
-// src/app/layout.tsx - COMPLETE VERSION
 import './globals.css';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 
 export const metadata: Metadata = {
   title: 'Shaun Chikerema - Software Engineer & Fullstack Developer',
   description: 'Professional portfolio of Shaun Chikerema - Expert Full-Stack Developer specializing in modern web technologies and scalable solutions.',
   keywords: 'Shaun Chikerema, Full-Stack Developer, Software Engineer, React, Next.js, TypeScript, Zimbabwe',
-  viewport: 'width=device-width, initial-scale=1',
   icons: {
     icon: '/favicon.ico',
   },
@@ -20,6 +18,11 @@ export const metadata: Metadata = {
     title: 'Shaun Chikerema - Full-Stack Developer',
     description: 'Professional portfolio of an expert software developer',
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 };
 
 export default function RootLayout({

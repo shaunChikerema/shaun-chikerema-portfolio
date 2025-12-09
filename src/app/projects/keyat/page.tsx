@@ -1,5 +1,5 @@
 'use client';
-import { ArrowLeft, ExternalLink, Building2, Database, Shield, Zap, Target, Lightbulb, Rocket } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Building2, Database, Shield, Zap, Target, Lightbulb, Rocket, Smartphone } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
@@ -8,7 +8,7 @@ const project = {
   title: "Keyat",
   liveUrl: "https://keyat.vercel.app",
   techStack: {
-    Frontend: ["Next.js 15", "TypeScript", "Tailwind CSS"],
+    Frontend: ["Next.js 15", "TypeScript", "Tailwind CSS", "PWA"],
     Backend: ["Supabase", "PostgreSQL", "REST APIs"],
     Infrastructure: ["Vercel", "GitHub Actions"],
     Auth: ["Supabase Auth"]
@@ -76,13 +76,14 @@ export default function KeyatProjectPage() {
             </h1>
             
             <p className="text-xl text-zinc-400 leading-relaxed mb-8 max-w-3xl">
-              A full-stack property marketplace connecting buyers, sellers, and agents. Multi-tenant architecture with role-based access and real-time listings.
+              A full-stack property marketplace connecting buyers, sellers, and agents. Multi-tenant architecture with role-based access and real-time listings. Built as a Progressive Web App for offline-first mobile experience.
             </p>
 
             {/* Context */}
             <div className="flex flex-wrap gap-3 text-sm">
               {[
-                { icon: Zap, text: 'Live & Deployed', color: 'blue', special: true }
+                { icon: Zap, text: 'Live & Deployed', color: 'blue', special: true },
+                { icon: Smartphone, text: 'Progressive Web App', color: 'emerald' }
               ].map((item, index) => {
                 const Icon = item.icon;
                 return (
@@ -91,7 +92,7 @@ export default function KeyatProjectPage() {
                     className={`flex items-center px-3 py-2 rounded-lg border ${
                       item.special 
                         ? 'text-blue-400 bg-blue-500/10 border-blue-500/20 font-medium' 
-                        : 'text-zinc-400 bg-white/5 backdrop-blur-sm border-white/10'
+                        : 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20 font-medium'
                     }`}
                   >
                     <Icon size={16} className="mr-2" />
@@ -119,7 +120,7 @@ export default function KeyatProjectPage() {
               {[
                 { icon: Target, color: 'blue', title: 'Property Search', desc: 'Search and filter system for property listings with location, price, and type filters' },
                 { icon: Rocket, color: 'emerald', title: 'Multi-tenant', desc: 'Separate data isolation for buyers, sellers, and agents with role-based permissions' },
-                { icon: Lightbulb, color: 'cyan', title: 'Mobile-First', desc: 'Responsive design optimized for mobile users with fast performance' }
+                { icon: Smartphone, color: 'cyan', title: 'PWA Features', desc: 'Installable app with offline support, push notifications, and home screen access' }
               ].map((item, index) => {
                 const Icon = item.icon;
                 return (
@@ -167,10 +168,10 @@ export default function KeyatProjectPage() {
                   <div>
                     <h4 className="font-semibold text-white mb-3">For Property Seekers</h4>
                     <p className="text-zinc-400 mb-4 text-sm">
-                      Search properties by location, price range, and type. Save favorites, contact agents directly, and schedule viewings.
+                      Search properties by location, price range, and type. Save favorites, contact agents directly, and schedule viewings. Works offline with PWA caching.
                     </p>
                     <div className="flex flex-wrap gap-2">
-                      {['Search & Filter', 'Save Listings', 'Contact Agents'].map((tag) => (
+                      {['Search & Filter', 'Save Listings', 'Offline Access'].map((tag) => (
                         <span key={tag} className="px-3 py-1 bg-white/10 backdrop-blur-sm text-cyan-300 rounded-md text-sm font-medium border border-cyan-500/20">
                           {tag}
                         </span>
@@ -178,12 +179,12 @@ export default function KeyatProjectPage() {
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-white mb-3">For Agents</h4>
+                    <h4 className="font-semibold text-white mb-3">PWA Capabilities</h4>
                     <p className="text-zinc-400 mb-4 text-sm">
-                      Create and manage property listings. Track inquiries, update availability, and manage client communications.
+                      Install on any device, receive push notifications for new listings, and browse properties offline with cached data and images.
                     </p>
                     <div className="flex flex-wrap gap-2">
-                      {['Listing Management', 'Client Tracking', 'Analytics'].map((tag) => (
+                      {['Installable', 'Push Notifications', 'Offline Mode'].map((tag) => (
                         <span key={tag} className="px-3 py-1 bg-white/10 backdrop-blur-sm text-cyan-300 rounded-md text-sm font-medium border border-cyan-500/20">
                           {tag}
                         </span>
@@ -214,13 +215,13 @@ export default function KeyatProjectPage() {
               <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
                 <h3 className="text-xl font-semibold text-white mb-4">Key Decisions</h3>
                 <p className="text-zinc-400 leading-relaxed mb-6 text-sm">
-                  Multi-tenant architecture using Supabase Row Level Security for complete data isolation between users while maintaining real-time updates.
+                  Multi-tenant architecture using Supabase Row Level Security for complete data isolation between users while maintaining real-time updates. PWA features enable offline-first experience.
                 </p>
                 <div className="space-y-4">
                   {[
                     { icon: Database, title: 'Real-time Database', desc: 'PostgreSQL with live subscriptions' },
                     { icon: Shield, title: 'Secure Access', desc: 'Role-based permissions & encryption' },
-                    { icon: Zap, title: 'Fast Performance', desc: 'Optimized queries & caching' }
+                    { icon: Smartphone, title: 'PWA Architecture', desc: 'Service workers & offline caching' }
                   ].map((item, index) => {
                     const Icon = item.icon;
                     return (
@@ -240,10 +241,11 @@ export default function KeyatProjectPage() {
                 <h4 className="font-semibold text-white mb-4">Tech Stack</h4>
                 <ul className="space-y-3">
                   {[
-                    'Next.js 15 for server-side rendering',
+                    'Next.js 15 with App Router',
+                    'Progressive Web App (PWA)',
                     'Supabase for auth and database',
                     'TypeScript for type safety',
-                    'Tailwind CSS for responsive design',
+                    'Service Workers for offline mode',
                     'Vercel for deployment'
                   ].map((item, index) => (
                     <li key={index} className="flex items-start group/tech">
@@ -272,8 +274,8 @@ export default function KeyatProjectPage() {
             <div className="space-y-6">
               {[
                 { title: 'Multi-tenant Data Isolation', desc: 'Implemented Supabase Row Level Security policies to ensure complete data separation between landlords, agents, and tenants. Each user only sees their own data.' },
+                { title: 'PWA Implementation', desc: 'Built custom service worker with smart caching strategy for property listings and images. Users can browse previously viewed properties offline and receive push notifications.' },
                 { title: 'Search Performance', desc: 'Built PostgreSQL full-text search with proper indexing. Optimized queries to handle property searches with multiple filters efficiently.' },
-                { title: 'Role-Based Access', desc: 'Created a flexible permission system allowing different capabilities for buyers, sellers, and agents while maintaining security.' },
                 { title: 'Mobile Responsiveness', desc: 'Designed mobile-first interface with Tailwind CSS. Optimized images and implemented lazy loading for better performance on mobile networks.' }
               ].map((item, index) => (
                 <motion.div
@@ -345,7 +347,7 @@ export default function KeyatProjectPage() {
           >
             <h2 className="text-3xl font-bold text-white mb-4">Explore the Platform</h2>
             <p className="text-zinc-400 mb-8 text-lg">
-              See the property marketplace in action. Browse listings, test the search, and explore the features.
+              See the property marketplace in action. Browse listings, test the search, and explore PWA features. Try installing it on your device!
             </p>
             <a
               href={project.liveUrl}

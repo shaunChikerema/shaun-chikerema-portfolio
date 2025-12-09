@@ -1,5 +1,5 @@
 'use client';
-import { ArrowLeft, ExternalLink, Building2, FileText, Shield, Zap, Database, Target, TrendingUp, Clock } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Building2, FileText, Shield, Zap, Database, Target, TrendingUp, Clock, Smartphone } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
@@ -8,7 +8,7 @@ const project = {
   title: "PolicyBridge",
   liveUrl: "https://policybridge.vercel.app",
   techStack: {
-    Frontend: ["Next.js 15", "React", "Tailwind CSS"],
+    Frontend: ["Next.js 15", "React", "Tailwind CSS", "PWA"],
     Backend: ["Supabase", "PostgreSQL", "Node.js"],
     Infrastructure: ["Vercel", "Redis"],
     Tools: ["Puppeteer"]
@@ -76,14 +76,15 @@ export default function PolicyBridgePage() {
             </h1>
             
             <p className="text-xl text-zinc-400 leading-relaxed mb-8 max-w-3xl">
-              An insurance management platform for brokers. Automates policy processing, document generation, and client tracking.
+              An insurance management platform for brokers. Automates policy processing, document generation, and client tracking. Built as a Progressive Web App for mobile-first broker workflows.
             </p>
 
             {/* Context */}
             <div className="flex flex-wrap gap-3 text-sm">
               {[
                 { icon: FileText, text: 'Insurance SaaS', color: 'cyan' },
-                { icon: Zap, text: 'Live & Deployed', color: 'blue', special: true }
+                { icon: Zap, text: 'Live & Deployed', color: 'blue', special: true },
+                { icon: Smartphone, text: 'Progressive Web App', color: 'emerald' }
               ].map((item, index) => {
                 const Icon = item.icon;
                 return (
@@ -92,6 +93,8 @@ export default function PolicyBridgePage() {
                     className={`flex items-center px-3 py-2 rounded-lg border ${
                       item.special 
                         ? 'text-blue-400 bg-blue-500/10 border-blue-500/20 font-medium' 
+                        : item.color === 'emerald'
+                        ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20 font-medium'
                         : 'text-zinc-400 bg-white/5 backdrop-blur-sm border-white/10'
                     }`}
                   >
@@ -120,7 +123,7 @@ export default function PolicyBridgePage() {
               {[
                 { icon: Clock, color: 'blue', title: 'Automation', desc: 'Reduces manual data entry and document processing time' },
                 { icon: TrendingUp, color: 'emerald', title: 'Workflow Tools', desc: 'Track policies from quote to renewal' },
-                { icon: Target, color: 'cyan', title: 'Multi-tenant', desc: 'Data isolation for multiple brokers' }
+                { icon: Smartphone, color: 'cyan', title: 'PWA Mobile', desc: 'Work offline, access on any device' }
               ].map((item, index) => {
                 const Icon = item.icon;
                 return (
@@ -168,10 +171,10 @@ export default function PolicyBridgePage() {
                   <div>
                     <h4 className="font-semibold text-white mb-3">For Brokers</h4>
                     <p className="text-zinc-400 mb-4 text-sm leading-relaxed">
-                      Manage policies, generate documents, and track renewals. Built-in audit trails and role-based access control.
+                      Manage policies, generate documents, and track renewals. Built-in audit trails and role-based access control. Works offline with PWA capabilities.
                     </p>
                     <div className="flex flex-wrap gap-2">
-                      {['Policy Management', 'Audit Trails', 'RBAC'].map((tag) => (
+                      {['Policy Management', 'Audit Trails', 'Offline Access'].map((tag) => (
                         <span key={tag} className="px-3 py-1 bg-white/10 backdrop-blur-sm text-cyan-300 rounded-md text-sm font-medium border border-cyan-500/20">
                           {tag}
                         </span>
@@ -181,7 +184,7 @@ export default function PolicyBridgePage() {
                   <div>
                     <h4 className="font-semibold text-white mb-3">Document Generation</h4>
                     <p className="text-zinc-400 mb-4 text-sm leading-relaxed">
-                      Automated PDF generation using Puppeteer. Custom templates for policies, quotes, and reports with bulk processing capability.
+                      Automated PDF generation using Puppeteer. Custom templates for policies, quotes, and reports with bulk processing capability. Documents cached for offline viewing.
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {['PDF Engine', 'Templates', 'Bulk Processing'].map((tag) => (
@@ -215,13 +218,13 @@ export default function PolicyBridgePage() {
               <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
                 <h3 className="text-xl font-semibold text-white mb-4">Key Decisions</h3>
                 <p className="text-zinc-400 leading-relaxed mb-6 text-sm">
-                  Multi-tenant architecture with Supabase Row Level Security for complete data isolation between brokers and their clients.
+                  Multi-tenant architecture with Supabase Row Level Security for complete data isolation between brokers and their clients. PWA enables offline document access and policy management.
                 </p>
                 <div className="space-y-4">
                   {[
                     { icon: Shield, title: 'Secure Architecture', desc: 'Encryption and audit logging' },
                     { icon: FileText, title: 'PDF Generation', desc: 'Puppeteer-based automation' },
-                    { icon: Database, title: 'Real-Time Updates', desc: 'Live policy tracking' }
+                    { icon: Smartphone, title: 'PWA Offline Mode', desc: 'Service workers & caching' }
                   ].map((item, index) => {
                     const Icon = item.icon;
                     return (
@@ -241,10 +244,11 @@ export default function PolicyBridgePage() {
                 <h4 className="font-semibold text-white mb-4">Tech Stack</h4>
                 <ul className="space-y-3">
                   {[
-                    'Next.js 15 for server-side rendering',
+                    'Next.js 15 with App Router',
+                    'Progressive Web App (PWA)',
                     'Supabase for auth and database',
                     'Puppeteer for PDF generation',
-                    'TypeScript for type safety',
+                    'Service Workers for offline mode',
                     'Redis for caching'
                   ].map((item, index) => (
                     <li key={index} className="flex items-start group/tech">
@@ -272,10 +276,10 @@ export default function PolicyBridgePage() {
             
             <div className="space-y-6">
               {[
-                { title: 'PDF Generation Pipeline', desc: 'Built a queue system with Puppeteer to generate policy documents server-side. Each PDF is rendered, validated, then stored in Supabase Storage.' },
+                { title: 'PDF Generation Pipeline', desc: 'Built a queue system with Puppeteer to generate policy documents server-side. Each PDF is rendered, validated, then stored in Supabase Storage with cached copies for offline access.' },
+                { title: 'PWA Offline Support', desc: 'Implemented service worker with intelligent caching strategy for policy data and generated PDFs. Brokers can view client information and documents without internet connection.' },
                 { title: 'Multi-Tenant Data Isolation', desc: 'Implemented Supabase Row Level Security to ensure brokers can only access their own clients\' data. Every policy and document is tied to a broker_id with strict RLS policies.' },
-                { title: 'Audit Trail System', desc: 'Every action (policy created, document generated, status changed) is logged with timestamps and user IDs for compliance tracking.' },
-                { title: 'Workflow Automation', desc: 'Automated renewal reminders and policy expiration notifications using scheduled database functions and email triggers.' }
+                { title: 'Workflow Automation', desc: 'Automated renewal reminders and policy expiration notifications using scheduled database functions and push notifications via PWA.' }
               ].map((item, index) => (
                 <motion.div
                   key={index}
@@ -346,7 +350,7 @@ export default function PolicyBridgePage() {
           >
             <h2 className="text-3xl font-bold text-white mb-4">Explore the Platform</h2>
             <p className="text-zinc-400 mb-8 text-lg">
-              See the insurance management platform in action. Explore automated workflows and document processing features.
+              See the insurance management platform in action. Explore automated workflows, document processing, and PWA features. Try installing it on your device!
             </p>
             <a
               href={project.liveUrl}
