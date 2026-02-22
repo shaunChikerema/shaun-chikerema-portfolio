@@ -58,20 +58,15 @@ export default function Hero() {
       style={{ background: 'var(--cream)' }}
       itemScope itemType="https://schema.org/Person"
     >
-      {/* Subtle radial warmth */}
+      {/* Boosted radial warmth — no grid */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse 80% 60% at 60% 40%, rgba(196,98,58,0.06) 0%, transparent 70%), radial-gradient(ellipse 50% 50% at 20% 80%, rgba(184,150,62,0.05) 0%, transparent 60%)'
-        }}
-      />
-
-      {/* Fine grid lines */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: 'linear-gradient(to right, rgba(26,23,20,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(26,23,20,0.04) 1px, transparent 1px)',
-          backgroundSize: '80px 80px'
+          background: `
+            radial-gradient(ellipse 70% 55% at 65% 35%, rgba(196,98,58,0.10) 0%, transparent 65%),
+            radial-gradient(ellipse 50% 45% at 15% 75%, rgba(184,150,62,0.08) 0%, transparent 60%),
+            radial-gradient(ellipse 40% 40% at 85% 80%, rgba(196,98,58,0.05) 0%, transparent 55%)
+          `
         }}
       />
 
