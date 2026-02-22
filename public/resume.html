@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shaun Chikerema - Software Engineer</title>
+    <style>
+        /* Modern CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.5;
+            color: #1f2937;
+            background: #ffffff;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 15mm;
+            font-size: 11pt;
+        }
+
+        /* Header Section */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid #3b82f6;
+        }
+
+        .name-title h1 {
+            font-size: 24pt;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 0.25rem;
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .name-title h2 {
+            font-size: 13pt;
+            font-weight: 600;
+            color: #6b7280;
+        }
+
+        .contact-info {
+            text-align: right;
+            font-size: 9pt;
+        }
+
+        .contact-item {
+            margin-bottom: 0.2rem;
+        }
+
+        .contact-item strong {
+            color: #374151;
+        }
+
+        /* Sections */
+        .section {
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 13pt;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.25rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 3px;
+            height: 16px;
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            margin-right: 0.5rem;
+            border-radius: 2px;
+        }
+
+        /* Summary */
+        .summary {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 6px;
+            border-left: 3px solid #3b82f6;
+            margin-bottom: 1rem;
+            font-size: 10pt;
+        }
+
+        /* Experience & Education Items */
+        .item {
+            margin-bottom: 1rem;
+            page-break-inside: avoid;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.25rem;
+        }
+
+        .item-title {
+            font-weight: 700;
+            color: #1f2937;
+            font-size: 11pt;
+        }
+
+        .item-company {
+            color: #3b82f6;
+            font-weight: 600;
+            font-size: 10pt;
+        }
+
+        .item-period {
+            color: #6b7280;
+            font-size: 9pt;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-category {
+            background: #f8fafc;
+            padding: 0.75rem;
+            border-radius: 5px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .skill-category h4 {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+            font-size: 10pt;
+            font-weight: 700;
+        }
+
+        .skill-list {
+            list-style: none;
+            font-size: 9pt;
+        }
+
+        .skill-list li {
+            padding: 0.15rem 0;
+            color: #4b5563;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .skill-level {
+            width: 50px;
+            height: 3px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .skill-level-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #1e40af);
+            border-radius: 2px;
+        }
+
+        /* Projects */
+        .project-item {
+            background: #f8fafc;
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+            border-left: 2px solid #3b82f6;
+            font-size: 9.5pt;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-title {
+            font-weight: 700;
+            color: #1f2937;
+            font-size: 10.5pt;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            margin: 0.5rem 0;
+        }
+
+        .tech-tag {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 0.15rem 0.5rem;
+            border-radius: 10px;
+            font-size: 8pt;
+            font-weight: 600;
+        }
+
+        /* Achievements */
+        .achievement-list {
+            list-style: none;
+            font-size: 9.5pt;
+        }
+
+        .achievement-list li {
+            padding: 0.15rem 0;
+            color: #4b5563;
+            position: relative;
+            padding-left: 1rem;
+            margin-bottom: 0.15rem;
+        }
+
+        .achievement-list li::before {
+            content: '▸';
+            color: #3b82f6;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 8pt;
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                padding: 12mm;
+                font-size: 10pt;
+            }
+            
+            .section {
+                margin-bottom: 0.75rem;
+            }
+            
+            .project-item, .skill-category {
+                page-break-inside: avoid;
+            }
+            
+            .no-print {
+                display: none;
+            }
+        }
+
+        /* Utilities */
+        .text-primary {
+            color: #3b82f6;
+        }
+
+        .text-muted {
+            color: #6b7280;
+        }
+
+        .mb-1 {
+            margin-bottom: 0.25rem;
+        }
+
+        .mb-2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .font-semibold {
+            font-weight: 600;
+        }
+
+        .ecosystem-badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 0.1rem 0.5rem;
+            border-radius: 8px;
+            font-size: 7pt;
+            font-weight: 700;
+            margin-left: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="name-title">
+            <h1>Shaun Chikerema</h1>
+            <h2>Software Engineer & Founder</h2>
+        </div>
+        <div class="contact-info">
+            <div class="contact-item"><strong>Email:</strong> sschikerema@gmail.com</div>
+            <div class="contact-item"><strong>Phone:</strong> +267 76 051 623</div>
+            <div class="contact-item"><strong>Location:</strong> Gaborone, Botswana</div>
+            <div class="contact-item"><strong>Portfolio:</strong> shaunchikerema.vercel.app</div>
+            <div class="contact-item"><strong>GitHub:</strong> github.com/shaunChikerema</div>
+            <div class="contact-item"><strong>LinkedIn:</strong> linkedin.com/in/shaunchikerema</div>
+        </div>
+    </div>
+
+    <!-- Professional Summary -->
+    <div class="section">
+        <div class="summary">
+            Software Engineer and Founder building BITROOT technology ecosystem. Architecting scalable production 
+            applications including Keyat (real estate platform) and PolicyBridge (insurance SaaS). Strong foundation 
+            in system design, full-stack development, and object-oriented programming with proven track record of 
+            delivering user-focused solutions across web and mobile platforms.
+        </div>
+    </div>
+
+    <div class="two-column">
+        <!-- Left Column -->
+        <div>
+            <!-- Technical Skills -->
+            <div class="section">
+                <div class="section-title">Technical Expertise</div>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h4>Frontend & Mobile</h4>
+                        <ul class="skill-list">
+                            <li>React/Next.js <div class="skill-level"><div class="skill-level-fill" style="width: 90%"></div></div></li>
+                            <li>TypeScript <div class="skill-level"><div class="skill-level-fill" style="width: 85%"></div></div></li>
+                            <li>React Native <div class="skill-level"><div class="skill-level-fill" style="width: 82%"></div></div></li>
+                            <li>Tailwind CSS <div class="skill-level"><div class="skill-level-fill" style="width: 88%"></div></div></li>
+                            <li>JavaScript (ES6+) <div class="skill-level"><div class="skill-level-fill" style="width: 92%"></div></div></li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4>Backend & Databases</h4>
+                        <ul class="skill-list">
+                            <li>Node.js/Express <div class="skill-level"><div class="skill-level-fill" style="width: 85%"></div></div></li>
+                            <li>Supabase <div class="skill-level"><div class="skill-level-fill" style="width: 80%"></div></div></li>
+                            <li>PostgreSQL <div class="skill-level"><div class="skill-level-fill" style="width: 78%"></div></div></li>
+                            <li>Firebase <div class="skill-level"><div class="skill-level-fill" style="width: 80%"></div></div></li>
+                            <li>RESTful APIs <div class="skill-level"><div class="skill-level-fill" style="width: 85%"></div></div></li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4>Object-Oriented & Systems</h4>
+                        <ul class="skill-list">
+                            <li>Java <div class="skill-level"><div class="skill-level-fill" style="width: 80%"></div></div></li>
+                            <li>C# /.NET <div class="skill-level"><div class="skill-level-fill" style="width: 75%"></div></div></li>
+                            <li>OOP Principles <div class="skill-level"><div class="skill-level-fill" style="width: 85%"></div></div></li>
+                            <li>Design Patterns <div class="skill-level"><div class="skill-level-fill" style="width: 78%"></div></div></li>
+                            <li>System Design <div class="skill-level"><div class="skill-level-fill" style="width: 75%"></div></div></li>
+                        </ul>
+                    </div>
+
+                    <div class="skill-category">
+                        <h4>Tools & Platforms</h4>
+                        <ul class="skill-list">
+                            <li>Git/GitHub <div class="skill-level"><div class="skill-level-fill" style="width: 88%"></div></div></li>
+                            <li>Docker <div class="skill-level"><div class="skill-level-fill" style="width: 70%"></div></div></li>
+                            <li>AWS Basics <div class="skill-level"><div class="skill-level-fill" style="width: 65%"></div></div></li>
+                            <li>VS Code <div class="skill-level"><div class="skill-level-fill" style="width: 90%"></div></div></li>
+                            <li>Figma <div class="skill-level"><div class="skill-level-fill" style="width: 75%"></div></div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Professional Experience -->
+            <div class="section">
+                <div class="section-title">Professional Experience</div>
+                
+                <div class="item">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-title">Founder & Lead Engineer</div>
+                            <div class="item-company">BITROOT - Technology Ecosystem</div>
+                        </div>
+                        <div class="item-period">2023 - Present</div>
+                    </div>
+                    <ul class="achievement-list">
+                        <li>Founded and architecting BITROOT technology ecosystem housing multiple SaaS products</li>
+                        <li>Leading development of Keyat (real estate platform) and PolicyBridge (insurance SaaS)</li>
+                        <li>Designing unified platform architecture for scalable multi-product infrastructure</li>
+                        <li>Building foundational systems serving 10,000+ target users across Botswana</li>
+                    </ul>
+                </div>
+
+                <div class="item">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-title">Software Development Intern</div>
+                            <div class="item-company">Local Tech Startup</div>
+                        </div>
+                        <div class="item-period">Summer 2023</div>
+                    </div>
+                    <ul class="achievement-list">
+                        <li>Contributed to React-based web applications implementing responsive UI components</li>
+                        <li>Participated in agile development workflows and code review processes</li>
+                        <li>Gained experience with professional software development methodologies</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div>
+            <!-- Featured Projects -->
+            <div class="section">
+                <div class="section-title">BITROOT Ecosystem Projects</div>
+                
+                <div class="project-item">
+                    <div class="project-header">
+                        <div class="project-title">Keyat Real Estate Platform <span class="ecosystem-badge">BITROOT</span></div>
+                    </div>
+                    <div class="mb-1">Botswana's first comprehensive real estate platform - multi-sided marketplace</div>
+                    <div class="project-tech">
+                        <span class="tech-tag">Next.js 15</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">Supabase</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Stripe</span>
+                        <span class="tech-tag">Real-time Chat</span>
+                    </div>
+                    <ul class="achievement-list">
+                        <li>Multi-tenant architecture with role-based access control</li>
+                        <li>Local payment integration (Orange Money, Mascom MyZaka)</li>
+                        <li>Advanced search with geolocation and filters</li>
+                    </ul>
+                </div>
+
+                <div class="project-item">
+                    <div class="project-header">
+                        <div class="project-title">PolicyBridge Insurance SaaS <span class="ecosystem-badge">BITROOT</span></div>
+                    </div>
+                    <div class="mb-1">Comprehensive insurance management with automated document generation</div>
+                    <div class="project-tech">
+                        <span class="tech-tag">Next.js 14</span>
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">React PDF</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">Puppeteer</span>
+                        <span class="tech-tag">Chart.js</span>
+                    </div>
+                    <ul class="achievement-list">
+                        <li>Automated PDF payslip generation with templates</li>
+                        <li>Real-time analytics and reporting dashboard</li>
+                        <li>Secure multi-tenant data isolation</li>
+                    </ul>
+                </div>
+
+                <div class="project-item">
+                    <div class="project-header">
+                        <div class="project-title">Academic Engineering Projects</div>
+                    </div>
+                    <div class="mb-1">University coursework demonstrating OOP and software engineering principles</div>
+                    <div class="project-tech">
+                        <span class="tech-tag">Java</span>
+                        <span class="tech-tag">C#</span>
+                        <span class="tech-tag">OOP</span>
+                        <span class="tech-tag">Design Patterns</span>
+                        <span class="tech-tag">UML</span>
+                    </div>
+                    <ul class="achievement-list">
+                        <li>Object-oriented system design and implementation</li>
+                        <li>Database management systems and SQL optimization</li>
+                        <li>Software architecture and design pattern applications</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Education -->
+            <div class="section">
+                <div class="section-title">Education</div>
+                
+                <div class="item">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-title">BSc (Hons) Software Engineering with Multimedia</div>
+                            <div class="item-company">Limkokwing University of Creative Technology</div>
+                        </div>
+                        <div class="item-period">2020 - 2024</div>
+                    </div>
+                    <div class="mb-1">Cyberjaya, Malaysia & Gaborone, Botswana | Graduated November 2024</div>
+                    <ul class="achievement-list">
+                        <li><strong>Core Technical Courses:</strong> Object-Oriented Programming (Java/C#), Data Structures & Algorithms, Database Systems, Software Engineering, Web Technologies, Mobile Development</li>
+                        <li><strong>Advanced Topics:</strong> System Design, Design Patterns, Software Architecture, Multimedia Systems, Human-Computer Interaction</li>
+                        <li><strong>Project Work:</strong> Full-stack applications, Mobile apps, Database design, System architecture</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Certifications & Achievements -->
+            <div class="section">
+                <div class="section-title">Certifications</div>
+                <div class="item">
+                    <div class="item-header">
+                        <div class="item-title">BSc (Hons) Software Engineering with Multimedia</div>
+                        <div class="item-period">2024</div>
+                    </div>
+                    <div class="item-company">Limkokwing University of Creative Technology</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Print Instructions -->
+    <div class="no-print" style="margin-top: 1.5rem; padding: 0.75rem; background: #f3f4f6; border-radius: 5px; text-align: center; font-size: 9pt; color: #6b7280;">
+        <strong>Print Instructions:</strong> Use "Save as PDF" in browser print dialog | Optimized for A4
+    </div>
+
+    <script>
+        window.addEventListener('beforeprint', () => {
+            document.querySelector('.no-print').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
