@@ -3,8 +3,6 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Download } from 'lucide-react';
 
-const PERSONAL_INFO = { name: 'Shaun Chikerema' };
-
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -12,63 +10,50 @@ export default function Header() {
   const [isNavigating, setIsNavigating] = useState(false);
 
   const handleScroll = useCallback(() => {
-    setIsScrolled(window.scrollY > 10);
-    const scrollPosition = window.scrollY + 100;
+    setIsScrolled(window.scrollY > 20);
+    const scrollPosition = window.scrollY + 120;
     const sections = ['home', 'about', 'expertise', 'projects', 'experience', 'contact'];
-    let currentActive = 'home';
+    let current = 'home';
     for (let i = sections.length - 1; i >= 0; i--) {
-      const section = document.getElementById(sections[i]);
-      if (section && section.offsetTop <= scrollPosition) {
-        currentActive = sections[i];
-        break;
-      }
+      const el = document.getElementById(sections[i]);
+      if (el && el.offsetTop <= scrollPosition) { current = sections[i]; break; }
     }
-    if (currentActive !== activeSection && !isNavigating) setActiveSection(currentActive);
+    if (current !== activeSection && !isNavigating) setActiveSection(current);
   }, [activeSection, isNavigating]);
 
-  const smoothScrollTo = useCallback((elementId: string) => {
-    const element = document.getElementById(elementId);
-    if (!element) return;
-    const offsetPosition = element.getBoundingClientRect().top + window.pageYOffset - 80;
-    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+  const smoothScrollTo = useCallback((id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 72, behavior: 'smooth' });
   }, []);
 
-  const handleNavigation = useCallback((href: string) => {
+  const handleNav = useCallback((href: string) => {
     const section = href.replace('#', '');
     setIsNavigating(true);
     setIsMobileMenuOpen(false);
     setActiveSection(section);
     if (history.pushState) history.pushState(null, '', href);
-    setTimeout(() => {
-      smoothScrollTo(section);
-      setTimeout(() => setIsNavigating(false), 800);
-    }, 100);
+    setTimeout(() => { smoothScrollTo(section); setTimeout(() => setIsNavigating(false), 800); }, 80);
   }, [smoothScrollTo]);
 
   useEffect(() => {
     let ticking = false;
-    const throttledScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => { handleScroll(); ticking = false; });
-        ticking = true;
-      }
+    const onScroll = () => {
+      if (!ticking) { requestAnimationFrame(() => { handleScroll(); ticking = false; }); ticking = true; }
     };
-    window.addEventListener('scroll', throttledScroll, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', throttledScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, [handleScroll]);
 
   useEffect(() => {
-    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : 'unset';
-    return () => { document.body.style.overflow = 'unset'; };
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
   }, [isMobileMenuOpen]);
 
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => { if (e.key === 'Escape') setIsMobileMenuOpen(false); };
-    if (isMobileMenuOpen) {
-      document.addEventListener('keydown', handleEscape);
-      return () => document.removeEventListener('keydown', handleEscape);
-    }
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setIsMobileMenuOpen(false); };
+    if (isMobileMenuOpen) { document.addEventListener('keydown', onKey); return () => document.removeEventListener('keydown', onKey); }
   }, [isMobileMenuOpen]);
 
   useEffect(() => {
@@ -85,16 +70,16 @@ export default function Header() {
     { name: 'Skills', href: '#expertise' },
     { name: 'Projects', href: '#projects' },
     { name: 'Experience', href: '#experience' },
-    { name: 'Contact', href: '#contact' }
+    { name: 'Contact', href: '#contact' },
   ];
 
   const downloadResume = () => {
-    const link = document.createElement('a');
-    link.href = '/shaun-chikerema-resume.pdf';
-    link.download = 'Shaun_Chikerema_Resume.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    const a = document.createElement('a');
+    a.href = '/shaun-chikerema-resume.pdf';
+    a.download = 'Shaun_Chikerema_Resume.pdf';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   };
 
   const scrollToTop = () => {
@@ -108,212 +93,147 @@ export default function Header() {
   return (
     <>
       <header
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
         style={{
-          background: isScrolled ? 'rgba(245,240,232,0.97)' : 'rgba(245,240,232,0.8)',
-          backdropFilter: 'blur(12px)',
-          borderBottom: isScrolled ? '1px solid rgba(26,23,20,0.1)' : '1px solid transparent',
-          boxShadow: isScrolled ? '0 1px 20px rgba(26,23,20,0.06)' : 'none'
+          background: isScrolled ? 'rgba(247,243,236,0.96)' : 'rgba(247,243,236,0.85)',
+          backdropFilter: 'blur(10px)',
+          borderBottom: isScrolled ? '1px solid var(--border)' : '1px solid transparent',
+          boxShadow: isScrolled ? '0 1px 12px rgba(24,19,15,0.05)' : 'none'
         }}
       >
-        <nav className="container mx-auto px-6 lg:px-12">
-          <div className="flex items-center justify-between h-16 lg:h-20">
+        <div className="container mx-auto px-6 lg:px-16">
+          <div className="flex items-center justify-between h-[72px]">
 
             {/* Logo */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="flex items-center gap-3 cursor-pointer group"
+            <button
               onClick={scrollToTop}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => e.key === 'Enter' && scrollToTop()}
+              className="flex items-center gap-3 group"
+              aria-label="Go to top"
             >
               <div
-                className="w-9 h-9 rounded-sm flex items-center justify-center font-display font-bold text-lg transition-all duration-200"
+                className="w-8 h-8 rounded-sm flex items-center justify-center font-display font-bold text-base"
                 style={{ background: 'var(--ink)', color: 'var(--cream)' }}
               >
                 S
               </div>
-              <div className="hidden sm:block">
-                <div
-                  className="font-display font-bold text-base leading-tight transition-colors duration-200"
-                  style={{ color: 'var(--ink)' }}
-                >
-                  {PERSONAL_INFO.name.split(' ')[0]}
-                </div>
-                <div className="font-body text-xs tracking-wide" style={{ color: 'var(--ink-faint)' }}>
+              <div className="hidden sm:block text-left">
+                <p className="font-display font-bold text-sm leading-tight" style={{ color: 'var(--ink)' }}>
+                  Shaun Chikerema
+                </p>
+                <p className="font-body text-[10px] tracking-wide uppercase" style={{ color: 'var(--ink-faint)' }}>
                   Software Engineer
-                </div>
+                </p>
               </div>
-            </motion.div>
+            </button>
 
-            {/* Desktop Nav */}
-            <div className="hidden lg:flex items-center gap-1">
+            {/* Desktop nav */}
+            <nav className="hidden lg:flex items-center gap-0.5">
               {navItems.map((item) => {
                 const isActive = activeSection === item.href.replace('#', '');
                 return (
                   <a
                     key={item.name}
                     href={item.href}
-                    onClick={(e) => { e.preventDefault(); handleNavigation(item.href); }}
-                    className={`relative px-4 py-2 font-body text-sm font-medium transition-all duration-200 rounded-sm ${isNavigating ? 'pointer-events-none opacity-60' : ''}`}
+                    onClick={(e) => { e.preventDefault(); handleNav(item.href); }}
+                    className={`relative px-4 py-2 font-body text-sm font-medium transition-colors rounded-sm ${isNavigating ? 'pointer-events-none opacity-50' : ''}`}
                     style={{ color: isActive ? 'var(--terra)' : 'var(--ink-muted)' }}
                     aria-current={isActive ? 'page' : undefined}
                   >
                     {item.name}
                     {isActive && (
                       <motion.div
-                        layoutId="activeNav"
-                        className="absolute bottom-0 left-3 right-3 h-px"
+                        layoutId="nav-indicator"
+                        className="absolute bottom-1 left-4 right-4 h-px"
                         style={{ background: 'var(--terra)' }}
-                        transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                        transition={{ type: 'spring', stiffness: 400, damping: 35 }}
                       />
                     )}
                   </a>
                 );
               })}
-            </div>
+            </nav>
 
-            {/* Desktop Resume CTA */}
-            <div className="hidden lg:flex items-center">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={downloadResume}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-sm font-body text-sm font-medium transition-all duration-200"
-                style={{ background: 'var(--ink)', color: 'var(--cream)' }}
-              >
+            {/* Desktop CTA */}
+            <div className="hidden lg:flex">
+              <button onClick={downloadResume} className="btn-primary text-xs py-2.5 px-4 gap-1.5">
                 <Download className="w-3.5 h-3.5" />
                 Resume
-              </motion.button>
+              </button>
             </div>
 
-            {/* Mobile controls */}
+            {/* Mobile */}
             <div className="flex lg:hidden items-center gap-2">
-              <button
-                onClick={downloadResume}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-sm font-body text-xs font-medium"
-                style={{ background: 'var(--ink)', color: 'var(--cream)' }}
-              >
+              <button onClick={downloadResume} className="btn-primary text-xs py-2 px-3 gap-1.5">
                 <Download className="w-3 h-3" />
                 Resume
               </button>
               <button
-                className="p-2 rounded-sm transition-colors"
-                style={{ color: 'var(--ink-muted)' }}
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="p-2 rounded-sm"
+                style={{ color: 'var(--ink-muted)' }}
                 aria-label="Toggle menu"
-                aria-expanded={isMobileMenuOpen}
               >
-                {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
               </button>
             </div>
           </div>
-        </nav>
+        </div>
       </header>
 
-      {/* Mobile Menu */}
+      {/* Mobile drawer */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
               className="lg:hidden fixed inset-0 z-[60]"
-              style={{ background: 'rgba(26,23,20,0.4)', backdropFilter: 'blur(4px)' }}
+              style={{ background: 'rgba(24,19,15,0.35)', backdropFilter: 'blur(3px)' }}
               onClick={() => setIsMobileMenuOpen(false)}
             />
-
             <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="lg:hidden fixed top-0 right-0 h-full w-72 z-[70] flex flex-col"
-              style={{ background: 'var(--cream)', borderLeft: '1px solid rgba(26,23,20,0.1)' }}
-              role="dialog"
-              aria-modal="true"
+              initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 28, stiffness: 280 }}
+              className="lg:hidden fixed top-0 right-0 h-full w-64 z-[70] flex flex-col"
+              style={{ background: 'var(--cream)', borderLeft: '1px solid var(--border)' }}
+              role="dialog" aria-modal="true"
             >
-              {/* Drawer header */}
-              <div className="flex items-center justify-between p-6" style={{ borderBottom: '1px solid rgba(26,23,20,0.08)' }}>
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-sm flex items-center justify-center font-display font-bold text-lg"
-                    style={{ background: 'var(--ink)', color: 'var(--cream)' }}>
-                    S
-                  </div>
-                  <div>
-                    <div className="font-display font-bold text-sm" style={{ color: 'var(--ink)' }}>{PERSONAL_INFO.name.split(' ')[0]}</div>
-                    <div className="font-body text-xs" style={{ color: 'var(--ink-faint)' }}>Software Engineer</div>
-                  </div>
-                </div>
-                <button
-                  className="p-1.5 rounded-sm"
-                  style={{ color: 'var(--ink-muted)' }}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  aria-label="Close menu"
-                >
-                  <X size={18} />
+              <div className="flex items-center justify-between p-5" style={{ borderBottom: '1px solid var(--border)' }}>
+                <p className="font-display font-bold text-sm" style={{ color: 'var(--ink)' }}>Menu</p>
+                <button onClick={() => setIsMobileMenuOpen(false)} style={{ color: 'var(--ink-faint)' }} aria-label="Close">
+                  <X size={16} />
                 </button>
               </div>
-
-              {/* Nav links */}
-              <div className="flex-1 overflow-y-auto p-5">
-                <nav className="space-y-1">
-                  {navItems.map((item, i) => {
-                    const isActive = activeSection === item.href.replace('#', '');
-                    return (
-                      <motion.a
-                        key={item.name}
-                        href={item.href}
-                        initial={{ opacity: 0, x: 16 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: i * 0.06 }}
-                        onClick={(e) => { e.preventDefault(); handleNavigation(item.href); }}
-                        className={`flex items-center justify-between w-full px-4 py-3 rounded-sm font-body text-sm font-medium transition-all duration-200 ${isNavigating ? 'pointer-events-none opacity-60' : ''}`}
-                        style={{
-                          background: isActive ? 'var(--terra-pale)' : 'transparent',
-                          color: isActive ? 'var(--terra)' : 'var(--ink-muted)',
-                        }}
-                        aria-current={isActive ? 'page' : undefined}
-                      >
-                        {item.name}
-                        {isActive && <div className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--terra)' }} />}
-                      </motion.a>
-                    );
-                  })}
-                </nav>
-
-                {/* Resume */}
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: navItems.length * 0.06 + 0.1 }}
-                  className="mt-6 pt-6"
-                  style={{ borderTop: '1px solid rgba(26,23,20,0.08)' }}
-                >
-                  <button
-                    onClick={downloadResume}
-                    className="w-full flex items-center justify-center gap-2 py-3 rounded-sm font-body text-sm font-medium"
-                    style={{ background: 'var(--ink)', color: 'var(--cream)' }}
-                  >
-                    <Download className="w-4 h-4" />
-                    Download Resume
-                  </button>
-                </motion.div>
-
-                {/* Location */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: navItems.length * 0.06 + 0.2 }}
-                  className="mt-4 text-center"
-                >
-                  <p className="font-body text-xs" style={{ color: 'var(--ink-faint)' }}>Gaborone, Botswana</p>
-                  <p className="font-body text-xs mt-0.5" style={{ color: 'var(--ink-faint)', opacity: 0.7 }}>Available for new projects</p>
-                </motion.div>
+              <nav className="flex-1 p-4 space-y-0.5">
+                {navItems.map((item, i) => {
+                  const isActive = activeSection === item.href.replace('#', '');
+                  return (
+                    <motion.a
+                      key={item.name}
+                      href={item.href}
+                      initial={{ opacity: 0, x: 12 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.05 }}
+                      onClick={(e) => { e.preventDefault(); handleNav(item.href); }}
+                      className="flex items-center justify-between px-3 py-2.5 rounded-sm font-body text-sm font-medium"
+                      style={{
+                        background: isActive ? 'var(--terra-pale)' : 'transparent',
+                        color: isActive ? 'var(--terra)' : 'var(--ink-muted)',
+                      }}
+                    >
+                      {item.name}
+                      {isActive && <div className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--terra)' }} />}
+                    </motion.a>
+                  );
+                })}
+              </nav>
+              <div className="p-4" style={{ borderTop: '1px solid var(--border)' }}>
+                <button onClick={downloadResume} className="btn-primary w-full justify-center text-sm py-2.5">
+                  <Download className="w-4 h-4" /> Download Resume
+                </button>
+                <p className="text-center mt-3 font-body text-xs" style={{ color: 'var(--ink-faint)' }}>
+                  Gaborone, Botswana · Open to remote
+                </p>
               </div>
             </motion.div>
           </>

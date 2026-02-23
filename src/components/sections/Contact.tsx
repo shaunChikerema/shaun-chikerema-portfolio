@@ -3,110 +3,143 @@ import { motion } from 'framer-motion';
 import { Mail, MapPin, Send } from 'lucide-react';
 import { useState } from 'react';
 
-const PERSONAL_INFO = { email: 'sschikerema@gmail.com' };
+const EMAIL = 'sschikerema@gmail.com';
+
+const contactMethods = [
+  {
+    icon: Mail,
+    label: 'Email',
+    value: EMAIL,
+    description: 'Best for project discussions',
+    href: `mailto:${EMAIL}?subject=Project Inquiry`,
+  },
+  {
+    icon: Send,
+    label: 'WhatsApp',
+    value: '+267 76 051 652',
+    description: 'Quick questions & direct messages',
+    href: 'https://wa.me/26776051652',
+  },
+  {
+    icon: MapPin,
+    label: 'Location',
+    value: 'Gaborone, Botswana',
+    description: 'Available for remote work worldwide',
+    href: '#',
+  },
+];
+
+const projectTypes = [
+  'Full-Stack Web App',
+  'Mobile App (React Native)',
+  'SaaS Platform',
+  'Real Estate Tech',
+  'Insurance Tech',
+  'MVP Development',
+  'Technical Consulting',
+  'Other',
+];
 
 export default function Contact() {
-  const [formData, setFormData] = useState({ name: '', email: '', company: '', projectType: '', message: '' });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [form, setForm] = useState({ name: '', email: '', company: '', projectType: '', message: '' });
+  const [submitting, setSubmitting] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
+    setForm({ ...form, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = async (e?: React.FormEvent) => {
-    e?.preventDefault();
-    setIsSubmitting(true);
+  const handleSubmit = async () => {
+    setSubmitting(true);
     try {
-      const response = await fetch('/api/contact', {
+      const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(form),
       });
-      if (response.ok) {
-        setSubmitStatus('success');
-        setFormData({ name: '', email: '', company: '', projectType: '', message: '' });
+      if (res.ok) {
+        setStatus('success');
+        setForm({ name: '', email: '', company: '', projectType: '', message: '' });
       } else {
-        setSubmitStatus('error');
+        setStatus('error');
       }
     } catch {
-      setSubmitStatus('error');
+      setStatus('error');
     } finally {
-      setIsSubmitting(false);
-      setTimeout(() => setSubmitStatus('idle'), 5000);
+      setSubmitting(false);
+      setTimeout(() => setStatus('idle'), 5000);
     }
   };
 
-  const contactMethods = [
-    { icon: Mail, href: `mailto:${PERSONAL_INFO.email}?subject=Project Inquiry`, label: 'Email', value: PERSONAL_INFO.email, description: 'Best for detailed discussions' },
-    { icon: Send, href: 'https://wa.me/26776051652', label: 'WhatsApp', value: '+267 76 051 622', description: 'Message me directly' },
-    { icon: MapPin, href: '#', label: 'Location', value: 'Gaborone, Botswana', description: 'Remote work worldwide' }
-  ];
-
-  const projectTypes = ['Full-Stack Web App', 'Mobile App (React Native)', 'SaaS Platform', 'Real Estate Tech', 'Insurance Tech', 'MVP Development', 'Technical Consulting', 'Other'];
-
-  const inputClass = "input-warm w-full px-4 py-3 text-sm font-body";
-  const labelClass = "block font-body text-xs font-medium uppercase tracking-wider mb-2";
+  const labelClass = 'block font-body text-[10px] font-semibold uppercase tracking-[0.14em] mb-1.5';
 
   return (
-    <section id="contact" className="relative overflow-hidden" style={{ background: 'var(--cream-dark)' }}>
-      <div className="rule-ornate" />
+    <section id="contact" style={{ background: 'var(--cream-mid)' }}>
+      <div className="rule-thin" />
 
-      <div className="container mx-auto px-6 lg:px-12 py-24 lg:py-32 max-w-7xl">
+      <div className="container mx-auto px-6 lg:px-16 py-20 lg:py-28 max-w-7xl">
 
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-20"
+          transition={{ duration: 0.55 }}
+          className="mb-16"
         >
-          <div className="section-label mb-5">
-            <span className="w-4 h-px inline-block" style={{ background: 'var(--terra)' }} />
+          <div className="section-label mb-4">
+            <span style={{ width: 20, height: 1, background: 'var(--terra)', display: 'inline-block' }} />
             Let's Work Together
           </div>
-          <h2 className="font-display text-5xl md:text-6xl font-bold leading-tight mb-4" style={{ color: 'var(--ink)' }}>
-            Have a <em style={{ color: 'var(--terra)' }}>Project?</em>
-          </h2>
-          <p className="font-body text-base leading-relaxed max-w-lg" style={{ color: 'var(--ink-muted)' }}>
-            Full-stack engineer building web applications. Based in Gaborone, working with clients globally.
-          </p>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
+            <div className="lg:col-span-6">
+              <h2
+                className="font-display font-bold leading-tight"
+                style={{ color: 'var(--ink)', fontSize: 'clamp(2.2rem, 5vw, 3.5rem)' }}
+              >
+                Have a <em style={{ color: 'var(--terra)' }}>project</em><br />in mind?
+              </h2>
+            </div>
+            <div className="lg:col-span-5 lg:col-start-8">
+              <p className="font-body text-base" style={{ color: 'var(--ink-muted)' }}>
+                Full-stack engineer based in Gaborone, working with clients globally. Get in touch and I'll respond within 24 hours.
+              </p>
+            </div>
+          </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-          {/* Left — Contact info */}
+          {/* Left: contact info */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -16 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="lg:col-span-2"
           >
-            <div className="p-8 rounded-sm h-full" style={{ background: 'var(--cream)', border: '1px solid rgba(26,23,20,0.1)' }}>
-              <h3 className="font-display text-xl font-bold mb-6" style={{ color: 'var(--ink)' }}>Get In Touch</h3>
+            <div className="card p-7 h-full flex flex-col">
+              <h3 className="font-display font-bold text-lg mb-5" style={{ color: 'var(--ink)' }}>Get in Touch</h3>
 
-              <div className="space-y-3 mb-8">
-                {contactMethods.map(m => {
+              <div className="space-y-2.5 mb-7">
+                {contactMethods.map((m) => {
                   const MIcon = m.icon;
                   return (
                     <a
                       key={m.label}
                       href={m.href}
-                      className="flex items-start gap-4 p-4 rounded-sm transition-all group"
-                      style={{ background: 'var(--cream-dark)', border: '1px solid rgba(26,23,20,0.08)' }}
+                      className="flex items-start gap-4 p-4 rounded-sm transition-colors group"
+                      style={{ background: 'var(--cream-mid)', border: '1px solid var(--border)' }}
                       target={m.href.startsWith('http') ? '_blank' : undefined}
                       rel={m.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                     >
                       <div
-                        className="w-9 h-9 rounded-sm flex items-center justify-center flex-shrink-0"
+                        className="w-8 h-8 rounded-sm flex items-center justify-center flex-shrink-0"
                         style={{ background: 'var(--terra-pale)' }}
                       >
-                        <MIcon className="w-4 h-4" style={{ color: 'var(--terra)' }} />
+                        <MIcon className="w-3.5 h-3.5" style={{ color: 'var(--terra)' }} />
                       </div>
                       <div>
-                        <p className="font-body font-medium text-sm mb-0.5" style={{ color: 'var(--ink)' }}>{m.label}</p>
+                        <p className="font-body font-semibold text-xs mb-0.5" style={{ color: 'var(--ink)' }}>{m.label}</p>
                         <p className="font-body text-sm mb-0.5" style={{ color: 'var(--ink-muted)' }}>{m.value}</p>
                         <p className="font-body text-xs" style={{ color: 'var(--ink-faint)' }}>{m.description}</p>
                       </div>
@@ -116,41 +149,48 @@ export default function Contact() {
               </div>
 
               {/* Response time */}
-              <div className="p-4 rounded-sm" style={{ background: 'var(--terra-pale)', border: '1px solid rgba(196,98,58,0.15)' }}>
+              <div
+                className="mt-auto p-4 rounded-sm"
+                style={{ background: 'var(--terra-pale)', border: '1px solid rgba(192,87,46,0.15)' }}
+              >
                 <div className="flex items-center gap-2 mb-1">
                   <span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--terra)' }} />
-                  <span className="font-body font-medium text-sm" style={{ color: 'var(--terra)' }}>24-Hour Response</span>
+                  <span className="font-body font-semibold text-xs" style={{ color: 'var(--terra)' }}>24-hour response</span>
                 </div>
                 <p className="font-body text-xs" style={{ color: 'var(--terra)' }}>
-                  I respond to all inquiries within one business day.
+                  I respond to all project inquiries within one business day.
                 </p>
               </div>
             </div>
           </motion.div>
 
-          {/* Right — Form */}
+          {/* Right: form */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 16 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="lg:col-span-3"
           >
-            <div className="p-8 lg:p-10 rounded-sm h-full" style={{ background: 'var(--cream)', border: '1px solid rgba(26,23,20,0.1)' }}>
-              {submitStatus === 'success' ? (
+            <div className="card p-7 h-full">
+              {status === 'success' ? (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   className="text-center py-16"
                 >
-                  <div className="w-16 h-16 rounded-sm flex items-center justify-center mx-auto mb-6" style={{ background: 'var(--terra-pale)' }}>
-                    <Send className="w-7 h-7" style={{ color: 'var(--terra)' }} />
+                  <div
+                    className="w-12 h-12 rounded-sm flex items-center justify-center mx-auto mb-5"
+                    style={{ background: 'var(--terra-pale)' }}
+                  >
+                    <Send className="w-5 h-5" style={{ color: 'var(--terra)' }} />
                   </div>
-                  <h3 className="font-display text-2xl font-bold mb-2" style={{ color: 'var(--ink)' }}>Message Sent!</h3>
-                  <p className="font-body text-sm mb-6" style={{ color: 'var(--ink-muted)' }}>I'll get back to you within 24 hours.</p>
+                  <h3 className="font-display font-bold text-xl mb-1.5" style={{ color: 'var(--ink)' }}>Message sent</h3>
+                  <p className="font-body text-sm mb-5" style={{ color: 'var(--ink-muted)' }}>
+                    I'll get back to you within 24 hours.
+                  </p>
                   <button
-                    onClick={() => setSubmitStatus('idle')}
-                    className="font-body text-sm font-medium underline underline-offset-4 transition-colors"
+                    onClick={() => setStatus('idle')}
+                    className="font-body text-sm font-medium underline underline-offset-4"
                     style={{ color: 'var(--terra)' }}
                   >
                     Send another message
@@ -158,38 +198,57 @@ export default function Contact() {
                 </motion.div>
               ) : (
                 <>
-                  <div className="flex items-center gap-3 mb-8">
-                    <div className="w-9 h-9 rounded-sm flex items-center justify-center" style={{ background: 'var(--terra)' }}>
-                      <Send className="w-4 h-4" style={{ color: 'var(--cream)' }} />
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-8 h-8 rounded-sm flex items-center justify-center" style={{ background: 'var(--terra)' }}>
+                      <Send className="w-3.5 h-3.5" style={{ color: 'var(--cream)' }} />
                     </div>
                     <div>
-                      <h3 className="font-display text-xl font-bold" style={{ color: 'var(--ink)' }}>Project Inquiry</h3>
-                      <p className="font-body text-sm" style={{ color: 'var(--ink-faint)' }}>Tell me about your project</p>
+                      <h3 className="font-display font-bold text-lg" style={{ color: 'var(--ink)' }}>Project Inquiry</h3>
+                      <p className="font-body text-xs" style={{ color: 'var(--ink-faint)' }}>Tell me about your project</p>
                     </div>
                   </div>
 
-                  <div className="space-y-5">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-2 gap-3">
                       <div>
                         <label htmlFor="name" className={labelClass} style={{ color: 'var(--ink-faint)' }}>Name *</label>
-                        <input type="text" id="name" required value={formData.name} onChange={handleChange} className={inputClass} placeholder="John Doe" />
+                        <input
+                          type="text" id="name" required
+                          value={form.name} onChange={handleChange}
+                          className="input-field w-full px-3.5 py-2.5"
+                          placeholder="John Doe"
+                        />
                       </div>
                       <div>
                         <label htmlFor="email" className={labelClass} style={{ color: 'var(--ink-faint)' }}>Email *</label>
-                        <input type="email" id="email" required value={formData.email} onChange={handleChange} className={inputClass} placeholder="john@example.com" />
+                        <input
+                          type="email" id="email" required
+                          value={form.email} onChange={handleChange}
+                          className="input-field w-full px-3.5 py-2.5"
+                          placeholder="john@example.com"
+                        />
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label htmlFor="company" className={labelClass} style={{ color: 'var(--ink-faint)' }}>Company (Optional)</label>
-                        <input type="text" id="company" value={formData.company} onChange={handleChange} className={inputClass} placeholder="Your company" />
+                        <label htmlFor="company" className={labelClass} style={{ color: 'var(--ink-faint)' }}>Company</label>
+                        <input
+                          type="text" id="company"
+                          value={form.company} onChange={handleChange}
+                          className="input-field w-full px-3.5 py-2.5"
+                          placeholder="Optional"
+                        />
                       </div>
                       <div>
                         <label htmlFor="projectType" className={labelClass} style={{ color: 'var(--ink-faint)' }}>Project Type *</label>
-                        <select id="projectType" required value={formData.projectType} onChange={handleChange} className={inputClass}>
+                        <select
+                          id="projectType" required
+                          value={form.projectType} onChange={handleChange}
+                          className="input-field w-full px-3.5 py-2.5"
+                        >
                           <option value="">Select type</option>
-                          {projectTypes.map(t => <option key={t} value={t}>{t}</option>)}
+                          {projectTypes.map((t) => <option key={t} value={t}>{t}</option>)}
                         </select>
                       </div>
                     </div>
@@ -197,8 +256,9 @@ export default function Contact() {
                     <div>
                       <label htmlFor="message" className={labelClass} style={{ color: 'var(--ink-faint)' }}>Project Details *</label>
                       <textarea
-                        id="message" rows={5} required value={formData.message} onChange={handleChange}
-                        className={`${inputClass} resize-none`}
+                        id="message" rows={5} required
+                        value={form.message} onChange={handleChange}
+                        className="input-field w-full px-3.5 py-2.5 resize-none"
                         placeholder="Describe your project, timeline, and any specific requirements..."
                       />
                     </div>
@@ -206,17 +266,20 @@ export default function Contact() {
                     <button
                       type="button"
                       onClick={handleSubmit}
-                      disabled={isSubmitting}
-                      className="w-full py-4 px-6 rounded-sm font-body font-semibold text-sm transition-all disabled:opacity-50 flex items-center justify-center gap-2"
-                      style={{ background: 'var(--ink)', color: 'var(--cream)' }}
+                      disabled={submitting}
+                      className="btn-primary w-full justify-center text-sm py-3 disabled:opacity-50"
                     >
-                      <Send className="w-4 h-4" />
-                      {isSubmitting ? 'Sending...' : 'Send Message'}
+                      <Send className="w-3.5 h-3.5" />
+                      {submitting ? 'Sending...' : 'Send Message'}
                     </button>
 
-                    {submitStatus === 'error' && (
-                      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="font-body text-sm text-center" style={{ color: '#C0392B' }}>
-                        Something went wrong. Please email me at {PERSONAL_INFO.email}
+                    {status === 'error' && (
+                      <motion.p
+                        initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                        className="font-body text-xs text-center"
+                        style={{ color: '#B91C1C' }}
+                      >
+                        Something went wrong. Please email me directly at {EMAIL}
                       </motion.p>
                     )}
                   </div>
@@ -225,35 +288,8 @@ export default function Contact() {
             </div>
           </motion.div>
         </div>
-
-        {/* Bottom services note */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-12 p-8 rounded-sm"
-          style={{ background: 'var(--cream)', border: '1px solid rgba(26,23,20,0.1)' }}
-        >
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-            <div>
-              <h3 className="font-display text-xl font-bold mb-1" style={{ color: 'var(--ink)' }}>Remote-First Development</h3>
-              <p className="font-body text-sm" style={{ color: 'var(--ink-muted)' }}>
-                Based in Gaborone, working globally — ongoing support for all projects.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              {["Full-Stack Development", "Mobile-First Design", "4–6 Week Delivery", "Post-Launch Support"].map(f => (
-                <span key={f} className="px-3 py-1.5 rounded-sm text-xs font-body font-medium"
-                  style={{ background: 'var(--cream-dark)', color: 'var(--ink-muted)', border: '1px solid rgba(26,23,20,0.1)' }}>
-                  {f}
-                </span>
-              ))}
-            </div>
-          </div>
-        </motion.div>
       </div>
-      <div className="rule-ornate" />
+      <div className="rule-thin" />
     </section>
   );
 }
