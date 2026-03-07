@@ -83,7 +83,7 @@ export default function Hero() {
                 style={{ fontSize: '0.7rem', background: 'var(--terra-pale)', color: 'var(--terra)' }}
               >
                 <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--terra)' }} />
-                Open to opportunities
+                Available for work
               </span>
             </motion.div>
 
@@ -109,7 +109,7 @@ export default function Hero() {
               style={{ fontSize: '0.7rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-muted)' }}
               itemProp="jobTitle"
             >
-              Full-Stack Engineer · Gaborone, Botswana
+              Software Engineer
             </motion.p>
 
             {/* Terra accent line */}
@@ -122,17 +122,8 @@ export default function Hero() {
 
             {/* Value prop */}
             <motion.div {...fade(0.26)} className="mb-8 max-w-lg">
-              <p
-                className="font-display leading-[1.25] mb-3"
-                style={{ fontSize: 'clamp(1.2rem, 2.4vw, 1.5rem)', color: 'var(--ink)', letterSpacing: '-0.01em' }}
-              >
-                I build{' '}
-                <em style={{ color: 'var(--terra)' }}>full-stack products</em>{' '}
-                that ship — not just prototypes.
-              </p>
-              <p className="font-body text-sm leading-relaxed" style={{ color: 'var(--ink-muted)', lineHeight: 1.7 }}>
-                Two production platforms built and deployed independently since graduating in 2024 —
-                a real estate marketplace and an insurance automation SaaS, both live and serving real users.
+              <p className="font-body text-sm leading-relaxed" style={{ color: 'var(--ink-mid)', lineHeight: 1.8 }}>
+                I design and build full-stack products end-to-end — from database schema to deployed UI.
               </p>
             </motion.div>
 
@@ -206,16 +197,7 @@ export default function Hero() {
                 />
               </div>
 
-              {/* Location chip */}
-              <motion.div
-                initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.85 }}
-                className="absolute -bottom-4 left-0 z-20 px-4 py-2 rounded-sm"
-                style={{ background: 'var(--ink)', color: 'var(--cream)' }}
-              >
-                <p className="font-body font-medium" style={{ fontSize: '0.7rem' }}>Gaborone, Botswana</p>
-                <p className="font-body" style={{ fontSize: '0.65rem', color: 'rgba(246,241,234,0.55)' }}>Available for remote work</p>
-              </motion.div>
+
             </div>
           </motion.div>
 
