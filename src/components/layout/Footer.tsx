@@ -34,7 +34,7 @@ export default function Footer() {
             </div>
             <div>
               <p className="font-display font-bold text-sm" style={{ color: 'var(--cream)' }}>Shaun Chikerema</p>
-              <p className="font-body text-[10px]" style={{ color: 'rgba(246,241,234,0.38)' }}>Full-Stack Engineer · Gaborone, Botswana</p>
+              <p className="font-body text-[10px]" style={{ color: 'rgba(246,241,234,0.38)' }}>Software Engineer · Available for remote</p>
             </div>
           </div>
 

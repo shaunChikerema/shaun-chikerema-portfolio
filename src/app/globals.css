@@ -10,10 +10,10 @@
   --cream-dark: #E5DDD0;
   --ink:        #161210;
   --ink-mid:    #3D3530;
-  --ink-muted:  #7A716A;
-  --terra:      #BE5430;
-  --terra-dim:  #C97354;
-  --terra-pale: #F0D8CF;
+  --ink-muted:  #6B6058;
+  --terra:      #1A4D6D;
+  --terra-dim:  #2E6A8E;
+  --terra-pale: #D6E8F2;
   --border:     rgba(22,18,16,0.09);
   --border-mid: rgba(22,18,16,0.15);
 }
@@ -31,6 +31,7 @@ body {
   color: var(--ink);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  font-size: 16px;
 }
 
 .font-display { font-family: 'Playfair Display', serif; }
@@ -49,7 +50,7 @@ body {
   align-items: center;
   gap: 8px;
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.65rem;
+  font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -72,7 +73,7 @@ body {
   transition: border-color 0.18s ease, box-shadow 0.18s ease;
 }
 .card:hover {
-  border-color: rgba(190,84,48,0.22);
+  border-color: rgba(26,77,109,0.22);
   box-shadow: 0 4px 24px rgba(22,18,16,0.05);
 }
 .card-ink { background: var(--ink); border-radius: 3px; }
@@ -93,12 +94,12 @@ body {
   text-decoration: none;
 }
 .btn-dark {
-  background: var(--ink);
+  background: var(--terra);
   color: var(--cream);
   border: 1px solid transparent;
   padding: 11px 22px;
 }
-.btn-dark:hover { opacity: 0.82; }
+.btn-dark:hover { opacity: 0.85; }
 .btn-ghost {
   background: transparent;
   color: var(--ink);
@@ -111,12 +112,12 @@ body {
 .tag {
   display: inline-flex;
   align-items: center;
-  padding: 3px 9px;
+  padding: 4px 10px;
   background: var(--cream-mid);
   border: 1px solid var(--border);
   border-radius: 2px;
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.7rem;
+  font-size: 0.775rem;
   font-weight: 500;
   color: var(--ink-mid);
 }
@@ -129,8 +130,8 @@ body {
   border-radius: 3px;
   color: var(--ink);
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.8125rem;
-  padding: 10px 14px;
+  font-size: 0.875rem;
+  padding: 11px 14px;
   transition: border-color 0.15s, background 0.15s;
 }
 .field:focus { outline: none; border-color: var(--terra); background: var(--cream); }

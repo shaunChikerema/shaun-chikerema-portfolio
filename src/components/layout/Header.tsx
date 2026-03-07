@@ -190,7 +190,7 @@ export default function Header() {
                   <Download className="w-4 h-4" /> Download Resume
                 </button>
                 <p className="text-center mt-3 font-body text-[10px]" style={{ color: 'var(--ink-muted)' }}>
-                  Gaborone · Open to remote
+                  Available for remote work
                 </p>
               </div>
             </motion.div>

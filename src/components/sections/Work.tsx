@@ -1,28 +1,19 @@
 'use client';
 import { motion } from 'framer-motion';
-import {
-  ExternalLink, ArrowRight, Building2, FileText,
-  Shield, Zap, Database, TrendingUp, Target, Calendar,
-} from 'lucide-react';
+import { ExternalLink, ArrowRight, Calendar } from 'lucide-react';
 import { useState } from 'react';
 
 const PROJECTS = [
   {
     id: 1,
     title: 'Keyat',
-    tagline: 'Real Estate Platform · Botswana',
+    slug: 'keyat',
+    type: 'Real Estate Platform',
     description:
-      'Full-stack property marketplace connecting buyers, sellers, and agents. Multi-tenant architecture with role-based access, real-time search, secure authentication, and a mobile-first UI built for the local market.',
+      'Full-stack property marketplace connecting buyers, sellers, and agents. Multi-tenant architecture with role-based access, real-time search, secure authentication, and a mobile-first UI.',
     url: 'https://keyat.vercel.app',
-    icon: Building2,
     accent: 'var(--terra)',
-    accentPale: 'var(--terra-pale)',
     stack: ['Next.js 15', 'TypeScript', 'PostgreSQL', 'Supabase', 'Tailwind CSS'],
-    metrics: [
-      { label: 'Multi-tenant',   detail: 'Full data isolation',  icon: Shield },
-      { label: 'Real-time search', detail: 'Optimised queries', icon: Zap },
-      { label: 'Mobile-first',   detail: 'Responsive design',    icon: Target },
-    ],
     features: [
       'Advanced property search with filters',
       'Role-based access — buyers, sellers, agents',
@@ -34,25 +25,37 @@ const PROJECTS = [
   {
     id: 2,
     title: 'PolicyBridge',
-    tagline: 'Insurance Automation SaaS',
+    slug: 'policybridge',
+    type: 'Insurance Automation SaaS',
     description:
-      'Enterprise SaaS for insurance brokers to automate policy workflows and document generation. Handles renewal tracking, compliance logging, and bulk PDF processing for brokers managing high client volumes.',
+      'Enterprise SaaS for insurance brokers to automate policy workflows and document generation. Handles renewal tracking, compliance logging, and bulk PDF processing.',
     url: 'https://policybridge.vercel.app',
-    icon: FileText,
     accent: '#7A5C2E',
-    accentPale: 'var(--cream-dark)',
     stack: ['Next.js 15', 'PostgreSQL', 'Node.js', 'Puppeteer', 'Redis'],
-    metrics: [
-      { label: 'PDF automation',   detail: 'Document generation',    icon: Zap },
-      { label: 'Renewal tracking', detail: 'Workflow alerts',         icon: TrendingUp },
-      { label: 'Multi-tenant',     detail: 'Per-broker isolation',    icon: Database },
-    ],
     features: [
       'Automated policy document generation',
       'Renewal tracking & notifications',
       'Audit trail & compliance logging',
       'Client portal with dashboard',
       'Bulk document processing',
+    ],
+  },
+  {
+    id: 3,
+    title: 'Paragon Insurance Brokers',
+    slug: 'paragon',
+    type: 'Client Work · Marketing Site',
+    description:
+      'Marketing website for a licensed NBFIRA insurance broker. Multi-page site with a WhatsApp-integrated quote request flow, provider showcase, scroll animations, and full mobile navigation.',
+    url: 'https://paragon-insurance-official.vercel.app',
+    accent: '#1A4D6D',
+    stack: ['Next.js', 'Tailwind CSS', 'Vercel'],
+    features: [
+      'WhatsApp quote request integration',
+      'Provider comparison section',
+      'Scroll-triggered animations',
+      'Responsive mobile navigation',
+      'Multi-page site with contact & about',
     ],
   },
 ];
@@ -66,7 +69,7 @@ export default function Work() {
 
       <div className="max-w-6xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
 
-        {/* ── Section header ── */}
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -87,16 +90,15 @@ export default function Work() {
             </div>
             <div className="lg:col-span-5 lg:col-start-8">
               <p className="font-body text-sm leading-relaxed" style={{ color: 'var(--ink-muted)' }}>
-                Two full-stack applications built independently from scratch — architected, coded, deployed, and maintained by me.
+                Three projects built from scratch — architected, coded, deployed, and maintained by me.
               </p>
             </div>
           </div>
         </motion.div>
 
-        {/* ── Project cards ── */}
-        <div className="space-y-5 mb-16">
+        {/* Project cards */}
+        <div className="space-y-4 mb-16">
           {PROJECTS.map((p, idx) => {
-            const Icon = p.icon;
             const isOpen = expanded === p.id;
             return (
               <motion.article
@@ -104,73 +106,42 @@ export default function Work() {
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.48, delay: idx * 0.1 }}
+                transition={{ duration: 0.48, delay: idx * 0.08 }}
                 className="card overflow-hidden"
               >
                 {/* Accent bar */}
-                <div style={{ height: 3, background: p.accent }} />
+                <div style={{ height: 2, background: p.accent }} />
 
                 <div className="p-7 lg:p-9">
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-7">
 
                     {/* Content */}
                     <div className="lg:col-span-8">
-                      <div className="flex items-start gap-4 mb-5">
-                        <div
-                          className="w-10 h-10 rounded-sm flex items-center justify-center flex-shrink-0"
-                          style={{ background: p.accentPale }}
-                        >
-                          <Icon className="w-5 h-5" style={{ color: p.accent }} />
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-2.5 mb-0.5 flex-wrap">
-                            <h3
-                              className="font-display font-bold"
-                              style={{ fontSize: '1.35rem', color: 'var(--ink)', letterSpacing: '-0.02em' }}
-                            >
-                              {p.title}
-                            </h3>
-                            <span
-                              className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-sm font-body font-medium"
-                              style={{ fontSize: '0.65rem', background: p.accentPale, color: p.accent }}
-                            >
-                              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: p.accent }} />
-                              Live
-                            </span>
-                          </div>
-                          <p className="font-body font-medium" style={{ fontSize: '0.72rem', color: 'var(--ink-muted)', letterSpacing: '0.04em' }}>
-                            {p.tagline}
-                          </p>
-                        </div>
-                      </div>
+                      <p
+                        className="font-body font-medium mb-1.5"
+                        style={{ fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-muted)' }}
+                      >
+                        {p.type}
+                      </p>
+                      <h3
+                        className="font-display font-bold mb-4"
+                        style={{ fontSize: '1.4rem', color: 'var(--ink)', letterSpacing: '-0.02em' }}
+                      >
+                        {p.title}
+                      </h3>
 
-                      <p className="font-body text-sm leading-relaxed mb-6" style={{ color: 'var(--ink-muted)', lineHeight: 1.72 }}>
+                      <p className="font-body text-sm leading-relaxed mb-6" style={{ color: 'var(--ink-muted)', lineHeight: 1.75 }}>
                         {p.description}
                       </p>
 
-                      {/* Metrics */}
-                      <div className="flex flex-wrap gap-5 mb-5">
-                        {p.metrics.map(m => {
-                          const MIcon = m.icon;
-                          return (
-                            <div key={m.label} className="flex items-center gap-1.5">
-                              <MIcon className="w-3.5 h-3.5" style={{ color: p.accent }} />
-                              <span className="font-body font-medium" style={{ fontSize: '0.76rem', color: 'var(--ink)' }}>{m.label}</span>
-                              <span className="font-body" style={{ fontSize: '0.72rem', color: 'var(--ink-muted)' }}>· {m.detail}</span>
-                            </div>
-                          );
-                        })}
-                      </div>
-
-                      {/* Stack */}
                       <div className="flex flex-wrap gap-1.5">
                         {p.stack.map(t => <span key={t} className="tag">{t}</span>)}
                       </div>
                     </div>
 
                     {/* Actions */}
-                    <div className="lg:col-span-4 flex flex-col gap-2">
-                      <a href={`/projects/${p.title.toLowerCase()}`} className="btn btn-dark group text-xs py-3">
+                    <div className="lg:col-span-4 flex flex-col gap-2 lg:justify-start lg:pt-7">
+                      <a href={`/projects/${p.slug}`} className="btn btn-dark group text-xs py-3">
                         Case Study
                         <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                       </a>
@@ -180,10 +151,10 @@ export default function Work() {
                       </a>
                       <button
                         onClick={() => setExpanded(isOpen ? null : p.id)}
-                        className="btn text-xs py-2.5 font-medium"
-                        style={{ background: p.accentPale, color: p.accent, border: 'none' }}
+                        className="font-body text-xs font-medium py-2.5 transition-colors"
+                        style={{ color: 'var(--ink-muted)' }}
                       >
-                        {isOpen ? 'Hide details' : 'Key features'}
+                        {isOpen ? 'Hide features ↑' : 'Key features ↓'}
                       </button>
                     </div>
                   </div>
@@ -196,11 +167,10 @@ export default function Work() {
                     className="overflow-hidden"
                   >
                     <div className="mt-7 pt-6" style={{ borderTop: '1px solid var(--border)' }}>
-                      <p className="eyebrow mb-4" style={{ fontSize: '0.6rem' }}>Key Features</p>
                       <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         {p.features.map((f, fi) => (
                           <li key={fi} className="flex items-start gap-2.5">
-                            <div className="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style={{ background: p.accent }} />
+                            <div className="mt-2 w-1 h-1 rounded-full flex-shrink-0" style={{ background: p.accent }} />
                             <span className="font-body text-sm" style={{ color: 'var(--ink-muted)' }}>{f}</span>
                           </li>
                         ))}
@@ -213,10 +183,10 @@ export default function Work() {
           })}
         </div>
 
-        {/* ── Divider ── */}
+        {/* Divider */}
         <div className="divider mb-16" />
 
-        {/* ── Background strip ── */}
+        {/* Background */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -244,14 +214,14 @@ export default function Work() {
                 </h3>
                 <p className="font-body font-semibold text-sm" style={{ color: 'var(--terra)' }}>BITROOT</p>
               </div>
-              <div className="flex items-center gap-1.5 flex-shrink-0 mt-0.5" style={{ color: 'var(--ink-muted)' }}>
+              <div className="flex items-center gap-1.5 flex-shrink-0 mt-0.5">
                 <Calendar className="w-3 h-3" style={{ color: 'var(--terra)' }} />
-                <span className="font-body text-xs">2024 – Present</span>
+                <span className="font-body text-xs" style={{ color: 'var(--ink-muted)' }}>2024 – Present</span>
               </div>
             </div>
             <ul className="space-y-2.5">
               {[
-                'Architected and shipped two production platforms from scratch',
+                'Architected and shipped three production projects from scratch',
                 'Multi-tenant database design with complete tenant data isolation',
                 'CI/CD pipelines, Vercel deployments, performance monitoring',
                 'Secure authentication, role-based access, audit logging',
@@ -284,11 +254,10 @@ export default function Work() {
                 Limkokwing University of Creative Technology
               </p>
               <p className="font-body text-xs" style={{ color: 'var(--ink-muted)' }}>
-                Gaborone, Botswana · 2019 – 2024
+                2019 – 2024
               </p>
             </div>
 
-            {/* Stack summary */}
             <div className="mt-7 pt-5" style={{ borderTop: '1px solid var(--border)' }}>
               <p className="eyebrow mb-3" style={{ fontSize: '0.6rem' }}>Core Stack</p>
               <div className="flex flex-wrap gap-1.5">
