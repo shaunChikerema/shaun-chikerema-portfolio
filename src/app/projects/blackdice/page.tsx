@@ -10,7 +10,7 @@ const ACCENT       = '#e63946';
 const ACCENT_PALE  = 'rgba(230,57,70,0.08)';
 const ACCENT_BORDER = 'rgba(230,57,70,0.2)';
 
-const APK_URL = 'https://expo.dev/artifacts/eas/eca90fc4-8707-470e-b804-4ae59e23edb1.apk';
+const APK_URL = 'https://expo.dev/artifacts/eas/7f9151b9-69b6-4e4d-ad7e-b966d9428437.apk';
 
 const project = {
   title: 'BlackDice',

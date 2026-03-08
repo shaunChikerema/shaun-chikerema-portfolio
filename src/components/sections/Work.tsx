@@ -68,7 +68,7 @@ const PROJECTS = [
     type: 'Mobile App · Music Player',
     description:
       'A local music player for Android built with React Native & Expo. Scans your device audio library, supports background playback, folder filtering, and a full-screen now-playing experience — no streaming, no accounts, just your music.',
-    url: 'https://expo.dev/artifacts/eas/eca90fc4-8707-470e-b804-4ae59e23edb1.apk',
+    url: 'https://expo.dev/artifacts/eas/7f9151b9-69b6-4e4d-ad7e-b966d9428437.apk',
     accent: '#e63946',
     isApp: true,
     stack: ['React Native', 'Expo', 'expo-av', 'expo-media-library', 'TypeScript'],
