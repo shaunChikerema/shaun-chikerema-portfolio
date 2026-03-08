@@ -1,6 +1,6 @@
 'use client';
 import { motion } from 'framer-motion';
-import { ExternalLink, ArrowRight, Calendar } from 'lucide-react';
+import { ExternalLink, ArrowRight, Calendar, Download, Smartphone } from 'lucide-react';
 import { useState } from 'react';
 
 const PROJECTS = [
@@ -13,6 +13,7 @@ const PROJECTS = [
       'Full-stack property marketplace connecting buyers, sellers, and agents. Multi-tenant architecture with role-based access, real-time search, secure authentication, and a mobile-first UI.',
     url: 'https://keyat.vercel.app',
     accent: 'var(--terra)',
+    isApp: false,
     stack: ['Next.js 15', 'TypeScript', 'PostgreSQL', 'Supabase', 'Tailwind CSS'],
     features: [
       'Advanced property search with filters',
@@ -31,6 +32,7 @@ const PROJECTS = [
       'Enterprise SaaS for insurance brokers to automate policy workflows and document generation. Handles renewal tracking, compliance logging, and bulk PDF processing.',
     url: 'https://policybridge.vercel.app',
     accent: '#7A5C2E',
+    isApp: false,
     stack: ['Next.js 15', 'PostgreSQL', 'Node.js', 'Puppeteer', 'Redis'],
     features: [
       'Automated policy document generation',
@@ -49,6 +51,7 @@ const PROJECTS = [
       'Marketing website for a licensed NBFIRA insurance broker. Multi-page site with a WhatsApp-integrated quote request flow, provider showcase, scroll animations, and full mobile navigation.',
     url: 'https://paragon-insurance-official.vercel.app',
     accent: '#1A4D6D',
+    isApp: false,
     stack: ['Next.js', 'Tailwind CSS', 'Vercel'],
     features: [
       'WhatsApp quote request integration',
@@ -56,6 +59,26 @@ const PROJECTS = [
       'Scroll-triggered animations',
       'Responsive mobile navigation',
       'Multi-page site with contact & about',
+    ],
+  },
+  {
+    id: 4,
+    title: 'BlackDice',
+    slug: 'blackdice',
+    type: 'Mobile App · Music Player',
+    description:
+      'A local music player for Android built with React Native & Expo. Scans your device audio library, supports background playback, folder filtering, and a full-screen now-playing experience — no streaming, no accounts, just your music.',
+    url: 'https://expo.dev/artifacts/eas/eca90fc4-8707-470e-b804-4ae59e23edb1.apk',
+    accent: '#e63946',
+    isApp: true,
+    stack: ['React Native', 'Expo', 'expo-av', 'expo-media-library', 'TypeScript'],
+    features: [
+      'Full device audio library scanning',
+      'Background audio playback',
+      'Folder include/exclude filtering',
+      'Full-screen now playing with seek',
+      'Mini player persistent across screens',
+      'Queue with shuffle & repeat modes',
     ],
   },
 ];
@@ -90,7 +113,7 @@ export default function Work() {
             </div>
             <div className="lg:col-span-5 lg:col-start-8">
               <p className="font-body text-sm leading-relaxed" style={{ color: 'var(--ink-muted)' }}>
-                Three projects built from scratch — architected, coded, deployed, and maintained by me.
+                Four projects built from scratch — architected, coded, deployed, and maintained by me.
               </p>
             </div>
           </div>
@@ -117,12 +140,24 @@ export default function Work() {
 
                     {/* Content */}
                     <div className="lg:col-span-8">
-                      <p
-                        className="font-body font-medium mb-1.5"
-                        style={{ fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-muted)' }}
-                      >
-                        {p.type}
-                      </p>
+                      <div className="flex items-center gap-3 mb-1.5">
+                        <p
+                          className="font-body font-medium"
+                          style={{ fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-muted)' }}
+                        >
+                          {p.type}
+                        </p>
+                        {p.isApp && (
+                          <span
+                            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-sm font-body font-medium"
+                            style={{ fontSize: '0.6rem', letterSpacing: '0.08em', textTransform: 'uppercase', background: `${p.accent}18`, color: p.accent, border: `1px solid ${p.accent}33` }}
+                          >
+                            <Smartphone className="w-2.5 h-2.5" />
+                            Android
+                          </span>
+                        )}
+                      </div>
+
                       <h3
                         className="font-display font-bold mb-4"
                         style={{ fontSize: '1.4rem', color: 'var(--ink)', letterSpacing: '-0.02em' }}
@@ -145,10 +180,30 @@ export default function Work() {
                         Case Study
                         <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                       </a>
-                      <a href={p.url} target="_blank" rel="noopener noreferrer" className="btn btn-ghost text-xs py-3">
-                        <ExternalLink className="w-3.5 h-3.5" />
-                        View Live
-                      </a>
+
+                      {p.isApp ? (
+                        <a
+                          href={p.url}
+                          download
+                          rel="noopener noreferrer"
+                          className="btn btn-ghost text-xs py-3"
+                          style={{ borderColor: `${p.accent}55`, color: p.accent }}
+                        >
+                          <Download className="w-3.5 h-3.5" />
+                          Download APK
+                        </a>
+                      ) : (
+                        <a
+                          href={p.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn btn-ghost text-xs py-3"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" />
+                          View Live
+                        </a>
+                      )}
+
                       <button
                         onClick={() => setExpanded(isOpen ? null : p.id)}
                         className="font-body text-xs font-medium py-2.5 transition-colors"
@@ -221,10 +276,11 @@ export default function Work() {
             </div>
             <ul className="space-y-2.5">
               {[
-                'Architected and shipped three production projects from scratch',
+                'Architected and shipped four production projects from scratch',
                 'Multi-tenant database design with complete tenant data isolation',
                 'CI/CD pipelines, Vercel deployments, performance monitoring',
                 'Secure authentication, role-based access, audit logging',
+                'Native Android app with local audio playback and media scanning',
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-2.5">
                   <div className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: 'var(--terra)' }} />
@@ -261,12 +317,13 @@ export default function Work() {
             <div className="mt-7 pt-5" style={{ borderTop: '1px solid var(--border)' }}>
               <p className="eyebrow mb-3" style={{ fontSize: '0.6rem' }}>Core Stack</p>
               <div className="flex flex-wrap gap-1.5">
-                {['Next.js', 'TypeScript', 'PostgreSQL', 'Supabase', 'Node.js', 'Vercel'].map(t => (
+                {['Next.js', 'TypeScript', 'PostgreSQL', 'Supabase', 'Node.js', 'React Native', 'Vercel'].map(t => (
                   <span key={t} className="tag">{t}</span>
                 ))}
               </div>
             </div>
           </motion.div>
+
         </div>
 
       </div>
