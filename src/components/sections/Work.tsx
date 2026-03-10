@@ -78,6 +78,26 @@ const PROJECTS = [
     ],
   },
   {
+    id: 6,
+    title: 'Yonder',
+    slug: 'yonder',
+    type: 'Mobile App · Audiobook Player',
+    description:
+      'Public-domain audiobook player built with React Native and Expo. Streams real LibriVox recordings from archive.org with chapter navigation, playback speed, sleep timer, bookmarks, and a warm amber-themed UI.',
+    url: '#',
+    accent: '#f5a623',
+    isApp: true,
+    stack: ['React Native', 'Expo SDK 54', 'TypeScript', 'expo-av', 'AsyncStorage'],
+    features: [
+      '8 pre-loaded public domain audiobooks via LibriVox',
+      'Chapter navigation with persistent progress tracking',
+      'Playback speed control — 0.5× to 2×',
+      'Sleep timer with live countdown',
+      'Bookmarks with timestamps and notes',
+      'MiniPlayer persistent across all tabs',
+    ],
+  },
+  {
     id: 5,
     title: 'DocFlow',
     slug: 'docflow',
@@ -128,7 +148,7 @@ export default function Work() {
             </div>
             <div className="lg:col-span-5 lg:col-start-8">
               <p className="font-body text-sm leading-relaxed" style={{ color: 'var(--ink-muted)' }}>
-                Five projects built from scratch — architected, coded, deployed, and maintained by me.
+                Five web and mobile projects built from scratch — architected, coded, deployed, and maintained by me.
               </p>
             </div>
           </div>
@@ -164,7 +184,7 @@ export default function Work() {
                         </p>
                         {(p as any).isApp && (
                           <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-body font-semibold"
-                            style={{ fontSize: '0.6rem', background: 'rgba(230,57,70,0.1)', color: '#e63946', letterSpacing: '0.08em' }}>
+                            style={{ fontSize: '0.6rem', background: p.accent === '#f5a623' ? 'rgba(245,166,35,0.12)' : 'rgba(230,57,70,0.1)', color: p.accent === '#f5a623' ? '#f5a623' : '#e63946', letterSpacing: '0.08em' }}>
                             <Smartphone size={9} /> ANDROID
                           </span>
                         )}
@@ -289,10 +309,10 @@ export default function Work() {
             </div>
             <ul className="space-y-2.5">
               {[
-                'Architected and shipped five production projects from scratch',
+                'Architected and shipped six production projects from scratch',
+                'Two Android apps built with React Native, Expo SDK, and EAS Build',
                 'Multi-tenant database design with complete tenant data isolation',
                 'CI/CD pipelines, Vercel deployments, performance monitoring',
-                'React Native mobile development with Expo SDK',
                 'Secure authentication, role-based access, audit logging',
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-2.5">
