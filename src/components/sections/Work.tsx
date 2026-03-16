@@ -1,9 +1,23 @@
 'use client';
-import { motion } from 'framer-motion';
-import { ExternalLink, ArrowRight, Calendar, Download, Smartphone } from 'lucide-react';
-import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ExternalLink, ArrowRight, Calendar, Download, Smartphone, Images, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, useEffect, useCallback } from 'react';
 
-const PROJECTS = [
+type Project = {
+  id: number;
+  title: string;
+  slug: string;
+  type: string;
+  description: string;
+  url: string;
+  accent: string;
+  isApp?: boolean;
+  stack: string[];
+  features: string[];
+  screenshots: { src: string; caption: string }[];
+};
+
+const PROJECTS: Project[] = [
   {
     id: 1,
     title: 'Keyat',
@@ -21,23 +35,10 @@ const PROJECTS = [
       'Secure auth & encrypted data',
       'Agent analytics dashboard',
     ],
-  },
-  {
-    id: 2,
-    title: 'PolicyBridge',
-    slug: 'policybridge',
-    type: 'Insurance Automation SaaS',
-    description:
-      'Enterprise SaaS for insurance brokers to automate policy workflows and document generation. Handles renewal tracking, compliance logging, and bulk PDF processing.',
-    url: 'https://policybridge.vercel.app',
-    accent: '#7A5C2E',
-    stack: ['Next.js 15', 'PostgreSQL', 'Node.js', 'Puppeteer', 'Redis'],
-    features: [
-      'Automated policy document generation',
-      'Renewal tracking & notifications',
-      'Audit trail & compliance logging',
-      'Client portal with dashboard',
-      'Bulk document processing',
+    screenshots: [
+      { src: '/screenshots/keyat-1.jpg', caption: 'Property listings overview' },
+      { src: '/screenshots/keyat-2.jpg', caption: 'Property detail page' },
+      { src: '/screenshots/keyat-3.jpg', caption: 'Agent dashboard' },
     ],
   },
   {
@@ -57,6 +58,34 @@ const PROJECTS = [
       'Responsive mobile navigation',
       'Multi-page site with contact & about',
     ],
+    screenshots: [
+      { src: '/screenshots/paragon-1.jpg', caption: 'Homepage hero' },
+      { src: '/screenshots/paragon-2.jpg', caption: 'Insurance providers section' },
+      { src: '/screenshots/paragon-3.jpg', caption: 'Contact & quote flow' },
+    ],
+  },
+  {
+    id: 2,
+    title: 'PolicyBridge',
+    slug: 'policybridge',
+    type: 'Insurance Automation SaaS',
+    description:
+      'Enterprise SaaS for insurance brokers to automate policy workflows and document generation. Handles renewal tracking, compliance logging, and bulk PDF processing.',
+    url: 'https://policybridge.vercel.app',
+    accent: '#7A5C2E',
+    stack: ['Next.js 15', 'PostgreSQL', 'Node.js', 'Puppeteer', 'Redis'],
+    features: [
+      'Automated policy document generation',
+      'Renewal tracking & notifications',
+      'Audit trail & compliance logging',
+      'Client portal with dashboard',
+      'Bulk document processing',
+    ],
+    screenshots: [
+      { src: '/screenshots/policybridge-1.jpg', caption: 'Broker dashboard' },
+      { src: '/screenshots/policybridge-2.jpg', caption: 'Policy workflow view' },
+      { src: '/screenshots/policybridge-3.jpg', caption: 'Document generation' },
+    ],
   },
   {
     id: 4,
@@ -75,6 +104,11 @@ const PROJECTS = [
       'EQ bar visualizer synced to playback',
       'Queue management & shuffle / repeat',
       'MiniPlayer persistent across all tabs',
+    ],
+    screenshots: [
+      { src: '/screenshots/blackdice-1.jpg', caption: 'Now playing — vinyl UI' },
+      { src: '/screenshots/blackdice-2.jpg', caption: 'Library & queue' },
+      { src: '/screenshots/blackdice-3.jpg', caption: 'EQ visualizer' },
     ],
   },
   {
@@ -96,30 +130,154 @@ const PROJECTS = [
       'Bookmarks with timestamps and notes',
       'MiniPlayer persistent across all tabs',
     ],
-  },
-  {
-    id: 5,
-    title: 'DocFlow',
-    slug: 'docflow',
-    type: 'Web App · PDF Editor',
-    description:
-      'Browser-based PDF editor with OCR text extraction, annotation tools, freehand drawing, and export. Built entirely client-side — no uploads, no backend, no data leaves the browser.',
-    url: '/projects/docflow/app',
-    accent: '#0ea5e9',
-    isLive: true,
-    stack: ['Next.js', 'PDF.js', 'pdf-lib', 'Tesseract.js', 'TypeScript'],
-    features: [
-      'PDF rendering via PDF.js — all pages',
-      'OCR text extraction with Tesseract.js',
-      'Highlight, text note & freehand draw tools',
-      'Shape overlays — rectangles & arrows',
-      'Export annotated PDF via pdf-lib',
+    screenshots: [
+      { src: '/screenshots/yonder-1.jpg', caption: 'Bookshelf view' },
+      { src: '/screenshots/yonder-2.jpg', caption: 'Now playing — chapter view' },
+      { src: '/screenshots/yonder-3.jpg', caption: 'Bookmarks & sleep timer' },
     ],
   },
 ];
 
+/* ── Lightbox ── */
+function Lightbox({
+  project,
+  initialIndex,
+  onClose,
+}: {
+  project: Project;
+  initialIndex: number;
+  onClose: () => void;
+}) {
+  const [idx, setIdx] = useState(initialIndex);
+  const shots = project.screenshots;
+
+  const prev = useCallback(() => setIdx(i => (i - 1 + shots.length) % shots.length), [shots.length]);
+  const next = useCallback(() => setIdx(i => (i + 1) % shots.length), [shots.length]);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowLeft') prev();
+      if (e.key === 'ArrowRight') next();
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [onClose, prev, next]);
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, []);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      className="fixed inset-0 z-50 flex items-center justify-center"
+      style={{ background: 'rgba(10,8,6,0.92)', backdropFilter: 'blur(6px)' }}
+      onClick={onClose}
+    >
+      {/* Close */}
+      <button
+        onClick={onClose}
+        className="absolute top-5 right-5 w-9 h-9 rounded-sm flex items-center justify-center transition-colors"
+        style={{ background: 'rgba(246,241,234,0.08)', color: 'rgba(246,241,234,0.7)' }}
+        aria-label="Close"
+      >
+        <X className="w-4 h-4" />
+      </button>
+
+      {/* Project title + counter */}
+      <div className="absolute top-5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-0.5">
+        <span className="font-display font-semibold text-sm" style={{ color: 'rgba(246,241,234,0.8)' }}>
+          {project.title}
+        </span>
+        <span className="font-body text-xs" style={{ color: 'rgba(246,241,234,0.35)', letterSpacing: '0.1em' }}>
+          {idx + 1} / {shots.length}
+        </span>
+      </div>
+
+      {/* Prev */}
+      {shots.length > 1 && (
+        <button
+          onClick={e => { e.stopPropagation(); prev(); }}
+          className="absolute left-4 w-10 h-10 rounded-sm flex items-center justify-center transition-colors"
+          style={{ background: 'rgba(246,241,234,0.08)', color: 'rgba(246,241,234,0.7)' }}
+          aria-label="Previous screenshot"
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+      )}
+
+      {/* Image */}
+      <motion.div
+        key={idx}
+        initial={{ opacity: 0, scale: 0.97 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.22 }}
+        className="flex flex-col items-center gap-4 px-16"
+        onClick={e => e.stopPropagation()}
+        style={{ maxWidth: '90vw', maxHeight: '90vh' }}
+      >
+        <div
+          className="rounded-sm overflow-hidden"
+          style={{ border: '1px solid rgba(246,241,234,0.1)', maxHeight: '75vh' }}
+        >
+          <img
+            src={shots[idx].src}
+            alt={shots[idx].caption}
+            style={{ maxWidth: '80vw', maxHeight: '75vh', objectFit: 'contain', display: 'block' }}
+            onError={e => {
+              (e.target as HTMLImageElement).src =
+                `https://placehold.co/1200x800/1a1714/BE5430?text=${encodeURIComponent(shots[idx].caption)}&font=playfair-display`;
+            }}
+          />
+        </div>
+        <p className="font-body text-sm text-center" style={{ color: 'rgba(246,241,234,0.55)' }}>
+          {shots[idx].caption}
+        </p>
+
+        {/* Dot indicators */}
+        {shots.length > 1 && (
+          <div className="flex gap-1.5 items-center">
+            {shots.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setIdx(i)}
+                className="rounded-full transition-all"
+                style={{
+                  width: i === idx ? 18 : 6,
+                  height: 6,
+                  background: i === idx ? project.accent : 'rgba(246,241,234,0.25)',
+                }}
+                aria-label={`Go to screenshot ${i + 1}`}
+              />
+            ))}
+          </div>
+        )}
+      </motion.div>
+
+      {/* Next */}
+      {shots.length > 1 && (
+        <button
+          onClick={e => { e.stopPropagation(); next(); }}
+          className="absolute right-4 w-10 h-10 rounded-sm flex items-center justify-center transition-colors"
+          style={{ background: 'rgba(246,241,234,0.08)', color: 'rgba(246,241,234,0.7)' }}
+          aria-label="Next screenshot"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
+      )}
+    </motion.div>
+  );
+}
+
+/* ── Work section ── */
 export default function Work() {
   const [expanded, setExpanded] = useState<number | null>(null);
+  const [lightbox, setLightbox] = useState<{ project: Project; index: number } | null>(null);
 
   return (
     <section id="work" style={{ background: 'var(--cream-mid)' }}>
@@ -158,6 +316,7 @@ export default function Work() {
         <div className="space-y-4 mb-16">
           {PROJECTS.map((p, idx) => {
             const isOpen = expanded === p.id;
+            const hasLiveUrl = p.url !== '#';
             return (
               <motion.article
                 key={p.id}
@@ -182,19 +341,21 @@ export default function Work() {
                         >
                           {p.type}
                         </p>
-                        {(p as any).isApp && (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-body font-semibold"
-                            style={{ fontSize: '0.6rem', background: p.accent === '#f5a623' ? 'rgba(245,166,35,0.12)' : 'rgba(230,57,70,0.1)', color: p.accent === '#f5a623' ? '#f5a623' : '#e63946', letterSpacing: '0.08em' }}>
+                        {p.isApp && (
+                          <span
+                            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-body font-semibold"
+                            style={{
+                              fontSize: '0.6rem',
+                              background: p.accent === '#f5a623' ? 'rgba(245,166,35,0.12)' : 'rgba(230,57,70,0.1)',
+                              color: p.accent === '#f5a623' ? '#f5a623' : '#e63946',
+                              letterSpacing: '0.08em',
+                            }}
+                          >
                             <Smartphone size={9} /> ANDROID
                           </span>
                         )}
-                        {(p as any).isLive && (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-body font-semibold"
-                            style={{ fontSize: '0.6rem', background: 'rgba(14,165,233,0.1)', color: '#0ea5e9', letterSpacing: '0.08em' }}>
-                            ● LIVE APP
-                          </span>
-                        )}
                       </div>
+
                       <h3
                         className="font-display font-bold mb-4"
                         style={{ fontSize: '1.4rem', color: 'var(--ink)', letterSpacing: '-0.02em' }}
@@ -213,30 +374,57 @@ export default function Work() {
 
                     {/* Actions */}
                     <div className="lg:col-span-4 flex flex-col gap-2 lg:justify-start lg:pt-7">
-                      <a href={`/projects/${p.slug}`} className="btn btn-dark group text-xs py-3">
+
+                      {/* 1. Primary — live site / download APK */}
+                      {p.isApp ? (
+                        hasLiveUrl ? (
+                          <a
+                            href={p.url}
+                            download
+                            className="btn btn-dark text-xs py-3"
+                            style={{ background: p.accent, borderColor: p.accent }}
+                          >
+                            <Download className="w-3.5 h-3.5" />
+                            Download APK
+                          </a>
+                        ) : (
+                          <span
+                            className="btn btn-dark text-xs py-3 opacity-40 cursor-not-allowed"
+                            style={{ background: p.accent, borderColor: p.accent }}
+                          >
+                            <Download className="w-3.5 h-3.5" />
+                            Coming Soon
+                          </span>
+                        )
+                      ) : (
+                        <a
+                          href={p.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn btn-dark text-xs py-3"
+                          style={{ background: p.accent, borderColor: p.accent }}
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" />
+                          Visit Site
+                        </a>
+                      )}
+
+                      {/* 2. Secondary — screenshots */}
+                      <button
+                        onClick={() => setLightbox({ project: p, index: 0 })}
+                        className="btn btn-ghost text-xs py-3"
+                      >
+                        <Images className="w-3.5 h-3.5" />
+                        Screenshots
+                      </button>
+
+                      {/* 3. Tertiary — case study */}
+                      <a href={`/projects/${p.slug}`} className="btn btn-ghost group text-xs py-3">
                         Case Study
                         <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                       </a>
 
-                      {(p as any).isApp ? (
-                        <a href={p.url} download className="btn btn-ghost text-xs py-3"
-                          style={{ borderColor: '#e63946', color: '#e63946' }}>
-                          <Download className="w-3.5 h-3.5" />
-                          Download APK
-                        </a>
-                      ) : (p as any).isLive ? (
-                        <a href={p.url} className="btn btn-ghost text-xs py-3"
-                          style={{ borderColor: '#0ea5e9', color: '#0ea5e9' }}>
-                          <ExternalLink className="w-3.5 h-3.5" />
-                          Launch App
-                        </a>
-                      ) : (
-                        <a href={p.url} target="_blank" rel="noopener noreferrer" className="btn btn-ghost text-xs py-3">
-                          <ExternalLink className="w-3.5 h-3.5" />
-                          View Live
-                        </a>
-                      )}
-
+                      {/* 4. Lowest — feature toggle */}
                       <button
                         onClick={() => setExpanded(isOpen ? null : p.id)}
                         className="font-body text-xs font-medium py-2.5 transition-colors"
@@ -309,7 +497,7 @@ export default function Work() {
             </div>
             <ul className="space-y-2.5">
               {[
-                'Architected and shipped six production projects from scratch',
+                'Architected and shipped five production projects from scratch',
                 'Two Android apps built with React Native, Expo SDK, and EAS Build',
                 'Multi-tenant database design with complete tenant data isolation',
                 'CI/CD pipelines, Vercel deployments, performance monitoring',
@@ -360,6 +548,17 @@ export default function Work() {
 
       </div>
       <div className="divider" />
+
+      {/* Lightbox */}
+      <AnimatePresence>
+        {lightbox && (
+          <Lightbox
+            project={lightbox.project}
+            initialIndex={lightbox.index}
+            onClose={() => setLightbox(null)}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 }

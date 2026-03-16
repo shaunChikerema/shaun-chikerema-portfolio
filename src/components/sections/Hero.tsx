@@ -9,7 +9,7 @@ const SOCIALS = [
   { href: 'mailto:sschikerema@gmail.com',            icon: Mail,     label: 'Email' },
 ];
 
-const STACK = ['Next.js', 'TypeScript', 'PostgreSQL', 'Supabase', 'Node.js'];
+const STACK = ['Next.js', 'TypeScript', 'React Native', 'Expo', 'PostgreSQL', 'Node.js', 'Supabase'];
 
 export default function Hero() {
   const [imgLoaded,     setImgLoaded]     = useState(false);
@@ -123,7 +123,7 @@ export default function Hero() {
             {/* Value prop */}
             <motion.div {...fade(0.26)} className="mb-8 max-w-lg">
               <p className="font-body text-sm leading-relaxed" style={{ color: 'var(--ink-mid)', lineHeight: 1.8 }}>
-                I design and build full-stack products end-to-end — from database schema to deployed UI.
+                Full-stack web and native mobile — from database schema to deployed app, on any platform.
               </p>
             </motion.div>
 
