@@ -59,15 +59,21 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center relative"
+      className="min-h-screen flex items-center relative noise-overlay"
       style={{ background: 'var(--cream)' }}
       itemScope itemType="https://schema.org/Person"
     >
-      {/* Subtle warm radial */}
+      {/* Primary depth glow */}
       <div
         aria-hidden
         className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 55% 55% at 72% 28%, rgba(190,84,48,0.07) 0%, transparent 68%)' }}
+        style={{ background: 'radial-gradient(ellipse 60% 60% at 72% 24%, rgba(26,77,109,0.09) 0%, transparent 68%)' }}
+      />
+      {/* Secondary corner accent */}
+      <div
+        aria-hidden
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse 30% 40% at 18% 82%, rgba(26,77,109,0.045) 0%, transparent 60%)' }}
       />
 
       <div className="max-w-6xl mx-auto px-6 lg:px-10 w-full relative z-10 py-32 lg:py-0">
@@ -82,7 +88,7 @@ export default function Hero() {
                 className="inline-flex items-center gap-2 px-3 py-1.5 rounded-sm font-body font-medium"
                 style={{ fontSize: '0.7rem', background: 'var(--terra-pale)', color: 'var(--terra)' }}
               >
-                <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--terra)' }} />
+                <span className="w-1.5 h-1.5 rounded-full dot-pulse" style={{ background: 'var(--terra)' }} />
                 Available for work
               </span>
             </motion.div>
@@ -167,17 +173,42 @@ export default function Hero() {
             className="lg:col-span-5 flex justify-center lg:justify-end"
           >
             <div className="relative">
-              {/* Single offset block */}
+              {/* Deep offset block — bottom-right */}
               <div
                 aria-hidden
-                className="absolute -top-3 -right-3 rounded-sm"
-                style={{ inset: undefined, width: '100%', height: '100%', top: -10, right: -10, background: 'var(--terra-pale)', zIndex: 0, borderRadius: 3 }}
+                style={{
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%',
+                  top: 16,
+                  right: -16,
+                  background: 'var(--terra-pale)',
+                  zIndex: 0,
+                  borderRadius: 3,
+                }}
+              />
+              {/* Thin accent border block */}
+              <div
+                aria-hidden
+                style={{
+                  position: 'absolute',
+                  width: '100%',
+                  height: '100%',
+                  top: 8,
+                  right: -8,
+                  background: 'transparent',
+                  border: '1.5px solid var(--terra)',
+                  opacity: 0.35,
+                  zIndex: 1,
+                  borderRadius: 3,
+                }}
               />
 
               {/* Photo frame */}
               <div
-                className="relative z-10 overflow-hidden rounded-sm"
+                className="relative overflow-hidden rounded-sm"
                 style={{
+                  zIndex: 2,
                   width: 'clamp(200px, 26vw, 340px)',
                   aspectRatio: '3/4',
                   border: '1px solid var(--border)',
@@ -196,8 +227,6 @@ export default function Hero() {
                   itemProp="image"
                 />
               </div>
-
-
             </div>
           </motion.div>
 

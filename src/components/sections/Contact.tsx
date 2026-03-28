@@ -129,7 +129,7 @@ export default function Contact() {
               style={{ background: 'var(--terra-pale)', border: '1px solid rgba(190,84,48,0.14)' }}
             >
               <div className="flex items-center gap-2 mb-0.5">
-                <span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--terra)' }} />
+                <span className="w-1.5 h-1.5 rounded-full dot-pulse" style={{ background: 'var(--terra)' }} />
                 <span className="font-body font-semibold text-xs" style={{ color: 'var(--terra)' }}>24-hour response</span>
               </div>
               <p className="font-body text-xs" style={{ color: 'var(--terra)' }}>

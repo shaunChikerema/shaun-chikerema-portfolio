@@ -1,5 +1,6 @@
 'use client';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { createPortal } from 'react-dom';
 import { ExternalLink, ArrowRight, Calendar, Download, Smartphone, Images, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState, useEffect, useCallback } from 'react';
 
@@ -36,9 +37,15 @@ const PROJECTS: Project[] = [
       'Agent analytics dashboard',
     ],
     screenshots: [
-      { src: '/screenshots/keyat-1.jpg', caption: 'Property listings overview' },
-      { src: '/screenshots/keyat-2.jpg', caption: 'Property detail page' },
-      { src: '/screenshots/keyat-3.jpg', caption: 'Agent dashboard' },
+      { src: '/screenshots/keyat/keyat-1.jpg', caption: 'Landing page — property search hero' },
+      { src: '/screenshots/keyat/keyat-2.jpg', caption: 'Tenant dashboard — featured listings' },
+      { src: '/screenshots/keyat/keyat-3.jpg', caption: 'Tenant dashboard — mobile view' },
+      { src: '/screenshots/keyat/keyat-4.jpg', caption: 'Agent dashboard — listings & market' },
+      { src: '/screenshots/keyat/keyat-5.jpg', caption: 'Browse listings — search results' },
+      { src: '/screenshots/keyat/keyat-6.jpg', caption: 'Landlord dashboard — property management' },
+      { src: '/screenshots/keyat/keyat-7.jpg', caption: 'Landlord dashboard — mobile view' },
+      { src: '/screenshots/keyat/keyat-8.jpg', caption: 'Add property — step 1 of 3 form' },
+      { src: '/screenshots/keyat/keyat-9.jpg', caption: 'Add property — photo upload step' },
     ],
   },
   {
@@ -59,9 +66,9 @@ const PROJECTS: Project[] = [
       'Multi-page site with contact & about',
     ],
     screenshots: [
-      { src: '/screenshots/paragon-1.jpg', caption: 'Homepage hero' },
-      { src: '/screenshots/paragon-2.jpg', caption: 'Insurance providers section' },
-      { src: '/screenshots/paragon-3.jpg', caption: 'Contact & quote flow' },
+      { src: '/screenshots/paragon/paragon-1.jpg', caption: 'Homepage hero' },
+      { src: '/screenshots/paragon/paragon-2.jpg', caption: 'Insurance providers section' },
+      { src: '/screenshots/paragon/paragon-3.jpg', caption: 'Contact & quote flow' },
     ],
   },
   {
@@ -82,9 +89,9 @@ const PROJECTS: Project[] = [
       'Bulk document processing',
     ],
     screenshots: [
-      { src: '/screenshots/policybridge-1.jpg', caption: 'Broker dashboard' },
-      { src: '/screenshots/policybridge-2.jpg', caption: 'Policy workflow view' },
-      { src: '/screenshots/policybridge-3.jpg', caption: 'Document generation' },
+      { src: '/screenshots/policybridge/policybridge-1.jpg', caption: 'Broker dashboard' },
+      { src: '/screenshots/policybridge/policybridge-2.jpg', caption: 'Policy workflow view' },
+      { src: '/screenshots/policybridge/policybridge-3.jpg', caption: 'Document generation' },
     ],
   },
   {
@@ -106,9 +113,9 @@ const PROJECTS: Project[] = [
       'MiniPlayer persistent across all tabs',
     ],
     screenshots: [
-      { src: '/screenshots/blackdice-1.jpg', caption: 'Now playing — vinyl UI' },
-      { src: '/screenshots/blackdice-2.jpg', caption: 'Library & queue' },
-      { src: '/screenshots/blackdice-3.jpg', caption: 'EQ visualizer' },
+      { src: '/screenshots/blackdice/blackdice-1.jpg', caption: 'Now playing — vinyl UI' },
+      { src: '/screenshots/blackdice/blackdice-2.jpg', caption: 'Library & queue' },
+      { src: '/screenshots/blackdice/blackdice-3.jpg', caption: 'EQ visualizer' },
     ],
   },
   {
@@ -131,9 +138,9 @@ const PROJECTS: Project[] = [
       'MiniPlayer persistent across all tabs',
     ],
     screenshots: [
-      { src: '/screenshots/yonder-1.jpg', caption: 'Bookshelf view' },
-      { src: '/screenshots/yonder-2.jpg', caption: 'Now playing — chapter view' },
-      { src: '/screenshots/yonder-3.jpg', caption: 'Bookmarks & sleep timer' },
+      { src: '/screenshots/yonder/yonder-1.jpg', caption: 'Bookshelf view' },
+      { src: '/screenshots/yonder/yonder-2.jpg', caption: 'Now playing — chapter view' },
+      { src: '/screenshots/yonder/yonder-3.jpg', caption: 'Bookmarks & sleep timer' },
     ],
   },
 ];
@@ -154,6 +161,15 @@ function Lightbox({
   const prev = useCallback(() => setIdx(i => (i - 1 + shots.length) % shots.length), [shots.length]);
   const next = useCallback(() => setIdx(i => (i + 1) % shots.length), [shots.length]);
 
+  // Preload adjacent images so navigation feels instant
+  useEffect(() => {
+    const preload = (src: string) => { const img = new window.Image(); img.src = src; };
+    const prevIdx = (idx - 1 + shots.length) % shots.length;
+    const nextIdx = (idx + 1) % shots.length;
+    preload(shots[prevIdx].src);
+    preload(shots[nextIdx].src);
+  }, [idx, shots]);
+
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -165,112 +181,154 @@ function Lightbox({
   }, [onClose, prev, next]);
 
   useEffect(() => {
+    document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = ''; };
+    return () => {
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    };
   }, []);
 
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
-      className="fixed inset-0 z-50 flex items-center justify-center"
-      style={{ background: 'rgba(10,8,6,0.92)', backdropFilter: 'blur(6px)' }}
+  return createPortal(
+    <div
       onClick={onClose}
+      style={{
+        position: 'fixed',
+        top: 0, left: 0, right: 0, bottom: 0,
+        zIndex: 9999,
+        background: 'rgba(10,8,6,0.95)',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '70px 60px 40px',
+      }}
     >
       {/* Close */}
       <button
         onClick={onClose}
-        className="absolute top-5 right-5 w-9 h-9 rounded-sm flex items-center justify-center transition-colors"
-        style={{ background: 'rgba(246,241,234,0.08)', color: 'rgba(246,241,234,0.7)' }}
         aria-label="Close"
+        style={{
+          position: 'absolute', top: 20, right: 20,
+          width: 36, height: 36, borderRadius: 4,
+          background: 'rgba(246,241,234,0.1)',
+          border: '1px solid rgba(246,241,234,0.15)',
+          color: 'rgba(246,241,234,0.8)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          cursor: 'pointer',
+        }}
       >
-        <X className="w-4 h-4" />
+        <X size={16} />
       </button>
 
-      {/* Project title + counter */}
-      <div className="absolute top-5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-0.5">
-        <span className="font-display font-semibold text-sm" style={{ color: 'rgba(246,241,234,0.8)' }}>
+      {/* Title + counter */}
+      <div style={{
+        position: 'absolute', top: 20, left: '50%', transform: 'translateX(-50%)',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2,
+        pointerEvents: 'none', whiteSpace: 'nowrap',
+      }}>
+        <span style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: 14, color: 'rgba(246,241,234,0.9)' }}>
           {project.title}
         </span>
-        <span className="font-body text-xs" style={{ color: 'rgba(246,241,234,0.35)', letterSpacing: '0.1em' }}>
+        <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: 'rgba(246,241,234,0.4)', letterSpacing: '0.1em' }}>
           {idx + 1} / {shots.length}
         </span>
       </div>
 
-      {/* Prev */}
+      {/* Prev button */}
       {shots.length > 1 && (
         <button
           onClick={e => { e.stopPropagation(); prev(); }}
-          className="absolute left-4 w-10 h-10 rounded-sm flex items-center justify-center transition-colors"
-          style={{ background: 'rgba(246,241,234,0.08)', color: 'rgba(246,241,234,0.7)' }}
           aria-label="Previous screenshot"
+          style={{
+            position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)',
+            width: 40, height: 40, borderRadius: 4,
+            background: 'rgba(246,241,234,0.08)',
+            border: '1px solid rgba(246,241,234,0.12)',
+            color: 'rgba(246,241,234,0.7)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            cursor: 'pointer',
+          }}
         >
-          <ChevronLeft className="w-5 h-5" />
+          <ChevronLeft size={20} />
         </button>
       )}
 
-      {/* Image */}
-      <motion.div
+      {/* Image + caption + dots */}
+      <div
         key={idx}
-        initial={{ opacity: 0, scale: 0.97 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.22 }}
-        className="flex flex-col items-center gap-4 px-16"
         onClick={e => e.stopPropagation()}
-        style={{ maxWidth: '90vw', maxHeight: '90vh' }}
+        style={{
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14,
+          width: '100%', height: '100%',
+          justifyContent: 'center',
+        }}
       >
-        <div
-          className="rounded-sm overflow-hidden"
-          style={{ border: '1px solid rgba(246,241,234,0.1)', maxHeight: '75vh' }}
-        >
-          <img
-            src={shots[idx].src}
-            alt={shots[idx].caption}
-            style={{ maxWidth: '80vw', maxHeight: '75vh', objectFit: 'contain', display: 'block' }}
-            onError={e => {
-              (e.target as HTMLImageElement).src =
-                `https://placehold.co/1200x800/1a1714/BE5430?text=${encodeURIComponent(shots[idx].caption)}&font=playfair-display`;
-            }}
-          />
-        </div>
-        <p className="font-body text-sm text-center" style={{ color: 'rgba(246,241,234,0.55)' }}>
+        <img
+          src={shots[idx].src}
+          alt={shots[idx].caption}
+          loading="eager"
+          style={{
+            maxWidth: '100%',
+            maxHeight: 'calc(100vh - 220px)',
+            width: 'auto',
+            height: 'auto',
+            objectFit: 'contain',
+            display: 'block',
+            borderRadius: 4,
+            border: '1px solid rgba(246,241,234,0.1)',
+          }}
+          onError={e => {
+            (e.target as HTMLImageElement).src =
+              `https://placehold.co/1200x800/1a1714/2E6A8E?text=${encodeURIComponent(shots[idx].caption)}`;
+          }}
+        />
+
+        <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: 'rgba(246,241,234,0.55)', textAlign: 'center', margin: 0 }}>
           {shots[idx].caption}
         </p>
 
         {/* Dot indicators */}
         {shots.length > 1 && (
-          <div className="flex gap-1.5 items-center">
+          <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
             {shots.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setIdx(i)}
-                className="rounded-full transition-all"
-                style={{
-                  width: i === idx ? 18 : 6,
-                  height: 6,
-                  background: i === idx ? project.accent : 'rgba(246,241,234,0.25)',
-                }}
                 aria-label={`Go to screenshot ${i + 1}`}
+                style={{
+                  width: i === idx ? 18 : 6, height: 6,
+                  borderRadius: 999,
+                  background: i === idx ? project.accent : 'rgba(246,241,234,0.25)',
+                  border: 'none', cursor: 'pointer', padding: 0,
+                  transition: 'all 0.2s ease',
+                }}
               />
             ))}
           </div>
         )}
-      </motion.div>
+      </div>
 
-      {/* Next */}
+      {/* Next button */}
       {shots.length > 1 && (
         <button
           onClick={e => { e.stopPropagation(); next(); }}
-          className="absolute right-4 w-10 h-10 rounded-sm flex items-center justify-center transition-colors"
-          style={{ background: 'rgba(246,241,234,0.08)', color: 'rgba(246,241,234,0.7)' }}
           aria-label="Next screenshot"
+          style={{
+            position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)',
+            width: 40, height: 40, borderRadius: 4,
+            background: 'rgba(246,241,234,0.08)',
+            border: '1px solid rgba(246,241,234,0.12)',
+            color: 'rgba(246,241,234,0.7)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            cursor: 'pointer',
+          }}
         >
-          <ChevronRight className="w-5 h-5" />
+          <ChevronRight size={20} />
         </button>
       )}
-    </motion.div>
+    </div>,
+    document.body
   );
 }
 
@@ -279,7 +337,18 @@ export default function Work() {
   const [expanded, setExpanded] = useState<number | null>(null);
   const [lightbox, setLightbox] = useState<{ project: Project; index: number } | null>(null);
 
+  // Preload the first screenshot of every project on mount
+  useEffect(() => {
+    PROJECTS.forEach(p => {
+      if (p.screenshots[0]) {
+        const img = new window.Image();
+        img.src = p.screenshots[0].src;
+      }
+    });
+  }, []);
+
   return (
+    <>
     <section id="work" style={{ background: 'var(--cream-mid)' }}>
       <div className="divider" />
 
@@ -335,6 +404,10 @@ export default function Work() {
                     {/* Content */}
                     <div className="lg:col-span-8">
                       <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                        {/* Small project number badge */}
+                        <span className="project-number" aria-hidden>
+                          {String(idx + 1).padStart(2, '0')}
+                        </span>
                         <p
                           className="font-body font-medium"
                           style={{ fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-muted)' }}
@@ -549,16 +622,15 @@ export default function Work() {
       </div>
       <div className="divider" />
 
-      {/* Lightbox */}
-      <AnimatePresence>
-        {lightbox && (
-          <Lightbox
-            project={lightbox.project}
-            initialIndex={lightbox.index}
-            onClose={() => setLightbox(null)}
-          />
-        )}
-      </AnimatePresence>
+      {/* Lightbox — outside section to avoid stacking context issues */}
+      {lightbox && (
+        <Lightbox
+          project={lightbox.project}
+          initialIndex={lightbox.index}
+          onClose={() => setLightbox(null)}
+        />
+      )}
     </section>
+    </>
   );
 }

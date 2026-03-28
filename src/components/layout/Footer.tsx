@@ -18,7 +18,29 @@ export default function Footer() {
   };
 
   return (
-    <footer style={{ background: 'var(--ink)' }}>
+    <footer style={{ background: 'var(--ink)', position: 'relative', overflow: 'hidden' }}>
+      {/* Large faded wordmark */}
+      <div
+        aria-hidden
+        style={{
+          position: 'absolute',
+          bottom: '-0.15em',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          fontFamily: "'Playfair Display', serif",
+          fontWeight: 700,
+          fontStyle: 'italic',
+          fontSize: 'clamp(4rem, 12vw, 9rem)',
+          letterSpacing: '-0.04em',
+          color: 'rgba(246,241,234,0.04)',
+          whiteSpace: 'nowrap',
+          pointerEvents: 'none',
+          userSelect: 'none',
+          lineHeight: 1,
+        }}
+      >
+        Shaun Chikerema
+      </div>
       <div className="max-w-6xl mx-auto px-6 lg:px-10">
         <div
           className="flex flex-col md:flex-row md:items-center md:justify-between gap-7 py-10"

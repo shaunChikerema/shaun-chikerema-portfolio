@@ -183,7 +183,19 @@ export default function Skills() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <div className="card-ink p-8 lg:p-10">
+          <div
+            className="card-ink p-8 lg:p-10 relative overflow-hidden"
+            style={{
+              backgroundImage: `
+                linear-gradient(135deg, rgba(255,255,255,0.018) 25%, transparent 25%),
+                linear-gradient(225deg, rgba(255,255,255,0.018) 25%, transparent 25%),
+                linear-gradient(315deg, rgba(255,255,255,0.018) 25%, transparent 25%),
+                linear-gradient(45deg,  rgba(255,255,255,0.018) 25%, transparent 25%)
+              `,
+              backgroundSize: '28px 28px',
+              backgroundPosition: '0 0, 14px 0, 14px -14px, 0 14px',
+            }}
+          >
             <p className="eyebrow mb-8" style={{ color: 'var(--terra-dim)' }}>
               How I work
             </p>
