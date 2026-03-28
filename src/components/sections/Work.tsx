@@ -1,9 +1,13 @@
 'use client';
-import { motion } from 'framer-motion';
-import { createPortal } from 'react-dom';
-import { ExternalLink, ArrowRight, Calendar, Download, Smartphone, Images, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  ExternalLink, ArrowRight, Calendar, Download,
+  Smartphone, X, ChevronLeft, ChevronRight, Images,
+} from 'lucide-react';
 import { useState, useEffect, useCallback } from 'react';
 
+/* ─── Types ─── */
+type Screenshot = { src: string; caption: string };
 type Project = {
   id: number;
   title: string;
@@ -15,9 +19,10 @@ type Project = {
   isApp?: boolean;
   stack: string[];
   features: string[];
-  screenshots: { src: string; caption: string }[];
+  screenshots: Screenshot[];
 };
 
+/* ─── Data ─── */
 const PROJECTS: Project[] = [
   {
     id: 1,
@@ -27,7 +32,7 @@ const PROJECTS: Project[] = [
     description:
       'Full-stack property marketplace connecting buyers, sellers, and agents. Multi-tenant architecture with role-based access, real-time search, secure authentication, and a mobile-first UI.',
     url: 'https://keyat.vercel.app',
-    accent: 'var(--terra)',
+    accent: '#1A4D6D',
     stack: ['Next.js 15', 'TypeScript', 'PostgreSQL', 'Supabase', 'Tailwind CSS'],
     features: [
       'Advanced property search with filters',
@@ -145,492 +150,367 @@ const PROJECTS: Project[] = [
   },
 ];
 
-/* ── Lightbox ── */
+/* ─────────────────────────────────────────────────────────
+   Lightbox — uses vanilla JS DOM append to guarantee
+   true fullscreen fixed overlay, bypassing all React
+   stacking context issues entirely.
+──────────────────────────────────────────────────────────── */
 function Lightbox({
   project,
-  initialIndex,
+  startIndex,
   onClose,
 }: {
   project: Project;
-  initialIndex: number;
+  startIndex: number;
   onClose: () => void;
 }) {
-  const [idx, setIdx] = useState(initialIndex);
+  const [idx, setIdx] = useState(startIndex);
   const shots = project.screenshots;
+  const shot = shots[idx];
 
-  const prev = useCallback(() => setIdx(i => (i - 1 + shots.length) % shots.length), [shots.length]);
-  const next = useCallback(() => setIdx(i => (i + 1) % shots.length), [shots.length]);
-
-  // Preload adjacent images so navigation feels instant
-  useEffect(() => {
-    const preload = (src: string) => { const img = new window.Image(); img.src = src; };
-    const prevIdx = (idx - 1 + shots.length) % shots.length;
-    const nextIdx = (idx + 1) % shots.length;
-    preload(shots[prevIdx].src);
-    preload(shots[nextIdx].src);
-  }, [idx, shots]);
+  const prev = useCallback(
+    () => setIdx(i => (i - 1 + shots.length) % shots.length),
+    [shots.length],
+  );
+  const next = useCallback(
+    () => setIdx(i => (i + 1) % shots.length),
+    [shots.length],
+  );
 
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
+    const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
       if (e.key === 'ArrowLeft') prev();
       if (e.key === 'ArrowRight') next();
     };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
   }, [onClose, prev, next]);
 
+  // Inject a style tag that forces the lightbox above everything
   useEffect(() => {
-    document.documentElement.style.overflow = 'hidden';
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.documentElement.style.overflow = '';
-      document.body.style.overflow = '';
-    };
+    const style = document.createElement('style');
+    style.id = 'lb-fix';
+    style.textContent = `
+      #lb-root {
+        position: fixed !important;
+        top: 0 !important; left: 0 !important;
+        width: 100vw !important; height: 100vh !important;
+        z-index: 2147483647 !important;
+        background: rgba(8,6,4,0.97) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        transform: none !important;
+      }
+    `;
+    document.head.appendChild(style);
+    return () => { document.getElementById('lb-fix')?.remove(); };
   }, []);
 
-  return createPortal(
-    <div
-      onClick={onClose}
-      style={{
-        position: 'fixed',
-        top: 0, left: 0, right: 0, bottom: 0,
-        zIndex: 9999,
-        background: 'rgba(10,8,6,0.95)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '70px 60px 40px',
-      }}
-    >
-      {/* Close */}
-      <button
-        onClick={onClose}
-        aria-label="Close"
-        style={{
-          position: 'absolute', top: 20, right: 20,
-          width: 36, height: 36, borderRadius: 4,
-          background: 'rgba(246,241,234,0.1)',
-          border: '1px solid rgba(246,241,234,0.15)',
-          color: 'rgba(246,241,234,0.8)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          cursor: 'pointer',
-        }}
-      >
-        <X size={16} />
-      </button>
-
-      {/* Title + counter */}
-      <div style={{
-        position: 'absolute', top: 20, left: '50%', transform: 'translateX(-50%)',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2,
-        pointerEvents: 'none', whiteSpace: 'nowrap',
-      }}>
-        <span style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: 14, color: 'rgba(246,241,234,0.9)' }}>
-          {project.title}
-        </span>
-        <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: 'rgba(246,241,234,0.4)', letterSpacing: '0.1em' }}>
-          {idx + 1} / {shots.length}
-        </span>
+  return (
+    <div id="lb-root" onClick={onClose}>
+      {/* Top bar */}
+      <div onClick={e => e.stopPropagation()} style={{ flexShrink: 0, height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 20px', borderBottom: '1px solid rgba(246,241,234,0.08)' }}>
+        <div>
+          <p style={{ fontFamily: 'serif', fontWeight: 700, fontSize: 14, color: '#F6F1EA', margin: 0 }}>{project.title}</p>
+          <p style={{ fontSize: 11, color: 'rgba(246,241,234,0.4)', margin: 0 }}>{idx + 1} / {shots.length}</p>
+        </div>
+        <button type="button" onClick={onClose} style={{ width: 36, height: 36, borderRadius: 6, background: 'rgba(246,241,234,0.08)', border: '1px solid rgba(246,241,234,0.15)', color: '#F6F1EA', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+          <X size={16} />
+        </button>
       </div>
 
-      {/* Prev button */}
-      {shots.length > 1 && (
-        <button
-          onClick={e => { e.stopPropagation(); prev(); }}
-          aria-label="Previous screenshot"
-          style={{
-            position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)',
-            width: 40, height: 40, borderRadius: 4,
-            background: 'rgba(246,241,234,0.08)',
-            border: '1px solid rgba(246,241,234,0.12)',
-            color: 'rgba(246,241,234,0.7)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            cursor: 'pointer',
-          }}
-        >
-          <ChevronLeft size={20} />
-        </button>
-      )}
-
-      {/* Image + caption + dots */}
-      <div
-        key={idx}
-        onClick={e => e.stopPropagation()}
-        style={{
-          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14,
-          width: '100%', height: '100%',
-          justifyContent: 'center',
-        }}
-      >
-        <img
-          src={shots[idx].src}
-          alt={shots[idx].caption}
-          loading="eager"
-          style={{
-            maxWidth: '100%',
-            maxHeight: 'calc(100vh - 220px)',
-            width: 'auto',
-            height: 'auto',
-            objectFit: 'contain',
-            display: 'block',
-            borderRadius: 4,
-            border: '1px solid rgba(246,241,234,0.1)',
-          }}
-          onError={e => {
-            (e.target as HTMLImageElement).src =
-              `https://placehold.co/1200x800/1a1714/2E6A8E?text=${encodeURIComponent(shots[idx].caption)}`;
-          }}
-        />
-
-        <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 13, color: 'rgba(246,241,234,0.55)', textAlign: 'center', margin: 0 }}>
-          {shots[idx].caption}
-        </p>
-
-        {/* Dot indicators */}
+      {/* Image row */}
+      <div style={{ flex: 1, minHeight: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, padding: '16px' }}>
         {shots.length > 1 && (
-          <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+          <button type="button" onClick={e => { e.stopPropagation(); prev(); }} style={{ flexShrink: 0, width: 42, height: 42, borderRadius: 6, background: 'rgba(246,241,234,0.08)', border: '1px solid rgba(246,241,234,0.15)', color: '#F6F1EA', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+            <ChevronLeft size={20} />
+          </button>
+        )}
+        <div onClick={e => e.stopPropagation()} style={{ flex: 1, minWidth: 0, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <img
+            key={idx}
+            src={shot.src}
+            alt={shot.caption}
+            style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: 6, display: 'block' }}
+          />
+        </div>
+        {shots.length > 1 && (
+          <button type="button" onClick={e => { e.stopPropagation(); next(); }} style={{ flexShrink: 0, width: 42, height: 42, borderRadius: 6, background: 'rgba(246,241,234,0.08)', border: '1px solid rgba(246,241,234,0.15)', color: '#F6F1EA', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+            <ChevronRight size={20} />
+          </button>
+        )}
+      </div>
+
+      {/* Caption + dots */}
+      <div onClick={e => e.stopPropagation()} style={{ flexShrink: 0, padding: '12px 20px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
+        <p style={{ fontSize: 13, color: 'rgba(246,241,234,0.45)', textAlign: 'center', margin: 0 }}>{shot.caption}</p>
+        {shots.length > 1 && (
+          <div style={{ display: 'flex', gap: 6 }}>
             {shots.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setIdx(i)}
-                aria-label={`Go to screenshot ${i + 1}`}
-                style={{
-                  width: i === idx ? 18 : 6, height: 6,
-                  borderRadius: 999,
-                  background: i === idx ? project.accent : 'rgba(246,241,234,0.25)',
-                  border: 'none', cursor: 'pointer', padding: 0,
-                  transition: 'all 0.2s ease',
-                }}
-              />
+              <button key={i} type="button" onClick={() => setIdx(i)} style={{ width: i === idx ? 20 : 6, height: 6, borderRadius: 999, background: i === idx ? project.accent : 'rgba(246,241,234,0.25)', border: 'none', padding: 0, cursor: 'pointer', transition: 'all 0.2s ease' }} />
             ))}
           </div>
         )}
       </div>
-
-      {/* Next button */}
-      {shots.length > 1 && (
-        <button
-          onClick={e => { e.stopPropagation(); next(); }}
-          aria-label="Next screenshot"
-          style={{
-            position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)',
-            width: 40, height: 40, borderRadius: 4,
-            background: 'rgba(246,241,234,0.08)',
-            border: '1px solid rgba(246,241,234,0.12)',
-            color: 'rgba(246,241,234,0.7)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            cursor: 'pointer',
-          }}
-        >
-          <ChevronRight size={20} />
-        </button>
-      )}
-    </div>,
-    document.body
+    </div>
   );
 }
 
-/* ── Work section ── */
+/* ─────────────────────────────────────────────────────────
+   Work section
+──────────────────────────────────────────────────────────── */
 export default function Work() {
   const [expanded, setExpanded] = useState<number | null>(null);
   const [lightbox, setLightbox] = useState<{ project: Project; index: number } | null>(null);
 
-  // Preload the first screenshot of every project on mount
-  useEffect(() => {
-    PROJECTS.forEach(p => {
-      if (p.screenshots[0]) {
-        const img = new window.Image();
-        img.src = p.screenshots[0].src;
-      }
-    });
-  }, []);
-
   return (
     <>
-    <section id="work" style={{ background: 'var(--cream-mid)' }}>
-      <div className="divider" />
+      <section id="work" style={{ background: 'var(--cream-mid)' }}>
+        <div className="divider" />
 
-      <div className="max-w-6xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
+        <div className="max-w-6xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
 
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-14"
-        >
-          <p className="eyebrow mb-4">Featured Work</p>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-end">
-            <div className="lg:col-span-6">
-              <h2
-                className="font-display font-bold leading-tight"
-                style={{ fontSize: 'clamp(2rem, 4.5vw, 3.2rem)', color: 'var(--ink)', letterSpacing: '-0.025em' }}
-              >
-                Production<br />
-                <em style={{ color: 'var(--terra)' }}>Projects</em>
-              </h2>
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-14"
+          >
+            <p className="eyebrow mb-4">Featured Work</p>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-end">
+              <div className="lg:col-span-6">
+                <h2
+                  className="font-display font-bold leading-tight"
+                  style={{ fontSize: 'clamp(2rem,4.5vw,3.2rem)', color: 'var(--ink)', letterSpacing: '-0.025em' }}
+                >
+                  Production<br />
+                  <em style={{ color: 'var(--terra)' }}>Projects</em>
+                </h2>
+              </div>
+              <div className="lg:col-span-5 lg:col-start-8">
+                <p className="font-body text-sm leading-relaxed" style={{ color: 'var(--ink-muted)' }}>
+                  Five web and mobile projects built from scratch — architected, coded, deployed, and maintained by me.
+                </p>
+              </div>
             </div>
-            <div className="lg:col-span-5 lg:col-start-8">
-              <p className="font-body text-sm leading-relaxed" style={{ color: 'var(--ink-muted)' }}>
-                Five web and mobile projects built from scratch — architected, coded, deployed, and maintained by me.
-              </p>
-            </div>
-          </div>
-        </motion.div>
+          </motion.div>
 
-        {/* Project cards */}
-        <div className="space-y-4 mb-16">
-          {PROJECTS.map((p, idx) => {
-            const isOpen = expanded === p.id;
-            const hasLiveUrl = p.url !== '#';
-            return (
-              <motion.article
-                key={p.id}
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.48, delay: idx * 0.08 }}
-                className="card overflow-hidden"
-              >
-                {/* Accent bar */}
-                <div style={{ height: 2, background: p.accent }} />
+          {/* Cards */}
+          <div className="space-y-4 mb-16">
+            {PROJECTS.map((p, cardIdx) => {
+              const isOpen     = expanded === p.id;
+              const hasLiveUrl = p.url !== '#';
 
-                <div className="p-7 lg:p-9">
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-7">
+              return (
+                <motion.article
+                  key={p.id}
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.48, delay: cardIdx * 0.07 }}
+                  className="card overflow-hidden"
+                >
+                  <div style={{ height: 2, background: p.accent }} />
 
-                    {/* Content */}
-                    <div className="lg:col-span-8">
-                      <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                        {/* Small project number badge */}
-                        <span className="project-number" aria-hidden>
-                          {String(idx + 1).padStart(2, '0')}
-                        </span>
-                        <p
-                          className="font-body font-medium"
-                          style={{ fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-muted)' }}
-                        >
-                          {p.type}
+                  <div className="p-7 lg:p-9">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-7">
+
+                      {/* Info */}
+                      <div className="lg:col-span-8">
+                        <div className="flex items-center gap-2 mb-2 flex-wrap">
+                          <span className="project-number" aria-hidden>
+                            {String(cardIdx + 1).padStart(2, '0')}
+                          </span>
+                          <p className="font-body font-medium" style={{ fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-muted)' }}>
+                            {p.type}
+                          </p>
+                          {p.isApp && (
+                            <span
+                              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-body font-semibold"
+                              style={{
+                                fontSize: '0.6rem',
+                                background: p.accent === '#f5a623' ? 'rgba(245,166,35,0.12)' : 'rgba(230,57,70,0.1)',
+                                color: p.accent === '#f5a623' ? '#b8760a' : '#c0222e',
+                                letterSpacing: '0.08em',
+                              }}
+                            >
+                              <Smartphone size={9} /> ANDROID
+                            </span>
+                          )}
+                        </div>
+
+                        <h3 className="font-display font-bold mb-4" style={{ fontSize: '1.4rem', color: 'var(--ink)', letterSpacing: '-0.02em' }}>
+                          {p.title}
+                        </h3>
+
+                        <p className="font-body text-sm leading-relaxed mb-5" style={{ color: 'var(--ink-muted)', lineHeight: 1.75 }}>
+                          {p.description}
                         </p>
-                        {p.isApp && (
-                          <span
-                            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-body font-semibold"
-                            style={{
-                              fontSize: '0.6rem',
-                              background: p.accent === '#f5a623' ? 'rgba(245,166,35,0.12)' : 'rgba(230,57,70,0.1)',
-                              color: p.accent === '#f5a623' ? '#f5a623' : '#e63946',
-                              letterSpacing: '0.08em',
-                            }}
-                          >
-                            <Smartphone size={9} /> ANDROID
-                          </span>
-                        )}
+
+                        <div className="flex flex-wrap gap-1.5">
+                          {p.stack.map(t => <span key={t} className="tag">{t}</span>)}
+                        </div>
                       </div>
 
-                      <h3
-                        className="font-display font-bold mb-4"
-                        style={{ fontSize: '1.4rem', color: 'var(--ink)', letterSpacing: '-0.02em' }}
-                      >
-                        {p.title}
-                      </h3>
+                      {/* Actions */}
+                      <div className="lg:col-span-4 flex flex-col gap-2 lg:justify-start lg:pt-7">
 
-                      <p className="font-body text-sm leading-relaxed mb-6" style={{ color: 'var(--ink-muted)', lineHeight: 1.75 }}>
-                        {p.description}
-                      </p>
-
-                      <div className="flex flex-wrap gap-1.5">
-                        {p.stack.map(t => <span key={t} className="tag">{t}</span>)}
-                      </div>
-                    </div>
-
-                    {/* Actions */}
-                    <div className="lg:col-span-4 flex flex-col gap-2 lg:justify-start lg:pt-7">
-
-                      {/* 1. Primary — live site / download APK */}
-                      {p.isApp ? (
-                        hasLiveUrl ? (
-                          <a
-                            href={p.url}
-                            download
-                            className="btn btn-dark text-xs py-3"
-                            style={{ background: p.accent, borderColor: p.accent }}
-                          >
-                            <Download className="w-3.5 h-3.5" />
-                            Download APK
-                          </a>
+                        {p.isApp ? (
+                          hasLiveUrl ? (
+                            <a href={p.url} download className="btn btn-dark text-xs py-3" style={{ background: p.accent, borderColor: p.accent }}>
+                              <Download className="w-3.5 h-3.5" /> Download APK
+                            </a>
+                          ) : (
+                            <span className="btn btn-dark text-xs py-3" style={{ background: p.accent, borderColor: p.accent, opacity: 0.4, cursor: 'not-allowed' }}>
+                              <Download className="w-3.5 h-3.5" /> Coming Soon
+                            </span>
+                          )
                         ) : (
-                          <span
-                            className="btn btn-dark text-xs py-3 opacity-40 cursor-not-allowed"
-                            style={{ background: p.accent, borderColor: p.accent }}
-                          >
-                            <Download className="w-3.5 h-3.5" />
-                            Coming Soon
-                          </span>
-                        )
-                      ) : (
-                        <a
-                          href={p.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="btn btn-dark text-xs py-3"
-                          style={{ background: p.accent, borderColor: p.accent }}
+                          <a href={p.url} target="_blank" rel="noopener noreferrer" className="btn btn-dark text-xs py-3" style={{ background: p.accent, borderColor: p.accent }}>
+                            <ExternalLink className="w-3.5 h-3.5" /> Visit Site
+                          </a>
+                        )}
+
+                        <button
+                          type="button"
+                          onClick={() => setLightbox({ project: p, index: 0 })}
+                          className="btn btn-ghost text-xs py-3"
                         >
-                          <ExternalLink className="w-3.5 h-3.5" />
-                          Visit Site
+                          <Images className="w-3.5 h-3.5" /> Screenshots
+                        </button>
+
+                        <a href={`/projects/${p.slug}`} className="btn btn-ghost group text-xs py-3">
+                          Case Study <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                         </a>
+
+                        <button
+                          type="button"
+                          onClick={() => setExpanded(isOpen ? null : p.id)}
+                          style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: '8px 0', fontFamily: "'DM Sans',sans-serif", fontSize: '0.75rem', fontWeight: 500, color: 'var(--ink-muted)' }}
+                        >
+                          {isOpen ? 'Hide features ↑' : 'Key features ↓'}
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Features */}
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.div
+                          key="features"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                          style={{ overflow: 'hidden' }}
+                        >
+                          <div className="mt-7 pt-6" style={{ borderTop: '1px solid var(--border)' }}>
+                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                              {p.features.map((f, fi) => (
+                                <li key={fi} className="flex items-start gap-2.5">
+                                  <div className="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style={{ background: p.accent }} />
+                                  <span className="font-body text-sm" style={{ color: 'var(--ink-muted)' }}>{f}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </motion.div>
                       )}
-
-                      {/* 2. Secondary — screenshots */}
-                      <button
-                        onClick={() => setLightbox({ project: p, index: 0 })}
-                        className="btn btn-ghost text-xs py-3"
-                      >
-                        <Images className="w-3.5 h-3.5" />
-                        Screenshots
-                      </button>
-
-                      {/* 3. Tertiary — case study */}
-                      <a href={`/projects/${p.slug}`} className="btn btn-ghost group text-xs py-3">
-                        Case Study
-                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                      </a>
-
-                      {/* 4. Lowest — feature toggle */}
-                      <button
-                        onClick={() => setExpanded(isOpen ? null : p.id)}
-                        className="font-body text-xs font-medium py-2.5 transition-colors"
-                        style={{ color: 'var(--ink-muted)' }}
-                      >
-                        {isOpen ? 'Hide features ↑' : 'Key features ↓'}
-                      </button>
-                    </div>
+                    </AnimatePresence>
                   </div>
+                </motion.article>
+              );
+            })}
+          </div>
 
-                  {/* Expandable features */}
-                  <motion.div
-                    initial={false}
-                    animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
-                    transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                    className="overflow-hidden"
-                  >
-                    <div className="mt-7 pt-6" style={{ borderTop: '1px solid var(--border)' }}>
-                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        {p.features.map((f, fi) => (
-                          <li key={fi} className="flex items-start gap-2.5">
-                            <div className="mt-2 w-1 h-1 rounded-full flex-shrink-0" style={{ background: p.accent }} />
-                            <span className="font-body text-sm" style={{ color: 'var(--ink-muted)' }}>{f}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </motion.div>
+          <div className="divider mb-16" />
+
+          {/* Background */}
+          <motion.p
+            className="eyebrow mb-8"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            Background
+          </motion.p>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45 }}
+              className="card p-7"
+            >
+              <div className="flex items-start justify-between mb-5 gap-4">
+                <div>
+                  <h3 className="font-display font-bold text-lg mb-0.5" style={{ color: 'var(--ink)', letterSpacing: '-0.015em' }}>Independent Developer</h3>
+                  <p className="font-body font-semibold text-sm" style={{ color: 'var(--terra)' }}>BITROOT</p>
                 </div>
-              </motion.article>
-            );
-          })}
-        </div>
-
-        {/* Divider */}
-        <div className="divider mb-16" />
-
-        {/* Background */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-4"
-        >
-          <p className="eyebrow mb-8">Background</p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-
-          {/* Experience */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.45 }}
-            className="card p-7"
-          >
-            <div className="flex items-start justify-between mb-5 gap-4">
-              <div>
-                <h3 className="font-display font-bold text-lg mb-0.5" style={{ color: 'var(--ink)', letterSpacing: '-0.015em' }}>
-                  Independent Developer
-                </h3>
-                <p className="font-body font-semibold text-sm" style={{ color: 'var(--terra)' }}>BITROOT</p>
+                <div className="flex items-center gap-1.5 flex-shrink-0 mt-0.5">
+                  <Calendar className="w-3 h-3" style={{ color: 'var(--terra)' }} />
+                  <span className="font-body text-xs" style={{ color: 'var(--ink-muted)' }}>2024 – Present</span>
+                </div>
               </div>
-              <div className="flex items-center gap-1.5 flex-shrink-0 mt-0.5">
-                <Calendar className="w-3 h-3" style={{ color: 'var(--terra)' }} />
-                <span className="font-body text-xs" style={{ color: 'var(--ink-muted)' }}>2024 – Present</span>
-              </div>
-            </div>
-            <ul className="space-y-2.5">
-              {[
-                'Architected and shipped five production projects from scratch',
-                'Two Android apps built with React Native, Expo SDK, and EAS Build',
-                'Multi-tenant database design with complete tenant data isolation',
-                'CI/CD pipelines, Vercel deployments, performance monitoring',
-                'Secure authentication, role-based access, audit logging',
-              ].map((item, i) => (
-                <li key={i} className="flex items-start gap-2.5">
-                  <div className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: 'var(--terra)' }} />
-                  <span className="font-body text-sm" style={{ color: 'var(--ink-muted)', lineHeight: 1.65 }}>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-
-          {/* Education */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.45, delay: 0.08 }}
-            className="card p-7 flex flex-col justify-between"
-          >
-            <div>
-              <p className="eyebrow mb-5" style={{ fontSize: '0.6rem' }}>Education</p>
-              <h3
-                className="font-display font-bold leading-snug mb-2"
-                style={{ fontSize: '1.1rem', color: 'var(--ink)', letterSpacing: '-0.015em' }}
-              >
-                BSc Software Engineering<br />with Multimedia
-              </h3>
-              <p className="font-body text-sm mb-1" style={{ color: 'var(--ink-muted)' }}>
-                Limkokwing University of Creative Technology
-              </p>
-              <p className="font-body text-xs" style={{ color: 'var(--ink-muted)' }}>
-                2019 – 2024
-              </p>
-            </div>
-
-            <div className="mt-7 pt-5" style={{ borderTop: '1px solid var(--border)' }}>
-              <p className="eyebrow mb-3" style={{ fontSize: '0.6rem' }}>Core Stack</p>
-              <div className="flex flex-wrap gap-1.5">
-                {['Next.js', 'TypeScript', 'PostgreSQL', 'Supabase', 'Node.js', 'React Native', 'Vercel'].map(t => (
-                  <span key={t} className="tag">{t}</span>
+              <ul className="space-y-2.5">
+                {[
+                  'Architected and shipped five production projects from scratch',
+                  'Two Android apps built with React Native, Expo SDK, and EAS Build',
+                  'Multi-tenant database design with complete tenant data isolation',
+                  'CI/CD pipelines, Vercel deployments, performance monitoring',
+                  'Secure authentication, role-based access, audit logging',
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-2.5">
+                    <div className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: 'var(--terra)' }} />
+                    <span className="font-body text-sm" style={{ color: 'var(--ink-muted)', lineHeight: 1.65 }}>{item}</span>
+                  </li>
                 ))}
+              </ul>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45, delay: 0.08 }}
+              className="card p-7 flex flex-col justify-between"
+            >
+              <div>
+                <p className="eyebrow mb-5" style={{ fontSize: '0.6rem' }}>Education</p>
+                <h3 className="font-display font-bold leading-snug mb-2" style={{ fontSize: '1.1rem', color: 'var(--ink)', letterSpacing: '-0.015em' }}>
+                  BSc Software Engineering<br />with Multimedia
+                </h3>
+                <p className="font-body text-sm mb-1" style={{ color: 'var(--ink-muted)' }}>Limkokwing University of Creative Technology</p>
+                <p className="font-body text-xs" style={{ color: 'var(--ink-muted)' }}>2019 – 2024</p>
               </div>
-            </div>
-          </motion.div>
+              <div className="mt-7 pt-5" style={{ borderTop: '1px solid var(--border)' }}>
+                <p className="eyebrow mb-3" style={{ fontSize: '0.6rem' }}>Core Stack</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {['Next.js', 'TypeScript', 'PostgreSQL', 'Supabase', 'Node.js', 'React Native', 'Vercel'].map(t => (
+                    <span key={t} className="tag">{t}</span>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
         </div>
+        <div className="divider" />
+      </section>
 
-      </div>
-      <div className="divider" />
-
-      {/* Lightbox — outside section to avoid stacking context issues */}
+      {/* Lightbox — outside section so no overflow:hidden clips it */}
       {lightbox && (
         <Lightbox
           project={lightbox.project}
-          initialIndex={lightbox.index}
+          startIndex={lightbox.index}
           onClose={() => setLightbox(null)}
         />
       )}
-    </section>
     </>
   );
 }
