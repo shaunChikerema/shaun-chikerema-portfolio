@@ -139,81 +139,25 @@ export default function Hero() {
               </p>
             </motion.div>
 
-            {/* Stack — label pinned left, badges wrap independently below it on overflow */}
-            <motion.div {...fade(0.32)} className="mb-9 flex flex-col gap-2.5">
-
-              {/* Web row */}
-              <div className="flex items-start gap-2">
-                {/* Label — fixed width, top-aligned so it stays put when badges wrap */}
-                <span
-                  className="shrink-0 pt-[3px]"
-                  style={{
-                    fontSize: '0.6rem',
-                    fontWeight: 700,
-                    letterSpacing: '0.12em',
-                    textTransform: 'uppercase',
-                    color: 'var(--ink-muted)',
-                    fontFamily: "'DM Sans', sans-serif",
-                    width: 36,
-                  }}
-                >
-                  Web
-                </span>
-                {/* Badges — wrap freely within remaining space */}
-                <div className="flex flex-wrap gap-1.5">
-                  {STACK_WEB.map(t => (
-                    <span
-                      key={t}
-                      className="tag"
-                      style={{
-                        background: 'rgba(26,77,109,0.08)',
-                        borderColor: 'rgba(26,77,109,0.25)',
-                        color: '#1A4D6D',
-                        fontWeight: 600,
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
+            {/* Stack badges — single compact row */}
+            <motion.div {...fade(0.32)} className="mb-9">
+              <div className="flex flex-wrap gap-1.5">
+                {[...STACK_WEB, ...STACK_MOBILE].map(t => (
+                  <span
+                    key={t}
+                    className="tag"
+                    style={{
+                      background: 'rgba(26,77,109,0.08)',
+                      borderColor: 'rgba(26,77,109,0.25)',
+                      color: '#1A4D6D',
+                      fontWeight: 600,
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {t}
+                  </span>
+                ))}
               </div>
-
-              {/* App row */}
-              <div className="flex items-start gap-2">
-                <span
-                  className="shrink-0 pt-[3px]"
-                  style={{
-                    fontSize: '0.6rem',
-                    fontWeight: 700,
-                    letterSpacing: '0.12em',
-                    textTransform: 'uppercase',
-                    color: 'var(--ink-muted)',
-                    fontFamily: "'DM Sans', sans-serif",
-                    width: 36,
-                  }}
-                >
-                  App
-                </span>
-                <div className="flex flex-wrap gap-1.5">
-                  {STACK_MOBILE.map(t => (
-                    <span
-                      key={t}
-                      className="tag"
-                      style={{
-                        background: 'rgba(26,77,109,0.08)',
-                        borderColor: 'rgba(26,77,109,0.25)',
-                        color: '#1A4D6D',
-                        fontWeight: 600,
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
             </motion.div>
 
             {/* CTAs */}
