@@ -61,7 +61,7 @@ const PROJECTS: Project[] = [
     type: 'Client Work · Marketing Site',
     description:
       'Marketing website for a licensed NBFIRA insurance broker. Multi-page site with a WhatsApp-integrated quote request flow, provider showcase, scroll animations, and full mobile navigation.',
-    url: 'https://paragon-insurance-official.vercel.app',
+    url: 'https://paragoninsurancebrokers.co.bw',
     accent: '#1A4D6D',
     stack: ['Next.js', 'Tailwind CSS', 'Vercel'],
     features: [
