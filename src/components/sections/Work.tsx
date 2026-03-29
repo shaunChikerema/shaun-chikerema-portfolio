@@ -289,7 +289,15 @@ function Lightbox({ project, startIndex, onClose }: { project: Project; startInd
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <div>
-            <p style={{ fontFamily: 'serif', fontWeight: 700, fontSize: 14, color: '#F6F1EA', margin: 0 }}>{project.title}</p>
+            {project.slug === 'paragon' ? (
+              <img
+                src="/images/paragon-logo.jpeg"
+                alt="Paragon Insurance Brokers"
+                style={{ height: 32, width: 'auto', objectFit: 'contain', display: 'block', borderRadius: 3 }}
+              />
+            ) : (
+              <p style={{ fontFamily: 'serif', fontWeight: 700, fontSize: 14, color: '#F6F1EA', margin: 0 }}>{project.title}</p>
+            )}
             <p style={{ fontSize: 11, color: 'rgba(246,241,234,0.4)', margin: 0 }}>{idx + 1} / {shots.length}</p>
           </div>
           {hasViews && (
