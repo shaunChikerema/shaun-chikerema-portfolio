@@ -2,7 +2,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ExternalLink, ArrowRight, Calendar, Download,
-  Smartphone, X, ChevronLeft, ChevronRight, Images,
+  Smartphone, X, ChevronLeft, ChevronRight, Images, ArrowUpRight,
 } from 'lucide-react';
 import { useState, useEffect, useCallback } from 'react';
 
@@ -124,6 +124,25 @@ const PROJECTS: Project[] = [
     ],
   },
   {
+    id: 5,
+    title: 'BITROOT',
+    slug: 'bitroot',
+    type: 'Tech Startup · Agency & SaaS Studio',
+    description:
+      'My own tech startup — a software studio building products and delivering client work across web and mobile. BITROOT is the umbrella under which all these projects were conceived, designed, and shipped.',
+    url: 'https://bitroot-dev.vercel.app',
+    accent: '#16a34a',
+    stack: ['Next.js', 'TypeScript', 'React Native', 'Supabase', 'Vercel'],
+    features: [
+      'Founder-led product studio',
+      'Full-stack web & mobile development',
+      'Client work & proprietary SaaS products',
+      'End-to-end — design, build, deploy, maintain',
+      'Based in Botswana, building for the world',
+    ],
+    screenshots: [],
+  },
+  {
     id: 6,
     title: 'Yonder',
     slug: 'yonder',
@@ -150,32 +169,14 @@ const PROJECTS: Project[] = [
   },
 ];
 
-/* ─────────────────────────────────────────────────────────
-   Lightbox — uses vanilla JS DOM append to guarantee
-   true fullscreen fixed overlay, bypassing all React
-   stacking context issues entirely.
-──────────────────────────────────────────────────────────── */
-function Lightbox({
-  project,
-  startIndex,
-  onClose,
-}: {
-  project: Project;
-  startIndex: number;
-  onClose: () => void;
-}) {
+/* ─── Lightbox ─── */
+function Lightbox({ project, startIndex, onClose }: { project: Project; startIndex: number; onClose: () => void }) {
   const [idx, setIdx] = useState(startIndex);
   const shots = project.screenshots;
   const shot = shots[idx];
 
-  const prev = useCallback(
-    () => setIdx(i => (i - 1 + shots.length) % shots.length),
-    [shots.length],
-  );
-  const next = useCallback(
-    () => setIdx(i => (i + 1) % shots.length),
-    [shots.length],
-  );
+  const prev = useCallback(() => setIdx(i => (i - 1 + shots.length) % shots.length), [shots.length]);
+  const next = useCallback(() => setIdx(i => (i + 1) % shots.length), [shots.length]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -187,7 +188,6 @@ function Lightbox({
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose, prev, next]);
 
-  // Inject a style tag that forces the lightbox above everything
   useEffect(() => {
     const style = document.createElement('style');
     style.id = 'lb-fix';
@@ -209,7 +209,6 @@ function Lightbox({
 
   return (
     <div id="lb-root" onClick={onClose}>
-      {/* Top bar */}
       <div onClick={e => e.stopPropagation()} style={{ flexShrink: 0, height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 20px', borderBottom: '1px solid rgba(246,241,234,0.08)' }}>
         <div>
           <p style={{ fontFamily: 'serif', fontWeight: 700, fontSize: 14, color: '#F6F1EA', margin: 0 }}>{project.title}</p>
@@ -219,8 +218,6 @@ function Lightbox({
           <X size={16} />
         </button>
       </div>
-
-      {/* Image row */}
       <div style={{ flex: 1, minHeight: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, padding: '16px' }}>
         {shots.length > 1 && (
           <button type="button" onClick={e => { e.stopPropagation(); prev(); }} style={{ flexShrink: 0, width: 42, height: 42, borderRadius: 6, background: 'rgba(246,241,234,0.08)', border: '1px solid rgba(246,241,234,0.15)', color: '#F6F1EA', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
@@ -228,12 +225,7 @@ function Lightbox({
           </button>
         )}
         <div onClick={e => e.stopPropagation()} style={{ flex: 1, minWidth: 0, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <img
-            key={idx}
-            src={shot.src}
-            alt={shot.caption}
-            style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: 6, display: 'block' }}
-          />
+          <img key={idx} src={shot.src} alt={shot.caption} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: 6, display: 'block' }} />
         </div>
         {shots.length > 1 && (
           <button type="button" onClick={e => { e.stopPropagation(); next(); }} style={{ flexShrink: 0, width: 42, height: 42, borderRadius: 6, background: 'rgba(246,241,234,0.08)', border: '1px solid rgba(246,241,234,0.15)', color: '#F6F1EA', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
@@ -241,8 +233,6 @@ function Lightbox({
           </button>
         )}
       </div>
-
-      {/* Caption + dots */}
       <div onClick={e => e.stopPropagation()} style={{ flexShrink: 0, padding: '12px 20px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
         <p style={{ fontSize: 13, color: 'rgba(246,241,234,0.45)', textAlign: 'center', margin: 0 }}>{shot.caption}</p>
         {shots.length > 1 && (
@@ -257,12 +247,11 @@ function Lightbox({
   );
 }
 
-/* ─────────────────────────────────────────────────────────
-   Work section
-──────────────────────────────────────────────────────────── */
+/* ─── Work Section ─── */
 export default function Work() {
   const [expanded, setExpanded] = useState<number | null>(null);
   const [lightbox, setLightbox] = useState<{ project: Project; index: number } | null>(null);
+  const [hovered, setHovered] = useState<number | null>(null);
 
   return (
     <>
@@ -277,7 +266,7 @@ export default function Work() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="mb-14"
+            className="mb-16"
           >
             <p className="eyebrow mb-4">Featured Work</p>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-end">
@@ -299,104 +288,293 @@ export default function Work() {
           </motion.div>
 
           {/* Cards */}
-          <div className="space-y-4 mb-16">
+          <div className="space-y-5 mb-16">
             {PROJECTS.map((p, cardIdx) => {
-              const isOpen     = expanded === p.id;
+              const isOpen = expanded === p.id;
               const hasLiveUrl = p.url !== '#';
+              const isHovered = hovered === p.id;
 
               return (
                 <motion.article
                   key={p.id}
-                  initial={{ opacity: 0, y: 18 }}
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.48, delay: cardIdx * 0.07 }}
-                  className="card overflow-hidden"
+                  onMouseEnter={() => setHovered(p.id)}
+                  onMouseLeave={() => setHovered(null)}
+                  style={{
+                    borderRadius: 16,
+                    background: 'var(--cream)',
+                    border: '1px solid var(--border)',
+                    overflow: 'hidden',
+                    transition: 'box-shadow 0.3s ease, transform 0.3s ease',
+                    transform: isHovered ? 'translateY(-2px)' : 'translateY(0)',
+                    boxShadow: isHovered
+                      ? `0 20px 60px rgba(0,0,0,0.1), 0 0 0 1px ${p.accent}30`
+                      : '0 2px 12px rgba(0,0,0,0.04)',
+                  }}
                 >
-                  <div style={{ height: 2, background: p.accent }} />
+                  {/* Accent bar */}
+                  <div style={{ height: 3, background: `linear-gradient(90deg, ${p.accent}, ${p.accent}80)` }} />
 
                   <div className="p-7 lg:p-9">
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-7">
-
-                      {/* Info */}
-                      <div className="lg:col-span-8">
-                        <div className="flex items-center gap-2 mb-2 flex-wrap">
-                          <span className="project-number" aria-hidden>
-                            {String(cardIdx + 1).padStart(2, '0')}
+                    {/* Top row: number + type + badge */}
+                    <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
+                      <div className="flex items-center gap-3">
+                        {/* Index number pill */}
+                        <span style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          width: 28,
+                          height: 28,
+                          borderRadius: 8,
+                          background: `${p.accent}18`,
+                          color: p.accent,
+                          fontSize: '0.7rem',
+                          fontWeight: 700,
+                          fontFamily: 'monospace',
+                          letterSpacing: '-0.02em',
+                          flexShrink: 0,
+                        }}>
+                          {String(cardIdx + 1).padStart(2, '0')}
+                        </span>
+                        <span style={{
+                          fontSize: '0.68rem',
+                          fontWeight: 600,
+                          letterSpacing: '0.09em',
+                          textTransform: 'uppercase',
+                          color: 'var(--ink-muted)',
+                          fontFamily: "'DM Sans', sans-serif",
+                        }}>
+                          {p.type}
+                        </span>
+                        {p.isApp && (
+                          <span style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: 4,
+                            padding: '2px 8px',
+                            borderRadius: 999,
+                            fontSize: '0.6rem',
+                            fontWeight: 700,
+                            letterSpacing: '0.08em',
+                            textTransform: 'uppercase',
+                            background: p.accent === '#f5a623' ? 'rgba(245,166,35,0.12)' : 'rgba(230,57,70,0.1)',
+                            color: p.accent === '#f5a623' ? '#b8760a' : '#c0222e',
+                          }}>
+                            <Smartphone size={9} /> Android
                           </span>
-                          <p className="font-body font-medium" style={{ fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-muted)' }}>
-                            {p.type}
-                          </p>
-                          {p.isApp && (
-                            <span
-                              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-body font-semibold"
-                              style={{
-                                fontSize: '0.6rem',
-                                background: p.accent === '#f5a623' ? 'rgba(245,166,35,0.12)' : 'rgba(230,57,70,0.1)',
-                                color: p.accent === '#f5a623' ? '#b8760a' : '#c0222e',
-                                letterSpacing: '0.08em',
-                              }}
-                            >
-                              <Smartphone size={9} /> ANDROID
-                            </span>
-                          )}
-                        </div>
+                        )}
+                      </div>
 
-                        <h3 className="font-display font-bold mb-4" style={{ fontSize: '1.4rem', color: 'var(--ink)', letterSpacing: '-0.02em' }}>
+
+                    </div>
+
+                    {/* Main grid */}
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-10">
+
+                      {/* Left: title + description + stack */}
+                      <div className="lg:col-span-8">
+                        <h3
+                          className="font-display font-bold mb-3"
+                          style={{ fontSize: 'clamp(1.25rem,2.5vw,1.55rem)', color: 'var(--ink)', letterSpacing: '-0.025em', lineHeight: 1.2 }}
+                        >
                           {p.title}
                         </h3>
 
-                        <p className="font-body text-sm leading-relaxed mb-5" style={{ color: 'var(--ink-muted)', lineHeight: 1.75 }}>
+                        <p className="font-body text-sm leading-relaxed mb-5" style={{ color: 'var(--ink-muted)', lineHeight: 1.8, maxWidth: '52ch' }}>
                           {p.description}
                         </p>
 
+                        {/* Stack pills */}
                         <div className="flex flex-wrap gap-1.5">
-                          {p.stack.map(t => <span key={t} className="tag">{t}</span>)}
+                          {p.stack.map(t => (
+                            <span
+                              key={t}
+                              style={{
+                                padding: '3px 10px',
+                                borderRadius: 6,
+                                fontSize: '0.68rem',
+                                fontWeight: 500,
+                                fontFamily: "'DM Sans', sans-serif",
+                                background: 'var(--cream-mid)',
+                                border: '1px solid var(--border)',
+                                color: 'var(--ink-muted)',
+                                letterSpacing: '0.01em',
+                              }}
+                            >
+                              {t}
+                            </span>
+                          ))}
                         </div>
                       </div>
 
-                      {/* Actions */}
-                      <div className="lg:col-span-4 flex flex-col gap-2 lg:justify-start lg:pt-7">
+                      {/* Right: action buttons */}
+                      <div className="lg:col-span-4 flex flex-col gap-2.5 lg:justify-start lg:pt-1">
 
+                        {/* Primary CTA */}
                         {p.isApp ? (
                           hasLiveUrl ? (
-                            <a href={p.url} download className="btn btn-dark text-xs py-3" style={{ background: p.accent, borderColor: p.accent }}>
-                              <Download className="w-3.5 h-3.5" /> Download APK
+                            <a
+                              href={p.url}
+                              download
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: 7,
+                                padding: '10px 16px',
+                                borderRadius: 10,
+                                background: p.accent,
+                                color: '#fff',
+                                fontSize: '0.75rem',
+                                fontWeight: 600,
+                                fontFamily: "'DM Sans', sans-serif",
+                                textDecoration: 'none',
+                                letterSpacing: '0.01em',
+                                transition: 'opacity 0.2s ease',
+                              }}
+                              onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '0.88')}
+                              onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '1')}
+                            >
+                              <Download size={13} /> Download APK
                             </a>
                           ) : (
-                            <span className="btn btn-dark text-xs py-3" style={{ background: p.accent, borderColor: p.accent, opacity: 0.4, cursor: 'not-allowed' }}>
-                              <Download className="w-3.5 h-3.5" /> Coming Soon
+                            <span style={{
+                              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
+                              padding: '10px 16px', borderRadius: 10, background: p.accent,
+                              color: '#fff', fontSize: '0.75rem', fontWeight: 600,
+                              fontFamily: "'DM Sans', sans-serif", opacity: 0.35, cursor: 'not-allowed',
+                            }}>
+                              <Download size={13} /> Coming Soon
                             </span>
                           )
                         ) : (
-                          <a href={p.url} target="_blank" rel="noopener noreferrer" className="btn btn-dark text-xs py-3" style={{ background: p.accent, borderColor: p.accent }}>
-                            <ExternalLink className="w-3.5 h-3.5" /> Visit Site
+                          <a
+                            href={p.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              gap: 7,
+                              padding: '10px 16px',
+                              borderRadius: 10,
+                              background: p.accent,
+                              color: '#fff',
+                              fontSize: '0.75rem',
+                              fontWeight: 600,
+                              fontFamily: "'DM Sans', sans-serif",
+                              textDecoration: 'none',
+                              letterSpacing: '0.01em',
+                              transition: 'opacity 0.2s ease',
+                            }}
+                            onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '0.88')}
+                            onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '1')}
+                          >
+                            <ArrowUpRight size={13} /> Visit Site
                           </a>
                         )}
 
-                        <button
-                          type="button"
-                          onClick={() => setLightbox({ project: p, index: 0 })}
-                          className="btn btn-ghost text-xs py-3"
-                        >
-                          <Images className="w-3.5 h-3.5" /> Screenshots
-                        </button>
+                        {/* Screenshots */}
+                        {p.screenshots.length > 0 && (
+                          <button
+                            type="button"
+                            onClick={() => setLightbox({ project: p, index: 0 })}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              gap: 7,
+                              padding: '10px 16px',
+                              borderRadius: 10,
+                              background: 'transparent',
+                              border: '1px solid var(--border)',
+                              color: 'var(--ink)',
+                              fontSize: '0.75rem',
+                              fontWeight: 600,
+                              fontFamily: "'DM Sans', sans-serif",
+                              letterSpacing: '0.01em',
+                              cursor: 'pointer',
+                              transition: 'background 0.2s ease, border-color 0.2s ease',
+                            }}
+                            onMouseEnter={e => {
+                              (e.currentTarget as HTMLButtonElement).style.background = 'var(--cream-mid)';
+                              (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--ink-muted)';
+                            }}
+                            onMouseLeave={e => {
+                              (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
+                              (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border)';
+                            }}
+                          >
+                            <Images size={13} /> Screenshots
+                          </button>
+                        )}
 
-                        <a href={`/projects/${p.slug}`} className="btn btn-ghost group text-xs py-3">
-                          Case Study <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                        {/* Secondary: Case Study */}
+                        <a
+                          href={`/projects/${p.slug}`}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: 7,
+                            padding: '10px 16px',
+                            borderRadius: 10,
+                            background: 'transparent',
+                            border: '1px solid var(--border)',
+                            color: 'var(--ink)',
+                            fontSize: '0.75rem',
+                            fontWeight: 600,
+                            fontFamily: "'DM Sans', sans-serif",
+                            textDecoration: 'none',
+                            letterSpacing: '0.01em',
+                            transition: 'background 0.2s ease, border-color 0.2s ease',
+                          }}
+                          onMouseEnter={e => {
+                            (e.currentTarget as HTMLAnchorElement).style.background = 'var(--cream-mid)';
+                            (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--ink-muted)';
+                          }}
+                          onMouseLeave={e => {
+                            (e.currentTarget as HTMLAnchorElement).style.background = 'transparent';
+                            (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--border)';
+                          }}
+                        >
+                          Case Study <ArrowRight size={13} />
                         </a>
 
+                        {/* Tertiary: Features toggle */}
                         <button
                           type="button"
                           onClick={() => setExpanded(isOpen ? null : p.id)}
-                          style={{ background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: '8px 0', fontFamily: "'DM Sans',sans-serif", fontSize: '0.75rem', fontWeight: 500, color: 'var(--ink-muted)' }}
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: 6,
+                            padding: '9px 16px',
+                            borderRadius: 10,
+                            background: 'transparent',
+                            border: 'none',
+                            color: 'var(--ink-muted)',
+                            fontSize: '0.72rem',
+                            fontWeight: 500,
+                            fontFamily: "'DM Sans', sans-serif",
+                            cursor: 'pointer',
+                            transition: 'color 0.2s ease',
+                          }}
+                          onMouseEnter={e => ((e.currentTarget as HTMLButtonElement).style.color = 'var(--ink)')}
+                          onMouseLeave={e => ((e.currentTarget as HTMLButtonElement).style.color = 'var(--ink-muted)')}
                         >
                           {isOpen ? 'Hide features ↑' : 'Key features ↓'}
                         </button>
                       </div>
                     </div>
 
-                    {/* Features */}
+                    {/* Features expandable */}
                     <AnimatePresence initial={false}>
                       {isOpen && (
                         <motion.div
@@ -407,12 +585,27 @@ export default function Work() {
                           transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                           style={{ overflow: 'hidden' }}
                         >
-                          <div className="mt-7 pt-6" style={{ borderTop: '1px solid var(--border)' }}>
-                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          <div
+                            className="mt-7 pt-6"
+                            style={{ borderTop: '1px solid var(--border)' }}
+                          >
+                            <p style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-muted)', marginBottom: 12, fontFamily: "'DM Sans', sans-serif" }}>
+                              Key Features
+                            </p>
+                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                               {p.features.map((f, fi) => (
                                 <li key={fi} className="flex items-start gap-2.5">
-                                  <div className="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style={{ background: p.accent }} />
-                                  <span className="font-body text-sm" style={{ color: 'var(--ink-muted)' }}>{f}</span>
+                                  <div
+                                    style={{
+                                      marginTop: 6,
+                                      width: 6,
+                                      height: 6,
+                                      borderRadius: 2,
+                                      flexShrink: 0,
+                                      background: p.accent,
+                                    }}
+                                  />
+                                  <span className="font-body text-sm" style={{ color: 'var(--ink-muted)', lineHeight: 1.7 }}>{f}</span>
                                 </li>
                               ))}
                             </ul>
@@ -503,7 +696,6 @@ export default function Work() {
         <div className="divider" />
       </section>
 
-      {/* Lightbox — outside section so no overflow:hidden clips it */}
       {lightbox && (
         <Lightbox
           project={lightbox.project}
