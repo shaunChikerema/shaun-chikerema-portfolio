@@ -1,5 +1,6 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
+import WhatsAppFloat from '@/components/sections/WhatsAppFloat';
 
 export const metadata: Metadata = {
   title: 'Shaun Chikerema - Software Engineer & Fullstack Developer',
@@ -34,6 +35,7 @@ export default function RootLayout({
     <html lang="en" className="overflow-x-hidden">
       <body className="font-sans antialiased overflow-x-hidden">
         {children}
+        <WhatsAppFloat />
       </body>
     </html>
   );

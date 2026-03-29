@@ -129,7 +129,7 @@ export default function Header() {
           {/* Mobile */}
           <div className="flex md:hidden items-center gap-2">
             <button onClick={downloadCV} className="btn btn-dark text-xs px-3 py-2 gap-1.5">
-              <Download className="w-3 h-3" /> CV
+              <Download className="w-3 h-3" /> Resume
             </button>
             <button
               onClick={() => setOpen(v => !v)}

@@ -9,7 +9,8 @@ const SOCIALS = [
   { href: 'mailto:sschikerema@gmail.com',            icon: Mail,     label: 'Email' },
 ];
 
-const STACK = ['Next.js', 'TypeScript', 'React Native', 'Expo', 'PostgreSQL', 'Node.js', 'Supabase'];
+const STACK_WEB    = ['Next.js', 'TypeScript', 'PostgreSQL', 'Node.js', 'Supabase'];
+const STACK_MOBILE = ['React Native', 'Expo'];
 
 export default function Hero() {
   const [imgLoaded,     setImgLoaded]     = useState(false);
@@ -96,7 +97,7 @@ export default function Hero() {
             {/* Name */}
             <motion.h1
               {...fade(0.07)}
-              className="font-display font-bold leading-[0.92] mb-5"
+              className="font-display font-bold leading-[0.92] mb-4"
               style={{
                 fontSize: 'clamp(3.8rem, 9vw, 7rem)',
                 letterSpacing: '-0.03em',
@@ -111,31 +112,108 @@ export default function Hero() {
             {/* Role line */}
             <motion.p
               {...fade(0.14)}
-              className="font-body font-medium mb-7"
-              style={{ fontSize: '0.7rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--ink-muted)' }}
+              className="font-body font-bold mb-6"
+              style={{
+                fontSize: 'clamp(1.05rem, 2vw, 1.35rem)',
+                letterSpacing: '0.09em',
+                textTransform: 'uppercase',
+                color: 'var(--ink-muted)',
+              }}
               itemProp="jobTitle"
             >
               Software Engineer
             </motion.p>
 
-            {/* Terra accent line */}
-            <motion.div
-              initial={{ scaleX: 0, originX: 0 }} animate={{ scaleX: 1 }}
-              transition={{ duration: 0.65, delay: 0.2 }}
-              className="mb-8"
-              style={{ width: 40, height: 1, background: 'var(--terra)' }}
-            />
-
             {/* Value prop */}
-            <motion.div {...fade(0.26)} className="mb-8 max-w-lg">
-              <p className="font-body text-sm leading-relaxed" style={{ color: 'var(--ink-mid)', lineHeight: 1.8 }}>
+            <motion.div {...fade(0.26)} className="mb-6 max-w-lg">
+              <p
+                className="font-body"
+                style={{
+                  fontSize: 'clamp(1.1rem, 2vw, 1.3rem)',
+                  color: 'var(--ink-mid)',
+                  lineHeight: 1.85,
+                  fontWeight: 500,
+                }}
+              >
                 Full-stack web and native mobile — from database schema to deployed app, on any platform.
               </p>
             </motion.div>
 
-            {/* Stack */}
-            <motion.div {...fade(0.32)} className="flex flex-wrap gap-1.5 mb-9">
-              {STACK.map(t => <span key={t} className="tag">{t}</span>)}
+            {/* Stack — label pinned left, badges wrap independently below it on overflow */}
+            <motion.div {...fade(0.32)} className="mb-9 flex flex-col gap-2.5">
+
+              {/* Web row */}
+              <div className="flex items-start gap-2">
+                {/* Label — fixed width, top-aligned so it stays put when badges wrap */}
+                <span
+                  className="shrink-0 pt-[3px]"
+                  style={{
+                    fontSize: '0.6rem',
+                    fontWeight: 700,
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                    color: 'var(--ink-muted)',
+                    fontFamily: "'DM Sans', sans-serif",
+                    width: 36,
+                  }}
+                >
+                  Web
+                </span>
+                {/* Badges — wrap freely within remaining space */}
+                <div className="flex flex-wrap gap-1.5">
+                  {STACK_WEB.map(t => (
+                    <span
+                      key={t}
+                      className="tag"
+                      style={{
+                        background: 'rgba(26,77,109,0.08)',
+                        borderColor: 'rgba(26,77,109,0.25)',
+                        color: '#1A4D6D',
+                        fontWeight: 600,
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* App row */}
+              <div className="flex items-start gap-2">
+                <span
+                  className="shrink-0 pt-[3px]"
+                  style={{
+                    fontSize: '0.6rem',
+                    fontWeight: 700,
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                    color: 'var(--ink-muted)',
+                    fontFamily: "'DM Sans', sans-serif",
+                    width: 36,
+                  }}
+                >
+                  App
+                </span>
+                <div className="flex flex-wrap gap-1.5">
+                  {STACK_MOBILE.map(t => (
+                    <span
+                      key={t}
+                      className="tag"
+                      style={{
+                        background: 'rgba(26,77,109,0.08)',
+                        borderColor: 'rgba(26,77,109,0.25)',
+                        color: '#1A4D6D',
+                        fontWeight: 600,
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
             </motion.div>
 
             {/* CTAs */}
@@ -144,7 +222,7 @@ export default function Hero() {
                 View my work
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
               </button>
-              <button onClick={handleDownload} disabled={downloading} className="btn btn-ghost disabled:opacity-50">
+              <button onClick={handleDownload} disabled={downloading} className="btn btn-ghost disabled:opacity-50" style={{ border: '1.5px solid var(--ink)', color: 'var(--ink)', fontWeight: 600 }}>
                 <Download className={`w-3.5 h-3.5 ${downloading ? 'animate-bounce' : ''}`} />
                 {downloading ? 'Downloading...' : 'Resume'}
               </button>
@@ -212,6 +290,7 @@ export default function Hero() {
                   width: 'clamp(200px, 26vw, 340px)',
                   aspectRatio: '3/4',
                   border: '1px solid var(--border)',
+                  background: 'var(--cream-dark)',
                 }}
               >
                 {!imgLoaded && (

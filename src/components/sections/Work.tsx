@@ -5,6 +5,7 @@ import {
   Smartphone, X, ChevronLeft, ChevronRight, Images, ArrowUpRight,
 } from 'lucide-react';
 import { useState, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 
 /* ─── Types ─── */
 type Screenshot = { src: string; caption: string };
@@ -173,78 +174,179 @@ const PROJECTS: Project[] = [
 function Lightbox({ project, startIndex, onClose }: { project: Project; startIndex: number; onClose: () => void }) {
   const [idx, setIdx] = useState(startIndex);
   const shots = project.screenshots;
-  const shot = shots[idx];
+  const shot  = shots[idx];
 
   const prev = useCallback(() => setIdx(i => (i - 1 + shots.length) % shots.length), [shots.length]);
   const next = useCallback(() => setIdx(i => (i + 1) % shots.length), [shots.length]);
 
+  /* keyboard nav */
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowLeft') prev();
+      if (e.key === 'Escape')     onClose();
+      if (e.key === 'ArrowLeft')  prev();
       if (e.key === 'ArrowRight') next();
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose, prev, next]);
 
+  /* scroll lock */
   useEffect(() => {
-    const style = document.createElement('style');
-    style.id = 'lb-fix';
-    style.textContent = `
-      #lb-root {
-        position: fixed !important;
-        top: 0 !important; left: 0 !important;
-        width: 100vw !important; height: 100vh !important;
-        z-index: 2147483647 !important;
-        background: rgba(8,6,4,0.97) !important;
-        display: flex !important;
-        flex-direction: column !important;
-        transform: none !important;
-      }
-    `;
-    document.head.appendChild(style);
-    return () => { document.getElementById('lb-fix')?.remove(); };
+    const saved = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = saved; };
   }, []);
 
-  return (
-    <div id="lb-root" onClick={onClose}>
-      <div onClick={e => e.stopPropagation()} style={{ flexShrink: 0, height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 20px', borderBottom: '1px solid rgba(246,241,234,0.08)' }}>
+  const HEADER = 56;
+  const FOOTER = 70;
+
+  const overlay = (
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        width: '100vw',
+        height: '100dvh',
+        zIndex: 2147483647,
+        background: 'rgba(8,6,4,0.97)',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+      }}
+    >
+      {/* Header */}
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{
+          flexShrink: 0,
+          height: HEADER,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '0 20px',
+          borderBottom: '1px solid rgba(246,241,234,0.08)',
+        }}
+      >
         <div>
           <p style={{ fontFamily: 'serif', fontWeight: 700, fontSize: 14, color: '#F6F1EA', margin: 0 }}>{project.title}</p>
           <p style={{ fontSize: 11, color: 'rgba(246,241,234,0.4)', margin: 0 }}>{idx + 1} / {shots.length}</p>
         </div>
-        <button type="button" onClick={onClose} style={{ width: 36, height: 36, borderRadius: 6, background: 'rgba(246,241,234,0.08)', border: '1px solid rgba(246,241,234,0.15)', color: '#F6F1EA', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+        <button
+          type="button" onClick={onClose}
+          style={{ width: 36, height: 36, borderRadius: 6, background: 'rgba(246,241,234,0.08)', border: '1px solid rgba(246,241,234,0.15)', color: '#F6F1EA', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
+        >
           <X size={16} />
         </button>
       </div>
-      <div style={{ flex: 1, minHeight: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, padding: '16px' }}>
+
+      {/* 
+        Image stage — uses flex:1 so it fills ALL remaining height between header and footer.
+        The key insight: we set height explicitly via style so that children with
+        max-height:100% can resolve against a real pixel value.
+      */}
+      <div
+        style={{
+          flex: 1,
+          minHeight: 0,           /* ← critical: allows flex child to shrink below content size */
+          position: 'relative',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '12px 56px',  /* horizontal pad clears the abs-positioned arrows */
+          overflow: 'hidden',
+        }}
+        onClick={e => e.stopPropagation()}
+      >
+        {/* Prev arrow */}
         {shots.length > 1 && (
-          <button type="button" onClick={e => { e.stopPropagation(); prev(); }} style={{ flexShrink: 0, width: 42, height: 42, borderRadius: 6, background: 'rgba(246,241,234,0.08)', border: '1px solid rgba(246,241,234,0.15)', color: '#F6F1EA', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+          <button
+            type="button"
+            onClick={e => { e.stopPropagation(); prev(); }}
+            style={{
+              position: 'absolute', left: 8, top: '50%', transform: 'translateY(-50%)',
+              zIndex: 2, width: 40, height: 40, borderRadius: 6,
+              background: 'rgba(246,241,234,0.10)', border: '1px solid rgba(246,241,234,0.18)',
+              color: '#F6F1EA', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
+            }}
+          >
             <ChevronLeft size={20} />
           </button>
         )}
-        <div onClick={e => e.stopPropagation()} style={{ flex: 1, minWidth: 0, height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <img key={idx} src={shot.src} alt={shot.caption} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: 6, display: 'block' }} />
-        </div>
+
+        {/*
+          The image itself.
+          - width: 100% + height: 100% fills the stage
+          - object-fit: contain scales it correctly within those bounds
+          This is the most reliable cross-browser approach — avoids the
+          max-width/max-height double-constraint that was shrinking landscape images.
+        */}
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={idx}
+            src={shot.src}
+            alt={shot.caption}
+            initial={{ opacity: 0, scale: 0.97 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.97 }}
+            transition={{ duration: 0.15 }}
+            style={{
+              display: 'block',
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+              borderRadius: 6,
+            }}
+          />
+        </AnimatePresence>
+
+        {/* Next arrow */}
         {shots.length > 1 && (
-          <button type="button" onClick={e => { e.stopPropagation(); next(); }} style={{ flexShrink: 0, width: 42, height: 42, borderRadius: 6, background: 'rgba(246,241,234,0.08)', border: '1px solid rgba(246,241,234,0.15)', color: '#F6F1EA', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+          <button
+            type="button"
+            onClick={e => { e.stopPropagation(); next(); }}
+            style={{
+              position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)',
+              zIndex: 2, width: 40, height: 40, borderRadius: 6,
+              background: 'rgba(246,241,234,0.10)', border: '1px solid rgba(246,241,234,0.18)',
+              color: '#F6F1EA', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
+            }}
+          >
             <ChevronRight size={20} />
           </button>
         )}
       </div>
-      <div onClick={e => e.stopPropagation()} style={{ flexShrink: 0, padding: '12px 20px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
+
+      {/* Footer */}
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{
+          flexShrink: 0,
+          height: FOOTER,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 10,
+          padding: '0 20px',
+        }}
+      >
         <p style={{ fontSize: 13, color: 'rgba(246,241,234,0.45)', textAlign: 'center', margin: 0 }}>{shot.caption}</p>
         {shots.length > 1 && (
           <div style={{ display: 'flex', gap: 6 }}>
             {shots.map((_, i) => (
-              <button key={i} type="button" onClick={() => setIdx(i)} style={{ width: i === idx ? 20 : 6, height: 6, borderRadius: 999, background: i === idx ? project.accent : 'rgba(246,241,234,0.25)', border: 'none', padding: 0, cursor: 'pointer', transition: 'all 0.2s ease' }} />
+              <button
+                key={i} type="button" onClick={() => setIdx(i)}
+                style={{ width: i === idx ? 20 : 6, height: 6, borderRadius: 999, background: i === idx ? project.accent : 'rgba(246,241,234,0.25)', border: 'none', padding: 0, cursor: 'pointer', transition: 'all 0.2s ease' }}
+              />
             ))}
           </div>
         )}
       </div>
     </div>
   );
+
+  return typeof document !== 'undefined' ? createPortal(overlay, document.body) : null;
 }
 
 /* ─── Work Section ─── */
@@ -266,7 +368,7 @@ export default function Work() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="mb-16"
+            className="mb-10"
           >
             <p className="eyebrow mb-4">Featured Work</p>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-end">
@@ -281,14 +383,14 @@ export default function Work() {
               </div>
               <div className="lg:col-span-5 lg:col-start-8">
                 <p className="font-body text-sm leading-relaxed" style={{ color: 'var(--ink-muted)' }}>
-                  Five web and mobile projects built from scratch — architected, coded, deployed, and maintained by me.
+                  Five production projects across web and mobile — architected, built, and shipped end-to-end.
                 </p>
               </div>
             </div>
           </motion.div>
 
           {/* Cards */}
-          <div className="space-y-5 mb-16">
+          <div className="space-y-4 mb-12">
             {PROJECTS.map((p, cardIdx) => {
               const isOpen = expanded === p.id;
               const hasLiveUrl = p.url !== '#';
@@ -319,57 +421,45 @@ export default function Work() {
                   <div style={{ height: 3, background: `linear-gradient(90deg, ${p.accent}, ${p.accent}80)` }} />
 
                   <div className="p-7 lg:p-9">
-                    {/* Top row: number + type + badge */}
-                    <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
-                      <div className="flex items-center gap-3">
-                        {/* Index number pill */}
+                    {/* Top row: type + badge */}
+                    <div className="flex items-center gap-2.5 mb-4 flex-wrap">
+                      <span style={{
+                        fontSize: '0.65rem',
+                        fontWeight: 700,
+                        fontFamily: 'monospace',
+                        color: p.accent,
+                        letterSpacing: '0.04em',
+                      }}>
+                        {String(cardIdx + 1).padStart(2, '0')}
+                      </span>
+                      <span style={{ width: 3, height: 3, borderRadius: '50%', background: 'var(--ink-muted)', opacity: 0.4, display: 'inline-block' }} />
+                      <span style={{
+                        fontSize: '0.68rem',
+                        fontWeight: 600,
+                        letterSpacing: '0.09em',
+                        textTransform: 'uppercase',
+                        color: 'var(--ink-muted)',
+                        fontFamily: "'DM Sans', sans-serif",
+                      }}>
+                        {p.type}
+                      </span>
+                      {p.isApp && (
                         <span style={{
                           display: 'inline-flex',
                           alignItems: 'center',
-                          justifyContent: 'center',
-                          width: 28,
-                          height: 28,
-                          borderRadius: 8,
-                          background: `${p.accent}18`,
-                          color: p.accent,
-                          fontSize: '0.7rem',
+                          gap: 4,
+                          padding: '2px 8px',
+                          borderRadius: 999,
+                          fontSize: '0.6rem',
                           fontWeight: 700,
-                          fontFamily: 'monospace',
-                          letterSpacing: '-0.02em',
-                          flexShrink: 0,
-                        }}>
-                          {String(cardIdx + 1).padStart(2, '0')}
-                        </span>
-                        <span style={{
-                          fontSize: '0.68rem',
-                          fontWeight: 600,
-                          letterSpacing: '0.09em',
+                          letterSpacing: '0.08em',
                           textTransform: 'uppercase',
-                          color: 'var(--ink-muted)',
-                          fontFamily: "'DM Sans', sans-serif",
+                          background: `${p.accent}15`,
+                          color: p.accent,
                         }}>
-                          {p.type}
+                          <Smartphone size={9} /> Android
                         </span>
-                        {p.isApp && (
-                          <span style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: 4,
-                            padding: '2px 8px',
-                            borderRadius: 999,
-                            fontSize: '0.6rem',
-                            fontWeight: 700,
-                            letterSpacing: '0.08em',
-                            textTransform: 'uppercase',
-                            background: p.accent === '#f5a623' ? 'rgba(245,166,35,0.12)' : 'rgba(230,57,70,0.1)',
-                            color: p.accent === '#f5a623' ? '#b8760a' : '#c0222e',
-                          }}>
-                            <Smartphone size={9} /> Android
-                          </span>
-                        )}
-                      </div>
-
-
+                      )}
                     </div>
 
                     {/* Main grid */}
@@ -397,11 +487,11 @@ export default function Work() {
                                 padding: '3px 10px',
                                 borderRadius: 6,
                                 fontSize: '0.68rem',
-                                fontWeight: 500,
+                                fontWeight: 600,
                                 fontFamily: "'DM Sans', sans-serif",
-                                background: 'var(--cream-mid)',
-                                border: '1px solid var(--border)',
-                                color: 'var(--ink-muted)',
+                                background: `${p.accent}10`,
+                                border: `1px solid ${p.accent}30`,
+                                color: p.accent,
                                 letterSpacing: '0.01em',
                               }}
                             >
@@ -642,7 +732,7 @@ export default function Work() {
             >
               <div className="flex items-start justify-between mb-5 gap-4">
                 <div>
-                  <h3 className="font-display font-bold text-lg mb-0.5" style={{ color: 'var(--ink)', letterSpacing: '-0.015em' }}>Independent Developer</h3>
+                  <h3 className="font-display font-bold text-lg mb-0.5" style={{ color: 'var(--ink)', letterSpacing: '-0.015em' }}>Founder & Software Engineer</h3>
                   <p className="font-body font-semibold text-sm" style={{ color: 'var(--terra)' }}>BITROOT</p>
                 </div>
                 <div className="flex items-center gap-1.5 flex-shrink-0 mt-0.5">
@@ -685,7 +775,7 @@ export default function Work() {
                 <p className="eyebrow mb-3" style={{ fontSize: '0.6rem' }}>Core Stack</p>
                 <div className="flex flex-wrap gap-1.5">
                   {['Next.js', 'TypeScript', 'PostgreSQL', 'Supabase', 'Node.js', 'React Native', 'Vercel'].map(t => (
-                    <span key={t} className="tag">{t}</span>
+                    <span key={t} className="tag" style={{ background: 'rgba(26,77,109,0.08)', borderColor: 'rgba(26,77,109,0.25)', color: '#1A4D6D', fontWeight: 600 }}>{t}</span>
                   ))}
                 </div>
               </div>

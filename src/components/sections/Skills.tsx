@@ -1,51 +1,51 @@
 'use client';
 import { motion } from 'framer-motion';
-import { Code2, Server, Cpu, Cloud, Smartphone } from 'lucide-react';
+import { Cpu, Smartphone, Server, Cloud } from 'lucide-react';
 
-const AREAS = [
+const SKILLS = [
   {
     icon: Cpu,
-    title: 'Full-Stack Development',
-    desc: 'End-to-end system design — from database schema to deployed UI.',
-    tech: ['Next.js 15', 'TypeScript', 'Node.js', 'PostgreSQL', 'Supabase'],
+    accent: '#1A4D6D',
+    title: 'Full-Stack Web',
+    body: 'Built three production web apps — a multi-tenant real estate marketplace, an insurance SaaS, and a client marketing site. Comfortable owning the entire stack.',
+    tech: ['Next.js 15', 'TypeScript', 'PostgreSQL', 'Supabase', 'Node.js', 'Tailwind CSS'],
   },
   {
     icon: Smartphone,
-    title: 'Mobile Development',
-    desc: 'Production Android apps with native device APIs, offline-first architecture, and polished UI.',
-    tech: ['React Native', 'Expo SDK 54', 'expo-av', 'expo-media-library', 'expo-router', 'EAS Build'],
-  },
-  {
-    icon: Code2,
-    title: 'Frontend Engineering',
-    desc: 'Performant, accessible interfaces built mobile-first.',
-    tech: ['React', 'Tailwind CSS', 'Framer Motion', 'PDF.js', 'Tesseract.js'],
+    accent: '#e63946',
+    title: 'Mobile (Android)',
+    body: 'Two Android apps shipped via EAS Build. Native device APIs for audio playback, media library scanning, background tasks, and offline-first storage.',
+    tech: ['React Native', 'Expo SDK 54', 'expo-av', 'expo-media-library', 'AsyncStorage', 'expo-router'],
   },
   {
     icon: Server,
+    accent: '#7A5C2E',
     title: 'Backend & Data',
-    desc: 'Robust APIs, multi-tenant architecture, and secure data models.',
-    tech: ['Express', 'REST APIs', 'Firebase', 'Puppeteer', 'Redis'],
+    body: 'Designed multi-tenant schemas, built REST APIs, handled auth and role-based access, automated document generation, and set up audit logging.',
+    tech: ['Express', 'REST APIs', 'Redis', 'Puppeteer', 'Firebase', 'Prisma'],
   },
   {
     icon: Cloud,
+    accent: '#16a34a',
     title: 'Deployment & DevOps',
-    desc: 'Production infrastructure, CI/CD, and monitoring.',
-    tech: ['Vercel', 'Docker', 'GitHub Actions', 'AWS', 'EAS'],
+    body: 'Every project is in production. CI/CD via GitHub Actions, deployments on Vercel and EAS, environment management, and performance monitoring.',
+    tech: ['Vercel', 'GitHub Actions', 'Docker', 'EAS Build', 'AWS'],
   },
 ];
 
 const APPROACHES = [
-  { title: 'Ship real things', body: 'Every project I touch goes live. No abandoned demos, no endless iterations in dev.' },
-  { title: 'Production mindset', body: 'Security, monitoring, and performance are part of the build — not afterthoughts.' },
-  { title: 'Self-directed', body: 'Self-taught developer who learns by doing. Fast to pick up new tools and adapt.' },
-];
-
-const MOBILE_HIGHLIGHTS = [
-  { label: 'Apps shipped', value: '2' },
-  { label: 'Platform', value: 'Android' },
-  { label: 'Build tool', value: 'EAS' },
-  { label: 'SDK', value: 'Expo 54' },
+  {
+    title: 'Ship real things',
+    body: 'Every project I touch goes live. No abandoned demos, no endless iterations in dev.',
+  },
+  {
+    title: 'Production mindset',
+    body: 'Security, monitoring, and performance are part of the build — not afterthoughts.',
+  },
+  {
+    title: 'Self-directed',
+    body: 'Self-taught, fast to pick up new tools. I learn by building and shipping.',
+  },
 ];
 
 export default function Skills() {
@@ -70,99 +70,72 @@ export default function Skills() {
                 className="font-display font-bold leading-tight"
                 style={{ fontSize: 'clamp(2rem, 4.5vw, 3.2rem)', color: 'var(--ink)', letterSpacing: '-0.025em' }}
               >
-                What I work<br />
-                <em style={{ color: 'var(--terra)' }}>with</em>
+                Built with,<br />
+                <em style={{ color: 'var(--terra)' }}>shipped with.</em>
               </h2>
             </div>
             <div className="lg:col-span-5 lg:col-start-8">
-              <p className="font-body text-sm leading-relaxed" style={{ color: 'var(--ink-muted)' }}>
-                Full-stack web and native mobile. Every tool below has been used in a deployed production project.
+              <p className="font-body text-sm leading-relaxed" style={{ color: 'var(--ink-muted)', lineHeight: 1.8 }}>
+                Every tool listed here has been used in a deployed production project — not tutorials, not toy apps.
               </p>
             </div>
           </div>
         </motion.div>
 
-        {/* Mobile callout banner */}
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.45 }}
-          className="mb-6 card overflow-hidden"
-        >
-          <div style={{ height: 2, background: 'linear-gradient(90deg, #e63946, #f5a623)' }} />
-          <div className="p-6 flex flex-col sm:flex-row items-start sm:items-center gap-5">
-            <div
-              className="w-10 h-10 rounded-sm flex items-center justify-center flex-shrink-0"
-              style={{ background: 'rgba(230,57,70,0.1)' }}
-            >
-              <Smartphone className="w-5 h-5" style={{ color: '#e63946' }} />
-            </div>
-            <div className="flex-1">
-              <div className="flex items-center gap-2 mb-1 flex-wrap">
-                <h3 className="font-display font-semibold text-base" style={{ color: 'var(--ink)', letterSpacing: '-0.01em' }}>
-                  React Native &amp; Expo
-                </h3>
-                <span
-                  className="px-2 py-0.5 rounded-full font-body font-semibold"
-                  style={{ fontSize: '0.6rem', background: 'rgba(230,57,70,0.1)', color: '#e63946', letterSpacing: '0.08em' }}
-                >
-                  MOBILE
-                </span>
-              </div>
-              <p className="font-body text-xs" style={{ color: 'var(--ink-muted)' }}>
-                Two Android apps built and shipped — BlackDice (local music player) and Yonder (audiobook player). 
-                Native device APIs, background audio, EAS Build pipeline, AsyncStorage persistence.
-              </p>
-            </div>
-            <div className="flex gap-4 flex-shrink-0">
-              {MOBILE_HIGHLIGHTS.map(h => (
-                <div key={h.label} className="text-center">
-                  <p className="font-display font-bold text-lg" style={{ color: 'var(--ink)', letterSpacing: '-0.02em' }}>{h.value}</p>
-                  <p className="font-body" style={{ fontSize: '0.6rem', color: 'var(--ink-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{h.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Skill areas grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-14">
-          {AREAS.map((area, i) => {
-            const Icon = area.icon;
-            const isMobile = area.title === 'Mobile Development';
+        {/* Skill cards — 2-col grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-14">
+          {SKILLS.map((s, i) => {
+            const Icon = s.icon;
             return (
               <motion.div
-                key={area.title}
+                key={s.title}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.42, delay: i * 0.07 }}
-                className="card p-6"
-                style={isMobile ? { border: '1px solid rgba(230,57,70,0.2)' } : {}}
+                transition={{ duration: 0.45, delay: i * 0.07 }}
+                className="card p-7"
+                style={{ borderTop: `2px solid ${s.accent}` }}
               >
-                <div className="flex items-start gap-3.5 mb-4">
+                {/* Icon + title */}
+                <div className="flex items-center gap-3 mb-3">
                   <div
-                    className="w-9 h-9 rounded-sm flex items-center justify-center flex-shrink-0"
-                    style={{ background: isMobile ? 'rgba(230,57,70,0.1)' : 'var(--terra-pale)' }}
+                    className="w-8 h-8 rounded-sm flex items-center justify-center flex-shrink-0"
+                    style={{ background: `${s.accent}15` }}
                   >
-                    <Icon className="w-4 h-4" style={{ color: isMobile ? '#e63946' : 'var(--terra)' }} />
+                    <Icon className="w-4 h-4" style={{ color: s.accent }} />
                   </div>
-                  <div>
-                    <h3 className="font-display font-semibold text-base mb-0.5" style={{ color: 'var(--ink)', letterSpacing: '-0.01em' }}>
-                      {area.title}
-                    </h3>
-                    <p className="font-body text-xs leading-relaxed" style={{ color: 'var(--ink-muted)' }}>
-                      {area.desc}
-                    </p>
-                  </div>
+                  <h3
+                    className="font-display font-bold"
+                    style={{ fontSize: '1.05rem', color: 'var(--ink)', letterSpacing: '-0.015em' }}
+                  >
+                    {s.title}
+                  </h3>
                 </div>
+
+                {/* Body */}
+                <p
+                  className="font-body text-sm leading-relaxed mb-5"
+                  style={{ color: 'var(--ink-muted)', lineHeight: 1.75 }}
+                >
+                  {s.body}
+                </p>
+
+                {/* Tech pills */}
                 <div className="flex flex-wrap gap-1.5">
-                  {area.tech.map(t => (
+                  {s.tech.map(t => (
                     <span
                       key={t}
-                      className="tag"
-                      style={isMobile ? { borderColor: 'rgba(230,57,70,0.2)', color: '#e63946' } : {}}
+                      style={{
+                        padding: '3px 10px',
+                        borderRadius: 6,
+                        fontSize: '0.68rem',
+                        fontWeight: 600,
+                        fontFamily: "'DM Sans', sans-serif",
+                        background: `${s.accent}10`,
+                        border: `1px solid ${s.accent}30`,
+                        color: s.accent,
+                        letterSpacing: '0.01em',
+                      }}
                     >
                       {t}
                     </span>
@@ -176,7 +149,7 @@ export default function Skills() {
         {/* Divider */}
         <div className="divider mb-14" />
 
-        {/* Working style — dark strip */}
+        {/* How I work — dark strip */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -209,12 +182,21 @@ export default function Skills() {
                   transition={{ duration: 0.38, delay: i * 0.08 }}
                   className="flex items-start gap-3"
                 >
-                  <div className="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style={{ background: 'var(--terra-dim)' }} />
+                  <div
+                    className="mt-1.5 w-1 h-1 rounded-full flex-shrink-0"
+                    style={{ background: 'var(--terra-dim)' }}
+                  />
                   <div>
-                    <h4 className="font-display font-semibold text-base mb-1.5" style={{ color: 'var(--cream)', letterSpacing: '-0.01em' }}>
+                    <h4
+                      className="font-display font-semibold text-base mb-1.5"
+                      style={{ color: 'var(--cream)', letterSpacing: '-0.01em' }}
+                    >
                       {a.title}
                     </h4>
-                    <p className="font-body text-sm leading-relaxed" style={{ color: 'rgba(246,241,234,0.5)' }}>
+                    <p
+                      className="font-body text-sm leading-relaxed"
+                      style={{ color: 'rgba(246,241,234,0.55)' }}
+                    >
                       {a.body}
                     </p>
                   </div>
