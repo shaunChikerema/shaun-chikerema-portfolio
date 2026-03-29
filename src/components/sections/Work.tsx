@@ -8,7 +8,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 
 /* ─── Types ─── */
-type Screenshot = { src: string; caption: string };
+type Screenshot = { src: string; caption: string; view?: 'desktop' | 'mobile' };
 type Project = {
   id: number;
   title: string;
@@ -72,9 +72,54 @@ const PROJECTS: Project[] = [
       'Multi-page site with contact & about',
     ],
     screenshots: [
-      { src: '/screenshots/paragon/paragon-1.jpg', caption: 'Homepage hero' },
-      { src: '/screenshots/paragon/paragon-2.jpg', caption: 'Insurance providers section' },
-      { src: '/screenshots/paragon/paragon-3.jpg', caption: 'Contact & quote flow' },
+      // Desktop (19)
+      { src: '/screenshots/paragon/desktop/paragon-1.png',  caption: 'Homepage hero',                     view: 'desktop' },
+      { src: '/screenshots/paragon/desktop/paragon-2.png',  caption: 'Get a quote CTA section',           view: 'desktop' },
+      { src: '/screenshots/paragon/desktop/paragon-3.png',  caption: 'Protect your family section',       view: 'desktop' },
+      { src: '/screenshots/paragon/desktop/paragon-4.png',  caption: 'Free guides section',               view: 'desktop' },
+      { src: '/screenshots/paragon/desktop/paragon-5.png',  caption: 'Compare leading insurers',          view: 'desktop' },
+      { src: '/screenshots/paragon/desktop/paragon-6.png',  caption: 'Insurance providers grid',          view: 'desktop' },
+      { src: '/screenshots/paragon/desktop/paragon-7.png',  caption: 'Your trusted insurance partner',    view: 'desktop' },
+      { src: '/screenshots/paragon/desktop/paragon-8.png',  caption: 'How it works',                      view: 'desktop' },
+      { src: '/screenshots/paragon/desktop/paragon-9.png',  caption: 'Ready to protect your team',        view: 'desktop' },
+      { src: '/screenshots/paragon/desktop/paragon-10.png', caption: 'Testimonials section',              view: 'desktop' },
+      { src: '/screenshots/paragon/desktop/paragon-11.png', caption: 'About Paragon',                     view: 'desktop' },
+      { src: '/screenshots/paragon/desktop/paragon-12.png', caption: 'We work for you section',           view: 'desktop' },
+      { src: '/screenshots/paragon/desktop/paragon-13.png', caption: 'Ready to get started',              view: 'desktop' },
+      { src: '/screenshots/paragon/desktop/paragon-14.png', caption: 'Chalice re-insurance partner',      view: 'desktop' },
+      { src: '/screenshots/paragon/desktop/paragon-15.png', caption: 'Get a quote form',                  view: 'desktop' },
+      { src: '/screenshots/paragon/desktop/paragon-16.png', caption: 'Contact page — map & details',      view: 'desktop' },
+      { src: '/screenshots/paragon/desktop/paragon-17.png', caption: 'Contact form',                      view: 'desktop' },
+      { src: '/screenshots/paragon/desktop/paragon-18.png', caption: 'Footer — dark',                     view: 'desktop' },
+      { src: '/screenshots/paragon/desktop/paragon-19.png', caption: 'Footer — links & info',             view: 'desktop' },
+      // Mobile (27)
+      { src: '/screenshots/paragon/mobile/paragon-1.png',   caption: 'Homepage hero — mobile',            view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-2.png',   caption: 'Get a quote CTA — mobile',          view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-3.png',   caption: 'Protect your family — mobile',      view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-4.png',   caption: 'Free guides — mobile',              view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-5.png',   caption: 'Compare insurers — mobile',         view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-6.png',   caption: 'Providers grid — mobile',           view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-7.png',   caption: 'Trusted partner — mobile',          view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-8.png',   caption: 'How it works — mobile',             view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-9.png',   caption: 'Protect your team — mobile',        view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-10.png',  caption: 'Testimonials — mobile',             view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-11.png',  caption: 'About Paragon — mobile',            view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-12.png',  caption: 'We work for you — mobile',          view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-13.png',  caption: 'Ready to get started — mobile',     view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-14.png',  caption: 'Chalice partner — mobile',          view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-15.png',  caption: 'Get a quote form — mobile',         view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-16.png',  caption: 'Contact map — mobile',              view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-17.png',  caption: 'Contact form — mobile',             view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-18.png',  caption: 'About page — mobile',               view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-19.png',  caption: 'Paragon logo section — mobile',     view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-20.png',  caption: 'Ready to be insured — mobile',      view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-21.png',  caption: 'Nav menu open — mobile',            view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-22.png',  caption: 'Nav menu links — mobile',           view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-23.png',  caption: 'Contact us — mobile',               view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-24.png',  caption: 'Quote form step 2 — mobile',        view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-25.png',  caption: 'Map view — mobile',                 view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-26.png',  caption: 'Footer links — mobile',             view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-27.png',  caption: 'Footer bottom — mobile',            view: 'mobile' },
     ],
   },
   {
@@ -172,9 +217,23 @@ const PROJECTS: Project[] = [
 
 /* ─── Lightbox ─── */
 function Lightbox({ project, startIndex, onClose }: { project: Project; startIndex: number; onClose: () => void }) {
-  const [idx, setIdx] = useState(startIndex);
-  const shots = project.screenshots;
-  const shot  = shots[idx];
+  const allShots = project.screenshots;
+  const hasViews = allShots.some(s => s.view === 'desktop') && allShots.some(s => s.view === 'mobile');
+  const startView = allShots[startIndex]?.view ?? (hasViews ? 'desktop' : undefined);
+  const [activeView, setActiveView] = useState<'desktop' | 'mobile' | undefined>(startView as any);
+
+  const shots = hasViews ? allShots.filter(s => s.view === activeView) : allShots;
+  const [idx, setIdx] = useState(() => {
+    if (!hasViews) return startIndex;
+    const filtered = allShots.filter(s => s.view === startView);
+    const match = filtered.findIndex(s => s.src === allShots[startIndex]?.src);
+    return match >= 0 ? match : 0;
+  });
+
+  // reset idx when switching tabs
+  const switchView = (v: 'desktop' | 'mobile') => { setActiveView(v); setIdx(0); };
+
+  const shot = shots[idx];
 
   const prev = useCallback(() => setIdx(i => (i - 1 + shots.length) % shots.length), [shots.length]);
   const next = useCallback(() => setIdx(i => (i + 1) % shots.length), [shots.length]);
@@ -228,9 +287,28 @@ function Lightbox({ project, startIndex, onClose }: { project: Project; startInd
           borderBottom: '1px solid rgba(246,241,234,0.08)',
         }}
       >
-        <div>
-          <p style={{ fontFamily: 'serif', fontWeight: 700, fontSize: 14, color: '#F6F1EA', margin: 0 }}>{project.title}</p>
-          <p style={{ fontSize: 11, color: 'rgba(246,241,234,0.4)', margin: 0 }}>{idx + 1} / {shots.length}</p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <div>
+            <p style={{ fontFamily: 'serif', fontWeight: 700, fontSize: 14, color: '#F6F1EA', margin: 0 }}>{project.title}</p>
+            <p style={{ fontSize: 11, color: 'rgba(246,241,234,0.4)', margin: 0 }}>{idx + 1} / {shots.length}</p>
+          </div>
+          {hasViews && (
+            <div style={{ display: 'flex', gap: 4, background: 'rgba(246,241,234,0.08)', borderRadius: 6, padding: 3 }}>
+              {(['desktop', 'mobile'] as const).map(v => (
+                <button
+                  key={v} type="button" onClick={() => switchView(v)}
+                  style={{
+                    padding: '3px 10px', borderRadius: 4, border: 'none', cursor: 'pointer', fontSize: 11, fontWeight: 600,
+                    background: activeView === v ? 'rgba(246,241,234,0.18)' : 'transparent',
+                    color: activeView === v ? '#F6F1EA' : 'rgba(246,241,234,0.4)',
+                    textTransform: 'capitalize', transition: 'all 0.15s ease',
+                  }}
+                >
+                  {v}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
         <button
           type="button" onClick={onClose}
