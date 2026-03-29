@@ -129,7 +129,7 @@ export default function Hero() {
               <p
                 className="font-body"
                 style={{
-                  fontSize: 'clamp(1.1rem, 2vw, 1.3rem)',
+                  fontSize: 'clamp(0.95rem, 1.6vw, 1.15rem)',
                   color: 'var(--ink-mid)',
                   lineHeight: 1.85,
                   fontWeight: 500,
