@@ -72,54 +72,16 @@ const PROJECTS: Project[] = [
       'Multi-page site with contact & about',
     ],
     screenshots: [
-      // Desktop (19)
-      { src: '/screenshots/paragon/desktop/paragon-1.png',  caption: 'Homepage hero',                     view: 'desktop' },
-      { src: '/screenshots/paragon/desktop/paragon-2.png',  caption: 'Get a quote CTA section',           view: 'desktop' },
-      { src: '/screenshots/paragon/desktop/paragon-3.png',  caption: 'Protect your family section',       view: 'desktop' },
-      { src: '/screenshots/paragon/desktop/paragon-4.png',  caption: 'Free guides section',               view: 'desktop' },
-      { src: '/screenshots/paragon/desktop/paragon-5.png',  caption: 'Compare leading insurers',          view: 'desktop' },
-      { src: '/screenshots/paragon/desktop/paragon-6.png',  caption: 'Insurance providers grid',          view: 'desktop' },
-      { src: '/screenshots/paragon/desktop/paragon-7.png',  caption: 'Your trusted insurance partner',    view: 'desktop' },
-      { src: '/screenshots/paragon/desktop/paragon-8.png',  caption: 'How it works',                      view: 'desktop' },
-      { src: '/screenshots/paragon/desktop/paragon-9.png',  caption: 'Ready to protect your team',        view: 'desktop' },
-      { src: '/screenshots/paragon/desktop/paragon-10.png', caption: 'Testimonials section',              view: 'desktop' },
-      { src: '/screenshots/paragon/desktop/paragon-11.png', caption: 'About Paragon',                     view: 'desktop' },
-      { src: '/screenshots/paragon/desktop/paragon-12.png', caption: 'We work for you section',           view: 'desktop' },
-      { src: '/screenshots/paragon/desktop/paragon-13.png', caption: 'Ready to get started',              view: 'desktop' },
-      { src: '/screenshots/paragon/desktop/paragon-14.png', caption: 'Chalice re-insurance partner',      view: 'desktop' },
-      { src: '/screenshots/paragon/desktop/paragon-15.png', caption: 'Get a quote form',                  view: 'desktop' },
-      { src: '/screenshots/paragon/desktop/paragon-16.png', caption: 'Contact page — map & details',      view: 'desktop' },
-      { src: '/screenshots/paragon/desktop/paragon-17.png', caption: 'Contact form',                      view: 'desktop' },
-      { src: '/screenshots/paragon/desktop/paragon-18.png', caption: 'Footer — dark',                     view: 'desktop' },
-      { src: '/screenshots/paragon/desktop/paragon-19.png', caption: 'Footer — links & info',             view: 'desktop' },
-      // Mobile (27)
-      { src: '/screenshots/paragon/mobile/paragon-1.png',   caption: 'Homepage hero — mobile',            view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-2.png',   caption: 'Get a quote CTA — mobile',          view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-3.png',   caption: 'Protect your family — mobile',      view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-4.png',   caption: 'Free guides — mobile',              view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-5.png',   caption: 'Compare insurers — mobile',         view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-6.png',   caption: 'Providers grid — mobile',           view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-7.png',   caption: 'Trusted partner — mobile',          view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-8.png',   caption: 'How it works — mobile',             view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-9.png',   caption: 'Protect your team — mobile',        view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-10.png',  caption: 'Testimonials — mobile',             view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-11.png',  caption: 'About Paragon — mobile',            view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-12.png',  caption: 'We work for you — mobile',          view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-13.png',  caption: 'Ready to get started — mobile',     view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-14.png',  caption: 'Chalice partner — mobile',          view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-15.png',  caption: 'Get a quote form — mobile',         view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-16.png',  caption: 'Contact map — mobile',              view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-17.png',  caption: 'Contact form — mobile',             view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-18.png',  caption: 'About page — mobile',               view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-19.png',  caption: 'Paragon logo section — mobile',     view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-20.png',  caption: 'Ready to be insured — mobile',      view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-21.png',  caption: 'Nav menu open — mobile',            view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-22.png',  caption: 'Nav menu links — mobile',           view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-23.png',  caption: 'Contact us — mobile',               view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-24.png',  caption: 'Quote form step 2 — mobile',        view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-25.png',  caption: 'Map view — mobile',                 view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-26.png',  caption: 'Footer links — mobile',             view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-27.png',  caption: 'Footer bottom — mobile',            view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-1.png',  caption: 'Homepage hero',              view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-2.png',  caption: 'Get your quote in 1 hour',   view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-3.png',  caption: 'Compare leading insurers',   view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-4.png',  caption: 'Hollard Life & Bona Life',   view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-5.png',  caption: 'How it works — steps 1 & 2', view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-6.png',  caption: 'Step 3 & CTA section',       view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-7.png',  caption: 'About Paragon',              view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-8.png',  caption: 'We work for you',            view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-9.png',  caption: 'Contact us',                 view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-10.png', caption: 'Office location — map',      view: 'mobile' },
     ],
   },
   {
@@ -288,12 +250,12 @@ function Lightbox({ project, startIndex, onClose }: { project: Project; startInd
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             {project.slug === 'paragon' ? (
               <img
                 src="/images/paragon-logo.jpeg"
                 alt="Paragon Insurance Brokers"
-                style={{ height: 32, width: 'auto', objectFit: 'contain', display: 'block', borderRadius: 3 }}
+                style={{ height: 28, width: 'auto', objectFit: 'contain', display: 'block', borderRadius: 3 }}
               />
             ) : (
               <p style={{ fontFamily: 'serif', fontWeight: 700, fontSize: 14, color: '#F6F1EA', margin: 0 }}>{project.title}</p>
@@ -318,12 +280,31 @@ function Lightbox({ project, startIndex, onClose }: { project: Project; startInd
             </div>
           )}
         </div>
-        <button
-          type="button" onClick={onClose}
-          style={{ width: 36, height: 36, borderRadius: 6, background: 'rgba(246,241,234,0.08)', border: '1px solid rgba(246,241,234,0.15)', color: '#F6F1EA', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
-        >
-          <X size={16} />
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          {project.url && project.url !== '#' && (
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={e => e.stopPropagation()}
+              style={{
+                display: 'flex', alignItems: 'center', gap: 6,
+                padding: '0 14px', height: 36, borderRadius: 6,
+                background: 'rgba(246,241,234,0.08)', border: '1px solid rgba(246,241,234,0.15)',
+                color: '#F6F1EA', fontSize: 12, fontWeight: 600, textDecoration: 'none',
+                cursor: 'pointer', whiteSpace: 'nowrap',
+              }}
+            >
+              Visit Site <ExternalLink size={12} />
+            </a>
+          )}
+          <button
+            type="button" onClick={onClose}
+            style={{ width: 36, height: 36, borderRadius: 6, background: 'rgba(246,241,234,0.08)', border: '1px solid rgba(246,241,234,0.15)', color: '#F6F1EA', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
+          >
+            <X size={16} />
+          </button>
+        </div>
       </div>
 
       {/* 
