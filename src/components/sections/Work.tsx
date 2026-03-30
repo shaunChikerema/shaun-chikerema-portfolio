@@ -17,6 +17,10 @@ type Project = {
   description: string;
   url: string;
   accent: string;
+  bgFrom: string;
+  bgTo: string;
+  previewImage?: string;   // hero image shown in the panel
+  previewPosition?: string; // CSS objectPosition, e.g. '50% 30%'
   isApp?: boolean;
   stack: string[];
   features: string[];
@@ -34,6 +38,10 @@ const PROJECTS: Project[] = [
       'Full-stack property marketplace connecting buyers, sellers, and agents. Multi-tenant architecture with role-based access, real-time search, secure authentication, and a mobile-first UI.',
     url: 'https://keyat.vercel.app',
     accent: '#1A4D6D',
+    bgFrom: '#e8f0f5',
+    bgTo: '#d4e5ef',
+    previewImage: '/screenshots/keyat/mobile/keyat-m-1.png',
+    previewPosition: '50% 40%',
     stack: ['Next.js 15', 'TypeScript', 'PostgreSQL', 'Supabase', 'Tailwind CSS'],
     features: [
       'Advanced property search with filters',
@@ -43,15 +51,16 @@ const PROJECTS: Project[] = [
       'Agent analytics dashboard',
     ],
     screenshots: [
-      { src: '/screenshots/keyat/keyat-1.jpg', caption: 'Landing page — property search hero' },
-      { src: '/screenshots/keyat/keyat-2.jpg', caption: 'Tenant dashboard — featured listings' },
-      { src: '/screenshots/keyat/keyat-3.jpg', caption: 'Tenant dashboard — mobile view' },
-      { src: '/screenshots/keyat/keyat-4.jpg', caption: 'Agent dashboard — listings & market' },
-      { src: '/screenshots/keyat/keyat-5.jpg', caption: 'Browse listings — search results' },
-      { src: '/screenshots/keyat/keyat-6.jpg', caption: 'Landlord dashboard — property management' },
-      { src: '/screenshots/keyat/keyat-7.jpg', caption: 'Landlord dashboard — mobile view' },
-      { src: '/screenshots/keyat/keyat-8.jpg', caption: 'Add property — step 1 of 3 form' },
-      { src: '/screenshots/keyat/keyat-9.jpg', caption: 'Add property — photo upload step' },
+      { src: '/screenshots/keyat/mobile/keyat-m-1.png',  caption: 'Homepage hero — find your dream home',     view: 'mobile' },
+      { src: '/screenshots/keyat/mobile/keyat-m-2.png',  caption: 'Homepage hero — apartment slide',           view: 'mobile' },
+      { src: '/screenshots/keyat/mobile/keyat-m-3.png',  caption: 'Sign in — Google, Facebook or email',       view: 'mobile' },
+      { src: '/screenshots/keyat/mobile/keyat-m-4.png',  caption: 'Create account',                            view: 'mobile' },
+      { src: '/screenshots/keyat/mobile/keyat-m-5.png',  caption: 'Tenant dashboard — featured properties',    view: 'mobile' },
+      { src: '/screenshots/keyat/mobile/keyat-m-6.png',  caption: 'Latest listings feed',                      view: 'mobile' },
+      { src: '/screenshots/keyat/mobile/keyat-m-7.png',  caption: 'Landlord dashboard — my listings',          view: 'mobile' },
+      { src: '/screenshots/keyat/mobile/keyat-m-8.png',  caption: 'My Properties — all 11 listings',           view: 'mobile' },
+      { src: '/screenshots/keyat/mobile/keyat-m-9.png',  caption: 'Agent dashboard — listings & market',       view: 'mobile' },
+      { src: '/screenshots/keyat/mobile/keyat-m-10.png', caption: 'Public browse — featured properties',       view: 'mobile' },
     ],
   },
   {
@@ -63,6 +72,9 @@ const PROJECTS: Project[] = [
       'Marketing website for a licensed NBFIRA insurance broker. Multi-page site with a WhatsApp-integrated quote request flow, provider showcase, scroll animations, and full mobile navigation.',
     url: 'https://paragoninsurancebrokers.co.bw',
     accent: '#1A4D6D',
+    bgFrom: '#eaf1f8',
+    bgTo: '#cddde9',
+    previewImage: '/screenshots/paragon/mobile/paragon-1.png',
     stack: ['Next.js', 'Tailwind CSS', 'Vercel'],
     features: [
       'WhatsApp quote request integration',
@@ -93,6 +105,8 @@ const PROJECTS: Project[] = [
       'Enterprise SaaS for insurance brokers to automate policy workflows and document generation. Handles renewal tracking, compliance logging, and bulk PDF processing.',
     url: 'https://policybridge.vercel.app',
     accent: '#7A5C2E',
+    bgFrom: '#f5efe6',
+    bgTo: '#e8d9c4',
     stack: ['Next.js 15', 'PostgreSQL', 'Node.js', 'Puppeteer', 'Redis'],
     features: [
       'Automated policy document generation',
@@ -116,6 +130,10 @@ const PROJECTS: Project[] = [
       'Offline-first Android music player built with React Native and Expo. Scans device storage for audio files, plays them with expo-av, and presents a polished vinyl-themed UI with EQ visualizer and queue management.',
     url: 'https://expo.dev/artifacts/eas/eca90fc4-8707-470e-b804-4ae59e23edb1.apk',
     accent: '#e63946',
+    bgFrom: '#1a0a0b',
+    bgTo: '#2d1014',
+    previewImage: '/screenshots/blackdice/mobile/blackdice-m-1.png',
+    previewPosition: '50% 30%',
     isApp: true,
     stack: ['React Native', 'Expo SDK 54', 'TypeScript', 'expo-av', 'expo-media-library'],
     features: [
@@ -126,9 +144,16 @@ const PROJECTS: Project[] = [
       'MiniPlayer persistent across all tabs',
     ],
     screenshots: [
-      { src: '/screenshots/blackdice/blackdice-1.jpg', caption: 'Now playing — vinyl UI' },
-      { src: '/screenshots/blackdice/blackdice-2.jpg', caption: 'Library & queue' },
-      { src: '/screenshots/blackdice/blackdice-3.jpg', caption: 'EQ visualizer' },
+      { src: '/screenshots/blackdice/mobile/blackdice-m-1.png',  caption: 'Now Playing — album art & controls',       view: 'mobile' },
+      { src: '/screenshots/blackdice/mobile/blackdice-m-2.png',  caption: 'Library — MiniPlayer active',              view: 'mobile' },
+      { src: '/screenshots/blackdice/mobile/blackdice-m-3.png',  caption: 'Library — songs list',                     view: 'mobile' },
+      { src: '/screenshots/blackdice/mobile/blackdice-m-4.png',  caption: 'Library — 48 tracks loaded',               view: 'mobile' },
+      { src: '/screenshots/blackdice/mobile/blackdice-m-5.png',  caption: 'Albums grid view',                         view: 'mobile' },
+      { src: '/screenshots/blackdice/mobile/blackdice-m-6.png',  caption: 'Folders — 54 total tracks',                view: 'mobile' },
+      { src: '/screenshots/blackdice/mobile/blackdice-m-7.png',  caption: 'Smart Playlists — favorites, recent, more', view: 'mobile' },
+      { src: '/screenshots/blackdice/mobile/blackdice-m-8.png',  caption: 'Settings — app info & library stats',      view: 'mobile' },
+      { src: '/screenshots/blackdice/mobile/blackdice-m-9.png',  caption: 'Scanning Library — 100% complete',         view: 'mobile' },
+      { src: '/screenshots/blackdice/mobile/blackdice-m-10.png', caption: 'Library — continued scroll',               view: 'mobile' },
     ],
   },
   {
@@ -140,6 +165,8 @@ const PROJECTS: Project[] = [
       'My own tech startup — a software studio building products and delivering client work across web and mobile. BITROOT is the umbrella under which all these projects were conceived, designed, and shipped.',
     url: 'https://bitroot-dev.vercel.app',
     accent: '#16a34a',
+    bgFrom: '#e8f5ee',
+    bgTo: '#c8e6d4',
     stack: ['Next.js', 'TypeScript', 'React Native', 'Supabase', 'Vercel'],
     features: [
       'Founder-led product studio',
@@ -159,6 +186,8 @@ const PROJECTS: Project[] = [
       'Public-domain audiobook player built with React Native and Expo. Streams real LibriVox recordings from archive.org with chapter navigation, playback speed, sleep timer, bookmarks, and a warm amber-themed UI.',
     url: '#',
     accent: '#f5a623',
+    bgFrom: '#2a1f0a',
+    bgTo: '#3d2e0e',
     isApp: true,
     stack: ['React Native', 'Expo SDK 54', 'TypeScript', 'expo-av', 'AsyncStorage'],
     features: [
@@ -169,11 +198,7 @@ const PROJECTS: Project[] = [
       'Bookmarks with timestamps and notes',
       'MiniPlayer persistent across all tabs',
     ],
-    screenshots: [
-      { src: '/screenshots/yonder/yonder-1.jpg', caption: 'Bookshelf view' },
-      { src: '/screenshots/yonder/yonder-2.jpg', caption: 'Now playing — chapter view' },
-      { src: '/screenshots/yonder/yonder-3.jpg', caption: 'Bookmarks & sleep timer' },
-    ],
+    screenshots: [],
   },
 ];
 
@@ -192,26 +217,21 @@ function Lightbox({ project, startIndex, onClose }: { project: Project; startInd
     return match >= 0 ? match : 0;
   });
 
-  // reset idx when switching tabs
   const switchView = (v: 'desktop' | 'mobile') => { setActiveView(v); setIdx(0); };
-
   const shot = shots[idx];
-
   const prev = useCallback(() => setIdx(i => (i - 1 + shots.length) % shots.length), [shots.length]);
   const next = useCallback(() => setIdx(i => (i + 1) % shots.length), [shots.length]);
 
-  /* keyboard nav */
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape')     onClose();
-      if (e.key === 'ArrowLeft')  prev();
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowLeft') prev();
       if (e.key === 'ArrowRight') next();
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose, prev, next]);
 
-  /* scroll lock */
   useEffect(() => {
     const saved = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -225,38 +245,23 @@ function Lightbox({ project, startIndex, onClose }: { project: Project; startInd
     <div
       onClick={onClose}
       style={{
-        position: 'fixed',
-        inset: 0,
-        width: '100vw',
-        height: '100dvh',
-        zIndex: 2147483647,
-        background: 'rgba(8,6,4,0.97)',
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'hidden',
+        position: 'fixed', inset: 0, width: '100vw', height: '100dvh',
+        zIndex: 2147483647, background: 'rgba(8,6,4,0.97)',
+        display: 'flex', flexDirection: 'column', overflow: 'hidden',
       }}
     >
-      {/* Header */}
       <div
         onClick={e => e.stopPropagation()}
         style={{
-          flexShrink: 0,
-          height: HEADER,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '0 20px',
-          borderBottom: '1px solid rgba(246,241,234,0.08)',
+          flexShrink: 0, height: HEADER, display: 'flex',
+          alignItems: 'center', justifyContent: 'space-between',
+          padding: '0 20px', borderBottom: '1px solid rgba(246,241,234,0.08)',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             {project.slug === 'paragon' ? (
-              <img
-                src="/images/paragon-logo.jpeg"
-                alt="Paragon Insurance Brokers"
-                style={{ height: 28, width: 'auto', objectFit: 'contain', display: 'block', borderRadius: 3 }}
-              />
+              <img src="/images/paragon-logo.jpeg" alt="Paragon" style={{ height: 28, width: 'auto', objectFit: 'contain', borderRadius: 3 }} />
             ) : (
               <p style={{ fontFamily: 'serif', fontWeight: 700, fontSize: 14, color: '#F6F1EA', margin: 0 }}>{project.title}</p>
             )}
@@ -265,145 +270,66 @@ function Lightbox({ project, startIndex, onClose }: { project: Project; startInd
           {hasViews && (
             <div style={{ display: 'flex', gap: 4, background: 'rgba(246,241,234,0.08)', borderRadius: 6, padding: 3 }}>
               {(['desktop', 'mobile'] as const).map(v => (
-                <button
-                  key={v} type="button" onClick={() => switchView(v)}
+                <button key={v} type="button" onClick={() => switchView(v)}
                   style={{
-                    padding: '3px 10px', borderRadius: 4, border: 'none', cursor: 'pointer', fontSize: 11, fontWeight: 600,
+                    padding: '3px 10px', borderRadius: 4, border: 'none', cursor: 'pointer',
+                    fontSize: 11, fontWeight: 600,
                     background: activeView === v ? 'rgba(246,241,234,0.18)' : 'transparent',
                     color: activeView === v ? '#F6F1EA' : 'rgba(246,241,234,0.4)',
                     textTransform: 'capitalize', transition: 'all 0.15s ease',
                   }}
-                >
-                  {v}
-                </button>
+                >{v}</button>
               ))}
             </div>
           )}
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           {project.url && project.url !== '#' && (
-            <a
-              href={project.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={e => e.stopPropagation()}
+            <a href={project.url} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
               style={{
-                display: 'flex', alignItems: 'center', gap: 6,
-                padding: '0 14px', height: 36, borderRadius: 6,
-                background: 'rgba(246,241,234,0.08)', border: '1px solid rgba(246,241,234,0.15)',
-                color: '#F6F1EA', fontSize: 12, fontWeight: 600, textDecoration: 'none',
-                cursor: 'pointer', whiteSpace: 'nowrap',
+                display: 'flex', alignItems: 'center', gap: 6, padding: '0 14px', height: 36,
+                borderRadius: 6, background: 'rgba(246,241,234,0.08)', border: '1px solid rgba(246,241,234,0.15)',
+                color: '#F6F1EA', fontSize: 12, fontWeight: 600, textDecoration: 'none', whiteSpace: 'nowrap',
               }}
-            >
-              Visit Site <ExternalLink size={12} />
-            </a>
+            >Visit Site <ExternalLink size={12} /></a>
           )}
-          <button
-            type="button" onClick={onClose}
+          <button type="button" onClick={onClose}
             style={{ width: 36, height: 36, borderRadius: 6, background: 'rgba(246,241,234,0.08)', border: '1px solid rgba(246,241,234,0.15)', color: '#F6F1EA', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
-          >
-            <X size={16} />
-          </button>
+          ><X size={16} /></button>
         </div>
       </div>
 
-      {/* 
-        Image stage — uses flex:1 so it fills ALL remaining height between header and footer.
-        The key insight: we set height explicitly via style so that children with
-        max-height:100% can resolve against a real pixel value.
-      */}
       <div
-        style={{
-          flex: 1,
-          minHeight: 0,           /* ← critical: allows flex child to shrink below content size */
-          position: 'relative',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '12px 56px',  /* horizontal pad clears the abs-positioned arrows */
-          overflow: 'hidden',
-        }}
+        style={{ flex: 1, minHeight: 0, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '12px 56px', overflow: 'hidden' }}
         onClick={e => e.stopPropagation()}
       >
-        {/* Prev arrow */}
         {shots.length > 1 && (
-          <button
-            type="button"
-            onClick={e => { e.stopPropagation(); prev(); }}
-            style={{
-              position: 'absolute', left: 8, top: '50%', transform: 'translateY(-50%)',
-              zIndex: 2, width: 40, height: 40, borderRadius: 6,
-              background: 'rgba(246,241,234,0.10)', border: '1px solid rgba(246,241,234,0.18)',
-              color: '#F6F1EA', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
-            }}
-          >
-            <ChevronLeft size={20} />
-          </button>
+          <button type="button" onClick={e => { e.stopPropagation(); prev(); }}
+            style={{ position: 'absolute', left: 8, top: '50%', transform: 'translateY(-50%)', zIndex: 2, width: 40, height: 40, borderRadius: 6, background: 'rgba(246,241,234,0.10)', border: '1px solid rgba(246,241,234,0.18)', color: '#F6F1EA', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
+          ><ChevronLeft size={20} /></button>
         )}
-
-        {/*
-          The image itself.
-          - width: 100% + height: 100% fills the stage
-          - object-fit: contain scales it correctly within those bounds
-          This is the most reliable cross-browser approach — avoids the
-          max-width/max-height double-constraint that was shrinking landscape images.
-        */}
         <AnimatePresence mode="wait">
-          <motion.img
-            key={idx}
-            src={shot.src}
-            alt={shot.caption}
-            initial={{ opacity: 0, scale: 0.97 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.97 }}
+          <motion.img key={idx} src={shot.src} alt={shot.caption}
+            initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.97 }}
             transition={{ duration: 0.15 }}
-            style={{
-              display: 'block',
-              width: '100%',
-              height: '100%',
-              objectFit: 'contain',
-              borderRadius: 6,
-            }}
+            style={{ display: 'block', width: '100%', height: '100%', objectFit: 'contain', borderRadius: 6 }}
           />
         </AnimatePresence>
-
-        {/* Next arrow */}
         {shots.length > 1 && (
-          <button
-            type="button"
-            onClick={e => { e.stopPropagation(); next(); }}
-            style={{
-              position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)',
-              zIndex: 2, width: 40, height: 40, borderRadius: 6,
-              background: 'rgba(246,241,234,0.10)', border: '1px solid rgba(246,241,234,0.18)',
-              color: '#F6F1EA', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
-            }}
-          >
-            <ChevronRight size={20} />
-          </button>
+          <button type="button" onClick={e => { e.stopPropagation(); next(); }}
+            style={{ position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)', zIndex: 2, width: 40, height: 40, borderRadius: 6, background: 'rgba(246,241,234,0.10)', border: '1px solid rgba(246,241,234,0.18)', color: '#F6F1EA', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
+          ><ChevronRight size={20} /></button>
         )}
       </div>
 
-      {/* Footer */}
-      <div
-        onClick={e => e.stopPropagation()}
-        style={{
-          flexShrink: 0,
-          height: FOOTER,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 10,
-          padding: '0 20px',
-        }}
+      <div onClick={e => e.stopPropagation()}
+        style={{ flexShrink: 0, height: FOOTER, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 10, padding: '0 20px' }}
       >
         <p style={{ fontSize: 13, color: 'rgba(246,241,234,0.45)', textAlign: 'center', margin: 0 }}>{shot.caption}</p>
         {shots.length > 1 && (
           <div style={{ display: 'flex', gap: 6 }}>
             {shots.map((_, i) => (
-              <button
-                key={i} type="button" onClick={() => setIdx(i)}
+              <button key={i} type="button" onClick={() => setIdx(i)}
                 style={{ width: i === idx ? 20 : 6, height: 6, borderRadius: 999, background: i === idx ? project.accent : 'rgba(246,241,234,0.25)', border: 'none', padding: 0, cursor: 'pointer', transition: 'all 0.2s ease' }}
               />
             ))}
@@ -416,11 +342,66 @@ function Lightbox({ project, startIndex, onClose }: { project: Project; startInd
   return typeof document !== 'undefined' ? createPortal(overlay, document.body) : null;
 }
 
+/* ─── Visual Panel ─── */
+function ProjectVisual({ project, onOpenLightbox }: { project: Project; onOpenLightbox: () => void }) {
+  const isDark = project.id === 4 || project.id === 6; // BlackDice, Yonder — dark panels
+
+  // If there's a preview image, show it filling the panel
+  if (project.previewImage) {
+    return (
+      <div
+        className="absolute inset-0 overflow-hidden cursor-pointer group/panel"
+        style={{ background: `linear-gradient(135deg, ${project.bgFrom}, ${project.bgTo})` }}
+        onClick={onOpenLightbox}
+      >
+        <img
+          src={project.previewImage}
+          alt={`${project.title} preview`}
+          style={{ display: 'block', position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: project.previewPosition ?? '50% 35%' }}
+        />
+        {/* Hover overlay to invite click */}
+        <div
+          className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/panel:opacity-100 transition-opacity duration-300"
+          style={{ background: 'rgba(0,0,0,0.35)' }}
+        >
+          <div
+            className="flex items-center gap-2.5 px-5 py-2.5 rounded-full text-white text-xs font-semibold"
+            style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.3)' }}
+          >
+            <Images size={14} /> View Screenshots
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Fallback: decorative panel for projects without a preview image
+  return (
+    <div
+      className="absolute inset-0 flex items-center justify-center"
+      style={{ background: `linear-gradient(135deg, ${project.bgFrom}, ${project.bgTo})` }}
+    >
+      <div className="flex flex-col items-center gap-3 opacity-40">
+        <div
+          className="w-14 h-14 rounded-2xl flex items-center justify-center"
+          style={{ background: project.accent + '20', border: `1px solid ${project.accent}40` }}
+        >
+          <span style={{ fontSize: 28 }}>
+            {project.slug === 'bitroot' ? '⚡' : project.isApp ? '📱' : '🌐'}
+          </span>
+        </div>
+        <span style={{ fontSize: 11, fontWeight: 600, color: project.accent, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+          {project.title}
+        </span>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Work Section ─── */
 export default function Work() {
   const [expanded, setExpanded] = useState<number | null>(null);
   const [lightbox, setLightbox] = useState<{ project: Project; index: number } | null>(null);
-  const [hovered, setHovered] = useState<number | null>(null);
 
   return (
     <>
@@ -429,13 +410,13 @@ export default function Work() {
 
         <div className="max-w-6xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
 
-          {/* Header */}
+          {/* ── Header ── */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="mb-10"
+            className="mb-14"
           >
             <p className="eyebrow mb-4">Featured Work</p>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-end">
@@ -450,326 +431,194 @@ export default function Work() {
               </div>
               <div className="lg:col-span-5 lg:col-start-8">
                 <p className="font-body text-sm leading-relaxed" style={{ color: 'var(--ink-muted)' }}>
-                  Five production projects across web and mobile — architected, built, and shipped end-to-end.
+                  Six production projects across web and mobile — architected, built, and shipped end-to-end.
                 </p>
               </div>
             </div>
           </motion.div>
 
-          {/* Cards */}
-          <div className="space-y-4 mb-12">
+          {/* ── Project Rows ── */}
+          <div className="space-y-5 mb-14">
             {PROJECTS.map((p, cardIdx) => {
               const isOpen = expanded === p.id;
               const hasLiveUrl = p.url !== '#';
-              const isHovered = hovered === p.id;
+              const isDarkPanel = p.id === 4 || p.id === 6;
 
               return (
                 <motion.article
                   key={p.id}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.48, delay: cardIdx * 0.07 }}
-                  onMouseEnter={() => setHovered(p.id)}
-                  onMouseLeave={() => setHovered(null)}
+                  transition={{ duration: 0.5, delay: cardIdx * 0.06 }}
+                  className="group"
                   style={{
-                    borderRadius: 16,
+                    borderRadius: 18,
                     background: 'var(--cream)',
                     border: '1px solid var(--border)',
                     overflow: 'hidden',
-                    transition: 'box-shadow 0.3s ease, transform 0.3s ease',
-                    transform: isHovered ? 'translateY(-2px)' : 'translateY(0)',
-                    boxShadow: isHovered
-                      ? `0 20px 60px rgba(0,0,0,0.1), 0 0 0 1px ${p.accent}30`
-                      : '0 2px 12px rgba(0,0,0,0.04)',
+                    transition: 'box-shadow 0.35s ease, border-color 0.35s ease, transform 0.35s ease',
+                  }}
+                  whileHover={{
+                    y: -3,
+                    boxShadow: `0 24px 64px rgba(0,0,0,0.09), 0 0 0 1px ${p.accent}28`,
+                    borderColor: p.accent + '50',
                   }}
                 >
-                  {/* Accent bar */}
-                  <div style={{ height: 3, background: `linear-gradient(90deg, ${p.accent}, ${p.accent}80)` }} />
+                  {/* Accent top bar */}
+                  <div style={{ height: 3, background: `linear-gradient(90deg, ${p.accent}, ${p.accent}55)` }} />
 
-                  <div className="p-7 lg:p-9">
-                    {/* Top row: type + badge */}
-                    <div className="flex items-center gap-2.5 mb-4 flex-wrap">
-                      <span style={{
-                        fontSize: '0.65rem',
-                        fontWeight: 700,
-                        fontFamily: 'monospace',
-                        color: p.accent,
-                        letterSpacing: '0.04em',
-                      }}>
-                        {String(cardIdx + 1).padStart(2, '0')}
-                      </span>
-                      <span style={{ width: 3, height: 3, borderRadius: '50%', background: 'var(--ink-muted)', opacity: 0.4, display: 'inline-block' }} />
-                      <span style={{
-                        fontSize: '0.68rem',
-                        fontWeight: 600,
-                        letterSpacing: '0.09em',
-                        textTransform: 'uppercase',
-                        color: 'var(--ink-muted)',
-                        fontFamily: "'DM Sans', sans-serif",
-                      }}>
-                        {p.type}
-                      </span>
-                      {p.isApp && (
-                        <span style={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: 4,
-                          padding: '2px 8px',
-                          borderRadius: 999,
-                          fontSize: '0.6rem',
-                          fontWeight: 700,
-                          letterSpacing: '0.08em',
-                          textTransform: 'uppercase',
-                          background: `${p.accent}15`,
-                          color: p.accent,
-                        }}>
-                          <Smartphone size={9} /> Android
-                        </span>
-                      )}
-                    </div>
+                  {/* Two-column layout */}
+                  <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px]">
 
-                    {/* Main grid */}
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-10">
+                    {/* ── Left: Info ── */}
+                    <div className="flex flex-col justify-between p-7 lg:p-9">
+                      <div>
+                        {/* Number + type row */}
+                        <div className="flex items-center gap-2.5 mb-5 flex-wrap">
+                          <span style={{ fontSize: '0.65rem', fontWeight: 700, fontFamily: 'monospace', color: p.accent, letterSpacing: '0.04em' }}>
+                            {String(cardIdx + 1).padStart(2, '0')}
+                          </span>
+                          <span style={{ width: 3, height: 3, borderRadius: '50%', background: 'var(--ink-muted)', opacity: 0.35, display: 'inline-block' }} />
+                          <span style={{ fontSize: '0.68rem', fontWeight: 600, letterSpacing: '0.09em', textTransform: 'uppercase', color: 'var(--ink-muted)', fontFamily: "'DM Sans', sans-serif" }}>
+                            {p.type}
+                          </span>
+                          {p.isApp && (
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, padding: '2px 8px', borderRadius: 999, fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', background: `${p.accent}15`, color: p.accent }}>
+                              <Smartphone size={9} /> Android
+                            </span>
+                          )}
+                          {!p.isApp && hasLiveUrl && (
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '2px 8px', borderRadius: 999, fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', background: '#16a34a14', color: '#16a34a' }}>
+                              <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#16a34a', display: 'inline-block', animation: 'pulse 2s infinite' }} />
+                              Live
+                            </span>
+                          )}
+                        </div>
 
-                      {/* Left: title + description + stack */}
-                      <div className="lg:col-span-8">
+                        {/* Title */}
                         <h3
-                          className="font-display font-bold mb-3"
-                          style={{ fontSize: 'clamp(1.25rem,2.5vw,1.55rem)', color: 'var(--ink)', letterSpacing: '-0.025em', lineHeight: 1.2 }}
+                          className="font-display font-bold mb-2.5"
+                          style={{ fontSize: 'clamp(1.3rem,2.5vw,1.65rem)', color: 'var(--ink)', letterSpacing: '-0.025em', lineHeight: 1.15 }}
                         >
                           {p.title}
                         </h3>
 
-                        <p className="font-body text-sm leading-relaxed mb-5" style={{ color: 'var(--ink-muted)', lineHeight: 1.8, maxWidth: '52ch' }}>
+                        {/* Description */}
+                        <p className="font-body text-sm leading-relaxed mb-6" style={{ color: 'var(--ink-muted)', lineHeight: 1.8, maxWidth: '48ch' }}>
                           {p.description}
                         </p>
 
                         {/* Stack pills */}
-                        <div className="flex flex-wrap gap-1.5">
+                        <div className="flex flex-wrap gap-1.5 mb-7">
                           {p.stack.map(t => (
-                            <span
-                              key={t}
-                              style={{
-                                padding: '3px 10px',
-                                borderRadius: 6,
-                                fontSize: '0.68rem',
-                                fontWeight: 600,
-                                fontFamily: "'DM Sans', sans-serif",
-                                background: `${p.accent}10`,
-                                border: `1px solid ${p.accent}30`,
-                                color: p.accent,
-                                letterSpacing: '0.01em',
-                              }}
-                            >
+                            <span key={t} style={{ padding: '3px 10px', borderRadius: 6, fontSize: '0.68rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", background: `${p.accent}10`, border: `1px solid ${p.accent}28`, color: p.accent, letterSpacing: '0.01em' }}>
                               {t}
                             </span>
                           ))}
                         </div>
                       </div>
 
-                      {/* Right: action buttons */}
-                      <div className="lg:col-span-4 flex flex-col gap-2.5 lg:justify-start lg:pt-1">
-
+                      {/* ── Action buttons ── */}
+                      <div className="flex flex-wrap items-center gap-2">
                         {/* Primary CTA */}
                         {p.isApp ? (
                           hasLiveUrl ? (
-                            <a
-                              href={p.url}
-                              download
-                              style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                gap: 7,
-                                padding: '10px 16px',
-                                borderRadius: 10,
-                                background: p.accent,
-                                color: '#fff',
-                                fontSize: '0.75rem',
-                                fontWeight: 600,
-                                fontFamily: "'DM Sans', sans-serif",
-                                textDecoration: 'none',
-                                letterSpacing: '0.01em',
-                                transition: 'opacity 0.2s ease',
-                              }}
-                              onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '0.88')}
+                            <a href={p.url} download
+                              className="inline-flex items-center gap-2"
+                              style={{ padding: '9px 18px', borderRadius: 10, background: p.accent, color: '#fff', fontSize: '0.72rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', letterSpacing: '0.01em', transition: 'opacity 0.2s ease' }}
+                              onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '0.85')}
                               onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '1')}
                             >
-                              <Download size={13} /> Download APK
+                              <Download size={12} /> Download APK
                             </a>
                           ) : (
-                            <span style={{
-                              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
-                              padding: '10px 16px', borderRadius: 10, background: p.accent,
-                              color: '#fff', fontSize: '0.75rem', fontWeight: 600,
-                              fontFamily: "'DM Sans', sans-serif", opacity: 0.35, cursor: 'not-allowed',
-                            }}>
-                              <Download size={13} /> Coming Soon
+                            <span className="inline-flex items-center gap-2" style={{ padding: '9px 18px', borderRadius: 10, background: p.accent, color: '#fff', fontSize: '0.72rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", opacity: 0.35, cursor: 'not-allowed' }}>
+                              <Download size={12} /> Coming Soon
                             </span>
                           )
                         ) : (
-                          <a
-                            href={p.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              gap: 7,
-                              padding: '10px 16px',
-                              borderRadius: 10,
-                              background: p.accent,
-                              color: '#fff',
-                              fontSize: '0.75rem',
-                              fontWeight: 600,
-                              fontFamily: "'DM Sans', sans-serif",
-                              textDecoration: 'none',
-                              letterSpacing: '0.01em',
-                              transition: 'opacity 0.2s ease',
-                            }}
-                            onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '0.88')}
+                          <a href={p.url} target="_blank" rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2"
+                            style={{ padding: '9px 18px', borderRadius: 10, background: p.accent, color: '#fff', fontSize: '0.72rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', letterSpacing: '0.01em', transition: 'opacity 0.2s ease' }}
+                            onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '0.85')}
                             onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '1')}
                           >
                             <ArrowUpRight size={13} /> Visit Site
                           </a>
                         )}
 
-                        {/* Screenshots */}
+                        {/* Screenshots button — only if has screenshots */}
                         {p.screenshots.length > 0 && (
-                          <button
-                            type="button"
-                            onClick={() => setLightbox({ project: p, index: 0 })}
-                            style={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              gap: 7,
-                              padding: '10px 16px',
-                              borderRadius: 10,
-                              background: 'transparent',
-                              border: '1px solid var(--border)',
-                              color: 'var(--ink)',
-                              fontSize: '0.75rem',
-                              fontWeight: 600,
-                              fontFamily: "'DM Sans', sans-serif",
-                              letterSpacing: '0.01em',
-                              cursor: 'pointer',
-                              transition: 'background 0.2s ease, border-color 0.2s ease',
-                            }}
-                            onMouseEnter={e => {
-                              (e.currentTarget as HTMLButtonElement).style.background = 'var(--cream-mid)';
-                              (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--ink-muted)';
-                            }}
-                            onMouseLeave={e => {
-                              (e.currentTarget as HTMLButtonElement).style.background = 'transparent';
-                              (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border)';
-                            }}
+                          <button type="button" onClick={() => setLightbox({ project: p, index: 0 })}
+                            className="inline-flex items-center gap-2"
+                            style={{ padding: '9px 18px', borderRadius: 10, background: 'transparent', border: '1px solid var(--border)', color: 'var(--ink)', fontSize: '0.72rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", cursor: 'pointer', transition: 'background 0.2s ease, border-color 0.2s ease' }}
+                            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'var(--cream-mid)'; (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--ink-muted)'; }}
+                            onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'transparent'; (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border)'; }}
                           >
-                            <Images size={13} /> Screenshots
+                            <Images size={12} /> Screenshots
                           </button>
                         )}
 
-                        {/* Secondary: Case Study */}
-                        <a
-                          href={`/projects/${p.slug}`}
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: 7,
-                            padding: '10px 16px',
-                            borderRadius: 10,
-                            background: 'transparent',
-                            border: '1px solid var(--border)',
-                            color: 'var(--ink)',
-                            fontSize: '0.75rem',
-                            fontWeight: 600,
-                            fontFamily: "'DM Sans', sans-serif",
-                            textDecoration: 'none',
-                            letterSpacing: '0.01em',
-                            transition: 'background 0.2s ease, border-color 0.2s ease',
-                          }}
-                          onMouseEnter={e => {
-                            (e.currentTarget as HTMLAnchorElement).style.background = 'var(--cream-mid)';
-                            (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--ink-muted)';
-                          }}
-                          onMouseLeave={e => {
-                            (e.currentTarget as HTMLAnchorElement).style.background = 'transparent';
-                            (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--border)';
-                          }}
+                        {/* Case Study */}
+                        <a href={`/projects/${p.slug}`}
+                          className="inline-flex items-center gap-2"
+                          style={{ padding: '9px 18px', borderRadius: 10, background: 'transparent', border: '1px solid var(--border)', color: 'var(--ink)', fontSize: '0.72rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', transition: 'background 0.2s ease, border-color 0.2s ease' }}
+                          onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'var(--cream-mid)'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--ink-muted)'; }}
+                          onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'transparent'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--border)'; }}
                         >
-                          Case Study <ArrowRight size={13} />
+                          Case Study <ArrowRight size={12} />
                         </a>
 
-                        {/* Tertiary: Features toggle */}
-                        <button
-                          type="button"
-                          onClick={() => setExpanded(isOpen ? null : p.id)}
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: 6,
-                            padding: '9px 16px',
-                            borderRadius: 10,
-                            background: 'transparent',
-                            border: 'none',
-                            color: 'var(--ink-muted)',
-                            fontSize: '0.72rem',
-                            fontWeight: 500,
-                            fontFamily: "'DM Sans', sans-serif",
-                            cursor: 'pointer',
-                            transition: 'color 0.2s ease',
-                          }}
+                        {/* Features toggle */}
+                        <button type="button" onClick={() => setExpanded(isOpen ? null : p.id)}
+                          style={{ padding: '9px 14px', borderRadius: 10, background: 'transparent', border: 'none', color: 'var(--ink-muted)', fontSize: '0.72rem', fontWeight: 500, fontFamily: "'DM Sans', sans-serif", cursor: 'pointer', transition: 'color 0.2s ease' }}
                           onMouseEnter={e => ((e.currentTarget as HTMLButtonElement).style.color = 'var(--ink)')}
                           onMouseLeave={e => ((e.currentTarget as HTMLButtonElement).style.color = 'var(--ink-muted)')}
                         >
                           {isOpen ? 'Hide features ↑' : 'Key features ↓'}
                         </button>
                       </div>
+
+                      {/* ── Expandable features ── */}
+                      <AnimatePresence initial={false}>
+                        {isOpen && (
+                          <motion.div
+                            key="features"
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                            style={{ overflow: 'hidden' }}
+                          >
+                            <div className="mt-6 pt-5" style={{ borderTop: '1px solid var(--border)' }}>
+                              <p style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-muted)', marginBottom: 10, fontFamily: "'DM Sans', sans-serif" }}>
+                                Key Features
+                              </p>
+                              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                {p.features.map((f, fi) => (
+                                  <li key={fi} className="flex items-start gap-2">
+                                    <div style={{ marginTop: 6, width: 5, height: 5, borderRadius: 2, flexShrink: 0, background: p.accent }} />
+                                    <span className="font-body text-sm" style={{ color: 'var(--ink-muted)', lineHeight: 1.65 }}>{f}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </div>
 
-                    {/* Features expandable */}
-                    <AnimatePresence initial={false}>
-                      {isOpen && (
-                        <motion.div
-                          key="features"
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                          style={{ overflow: 'hidden' }}
-                        >
-                          <div
-                            className="mt-7 pt-6"
-                            style={{ borderTop: '1px solid var(--border)' }}
-                          >
-                            <p style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-muted)', marginBottom: 12, fontFamily: "'DM Sans', sans-serif" }}>
-                              Key Features
-                            </p>
-                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                              {p.features.map((f, fi) => (
-                                <li key={fi} className="flex items-start gap-2.5">
-                                  <div
-                                    style={{
-                                      marginTop: 6,
-                                      width: 6,
-                                      height: 6,
-                                      borderRadius: 2,
-                                      flexShrink: 0,
-                                      background: p.accent,
-                                    }}
-                                  />
-                                  <span className="font-body text-sm" style={{ color: 'var(--ink-muted)', lineHeight: 1.7 }}>{f}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                    {/* ── Right: Visual Panel ── */}
+                    <div
+                      className="hidden lg:flex relative overflow-hidden"
+                      style={{ minHeight: 320, position: 'relative' }}
+                    >
+                      <ProjectVisual
+                        project={p}
+                        onOpenLightbox={() => p.screenshots.length > 0 && setLightbox({ project: p, index: 0 })}
+                      />
+                    </div>
                   </div>
                 </motion.article>
               );
@@ -778,7 +627,7 @@ export default function Work() {
 
           <div className="divider mb-16" />
 
-          {/* Background */}
+          {/* ── Background ── */}
           <motion.p
             className="eyebrow mb-8"
             initial={{ opacity: 0, y: 16 }}
@@ -809,7 +658,7 @@ export default function Work() {
               </div>
               <ul className="space-y-2.5">
                 {[
-                  'Architected and shipped five production projects from scratch',
+                  'Architected and shipped six production projects from scratch',
                   'Two Android apps built with React Native, Expo SDK, and EAS Build',
                   'Multi-tenant database design with complete tenant data isolation',
                   'CI/CD pipelines, Vercel deployments, performance monitoring',
