@@ -5,7 +5,7 @@ import { Cpu, Smartphone, Server, Cloud } from 'lucide-react';
 const SKILLS = [
   {
     icon: Cpu,
-    accent: '#1A4D6D',
+    accent: '#3ECF8E',
     title: 'Full-Stack Web',
     body: 'Built three production web apps — a multi-tenant real estate marketplace, an insurance SaaS, and a client marketing site. Comfortable owning the entire stack.',
     tech: ['Next.js 15', 'TypeScript', 'PostgreSQL', 'Supabase', 'Node.js', 'Tailwind CSS'],
@@ -19,7 +19,7 @@ const SKILLS = [
   },
   {
     icon: Server,
-    accent: '#7A5C2E',
+    accent: '#3ECF8E',
     title: 'Backend & Data',
     body: 'Designed multi-tenant schemas, built REST APIs, handled auth and role-based access, automated document generation, and set up audit logging.',
     tech: ['Express', 'REST APIs', 'Redis', 'Puppeteer', 'Firebase', 'Prisma'],
@@ -50,7 +50,7 @@ const APPROACHES = [
 
 export default function Skills() {
   return (
-    <section id="skills" style={{ background: 'var(--cream)' }}>
+    <section id="skills" style={{ background: '#ffffff' }}>
       <div className="divider" />
 
       <div className="max-w-6xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
@@ -71,7 +71,7 @@ export default function Skills() {
                 style={{ fontSize: 'clamp(2rem, 4.5vw, 3.2rem)', color: 'var(--ink)', letterSpacing: '-0.025em' }}
               >
                 Built with,<br />
-                <em style={{ color: 'var(--terra)' }}>shipped with.</em>
+                <em style={{ color: '#3ECF8E' }}>shipped with.</em>
               </h2>
             </div>
             <div className="lg:col-span-5 lg:col-start-8">
@@ -169,7 +169,7 @@ export default function Skills() {
               backgroundPosition: '0 0, 14px 0, 14px -14px, 0 14px',
             }}
           >
-            <p className="eyebrow mb-8" style={{ color: 'var(--terra-dim)' }}>
+            <p className="eyebrow mb-8" style={{ color: 'rgba(62,207,142,0.7)' }}>
               How I work
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -184,7 +184,7 @@ export default function Skills() {
                 >
                   <div
                     className="mt-1.5 w-1 h-1 rounded-full flex-shrink-0"
-                    style={{ background: 'var(--terra-dim)' }}
+                    style={{ background: 'rgba(62,207,142,0.7)' }}
                   />
                   <div>
                     <h4

@@ -37,9 +37,9 @@ const PROJECTS: Project[] = [
     description:
       'Full-stack property marketplace connecting buyers, sellers, and agents. Multi-tenant architecture with role-based access, real-time search, secure authentication, and a mobile-first UI.',
     url: 'https://keyat.vercel.app',
-    accent: '#1A4D6D',
-    bgFrom: '#e8f0f5',
-    bgTo: '#d4e5ef',
+    accent: '#3ECF8E',
+    bgFrom: '#e8f5ee',
+    bgTo: '#d4efe2',
     previewImage: '/screenshots/keyat/mobile/keyat-m-1.png',
     previewPosition: '50% 40%',
     stack: ['Next.js 15', 'TypeScript', 'PostgreSQL', 'Supabase', 'Tailwind CSS'],
@@ -71,9 +71,9 @@ const PROJECTS: Project[] = [
     description:
       'Marketing website for a licensed NBFIRA insurance broker. Multi-page site with a WhatsApp-integrated quote request flow, provider showcase, scroll animations, and full mobile navigation.',
     url: 'https://paragoninsurancebrokers.co.bw',
-    accent: '#1A4D6D',
-    bgFrom: '#eaf1f8',
-    bgTo: '#cddde9',
+    accent: '#3ECF8E',
+    bgFrom: '#e8f5ee',
+    bgTo: '#c8e6d4',
     previewImage: '/screenshots/paragon/mobile/paragon-1.png',
     stack: ['Next.js', 'Tailwind CSS', 'Vercel'],
     features: [
@@ -104,9 +104,9 @@ const PROJECTS: Project[] = [
     description:
       'Enterprise SaaS for insurance brokers to automate policy workflows and document generation. Handles renewal tracking, compliance logging, and bulk PDF processing.',
     url: 'https://policybridge.vercel.app',
-    accent: '#7A5C2E',
-    bgFrom: '#f5efe6',
-    bgTo: '#e8d9c4',
+    accent: '#3ECF8E',
+    bgFrom: '#e8f5ee',
+    bgTo: '#d4efe2',
     stack: ['Next.js 15', 'PostgreSQL', 'Node.js', 'Puppeteer', 'Redis'],
     features: [
       'Automated policy document generation',
@@ -405,7 +405,7 @@ export default function Work() {
 
   return (
     <>
-      <section id="work" style={{ background: 'var(--cream-mid)' }}>
+      <section id="work" style={{ background: '#ffffff' }}>
         <div className="divider" />
 
         <div className="max-w-6xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
@@ -426,7 +426,7 @@ export default function Work() {
                   style={{ fontSize: 'clamp(2rem,4.5vw,3.2rem)', color: 'var(--ink)', letterSpacing: '-0.025em' }}
                 >
                   Production<br />
-                  <em style={{ color: 'var(--terra)' }}>Projects</em>
+                  <em style={{ color: '#3ECF8E' }}>Projects</em>
                 </h2>
               </div>
               <div className="lg:col-span-5 lg:col-start-8">
@@ -454,7 +454,7 @@ export default function Work() {
                   className="group"
                   style={{
                     borderRadius: 18,
-                    background: 'var(--cream)',
+                    background: '#f8fafc',
                     border: '1px solid var(--border)',
                     overflow: 'hidden',
                     transition: 'box-shadow 0.35s ease, border-color 0.35s ease, transform 0.35s ease',
@@ -553,7 +553,7 @@ export default function Work() {
                           <button type="button" onClick={() => setLightbox({ project: p, index: 0 })}
                             className="inline-flex items-center gap-2"
                             style={{ padding: '9px 18px', borderRadius: 10, background: 'transparent', border: '1px solid var(--border)', color: 'var(--ink)', fontSize: '0.72rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", cursor: 'pointer', transition: 'background 0.2s ease, border-color 0.2s ease' }}
-                            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'var(--cream-mid)'; (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--ink-muted)'; }}
+                            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = '#f1f5f9'; (e.currentTarget as HTMLButtonElement).style.borderColor = '#94a3b8'; }}
                             onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'transparent'; (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border)'; }}
                           >
                             <Images size={12} /> Screenshots
@@ -564,7 +564,7 @@ export default function Work() {
                         <a href={`/projects/${p.slug}`}
                           className="inline-flex items-center gap-2"
                           style={{ padding: '9px 18px', borderRadius: 10, background: 'transparent', border: '1px solid var(--border)', color: 'var(--ink)', fontSize: '0.72rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', transition: 'background 0.2s ease, border-color 0.2s ease' }}
-                          onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'var(--cream-mid)'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--ink-muted)'; }}
+                          onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = '#f1f5f9'; (e.currentTarget as HTMLAnchorElement).style.borderColor = '#94a3b8'; }}
                           onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'transparent'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--border)'; }}
                         >
                           Case Study <ArrowRight size={12} />
@@ -611,8 +611,12 @@ export default function Work() {
 
                     {/* ── Right: Visual Panel ── */}
                     <div
-                      className="hidden lg:flex relative overflow-hidden"
-                      style={{ minHeight: 320, position: 'relative' }}
+                      className="flex relative overflow-hidden"
+                      style={{
+                        minHeight: 'clamp(200px, 45vw, 320px)',
+                        position: 'relative',
+                        borderTop: '1px solid var(--border)',
+                      }}
                     >
                       <ProjectVisual
                         project={p}
@@ -649,10 +653,10 @@ export default function Work() {
               <div className="flex items-start justify-between mb-5 gap-4">
                 <div>
                   <h3 className="font-display font-bold text-lg mb-0.5" style={{ color: 'var(--ink)', letterSpacing: '-0.015em' }}>Founder & Software Engineer</h3>
-                  <p className="font-body font-semibold text-sm" style={{ color: 'var(--terra)' }}>BITROOT</p>
+                  <p className="font-body font-semibold text-sm" style={{ color: '#3ECF8E' }}>BITROOT</p>
                 </div>
                 <div className="flex items-center gap-1.5 flex-shrink-0 mt-0.5">
-                  <Calendar className="w-3 h-3" style={{ color: 'var(--terra)' }} />
+                  <Calendar className="w-3 h-3" style={{ color: '#3ECF8E' }} />
                   <span className="font-body text-xs" style={{ color: 'var(--ink-muted)' }}>2024 – Present</span>
                 </div>
               </div>
@@ -665,7 +669,7 @@ export default function Work() {
                   'Secure authentication, role-based access, audit logging',
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-2.5">
-                    <div className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: 'var(--terra)' }} />
+                    <div className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#3ECF8E' }} />
                     <span className="font-body text-sm" style={{ color: 'var(--ink-muted)', lineHeight: 1.65 }}>{item}</span>
                   </li>
                 ))}
@@ -691,7 +695,7 @@ export default function Work() {
                 <p className="eyebrow mb-3" style={{ fontSize: '0.6rem' }}>Core Stack</p>
                 <div className="flex flex-wrap gap-1.5">
                   {['Next.js', 'TypeScript', 'PostgreSQL', 'Supabase', 'Node.js', 'React Native', 'Vercel'].map(t => (
-                    <span key={t} className="tag" style={{ background: 'rgba(26,77,109,0.08)', borderColor: 'rgba(26,77,109,0.25)', color: '#1A4D6D', fontWeight: 600 }}>{t}</span>
+                    <span key={t} className="tag" style={{ background: 'rgba(62,207,142,0.08)', borderColor: 'rgba(62,207,142,0.25)', color: '#1a7a52', fontWeight: 600 }}>{t}</span>
                   ))}
                 </div>
               </div>

@@ -11,6 +11,17 @@ const SOCIALS = [
 
 const STACK = ['Next.js', 'TypeScript', 'PostgreSQL', 'Node.js', 'Supabase', 'React Native', 'Expo'];
 
+// ── Palette ──────────────────────────────────────────────────────────────────
+const G        = '#3ECF8E';
+const G_DARK   = '#1a7a52';
+const INK      = '#0f172a';
+const INK_MID  = '#475569';
+const INK_SOFT = '#94a3b8';
+const BORDER   = 'rgba(15,23,42,0.1)';
+
+const PLAYFAIR: React.CSSProperties = { fontFamily: "'Playfair Display', Georgia, serif" };
+const DM: React.CSSProperties       = { fontFamily: "'DM Sans', sans-serif" };
+
 export default function Hero() {
   const [imgLoaded,   setImgLoaded]   = useState(false);
   const [downloading, setDownloading] = useState(false);
@@ -23,7 +34,7 @@ export default function Hero() {
     img.src = imgSrc;
     img.onload  = () => setImgLoaded(true);
     img.onerror = () => {
-      setImgSrc('https://placehold.co/600x800/0a0a0a/d4a96a?text=SC&font=playfair-display');
+      setImgSrc('https://placehold.co/600x800/f1f5f9/3ECF8E?text=SC&font=playfair-display');
       setImgLoaded(true);
     };
   }, []);
@@ -44,7 +55,7 @@ export default function Hero() {
       if (!res.ok) throw new Error();
       if (!linkRef.current) {
         const a = document.createElement('a');
-        a.href = '/shaun-chikerema-resume.pdf';
+        a.href     = '/shaun-chikerema-resume.pdf';
         a.download = 'Shaun_Chikerema_Resume.pdf';
         a.style.display = 'none';
         document.body.appendChild(a);
@@ -58,54 +69,39 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col overflow-hidden"
-      style={{ background: '#080808' }}
+      className="relative min-h-screen flex flex-col overflow-x-hidden"
+      style={{ background: '#ffffff' }}
       itemScope itemType="https://schema.org/Person"
     >
-      {/* Grain texture */}
-      <div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none z-10 opacity-[0.04]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-          backgroundRepeat: 'repeat',
-          backgroundSize: '128px',
-        }}
-      />
+      {/* Green top accent bar */}
+      <div aria-hidden style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg, transparent, ${G}, transparent)`, zIndex: 30 }} />
 
-      {/* Warm glow behind photo */}
-      <div
-        aria-hidden
-        className="absolute inset-0 pointer-events-none z-0"
-        style={{ background: 'radial-gradient(ellipse 55% 70% at 80% 50%, rgba(180,130,60,0.13) 0%, transparent 65%)' }}
-      />
+      {/* Green glow behind photo */}
+      <div aria-hidden className="absolute inset-0 pointer-events-none z-0"
+        style={{ background: 'radial-gradient(ellipse 50% 65% at 78% 55%, rgba(62,207,142,0.10) 0%, transparent 70%)' }} />
+
+      {/* Light grid */}
+      <div aria-hidden className="absolute inset-0 pointer-events-none z-0 opacity-[0.035]"
+        style={{
+          backgroundImage: 'linear-gradient(rgba(15,23,42,1) 1px, transparent 1px), linear-gradient(90deg, rgba(15,23,42,1) 1px, transparent 1px)',
+          backgroundSize: '48px 48px',
+        }} />
 
       {/* ── Top bar ── */}
-      <motion.div
-        {...fade(0, 0)}
-        className="relative z-20 flex items-center justify-between px-6 lg:px-14 pt-8"
-      >
+      <motion.div {...fade(0, 0)} className="relative z-20 flex items-center justify-between px-6 lg:px-14 pt-8">
         <div className="flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#4ade80', boxShadow: '0 0 6px #4ade80' }} />
-          <span style={{ fontSize: '0.62rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.38)', fontFamily: "'DM Sans', sans-serif", fontWeight: 600 }}>
+          <span className="w-1.5 h-1.5 rounded-full" style={{ background: G, boxShadow: `0 0 6px ${G}` }} />
+          <span style={{ fontSize: '0.62rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: INK_MID, ...DM, fontWeight: 600 }}>
             Available for work
           </span>
         </div>
         <div className="flex items-center gap-1.5">
           {SOCIALS.map(({ href, icon: Icon, label }) => (
-            <a
-              key={href} href={href} aria-label={label}
-              target="_blank" rel="noopener noreferrer"
+            <a key={href} href={href} aria-label={label} target="_blank" rel="noopener noreferrer"
               className="flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200"
-              style={{ border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.38)' }}
-              onMouseEnter={e => {
-                (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(212,169,106,0.5)';
-                (e.currentTarget as HTMLAnchorElement).style.color = '#d4a96a';
-              }}
-              onMouseLeave={e => {
-                (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(255,255,255,0.1)';
-                (e.currentTarget as HTMLAnchorElement).style.color = 'rgba(255,255,255,0.38)';
-              }}
+              style={{ border: `1px solid ${BORDER}`, color: INK_SOFT }}
+              onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = `${G}60`; el.style.color = G_DARK; el.style.background = `${G}0f`; }}
+              onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = BORDER; el.style.color = INK_SOFT; el.style.background = 'transparent'; }}
             >
               <Icon size={13} />
             </a>
@@ -113,37 +109,63 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      {/* ── Main content ── */}
+      {/* ── Main grid ── */}
       <div className="relative z-20 flex-1 grid grid-cols-1 lg:grid-cols-12 max-w-7xl mx-auto w-full px-6 lg:px-14 pb-12 items-end lg:items-stretch gap-0">
 
-        {/* ── Left: Text ── */}
+        {/* Left: Text */}
         <div className="lg:col-span-7 flex flex-col justify-center lg:justify-end pb-0 lg:pb-16 pt-14 lg:pt-0">
 
           {/* Eyebrow */}
-          <motion.p {...fade(0.1)} style={{ fontSize: '0.68rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: '#d4a96a', fontFamily: "'DM Sans', sans-serif", fontWeight: 700, marginBottom: '1.6rem' }}>
+          <motion.p {...fade(0.1)} style={{ fontSize: '0.68rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: G, ...DM, fontWeight: 700, marginBottom: '1.6rem' }}>
             Software Engineer · Botswana
           </motion.p>
 
-          {/* Name — split lines for stagger */}
-          <div style={{ overflow: 'hidden', marginBottom: '0.2rem' }}>
+          {/* ── Name block ── */}
+          {/*
+            Font size uses vw capped conservatively so "Chikerema" never clips.
+            "Shaun" is shorter so it will look slightly smaller than before — that's correct.
+            Both names share the same size for visual consistency.
+            The col-span-7 container is ~58% of viewport width on desktop.
+            "Chikerema" has 9 chars; at ~0.62em per char in Playfair bold italic,
+            safe max = container_width / 9 / 0.62 ≈ 10vw → we cap at 9vw to be safe.
+          */}
+          <div style={{ overflow: 'hidden', marginBottom: '0.15rem' }}>
             <motion.h1
               initial={{ opacity: 0, y: reduced ? 0 : 90 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.95, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-              className="font-display font-bold"
-              style={{ fontSize: 'clamp(4.8rem, 11.5vw, 9.5rem)', letterSpacing: '-0.04em', lineHeight: 0.88, color: '#f5f0e8' }}
+              style={{
+                ...PLAYFAIR,
+                fontWeight: 700,
+                fontSize: 'clamp(3.8rem, 9vw, 8rem)',
+                letterSpacing: '-0.04em',
+                lineHeight: 0.9,
+                color: INK,
+                WebkitTextFillColor: INK,
+                whiteSpace: 'nowrap',
+              }}
               itemProp="name"
             >
               Shaun
             </motion.h1>
           </div>
+
           <div style={{ overflow: 'hidden', marginBottom: '2rem' }}>
             <motion.h1
               initial={{ opacity: 0, y: reduced ? 0 : 90 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.95, delay: 0.23, ease: [0.16, 1, 0.3, 1] }}
-              className="font-display font-bold"
-              style={{ fontSize: 'clamp(4.8rem, 11.5vw, 9.5rem)', letterSpacing: '-0.04em', lineHeight: 0.88, fontStyle: 'italic', color: '#d4a96a' }}
+              style={{
+                ...PLAYFAIR,
+                fontWeight: 700,
+                fontStyle: 'italic',
+                fontSize: 'clamp(3.8rem, 9vw, 8rem)',
+                letterSpacing: '-0.04em',
+                lineHeight: 0.9,
+                color: G,
+                WebkitTextFillColor: G,
+                whiteSpace: 'nowrap',
+              }}
             >
               Chikerema
             </motion.h1>
@@ -154,11 +176,11 @@ export default function Hero() {
             initial={{ scaleX: 0, opacity: 0 }}
             animate={{ scaleX: 1, opacity: 1 }}
             transition={{ duration: 0.9, delay: 0.38, ease: [0.16, 1, 0.3, 1] }}
-            style={{ height: 1, background: 'rgba(255,255,255,0.08)', marginBottom: '1.8rem', transformOrigin: 'left' }}
+            style={{ height: 1, background: BORDER, marginBottom: '1.8rem', transformOrigin: 'left' }}
           />
 
           {/* Bio */}
-          <motion.p {...fade(0.44)} style={{ fontSize: 'clamp(0.9rem, 1.4vw, 1.05rem)', color: 'rgba(245,240,232,0.5)', lineHeight: 1.85, maxWidth: '44ch', fontFamily: "'DM Sans', sans-serif", marginBottom: '2rem' }}>
+          <motion.p {...fade(0.44)} style={{ fontSize: 'clamp(0.9rem, 1.4vw, 1.05rem)', color: INK_MID, lineHeight: 1.85, maxWidth: '44ch', ...DM, marginBottom: '2rem' }}>
             Full-stack web and native mobile — from database schema to deployed app, on any platform.
           </motion.p>
 
@@ -166,7 +188,7 @@ export default function Hero() {
           <motion.div {...fade(0.5)} style={{ marginBottom: '2.5rem' }}>
             <div className="flex flex-wrap gap-1.5">
               {STACK.map(t => (
-                <span key={t} style={{ padding: '3px 10px', borderRadius: 4, fontSize: '0.64rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", letterSpacing: '0.04em', background: 'rgba(212,169,106,0.09)', border: '1px solid rgba(212,169,106,0.22)', color: '#d4a96a' }}>
+                <span key={t} style={{ padding: '3px 10px', borderRadius: 4, fontSize: '0.64rem', fontWeight: 600, ...DM, letterSpacing: '0.04em', background: `${G}12`, border: `1px solid ${G}35`, color: G_DARK }}>
                   {t}
                 </span>
               ))}
@@ -177,20 +199,18 @@ export default function Hero() {
           <motion.div {...fade(0.56)} className="flex flex-wrap gap-3">
             <button
               onClick={scrollToWork}
-              className="inline-flex items-center gap-2 group"
-              style={{ padding: '11px 24px', borderRadius: 6, background: '#d4a96a', color: '#080808', fontSize: '0.76rem', fontWeight: 700, fontFamily: "'DM Sans', sans-serif", letterSpacing: '0.02em', border: 'none', cursor: 'pointer', transition: 'opacity 0.2s' }}
-              onMouseEnter={e => ((e.currentTarget as HTMLButtonElement).style.opacity = '0.85')}
-              onMouseLeave={e => ((e.currentTarget as HTMLButtonElement).style.opacity = '1')}
+              style={{ padding: '11px 24px', borderRadius: 6, background: G, color: '#fff', fontSize: '0.76rem', fontWeight: 700, ...DM, letterSpacing: '0.02em', border: 'none', cursor: 'pointer', transition: 'background 0.2s, transform 0.15s', boxShadow: `0 4px 20px ${G}40`, display: 'inline-flex', alignItems: 'center', gap: 8 }}
+              onMouseEnter={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = G_DARK; b.style.transform = 'translateY(-1px)'; }}
+              onMouseLeave={e => { const b = e.currentTarget as HTMLButtonElement; b.style.background = G; b.style.transform = 'translateY(0)'; }}
             >
               View my work <ArrowRight size={14} />
             </button>
             <button
               onClick={handleDownload}
               disabled={downloading}
-              className="inline-flex items-center gap-2"
-              style={{ padding: '11px 24px', borderRadius: 6, background: 'transparent', color: 'rgba(245,240,232,0.7)', fontSize: '0.76rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", border: '1px solid rgba(255,255,255,0.14)', cursor: 'pointer', transition: 'all 0.2s' }}
-              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(212,169,106,0.4)'; (e.currentTarget as HTMLButtonElement).style.color = '#f5f0e8'; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255,255,255,0.14)'; (e.currentTarget as HTMLButtonElement).style.color = 'rgba(245,240,232,0.7)'; }}
+              style={{ padding: '11px 24px', borderRadius: 6, background: 'transparent', color: INK_MID, fontSize: '0.76rem', fontWeight: 600, ...DM, border: `1px solid ${BORDER}`, cursor: 'pointer', transition: 'all 0.2s', display: 'inline-flex', alignItems: 'center', gap: 8 }}
+              onMouseEnter={e => { const b = e.currentTarget as HTMLButtonElement; b.style.borderColor = `${G}50`; b.style.color = INK; b.style.background = `${G}08`; }}
+              onMouseLeave={e => { const b = e.currentTarget as HTMLButtonElement; b.style.borderColor = BORDER; b.style.color = INK_MID; b.style.background = 'transparent'; }}
             >
               <Download size={13} className={downloading ? 'animate-bounce' : ''} />
               {downloading ? 'Downloading...' : 'Resume'}
@@ -198,7 +218,7 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* ── Right: Photo ── */}
+        {/* Right: Photo */}
         <motion.div
           initial={{ opacity: 0, scale: 0.97, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -206,57 +226,48 @@ export default function Hero() {
           className="lg:col-span-5 flex justify-center lg:justify-end items-end pt-14 lg:pt-0 lg:pb-16"
         >
           <div className="relative">
+            <div aria-hidden style={{ position: 'absolute', inset: 0, background: `radial-gradient(ellipse at center, ${G}28 0%, transparent 70%)`, transform: 'scale(1.25)', filter: 'blur(32px)', zIndex: 0 }} />
+            <div aria-hidden style={{ position: 'absolute', left: -14, top: '15%', bottom: '15%', width: 3, background: `linear-gradient(to bottom, transparent, ${G}, transparent)`, zIndex: 3, borderRadius: 2 }} />
 
-            {/* Ambient glow */}
-            <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(212,169,106,0.18) 0%, transparent 70%)', transform: 'scale(1.2)', filter: 'blur(28px)', zIndex: 0 }} />
-
-            {/* Gold vertical accent */}
-            <div aria-hidden style={{ position: 'absolute', left: -14, top: '20%', bottom: '20%', width: 2, background: 'linear-gradient(to bottom, transparent, #d4a96a80, transparent)', zIndex: 3, borderRadius: 2 }} />
-
-            {/* Photo frame */}
-            <div
-              className="relative overflow-hidden"
-              style={{ zIndex: 2, width: 'clamp(230px, 28vw, 370px)', aspectRatio: '3/4', borderRadius: 6, border: '1px solid rgba(212,169,106,0.18)', background: '#111' }}
+            <div className="relative overflow-hidden"
+              style={{ zIndex: 2, width: 'clamp(240px, 30vw, 400px)', aspectRatio: '2/3', borderRadius: 14, border: `1px solid ${G}35`, background: '#f1f5f9', boxShadow: `0 32px 80px rgba(62,207,142,0.15), 0 8px 24px rgba(15,23,42,0.10)` }}
             >
               {!imgLoaded && (
-                <div className="absolute inset-0 flex items-center justify-center" style={{ background: '#111' }}>
-                  <div className="w-6 h-6 border-2 rounded-full animate-spin" style={{ borderColor: 'rgba(212,169,106,0.15)', borderTopColor: '#d4a96a' }} />
+                <div className="absolute inset-0 flex items-center justify-center" style={{ background: '#f1f5f9' }}>
+                  <div className="w-6 h-6 border-2 rounded-full animate-spin" style={{ borderColor: `${G}25`, borderTopColor: G }} />
                 </div>
               )}
               <img
-                src={imgSrc}
-                alt="Shaun Chikerema"
+                src={imgSrc} alt="Shaun Chikerema"
                 className={`w-full h-full object-cover transition-opacity duration-700 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
-                style={{ objectPosition: '50% 12%' }}
+                style={{ objectPosition: '50% 10%' }}
                 onLoad={() => setImgLoaded(true)}
                 itemProp="image"
               />
-              {/* Bottom fade into dark */}
-              <div aria-hidden className="absolute bottom-0 left-0 right-0" style={{ height: '40%', background: 'linear-gradient(to top, rgba(8,8,8,0.75) 0%, transparent 100%)' }} />
+              <div aria-hidden className="absolute bottom-0 left-0 right-0" style={{ height: '45%', background: 'linear-gradient(to top, rgba(8,12,24,0.72) 0%, rgba(8,12,24,0.2) 60%, transparent 100%)' }} />
             </div>
 
-            {/* Floating stats card */}
+            {/* Stats card */}
             <motion.div
-              initial={{ opacity: 0, x: -16 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.65, delay: 0.85, ease: [0.16, 1, 0.3, 1] }}
-              style={{ position: 'absolute', bottom: 28, left: -32, zIndex: 10, background: 'rgba(10,10,10,0.9)', backdropFilter: 'blur(16px)', border: '1px solid rgba(212,169,106,0.18)', borderRadius: 8, padding: '10px 16px', display: 'flex', alignItems: 'center', gap: 14 }}
+              style={{ position: 'absolute', bottom: -18, right: -18, zIndex: 10, background: 'rgba(255,255,255,0.96)', backdropFilter: 'blur(16px)', border: `1px solid ${G}35`, borderRadius: 12, padding: '12px 18px', display: 'flex', alignItems: 'center', gap: 16, boxShadow: `0 12px 40px rgba(15,23,42,0.12), 0 0 0 1px ${G}20` }}
             >
               {[{ num: '6', label: 'Projects' }, { num: '2', label: 'Android apps' }, { num: '1+', label: 'Client' }].map((s, i) => (
-                <>
-                  {i > 0 && <div key={`d${i}`} style={{ width: 1, height: 26, background: 'rgba(255,255,255,0.07)' }} />}
-                  <div key={s.label}>
-                    <p style={{ fontSize: '1.15rem', fontWeight: 800, color: '#d4a96a', lineHeight: 1, fontFamily: 'serif' }}>{s.num}</p>
-                    <p style={{ fontSize: '0.55rem', color: 'rgba(255,255,255,0.35)', fontFamily: "'DM Sans', sans-serif", letterSpacing: '0.09em', textTransform: 'uppercase', marginTop: 3 }}>{s.label}</p>
+                <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                  {i > 0 && <div style={{ width: 1, height: 26, background: BORDER }} />}
+                  <div>
+                    <p style={{ fontSize: '1.15rem', fontWeight: 800, color: G, lineHeight: 1, ...PLAYFAIR }}>{s.num}</p>
+                    <p style={{ fontSize: '0.55rem', color: INK_SOFT, ...DM, letterSpacing: '0.09em', textTransform: 'uppercase', marginTop: 3 }}>{s.label}</p>
                   </div>
-                </>
+                </div>
               ))}
             </motion.div>
           </div>
         </motion.div>
       </div>
 
-      {/* ── Scroll cue ── */}
+      {/* Scroll cue */}
       <motion.div
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.9 }}
         className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1"
@@ -265,11 +276,11 @@ export default function Hero() {
           onClick={scrollToWork}
           animate={{ y: [0, 5, 0] }}
           transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
-          style={{ color: 'rgba(255,255,255,0.18)', fontSize: '0.55rem', letterSpacing: '0.22em', textTransform: 'uppercase', fontFamily: "'DM Sans', sans-serif", background: 'none', border: 'none', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}
+          style={{ color: INK_SOFT, fontSize: '0.55rem', letterSpacing: '0.22em', textTransform: 'uppercase', ...DM, background: 'none', border: 'none', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}
           aria-label="Scroll down"
         >
           scroll
-          <div style={{ width: 1, height: 22, background: 'linear-gradient(to bottom, rgba(212,169,106,0.5), transparent)' }} />
+          <div style={{ width: 1, height: 22, background: `linear-gradient(to bottom, ${G}80, transparent)` }} />
         </motion.button>
       </motion.div>
     </section>

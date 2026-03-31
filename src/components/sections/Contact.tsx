@@ -63,7 +63,7 @@ export default function Contact() {
   const lbl = 'font-body block mb-1.5 font-semibold uppercase tracking-widest text-[10px]';
 
   return (
-    <section id="contact" style={{ background: 'var(--cream-mid)' }}>
+    <section id="contact" style={{ background: '#ffffff' }}>
       <div className="divider" />
 
       <div className="max-w-6xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
@@ -84,7 +84,7 @@ export default function Contact() {
                 style={{ fontSize: 'clamp(2rem, 4.5vw, 3.2rem)', color: 'var(--ink)', letterSpacing: '-0.025em' }}
               >
                 Have a project<br />
-                <em style={{ color: 'var(--terra)' }}>in mind?</em>
+                <em style={{ color: '#3ECF8E' }}>in mind?</em>
               </h2>
             </div>
             <div className="lg:col-span-5 lg:col-start-8">
@@ -120,13 +120,13 @@ export default function Contact() {
                     target={m.href.startsWith('http') ? '_blank' : undefined}
                     rel={m.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                     className="flex items-start gap-3.5 p-4 rounded-sm group transition-colors"
-                    style={{ background: 'var(--cream-mid)', border: '1px solid var(--border)' }}
+                    style={{ background: '#f8fafc', border: '1px solid rgba(15,23,42,0.1)' }}
                   >
                     <div
                       className="w-8 h-8 rounded-sm flex items-center justify-center flex-shrink-0"
-                      style={{ background: m.isWA ? 'rgba(37,211,102,0.12)' : 'var(--terra-pale)' }}
+                      style={{ background: m.isWA ? 'rgba(37,211,102,0.12)' : 'rgba(62,207,142,0.1)' }}
                     >
-                      <MIcon className="w-3.5 h-3.5" style={{ color: m.isWA ? '#25D366' : 'var(--terra)' }} />
+                      <MIcon className="w-3.5 h-3.5" style={{ color: m.isWA ? '#25D366' : '#3ECF8E' }} />
                     </div>
                     <div>
                       <p className="font-body font-semibold text-xs mb-0.5" style={{ color: 'var(--ink)' }}>{m.label}</p>
@@ -141,13 +141,13 @@ export default function Contact() {
             {/* Response note */}
             <div
               className="mt-auto p-4 rounded-sm"
-              style={{ background: 'var(--terra-pale)', border: '1px solid rgba(190,84,48,0.14)' }}
+              style={{ background: 'rgba(62,207,142,0.08)', border: '1px solid rgba(62,207,142,0.2)' }}
             >
               <div className="flex items-center gap-2 mb-0.5">
-                <span className="w-1.5 h-1.5 rounded-full dot-pulse" style={{ background: 'var(--terra)' }} />
-                <span className="font-body font-semibold text-xs" style={{ color: 'var(--terra)' }}>24-hour response</span>
+                <span className="w-1.5 h-1.5 rounded-full dot-pulse" style={{ background: '#3ECF8E' }} />
+                <span className="font-body font-semibold text-xs" style={{ color: '#1a7a52' }}>24-hour response</span>
               </div>
-              <p className="font-body text-xs" style={{ color: 'var(--terra)' }}>
+              <p className="font-body text-xs" style={{ color: '#1a7a52' }}>
                 All project inquiries answered within one business day.
               </p>
             </div>
@@ -167,8 +167,8 @@ export default function Contact() {
                 animate={{ opacity: 1, scale: 1 }}
                 className="h-full flex flex-col items-center justify-center text-center py-12"
               >
-                <div className="w-11 h-11 rounded-sm flex items-center justify-center mb-5" style={{ background: 'var(--terra-pale)' }}>
-                  <Send className="w-5 h-5" style={{ color: 'var(--terra)' }} />
+                <div className="w-11 h-11 rounded-sm flex items-center justify-center mb-5" style={{ background: 'rgba(62,207,142,0.1)' }}>
+                  <Send className="w-5 h-5" style={{ color: '#3ECF8E' }} />
                 </div>
                 <h3 className="font-display font-bold text-xl mb-2" style={{ color: 'var(--ink)' }}>Message sent</h3>
                 <p className="font-body text-sm mb-6" style={{ color: 'var(--ink-muted)' }}>
@@ -177,7 +177,7 @@ export default function Contact() {
                 <button
                   onClick={() => setStatus('idle')}
                   className="font-body text-sm font-medium underline underline-offset-4"
-                  style={{ color: 'var(--terra)' }}
+                  style={{ color: '#3ECF8E' }}
                 >
                   Send another message
                 </button>
@@ -185,8 +185,8 @@ export default function Contact() {
             ) : (
               <>
                 <div className="flex items-center gap-3 mb-7">
-                  <div className="w-8 h-8 rounded-sm flex items-center justify-center" style={{ background: 'var(--terra)' }}>
-                    <Send className="w-3.5 h-3.5" style={{ color: 'var(--cream)' }} />
+                  <div className="w-8 h-8 rounded-sm flex items-center justify-center" style={{ background: '#3ECF8E' }}>
+                    <Send className="w-3.5 h-3.5" style={{ color: '#ffffff' }} />
                   </div>
                   <div>
                     <h3 className="font-display font-bold text-lg" style={{ color: 'var(--ink)', letterSpacing: '-0.015em' }}>Project Inquiry</h3>

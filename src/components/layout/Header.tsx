@@ -66,7 +66,7 @@ export default function Header() {
       <header
         className="fixed top-0 inset-x-0 z-50 transition-all duration-300"
         style={{
-          background: scrolled ? 'rgba(246,241,234,0.97)' : 'rgba(246,241,234,0.82)',
+          background: scrolled ? 'rgba(255,255,255,0.97)' : 'rgba(255,255,255,0.88)',
           backdropFilter: 'blur(12px)',
           borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
           boxShadow: scrolled ? '0 1px 16px rgba(22,18,16,0.055)' : 'none',
@@ -82,7 +82,7 @@ export default function Header() {
           >
             <div
               className="w-8 h-8 rounded-sm font-display font-bold text-sm flex items-center justify-center"
-              style={{ background: 'var(--ink)', color: 'var(--cream)' }}
+              style={{ background: '#3ECF8E', color: '#fff' }}
             >
               SC
             </div>
@@ -102,7 +102,7 @@ export default function Header() {
                   href={href}
                   onClick={e => { e.preventDefault(); navigate(href); }}
                   className="relative px-4 py-2 font-body text-sm font-medium rounded-sm transition-colors"
-                  style={{ color: isActive ? 'var(--terra)' : 'var(--ink-muted)' }}
+                  style={{ color: isActive ? '#3ECF8E' : 'var(--ink-muted)' }}
                 >
                   {label}
                   {isActive && (
@@ -120,7 +120,7 @@ export default function Header() {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex">
-            <button onClick={downloadCV} className="btn btn-dark text-xs px-4 py-2.5 gap-1.5">
+            <button onClick={downloadCV} className="btn text-xs px-4 py-2.5 gap-1.5 inline-flex items-center" style={{ background: '#3ECF8E', color: '#fff', border: 'none', borderRadius: 6, fontWeight: 700, cursor: 'pointer', transition: 'background 0.2s', boxShadow: '0 2px 12px rgba(62,207,142,0.3)' }} onMouseEnter={e => (e.currentTarget.style.background = '#1a7a52')} onMouseLeave={e => (e.currentTarget.style.background = '#3ECF8E')}>
               <Download className="w-3.5 h-3.5" />
               Resume
             </button>
@@ -128,7 +128,7 @@ export default function Header() {
 
           {/* Mobile */}
           <div className="flex md:hidden items-center gap-2">
-            <button onClick={downloadCV} className="btn btn-dark text-xs px-3 py-2 gap-1.5">
+            <button onClick={downloadCV} className="btn text-xs px-3 py-2 gap-1.5 inline-flex items-center" style={{ background: '#3ECF8E', color: '#fff', border: 'none', borderRadius: 6, fontWeight: 700, cursor: 'pointer' }}>
               <Download className="w-3 h-3" /> Resume
             </button>
             <button
@@ -157,7 +157,7 @@ export default function Header() {
               initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 26, stiffness: 260 }}
               className="md:hidden fixed top-0 right-0 h-full w-60 z-[70] flex flex-col"
-              style={{ background: 'var(--cream)', borderLeft: '1px solid var(--border)' }}
+              style={{ background: '#ffffff', borderLeft: '1px solid rgba(15,23,42,0.08)' }}
             >
               <div className="flex items-center justify-between px-5 h-[68px]" style={{ borderBottom: '1px solid var(--border)' }}>
                 <span className="font-display font-bold text-sm" style={{ color: 'var(--ink)' }}>Menu</span>
@@ -175,18 +175,18 @@ export default function Header() {
                       onClick={e => { e.preventDefault(); navigate(href); }}
                       className="flex items-center justify-between px-3 py-3 rounded-sm font-body text-sm font-medium"
                       style={{
-                        background: isActive ? 'var(--terra-pale)' : 'transparent',
-                        color: isActive ? 'var(--terra)' : 'var(--ink-mid)',
+                        background: isActive ? 'rgba(62,207,142,0.08)' : 'transparent',
+                        color: isActive ? '#1a7a52' : 'var(--ink-mid)',
                       }}
                     >
                       {label}
-                      {isActive && <span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--terra)' }} />}
+                      {isActive && <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#3ECF8E' }} />}
                     </motion.a>
                   );
                 })}
               </nav>
               <div className="p-4" style={{ borderTop: '1px solid var(--border)' }}>
-                <button onClick={downloadCV} className="btn btn-dark w-full py-2.5 text-sm">
+                <button onClick={downloadCV} className="btn w-full py-2.5 text-sm inline-flex items-center justify-center gap-2" style={{ background: '#3ECF8E', color: '#fff', border: 'none', borderRadius: 6, fontWeight: 700, cursor: 'pointer' }}>
                   <Download className="w-4 h-4" /> Download Resume
                 </button>
                 <p className="text-center mt-3 font-body text-[10px]" style={{ color: 'var(--ink-muted)' }}>

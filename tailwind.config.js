@@ -8,31 +8,35 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
+        green: {
+          50:  '#e8faf3',
+          100: '#c8f2e0',
+          200: '#94e6c4',
+          300: '#3ECF8E',
+          400: '#2bb378',
+          500: '#1a7a52',
+          600: '#155f40',
+        },
+        ink: {
+          DEFAULT: '#0f172a',
+          mid:     '#475569',
+          muted:   '#94a3b8',
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans:    ["'DM Sans'",          'system-ui', 'sans-serif'],
+        display: ["'Playfair Display'", 'Georgia',   'serif'],
+        body:    ["'DM Sans'",          'system-ui', 'sans-serif'],
       },
       animation: {
-        'float': 'float 6s ease-in-out infinite',
+        float: 'float 6s ease-in-out infinite',
       },
       keyframes: {
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-10px)' },
-        }
-      }
+          '50%':       { transform: 'translateY(-10px)' },
+        },
+      },
     },
   },
   plugins: [],

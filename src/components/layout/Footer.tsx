@@ -18,7 +18,9 @@ export default function Footer() {
   };
 
   return (
-    <footer style={{ background: 'var(--ink)', position: 'relative', overflow: 'hidden' }}>
+    <footer style={{ background: '#0a0f0d', position: 'relative', overflow: 'hidden', borderTop: '1px solid rgba(62,207,142,0.2)' }}>
+      {/* Green top accent */}
+      <div aria-hidden style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, transparent, #3ECF8E, transparent)' }} />
       {/* Large faded wordmark */}
       <div
         aria-hidden
@@ -44,13 +46,13 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-6 lg:px-10">
         <div
           className="flex flex-col md:flex-row md:items-center md:justify-between gap-7 py-10"
-          style={{ borderBottom: '1px solid rgba(246,241,234,0.08)' }}
+          style={{ borderBottom: '1px solid rgba(62,207,142,0.12)' }}
         >
           {/* Brand */}
           <div className="flex items-center gap-2.5">
             <div
               className="w-8 h-8 rounded-sm font-display font-bold text-sm flex items-center justify-center"
-              style={{ background: 'var(--terra)', color: 'var(--cream)' }}
+              style={{ background: '#3ECF8E', color: '#0a0f0d' }}
             >
               SC
             </div>
