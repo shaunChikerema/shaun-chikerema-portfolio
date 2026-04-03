@@ -337,29 +337,57 @@ function Lightbox({ project, startIndex, onClose }: { project: Project; startInd
 }
 
 /* ─── Visual Panel ─── */
-function ProjectVisual({ project, onOpenLightbox }: { project: Project; onOpenLightbox: () => void }) {
-  if (project.previewImage) {
+
+// Pick up to 5 screenshots evenly spaced from the full set
+function pickSlides(screenshots: Screenshot[], max = 5): Screenshot[] {
+  if (screenshots.length === 0) return [];
+  if (screenshots.length <= max) return screenshots;
+  const step = (screenshots.length - 1) / (max - 1);
+  return Array.from({ length: max }, (_, i) => screenshots[Math.round(i * step)]);
+}
+
+function ProjectSlideshow({ project, onOpenLightbox }: { project: Project; onOpenLightbox: () => void }) {
+  const slides = pickSlides(project.screenshots);
+  const [idx, setIdx] = useState(0);
+  const [fading, setFading] = useState(false);
+
+  useEffect(() => {
+    if (slides.length <= 1) return;
+    const t = setInterval(() => {
+      setFading(true);
+      setTimeout(() => {
+        setIdx(i => (i + 1) % slides.length);
+        setFading(false);
+      }, 280);
+    }, 3200);
+    return () => clearInterval(t);
+  }, [slides.length]);
+
+  const goTo = (i: number) => {
+    if (i === idx) return;
+    setFading(true);
+    setTimeout(() => { setIdx(i); setFading(false); }, 280);
+  };
+
+  // No screenshots — keep original placeholder
+  if (slides.length === 0) {
     return (
       <div
-        className="absolute inset-0 overflow-hidden cursor-pointer group/panel"
+        className="absolute inset-0 flex items-center justify-center"
         style={{ background: `linear-gradient(135deg, ${project.bgFrom}, ${project.bgTo})` }}
-        onClick={onOpenLightbox}
       >
-        <img
-          src={project.previewImage}
-          alt={`${project.title} preview`}
-          style={{ display: 'block', position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: project.previewPosition ?? '50% 35%' }}
-        />
-        <div
-          className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/panel:opacity-100 transition-opacity duration-300"
-          style={{ background: 'rgba(0,0,0,0.35)' }}
-        >
+        <div className="flex flex-col items-center gap-3 opacity-40">
           <div
-            className="flex items-center gap-2.5 px-5 py-2.5 rounded-full text-white text-xs font-semibold"
-            style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.3)' }}
+            className="w-14 h-14 rounded-2xl flex items-center justify-center"
+            style={{ background: project.accent + '20', border: `1px solid ${project.accent}40` }}
           >
-            <Images size={14} /> View Screenshots
+            <span style={{ fontSize: 28 }}>
+              {project.slug === 'bitroot' ? '⚡' : project.isApp ? '📱' : '🌐'}
+            </span>
           </div>
+          <span style={{ fontSize: 11, fontWeight: 600, color: project.accent, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+            {project.title}
+          </span>
         </div>
       </div>
     );
@@ -367,22 +395,64 @@ function ProjectVisual({ project, onOpenLightbox }: { project: Project; onOpenLi
 
   return (
     <div
-      className="absolute inset-0 flex items-center justify-center"
+      className="absolute inset-0 overflow-hidden cursor-pointer group/panel"
       style={{ background: `linear-gradient(135deg, ${project.bgFrom}, ${project.bgTo})` }}
+      onClick={onOpenLightbox}
     >
-      <div className="flex flex-col items-center gap-3 opacity-40">
+      {/* Stacked slides — crossfade */}
+      {slides.map((shot, i) => (
+        <img
+          key={shot.src}
+          src={shot.src}
+          alt={shot.caption}
+          style={{
+            position: 'absolute', inset: 0, width: '100%', height: '100%',
+            objectFit: 'cover', objectPosition: project.previewPosition ?? '50% 35%',
+            opacity: i === idx ? (fading ? 0 : 1) : 0,
+            transition: 'opacity 0.28s ease',
+          }}
+        />
+      ))}
+
+      {/* Bottom gradient for dot legibility */}
+      <div style={{ position: 'absolute', inset: '60% 0 0 0', background: 'linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%)', pointerEvents: 'none' }} />
+
+      {/* Hover overlay */}
+      <div
+        className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/panel:opacity-100 transition-opacity duration-300"
+        style={{ background: 'rgba(0,0,0,0.32)' }}
+      >
         <div
-          className="w-14 h-14 rounded-2xl flex items-center justify-center"
-          style={{ background: project.accent + '20', border: `1px solid ${project.accent}40` }}
+          className="flex items-center gap-2.5 px-5 py-2.5 rounded-full text-white text-xs font-semibold"
+          style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.3)' }}
         >
-          <span style={{ fontSize: 28 }}>
-            {project.slug === 'bitroot' ? '⚡' : project.isApp ? '📱' : '🌐'}
-          </span>
+          <Images size={14} /> View {project.screenshots.length} Screenshots
         </div>
-        <span style={{ fontSize: 11, fontWeight: 600, color: project.accent, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-          {project.title}
-        </span>
       </div>
+
+      {/* Dots + label */}
+      {slides.length > 1 && (
+        <div style={{ position: 'absolute', bottom: 12, left: 0, right: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5, pointerEvents: 'none' }}>
+          <span style={{ fontSize: 9, fontWeight: 600, color: 'rgba(255,255,255,0.6)', letterSpacing: '0.18em', textTransform: 'uppercase' }}>
+            {slides[idx].caption.split('—')[0].trim()}
+          </span>
+          <div style={{ display: 'flex', gap: 5, pointerEvents: 'auto' }}>
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={e => { e.stopPropagation(); goTo(i); }}
+                aria-label={`Slide ${i + 1}`}
+                style={{
+                  width: i === idx ? 16 : 6, height: 6, borderRadius: 999, border: 'none', padding: 0, cursor: 'pointer',
+                  background: i === idx ? '#fff' : 'rgba(255,255,255,0.38)',
+                  transition: 'all 0.25s ease',
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -456,10 +526,26 @@ export default function Work() {
                   {/* Accent top bar */}
                   <div style={{ height: 3, background: `linear-gradient(90deg, ${p.accent}, ${p.accent}55)` }} />
 
-                  {/* Two-column layout on desktop, stacked on mobile */}
-                  <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px]">
+                  {/* Two-column layout — alternating image side */}
+                  <div className={`grid grid-cols-1 ${cardIdx % 2 === 0 ? 'lg:grid-cols-[1fr_380px]' : 'lg:grid-cols-[380px_1fr]'}`}>
 
-                    {/* ── Left: Info ── */}
+                    {/* ── Visual Panel (left on even cardIdx, right on odd) ── */}
+                    {cardIdx % 2 !== 0 && (
+                      <div
+                        className="relative overflow-hidden order-last lg:order-first"
+                        style={{
+                          minHeight: 'clamp(260px, 50vw, 340px)',
+                          borderBottom: '1px solid var(--border)',
+                        }}
+                      >
+                        <ProjectSlideshow
+                          project={p}
+                          onOpenLightbox={() => p.screenshots.length > 0 && setLightbox({ project: p, index: 0 })}
+                        />
+                      </div>
+                    )}
+
+                    {/* ── Info ── */}
                     <div className="flex flex-col justify-between p-6 lg:p-9">
                       <div>
                         {/* Number + type + badge row */}
@@ -600,7 +686,8 @@ export default function Work() {
                       </AnimatePresence>
                     </div>
 
-                    {/* ── Right: Visual Panel ── */}
+                    {/* ── Visual Panel (right side — only on even cardIdx) ── */}
+                    {cardIdx % 2 === 0 && (
                     <div
                       className="relative overflow-hidden"
                       style={{
@@ -608,11 +695,12 @@ export default function Work() {
                         borderTop: '1px solid var(--border)',
                       }}
                     >
-                      <ProjectVisual
+                      <ProjectSlideshow
                         project={p}
                         onOpenLightbox={() => p.screenshots.length > 0 && setLightbox({ project: p, index: 0 })}
                       />
                     </div>
+                    )}
                   </div>
                 </motion.article>
               );
