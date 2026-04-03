@@ -121,14 +121,6 @@ export default function Hero() {
           </motion.p>
 
           {/* ── Name block ── */}
-          {/*
-            Font size uses vw capped conservatively so "Chikerema" never clips.
-            "Shaun" is shorter so it will look slightly smaller than before — that's correct.
-            Both names share the same size for visual consistency.
-            The col-span-7 container is ~58% of viewport width on desktop.
-            "Chikerema" has 9 chars; at ~0.62em per char in Playfair bold italic,
-            safe max = container_width / 9 / 0.62 ≈ 10vw → we cap at 9vw to be safe.
-          */}
           <div style={{ overflow: 'hidden', marginBottom: '0.15rem' }}>
             <motion.h1
               initial={{ opacity: 0, y: reduced ? 0 : 90 }}
@@ -240,29 +232,12 @@ export default function Hero() {
               <img
                 src={imgSrc} alt="Shaun Chikerema"
                 className={`w-full h-full object-cover transition-opacity duration-700 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
-                style={{ objectPosition: '50% 10%' }}
+                style={{ objectPosition: '50% 5%' }}
                 onLoad={() => setImgLoaded(true)}
                 itemProp="image"
               />
               <div aria-hidden className="absolute bottom-0 left-0 right-0" style={{ height: '45%', background: 'linear-gradient(to top, rgba(8,12,24,0.72) 0%, rgba(8,12,24,0.2) 60%, transparent 100%)' }} />
             </div>
-
-            {/* Stats card */}
-            <motion.div
-              initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.65, delay: 0.85, ease: [0.16, 1, 0.3, 1] }}
-              style={{ position: 'absolute', bottom: -18, right: -18, zIndex: 10, background: 'rgba(255,255,255,0.96)', backdropFilter: 'blur(16px)', border: `1px solid ${G}35`, borderRadius: 12, padding: '12px 18px', display: 'flex', alignItems: 'center', gap: 16, boxShadow: `0 12px 40px rgba(15,23,42,0.12), 0 0 0 1px ${G}20` }}
-            >
-              {[{ num: '6', label: 'Projects' }, { num: '2', label: 'Android apps' }, { num: '1+', label: 'Client' }].map((s, i) => (
-                <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                  {i > 0 && <div style={{ width: 1, height: 26, background: BORDER }} />}
-                  <div>
-                    <p style={{ fontSize: '1.15rem', fontWeight: 800, color: G, lineHeight: 1, ...PLAYFAIR }}>{s.num}</p>
-                    <p style={{ fontSize: '0.55rem', color: INK_SOFT, ...DM, letterSpacing: '0.09em', textTransform: 'uppercase', marginTop: 3 }}>{s.label}</p>
-                  </div>
-                </div>
-              ))}
-            </motion.div>
           </div>
         </motion.div>
       </div>

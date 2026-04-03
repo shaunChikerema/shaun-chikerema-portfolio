@@ -2,7 +2,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ExternalLink, ArrowRight, Calendar, Download,
-  Smartphone, X, ChevronLeft, ChevronRight, Images, ArrowUpRight,
+  Smartphone, X, ChevronLeft, ChevronRight, Images, ArrowUpRight, ChevronDown,
 } from 'lucide-react';
 import { useState, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
@@ -19,8 +19,8 @@ type Project = {
   accent: string;
   bgFrom: string;
   bgTo: string;
-  previewImage?: string;   // hero image shown in the panel
-  previewPosition?: string; // CSS objectPosition, e.g. '50% 30%'
+  previewImage?: string;
+  previewPosition?: string;
   isApp?: boolean;
   stack: string[];
   features: string[];
@@ -34,8 +34,7 @@ const PROJECTS: Project[] = [
     title: 'Keyat',
     slug: 'keyat',
     type: 'Real Estate Platform',
-    description:
-      'Full-stack property marketplace connecting buyers, sellers, and agents. Multi-tenant architecture with role-based access, real-time search, secure authentication, and a mobile-first UI.',
+    description: 'Property marketplace for buyers, sellers, and agents — multi-tenant, role-based access, real-time search.',
     url: 'https://keyat.vercel.app',
     accent: '#3ECF8E',
     bgFrom: '#e8f5ee',
@@ -68,8 +67,7 @@ const PROJECTS: Project[] = [
     title: 'Paragon Insurance Brokers',
     slug: 'paragon',
     type: 'Client Work · Marketing Site',
-    description:
-      'Marketing website for a licensed NBFIRA insurance broker. Multi-page site with a WhatsApp-integrated quote request flow, provider showcase, scroll animations, and full mobile navigation.',
+    description: 'Marketing site for a licensed NBFIRA broker — WhatsApp quote flow, provider showcase, and scroll animations.',
     url: 'https://paragoninsurancebrokers.co.bw',
     accent: '#3ECF8E',
     bgFrom: '#e8f5ee',
@@ -101,8 +99,7 @@ const PROJECTS: Project[] = [
     title: 'PolicyBridge',
     slug: 'policybridge',
     type: 'Insurance Automation SaaS',
-    description:
-      'Enterprise SaaS for insurance brokers to automate policy workflows and document generation. Handles renewal tracking, compliance logging, and bulk PDF processing.',
+    description: 'Enterprise SaaS automating policy workflows, document generation, renewal tracking, and compliance logging for insurance brokers.',
     url: 'https://policybridge.vercel.app',
     accent: '#3ECF8E',
     bgFrom: '#e8f5ee',
@@ -126,8 +123,7 @@ const PROJECTS: Project[] = [
     title: 'BlackDice',
     slug: 'blackdice',
     type: 'Mobile App · Local Music Player',
-    description:
-      'Offline-first Android music player built with React Native and Expo. Scans device storage for audio files, plays them with expo-av, and presents a polished vinyl-themed UI with EQ visualizer and queue management.',
+    description: 'Offline-first Android music player — scans device storage, vinyl-themed UI, EQ visualizer, and persistent queue management.',
     url: 'https://expo.dev/artifacts/eas/eca90fc4-8707-470e-b804-4ae59e23edb1.apk',
     accent: '#e63946',
     bgFrom: '#1a0a0b',
@@ -161,8 +157,7 @@ const PROJECTS: Project[] = [
     title: 'BITROOT',
     slug: 'bitroot',
     type: 'Tech Startup · Agency & SaaS Studio',
-    description:
-      'My own tech startup — a software studio building products and delivering client work across web and mobile. BITROOT is the umbrella under which all these projects were conceived, designed, and shipped.',
+    description: 'My own software studio — building proprietary products and delivering client work across web and mobile.',
     url: 'https://bitroot-dev.vercel.app',
     accent: '#16a34a',
     bgFrom: '#e8f5ee',
@@ -182,8 +177,7 @@ const PROJECTS: Project[] = [
     title: 'Yonder',
     slug: 'yonder',
     type: 'Mobile App · Audiobook Player',
-    description:
-      'Public-domain audiobook player built with React Native and Expo. Streams real LibriVox recordings from archive.org with chapter navigation, playback speed, sleep timer, bookmarks, and a warm amber-themed UI.',
+    description: 'Audiobook player streaming LibriVox recordings — chapter nav, sleep timer, bookmarks, amber-themed UI.',
     url: '#',
     accent: '#f5a623',
     bgFrom: '#2a1f0a',
@@ -344,9 +338,6 @@ function Lightbox({ project, startIndex, onClose }: { project: Project; startInd
 
 /* ─── Visual Panel ─── */
 function ProjectVisual({ project, onOpenLightbox }: { project: Project; onOpenLightbox: () => void }) {
-  const isDark = project.id === 4 || project.id === 6; // BlackDice, Yonder — dark panels
-
-  // If there's a preview image, show it filling the panel
   if (project.previewImage) {
     return (
       <div
@@ -359,7 +350,6 @@ function ProjectVisual({ project, onOpenLightbox }: { project: Project; onOpenLi
           alt={`${project.title} preview`}
           style={{ display: 'block', position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: project.previewPosition ?? '50% 35%' }}
         />
-        {/* Hover overlay to invite click */}
         <div
           className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/panel:opacity-100 transition-opacity duration-300"
           style={{ background: 'rgba(0,0,0,0.35)' }}
@@ -375,7 +365,6 @@ function ProjectVisual({ project, onOpenLightbox }: { project: Project; onOpenLi
     );
   }
 
-  // Fallback: decorative panel for projects without a preview image
   return (
     <div
       className="absolute inset-0 flex items-center justify-center"
@@ -442,7 +431,6 @@ export default function Work() {
             {PROJECTS.map((p, cardIdx) => {
               const isOpen = expanded === p.id;
               const hasLiveUrl = p.url !== '#';
-              const isDarkPanel = p.id === 4 || p.id === 6;
 
               return (
                 <motion.article
@@ -468,14 +456,14 @@ export default function Work() {
                   {/* Accent top bar */}
                   <div style={{ height: 3, background: `linear-gradient(90deg, ${p.accent}, ${p.accent}55)` }} />
 
-                  {/* Two-column layout */}
+                  {/* Two-column layout on desktop, stacked on mobile */}
                   <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px]">
 
                     {/* ── Left: Info ── */}
-                    <div className="flex flex-col justify-between p-7 lg:p-9">
+                    <div className="flex flex-col justify-between p-6 lg:p-9">
                       <div>
-                        {/* Number + type row */}
-                        <div className="flex items-center gap-2.5 mb-5 flex-wrap">
+                        {/* Number + type + badge row */}
+                        <div className="flex items-center gap-2.5 mb-4 flex-wrap">
                           <span style={{ fontSize: '0.65rem', fontWeight: 700, fontFamily: 'monospace', color: p.accent, letterSpacing: '0.04em' }}>
                             {String(cardIdx + 1).padStart(2, '0')}
                           </span>
@@ -498,19 +486,19 @@ export default function Work() {
 
                         {/* Title */}
                         <h3
-                          className="font-display font-bold mb-2.5"
+                          className="font-display font-bold mb-2"
                           style={{ fontSize: 'clamp(1.3rem,2.5vw,1.65rem)', color: 'var(--ink)', letterSpacing: '-0.025em', lineHeight: 1.15 }}
                         >
                           {p.title}
                         </h3>
 
-                        {/* Description */}
-                        <p className="font-body text-sm leading-relaxed mb-6" style={{ color: 'var(--ink-muted)', lineHeight: 1.8, maxWidth: '48ch' }}>
+                        {/* Description — tighter, max 2 lines */}
+                        <p className="font-body text-sm mb-5" style={{ color: 'var(--ink-muted)', lineHeight: 1.7, maxWidth: '52ch' }}>
                           {p.description}
                         </p>
 
                         {/* Stack pills */}
-                        <div className="flex flex-wrap gap-1.5 mb-7">
+                        <div className="flex flex-wrap gap-1.5 mb-6">
                           {p.stack.map(t => (
                             <span key={t} style={{ padding: '3px 10px', borderRadius: 6, fontSize: '0.68rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", background: `${p.accent}10`, border: `1px solid ${p.accent}28`, color: p.accent, letterSpacing: '0.01em' }}>
                               {t}
@@ -520,64 +508,70 @@ export default function Work() {
                       </div>
 
                       {/* ── Action buttons ── */}
-                      <div className="flex flex-wrap items-center gap-2">
-                        {/* Primary CTA */}
-                        {p.isApp ? (
-                          hasLiveUrl ? (
-                            <a href={p.url} download
-                              className="inline-flex items-center gap-2"
-                              style={{ padding: '9px 18px', borderRadius: 10, background: p.accent, color: '#fff', fontSize: '0.72rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', letterSpacing: '0.01em', transition: 'opacity 0.2s ease' }}
+                      <div className="flex flex-col gap-2">
+                        {/* Primary CTA — full width on mobile */}
+                        <div className="flex flex-wrap gap-2">
+                          {p.isApp ? (
+                            hasLiveUrl ? (
+                              <a href={p.url} download
+                                className="inline-flex items-center justify-center gap-2 flex-1 lg:flex-none"
+                                style={{ padding: '10px 20px', borderRadius: 10, background: p.accent, color: '#fff', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', letterSpacing: '0.01em', transition: 'opacity 0.2s ease' }}
+                                onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '0.85')}
+                                onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '1')}
+                              >
+                                <Download size={13} /> Download APK
+                              </a>
+                            ) : (
+                              <span className="inline-flex items-center justify-center gap-2 flex-1 lg:flex-none" style={{ padding: '10px 20px', borderRadius: 10, background: p.accent, color: '#fff', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", opacity: 0.35, cursor: 'not-allowed' }}>
+                                <Download size={13} /> Coming Soon
+                              </span>
+                            )
+                          ) : (
+                            <a href={p.url} target="_blank" rel="noopener noreferrer"
+                              className="inline-flex items-center justify-center gap-2 flex-1 lg:flex-none"
+                              style={{ padding: '10px 20px', borderRadius: 10, background: p.accent, color: '#fff', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', letterSpacing: '0.01em', transition: 'opacity 0.2s ease' }}
                               onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '0.85')}
                               onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '1')}
                             >
-                              <Download size={12} /> Download APK
+                              <ArrowUpRight size={13} /> Visit Site
                             </a>
-                          ) : (
-                            <span className="inline-flex items-center gap-2" style={{ padding: '9px 18px', borderRadius: 10, background: p.accent, color: '#fff', fontSize: '0.72rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", opacity: 0.35, cursor: 'not-allowed' }}>
-                              <Download size={12} /> Coming Soon
-                            </span>
-                          )
-                        ) : (
-                          <a href={p.url} target="_blank" rel="noopener noreferrer"
+                          )}
+                        </div>
+
+                        {/* Secondary row — Screenshots + Case Study + Features toggle */}
+                        <div className="flex flex-wrap gap-2 items-center">
+                          {p.screenshots.length > 0 && (
+                            <button type="button" onClick={() => setLightbox({ project: p, index: 0 })}
+                              className="inline-flex items-center gap-2"
+                              style={{ padding: '8px 16px', borderRadius: 10, background: 'transparent', border: '1px solid var(--border)', color: 'var(--ink)', fontSize: '0.72rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", cursor: 'pointer', transition: 'background 0.2s ease, border-color 0.2s ease' }}
+                              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = '#f1f5f9'; (e.currentTarget as HTMLButtonElement).style.borderColor = '#94a3b8'; }}
+                              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'transparent'; (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border)'; }}
+                            >
+                              <Images size={12} /> Screenshots
+                            </button>
+                          )}
+
+                          <a href={`/projects/${p.slug}`}
                             className="inline-flex items-center gap-2"
-                            style={{ padding: '9px 18px', borderRadius: 10, background: p.accent, color: '#fff', fontSize: '0.72rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', letterSpacing: '0.01em', transition: 'opacity 0.2s ease' }}
-                            onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '0.85')}
-                            onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '1')}
+                            style={{ padding: '8px 16px', borderRadius: 10, background: 'transparent', border: '1px solid var(--border)', color: 'var(--ink)', fontSize: '0.72rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', transition: 'background 0.2s ease, border-color 0.2s ease' }}
+                            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = '#f1f5f9'; (e.currentTarget as HTMLAnchorElement).style.borderColor = '#94a3b8'; }}
+                            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'transparent'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--border)'; }}
                           >
-                            <ArrowUpRight size={13} /> Visit Site
+                            Case Study <ArrowRight size={12} />
                           </a>
-                        )}
 
-                        {/* Screenshots button — only if has screenshots */}
-                        {p.screenshots.length > 0 && (
-                          <button type="button" onClick={() => setLightbox({ project: p, index: 0 })}
-                            className="inline-flex items-center gap-2"
-                            style={{ padding: '9px 18px', borderRadius: 10, background: 'transparent', border: '1px solid var(--border)', color: 'var(--ink)', fontSize: '0.72rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", cursor: 'pointer', transition: 'background 0.2s ease, border-color 0.2s ease' }}
-                            onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = '#f1f5f9'; (e.currentTarget as HTMLButtonElement).style.borderColor = '#94a3b8'; }}
-                            onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'transparent'; (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border)'; }}
+                          <button type="button" onClick={() => setExpanded(isOpen ? null : p.id)}
+                            className="inline-flex items-center gap-1.5"
+                            style={{ padding: '8px 14px', borderRadius: 10, background: 'transparent', border: 'none', color: 'var(--ink-muted)', fontSize: '0.72rem', fontWeight: 500, fontFamily: "'DM Sans', sans-serif", cursor: 'pointer', transition: 'color 0.2s ease' }}
+                            onMouseEnter={e => ((e.currentTarget as HTMLButtonElement).style.color = 'var(--ink)')}
+                            onMouseLeave={e => ((e.currentTarget as HTMLButtonElement).style.color = 'var(--ink-muted)')}
                           >
-                            <Images size={12} /> Screenshots
+                            Features
+                            <motion.span animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }} style={{ display: 'flex' }}>
+                              <ChevronDown size={13} />
+                            </motion.span>
                           </button>
-                        )}
-
-                        {/* Case Study */}
-                        <a href={`/projects/${p.slug}`}
-                          className="inline-flex items-center gap-2"
-                          style={{ padding: '9px 18px', borderRadius: 10, background: 'transparent', border: '1px solid var(--border)', color: 'var(--ink)', fontSize: '0.72rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', transition: 'background 0.2s ease, border-color 0.2s ease' }}
-                          onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = '#f1f5f9'; (e.currentTarget as HTMLAnchorElement).style.borderColor = '#94a3b8'; }}
-                          onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'transparent'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--border)'; }}
-                        >
-                          Case Study <ArrowRight size={12} />
-                        </a>
-
-                        {/* Features toggle */}
-                        <button type="button" onClick={() => setExpanded(isOpen ? null : p.id)}
-                          style={{ padding: '9px 14px', borderRadius: 10, background: 'transparent', border: 'none', color: 'var(--ink-muted)', fontSize: '0.72rem', fontWeight: 500, fontFamily: "'DM Sans', sans-serif", cursor: 'pointer', transition: 'color 0.2s ease' }}
-                          onMouseEnter={e => ((e.currentTarget as HTMLButtonElement).style.color = 'var(--ink)')}
-                          onMouseLeave={e => ((e.currentTarget as HTMLButtonElement).style.color = 'var(--ink-muted)')}
-                        >
-                          {isOpen ? 'Hide features ↑' : 'Key features ↓'}
-                        </button>
+                        </div>
                       </div>
 
                       {/* ── Expandable features ── */}
@@ -591,10 +585,7 @@ export default function Work() {
                             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                             style={{ overflow: 'hidden' }}
                           >
-                            <div className="mt-6 pt-5" style={{ borderTop: '1px solid var(--border)' }}>
-                              <p style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--ink-muted)', marginBottom: 10, fontFamily: "'DM Sans', sans-serif" }}>
-                                Key Features
-                              </p>
+                            <div className="mt-5 pt-5" style={{ borderTop: '1px solid var(--border)' }}>
                               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                 {p.features.map((f, fi) => (
                                   <li key={fi} className="flex items-start gap-2">
@@ -611,10 +602,9 @@ export default function Work() {
 
                     {/* ── Right: Visual Panel ── */}
                     <div
-                      className="flex relative overflow-hidden"
+                      className="relative overflow-hidden"
                       style={{
-                        minHeight: 'clamp(200px, 45vw, 320px)',
-                        position: 'relative',
+                        minHeight: 'clamp(260px, 50vw, 340px)',
                         borderTop: '1px solid var(--border)',
                       }}
                     >
