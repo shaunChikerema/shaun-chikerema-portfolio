@@ -104,6 +104,8 @@ const PROJECTS: Project[] = [
     accent: '#3ECF8E',
     bgFrom: '#e8f5ee',
     bgTo: '#d4efe2',
+    previewImage: '/screenshots/policybridge/mobile/policybridge-m-1.png',
+    previewPosition: '50% 20%',
     stack: ['Next.js 15', 'PostgreSQL', 'Node.js', 'Puppeteer', 'Redis'],
     features: [
       'Automated policy document generation',
@@ -113,9 +115,16 @@ const PROJECTS: Project[] = [
       'Bulk document processing',
     ],
     screenshots: [
-      { src: '/screenshots/policybridge/policybridge-1.jpg', caption: 'Broker dashboard' },
-      { src: '/screenshots/policybridge/policybridge-2.jpg', caption: 'Policy workflow view' },
-      { src: '/screenshots/policybridge/policybridge-3.jpg', caption: 'Document generation' },
+      { src: '/screenshots/policybridge/mobile/policybridge-m-1.png',  caption: 'Landing — the modern way to run your brokerage',  view: 'mobile' },
+      { src: '/screenshots/policybridge/mobile/policybridge-m-2.png',  caption: 'Hero — policy renewed notification',               view: 'mobile' },
+      { src: '/screenshots/policybridge/mobile/policybridge-m-3.png',  caption: 'What we do — client management',                  view: 'mobile' },
+      { src: '/screenshots/policybridge/mobile/policybridge-m-4.png',  caption: 'Policy tracking & payment receipts',              view: 'mobile' },
+      { src: '/screenshots/policybridge/mobile/policybridge-m-5.png',  caption: 'Payment receipts — how it works',                 view: 'mobile' },
+      { src: '/screenshots/policybridge/mobile/policybridge-m-6.png',  caption: 'How it works — steps 01, 02, 03',                 view: 'mobile' },
+      { src: '/screenshots/policybridge/mobile/policybridge-m-7.png',  caption: 'Generate receipts — built for brokers',           view: 'mobile' },
+      { src: '/screenshots/policybridge/mobile/policybridge-m-8.png',  caption: 'Ready to modernise your brokerage',               view: 'mobile' },
+      { src: '/screenshots/policybridge/mobile/policybridge-m-9.png',  caption: 'Sign in to your account',                        view: 'mobile' },
+      { src: '/screenshots/policybridge/mobile/policybridge-m-10.png', caption: 'Create your brokerage account',                  view: 'mobile' },
     ],
   },
   {
