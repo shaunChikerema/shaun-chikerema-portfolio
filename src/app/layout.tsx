@@ -8,6 +8,7 @@ export const metadata: Metadata = {
     'Portfolio of Shaun Chikerema — full-stack web and native mobile engineer based in Gaborone, Botswana. Specialising in Next.js, TypeScript, PostgreSQL, React Native, and Supabase.',
   keywords:
     'Shaun Chikerema, Full-Stack Developer, Software Engineer, React, Next.js, TypeScript, React Native, Supabase, Botswana, Gaborone',
+  manifest: '/manifest.json',
   icons: {
     icon: [
       { url: '/favicon.ico' },
