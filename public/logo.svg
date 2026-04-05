@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 72" width="320" height="72">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&amp;display=swap');
+    </style>
+  </defs>
+  <!-- Green square mark -->
+  <rect x="0" y="8" width="52" height="52" rx="8" fill="#3ECF8E"/>
+  <text x="26" y="42" text-anchor="middle" dominant-baseline="central"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="24" font-weight="700" fill="#ffffff" letter-spacing="-1">SC</text>
+  <!-- Wordmark -->
+  <text x="64" y="34"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="26" font-weight="700" fill="#0D2137" letter-spacing="-0.5">Shaun</text>
+  <text x="64" y="62"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="26" font-weight="700" font-style="italic" fill="#3ECF8E" letter-spacing="-0.5">Chikerema</text>
+</svg>

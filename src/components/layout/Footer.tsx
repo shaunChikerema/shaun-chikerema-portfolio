@@ -50,14 +50,19 @@ export default function Footer() {
         >
           {/* Brand */}
           <div className="flex items-center gap-2.5">
-            <div
-              className="w-8 h-8 rounded-sm font-display font-bold text-sm flex items-center justify-center"
-              style={{ background: '#3ECF8E', color: '#0a0f0d' }}
-            >
-              SC
-            </div>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+              <rect width="32" height="32" rx="6" fill="#3ECF8E"/>
+              <text
+                x="16" y="22" textAnchor="middle"
+                fontFamily="Georgia, 'Times New Roman', serif"
+                fontSize="16" fontWeight="700" fill="#0a0f0d"
+                letterSpacing="-0.5"
+              >SC</text>
+            </svg>
             <div>
-              <p className="font-display font-bold text-sm" style={{ color: 'var(--cream)' }}>Shaun Chikerema</p>
+              <p className="font-display font-bold text-sm" style={{ color: 'var(--cream)' }}>
+                Shaun <span style={{ fontStyle: 'italic', color: '#3ECF8E' }}>Chikerema</span>
+              </p>
               <p className="font-body text-[10px]" style={{ color: 'rgba(246,241,234,0.38)' }}>Software Engineer · Available for remote</p>
             </div>
           </div>
