@@ -29,6 +29,7 @@ type Project = {
 
 /* ─── Data ─── */
 const PROJECTS: Project[] = [
+  // 1 — Most complex production app (anchors credibility)
   {
     id: 1,
     title: 'Keyat',
@@ -62,38 +63,29 @@ const PROJECTS: Project[] = [
       { src: '/screenshots/keyat/mobile/keyat-m-10.png', caption: 'Public browse — featured properties',       view: 'mobile' },
     ],
   },
+  // 2 — AI/RAG (hottest skill, lands while they're engaged)
   {
-    id: 3,
-    title: 'Paragon Insurance Brokers',
-    slug: 'paragon',
-    type: 'Client Work · Marketing Site',
-    description: 'Marketing site for a licensed NBFIRA broker — WhatsApp quote flow, provider showcase, and scroll animations.',
-    url: 'https://paragoninsurancebrokers.co.bw',
+    id: 7,
+    title: 'RAG Research API',
+    slug: 'rag-api',
+    type: 'AI Engineering · Python + Next.js',
+    description: 'A full RAG (Retrieval-Augmented Generation) pipeline — Python FastAPI backend that scrapes sources, chunks and embeds content into pgvector, then answers questions with cited references via GPT-4o-mini.',
+    url: 'https://github.com/shaunChikerema/rag-api',
     accent: '#3ECF8E',
-    bgFrom: '#e8f5ee',
-    bgTo: '#c8e6d4',
-    previewImage: '/screenshots/paragon/mobile/paragon-1.png',
-    stack: ['Next.js', 'Tailwind CSS', 'Vercel'],
+    bgFrom: '#0f172a',
+    bgTo: '#1e293b',
+    stack: ['Python', 'FastAPI', 'LangChain', 'pgvector', 'OpenAI', 'Next.js', 'TypeScript'],
     features: [
-      'WhatsApp quote request integration',
-      'Provider comparison section',
-      'Scroll-triggered animations',
-      'Responsive mobile navigation',
-      'Multi-page site with contact & about',
+      'Python FastAPI microservice with clean REST endpoints',
+      'RAG pipeline: scrape → chunk → embed → retrieve → generate',
+      'pgvector similarity search on existing Supabase Postgres',
+      'GPT-4o-mini for grounded answers with source citations',
+      'Next.js frontend calling Python API — polyglot architecture',
+      'Full conversation history with citation highlighting',
     ],
-    screenshots: [
-      { src: '/screenshots/paragon/mobile/paragon-1.png',  caption: 'Homepage hero',              view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-2.png',  caption: 'Get your quote in 1 hour',   view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-3.png',  caption: 'Compare leading insurers',   view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-4.png',  caption: 'Hollard Life & Bona Life',   view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-5.png',  caption: 'How it works — steps 1 & 2', view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-6.png',  caption: 'Step 3 & CTA section',       view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-7.png',  caption: 'About Paragon',              view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-8.png',  caption: 'We work for you',            view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-9.png',  caption: 'Contact us',                 view: 'mobile' },
-      { src: '/screenshots/paragon/mobile/paragon-10.png', caption: 'Office location — map',      view: 'mobile' },
-    ],
+    screenshots: [],
   },
+  // 3 — Enterprise SaaS (shows backend depth)
   {
     id: 2,
     title: 'PolicyBridge',
@@ -127,6 +119,61 @@ const PROJECTS: Project[] = [
       { src: '/screenshots/policybridge/mobile/policybridge-m-10.png', caption: 'Create your brokerage account',                  view: 'mobile' },
     ],
   },
+  // 4 — Real client work (shows commercial delivery)
+  {
+    id: 3,
+    title: 'Paragon Insurance Brokers',
+    slug: 'paragon',
+    type: 'Client Work · Marketing Site',
+    description: 'Marketing site for a licensed NBFIRA broker — WhatsApp quote flow, provider showcase, and scroll animations.',
+    url: 'https://paragoninsurancebrokers.co.bw',
+    accent: '#3ECF8E',
+    bgFrom: '#e8f5ee',
+    bgTo: '#c8e6d4',
+    previewImage: '/screenshots/paragon/mobile/paragon-1.png',
+    stack: ['Next.js', 'Tailwind CSS', 'Vercel'],
+    features: [
+      'WhatsApp quote request integration',
+      'Provider comparison section',
+      'Scroll-triggered animations',
+      'Responsive mobile navigation',
+      'Multi-page site with contact & about',
+    ],
+    screenshots: [
+      { src: '/screenshots/paragon/mobile/paragon-1.png',  caption: 'Homepage hero',              view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-2.png',  caption: 'Get your quote in 1 hour',   view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-3.png',  caption: 'Compare leading insurers',   view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-4.png',  caption: 'Hollard Life & Bona Life',   view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-5.png',  caption: 'How it works — steps 1 & 2', view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-6.png',  caption: 'Step 3 & CTA section',       view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-7.png',  caption: 'About Paragon',              view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-8.png',  caption: 'We work for you',            view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-9.png',  caption: 'Contact us',                 view: 'mobile' },
+      { src: '/screenshots/paragon/mobile/paragon-10.png', caption: 'Office location — map',      view: 'mobile' },
+    ],
+  },
+  // 5 — Studio (context/backstory)
+  {
+    id: 5,
+    title: 'BITROOT',
+    slug: 'bitroot',
+    type: 'Tech Startup · Agency & SaaS Studio',
+    description: 'My own software studio — building proprietary products and delivering client work across web and mobile.',
+    url: 'https://bitroot-dev.vercel.app',
+    accent: '#16a34a',
+    bgFrom: '#e8f5ee',
+    bgTo: '#c8e6d4',
+    stack: ['Next.js', 'TypeScript', 'React Native', 'Supabase', 'Vercel'],
+    features: [
+      'Founder-led product studio',
+      'Full-stack web & mobile development',
+      'Client work & proprietary SaaS products',
+      'End-to-end — design, build, deploy, maintain',
+      'Based in Botswana, building for the world',
+    ],
+    screenshots: [],
+  },
+  // 6 — Mobile (shows breadth)
   {
     id: 4,
     title: 'BlackDice',
@@ -161,26 +208,7 @@ const PROJECTS: Project[] = [
       { src: '/screenshots/blackdice/mobile/blackdice-m-10.png', caption: 'Library — continued scroll',               view: 'mobile' },
     ],
   },
-  {
-    id: 5,
-    title: 'BITROOT',
-    slug: 'bitroot',
-    type: 'Tech Startup · Agency & SaaS Studio',
-    description: 'My own software studio — building proprietary products and delivering client work across web and mobile.',
-    url: 'https://bitroot-dev.vercel.app',
-    accent: '#16a34a',
-    bgFrom: '#e8f5ee',
-    bgTo: '#c8e6d4',
-    stack: ['Next.js', 'TypeScript', 'React Native', 'Supabase', 'Vercel'],
-    features: [
-      'Founder-led product studio',
-      'Full-stack web & mobile development',
-      'Client work & proprietary SaaS products',
-      'End-to-end — design, build, deploy, maintain',
-      'Based in Botswana, building for the world',
-    ],
-    screenshots: [],
-  },
+  // 7 — Second mobile app
   {
     id: 6,
     title: 'Yonder',
@@ -749,7 +777,7 @@ export default function Work() {
               </div>
               <ul className="space-y-2.5">
                 {[
-                  'Architected and shipped six production projects from scratch',
+                  'Architected and shipped seven production projects from scratch — including an AI/RAG pipeline',
                   'Two Android apps built with React Native, Expo SDK, and EAS Build',
                   'Multi-tenant database design with complete tenant data isolation',
                   'CI/CD pipelines, Vercel deployments, performance monitoring',
@@ -781,7 +809,7 @@ export default function Work() {
               <div className="mt-7 pt-5" style={{ borderTop: '1px solid var(--border)' }}>
                 <p className="eyebrow mb-3" style={{ fontSize: '0.6rem' }}>Core Stack</p>
                 <div className="flex flex-wrap gap-1.5">
-                  {['Next.js', 'TypeScript', 'PostgreSQL', 'Supabase', 'Node.js', 'React Native', 'Vercel'].map(t => (
+                  {['Next.js', 'TypeScript', 'PostgreSQL', 'Supabase', 'Node.js', 'React Native', 'Python', 'LangChain'].map(t => (
                     <span key={t} className="tag" style={{ background: 'rgba(62,207,142,0.08)', borderColor: 'rgba(62,207,142,0.25)', color: '#1a7a52', fontWeight: 600 }}>{t}</span>
                   ))}
                 </div>

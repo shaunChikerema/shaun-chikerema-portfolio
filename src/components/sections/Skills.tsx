@@ -5,17 +5,17 @@ import { Cpu, Smartphone, Server, Cloud } from 'lucide-react';
 const SKILLS = [
   {
     icon: Cpu,
+    accent: '#6366f1',
+    title: 'AI & RAG Engineering',
+    body: 'Built a full Retrieval-Augmented Generation pipeline in Python — scraping, chunking, embedding with pgvector, and grounded LLM responses with source citations.',
+    tech: ['Python', 'FastAPI', 'LangChain', 'pgvector', 'OpenAI', 'BeautifulSoup'],
+  },
+  {
+    icon: Cpu,
     accent: '#3ECF8E',
     title: 'Full-Stack Web',
     body: 'Built three production web apps — a multi-tenant real estate marketplace, an insurance SaaS, and a client marketing site. Comfortable owning the entire stack.',
     tech: ['Next.js 15', 'TypeScript', 'PostgreSQL', 'Supabase', 'Node.js', 'Tailwind CSS'],
-  },
-  {
-    icon: Smartphone,
-    accent: '#e63946',
-    title: 'Mobile (Android)',
-    body: 'Two Android apps shipped via EAS Build. Native device APIs for audio playback, media library scanning, background tasks, and offline-first storage.',
-    tech: ['React Native', 'Expo SDK 54', 'expo-av', 'expo-media-library', 'AsyncStorage', 'expo-router'],
   },
   {
     icon: Server,
@@ -30,6 +30,13 @@ const SKILLS = [
     title: 'Deployment & DevOps',
     body: 'Every project is in production. CI/CD via GitHub Actions, deployments on Vercel and EAS, environment management, and performance monitoring.',
     tech: ['Vercel', 'GitHub Actions', 'Docker', 'EAS Build', 'AWS'],
+  },
+  {
+    icon: Smartphone,
+    accent: '#e63946',
+    title: 'Mobile (Android)',
+    body: 'Two Android apps shipped via EAS Build. Native device APIs for audio playback, media library scanning, background tasks, and offline-first storage.',
+    tech: ['React Native', 'Expo SDK 54', 'expo-av', 'expo-media-library', 'AsyncStorage', 'expo-router'],
   },
 ];
 

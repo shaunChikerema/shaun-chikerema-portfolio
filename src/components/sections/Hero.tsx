@@ -9,7 +9,7 @@ const SOCIALS = [
   { href: 'mailto:sschikerema@gmail.com',           icon: Mail,     label: 'Email' },
 ];
 
-const STACK = ['Next.js', 'TypeScript', 'PostgreSQL', 'Node.js', 'Supabase', 'React Native', 'Expo'];
+const STACK = ['Python', 'LangChain', 'Next.js', 'TypeScript', 'Node.js', 'PostgreSQL', 'Supabase', 'React Native', 'Expo'];
 
 // ── Palette ──────────────────────────────────────────────────────────────────
 const G        = '#3ECF8E';
