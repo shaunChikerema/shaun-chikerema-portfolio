@@ -16,6 +16,7 @@ type Project = {
   type: string;
   description: string;
   url: string;
+  architectureUrl?: string;
   accent: string;
   bgFrom: string;
   bgTo: string;
@@ -67,21 +68,22 @@ const PROJECTS: Project[] = [
   {
     id: 7,
     title: 'Askragify',
-    slug: 'rag-api',
+    slug: 'askragify',
     type: 'AI Engineering · Python + React',
-    description: 'A production RAG (Retrieval-Augmented Generation) system — scrapes any URL, embeds content into pgvector via Gemini, and answers questions with cited sources using Llama 3.3 70B via Groq.',
+    description: 'Full RAG pipeline built from scratch — scrape → chunk (2k chars, 200-char overlap) → embed (Gemini, 768-dim) → pgvector cosine search → grounded generation (Llama 3.3 70B). Tunable retrieval, multi-turn conversation, and inline citations tied to source URLs.',
     url: 'https://askragify.vercel.app',
+    architectureUrl: 'https://askragify.vercel.app/architecture.html',
     accent: '#3ECF8E',
     bgFrom: '#0f172a',
     bgTo: '#1e293b',
     stack: ['Python', 'FastAPI', 'Gemini', 'Groq', 'pgvector', 'Supabase', 'React'],
     features: [
-      'Python FastAPI backend deployed on Railway',
-      'RAG pipeline: scrape → chunk → embed → retrieve → generate',
-      'Gemini embeddings with pgvector similarity search on Supabase',
-      'Llama 3.3 70B via Groq for fast, grounded answers with citations',
-      'React frontend deployed on Vercel',
-      'Full conversation history with inline source citations',
+      'Scrape any HTML URL → clean text → overlapping chunks at word boundaries',
+      'Gemini gemini-embedding-001 — 768-dim vectors, batched 50 at a time with deduplication',
+      'pgvector cosine similarity via Supabase RPC — vector math stays in the DB, not Python',
+      'Llama 3.3 70B on Groq at ~800 tok/s — temperature 0.2 for grounded, natural answers',
+      'Configurable top-k and similarity threshold exposed in the UI settings tab',
+      'Full multi-turn conversation history passed on every query',
     ],
     screenshots: [
       { src: '/screenshots/rag/mobile/rag-1.png', caption: 'Query tab — ask anything from your knowledge base', view: 'mobile' },
@@ -687,6 +689,17 @@ export default function Work() {
                           >
                             Case Study <ArrowRight size={12} />
                           </a>
+
+                          {p.architectureUrl && (
+                            <a href={p.architectureUrl} target="_blank" rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2"
+                              style={{ padding: '8px 16px', borderRadius: 10, background: 'rgba(62,207,142,0.06)', border: '1px solid rgba(62,207,142,0.3)', color: '#1a7a52', fontSize: '0.72rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', transition: 'background 0.2s ease, border-color 0.2s ease' }}
+                              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(62,207,142,0.12)'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(62,207,142,0.5)'; }}
+                              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(62,207,142,0.06)'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(62,207,142,0.3)'; }}
+                            >
+                              Architecture <ArrowUpRight size={12} />
+                            </a>
+                          )}
 
                           <button type="button" onClick={() => setExpanded(isOpen ? null : p.id)}
                             className="inline-flex items-center gap-1.5"
