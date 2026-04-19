@@ -127,7 +127,7 @@ function PipelineStep({
 }
 
 /* ── Main Component ── */
-export default function AskragifyCaseStudy() {
+export default function RagifyCaseStudy() {
 
   const handleBack = () => {
     if (typeof window !== 'undefined') {
@@ -192,7 +192,7 @@ export default function AskragifyCaseStudy() {
             ...SERIF, fontSize: 'clamp(2.4rem, 6vw, 4.2rem)', fontWeight: 700,
             color: '#F6F1EA', letterSpacing: '-0.035em', lineHeight: 0.95, marginBottom: '1.4rem',
           }}>
-            Askragify
+            Ragify
           </motion.h1>
 
           <motion.p {...fade(0.2)} style={{
@@ -228,14 +228,14 @@ export default function AskragifyCaseStudy() {
 
           {/* Links */}
           <motion.div {...fade(0.35)} style={{ display: 'flex', gap: 10, marginTop: '2rem', flexWrap: 'wrap' }}>
-            <a href="https://askragify.vercel.app" target="_blank" rel="noopener noreferrer" style={{
+            <a href="https://ragify.vercel.app" target="_blank" rel="noopener noreferrer" style={{
               display: 'inline-flex', alignItems: 'center', gap: 7,
               padding: '10px 20px', borderRadius: 9, background: G, color: '#fff',
               fontSize: '0.76rem', fontWeight: 700, ...SANS, textDecoration: 'none',
             }}>
               Live Demo <ArrowUpRight size={13} />
             </a>
-            <a href="https://askragify.vercel.app/architecture.html" target="_blank" rel="noopener noreferrer" style={{
+            <a href="https://ragify.vercel.app/architecture.html" target="_blank" rel="noopener noreferrer" style={{
               display: 'inline-flex', alignItems: 'center', gap: 7,
               padding: '10px 20px', borderRadius: 9, background: 'rgba(255,255,255,0.07)',
               border: '1px solid rgba(255,255,255,0.15)', color: 'rgba(246,241,234,0.75)',
@@ -489,14 +489,14 @@ export default function AskragifyCaseStudy() {
             <div style={{ ...SANS, fontSize: '0.8rem', color: INK_MID }}>I can walk through any part of the pipeline in detail.</div>
           </div>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            <a href="https://askragify.vercel.app" target="_blank" rel="noopener noreferrer" style={{
+            <a href="https://ragify.vercel.app" target="_blank" rel="noopener noreferrer" style={{
               display: 'inline-flex', alignItems: 'center', gap: 6,
               padding: '9px 18px', borderRadius: 8, background: G, color: '#fff',
               fontSize: '0.75rem', fontWeight: 700, ...SANS, textDecoration: 'none',
             }}>
               Live Demo <ArrowUpRight size={12} />
             </a>
-            <a href="mailto:shaunchikerema28@gmail.com?subject=Askragify architecture question" style={{
+            <a href="mailto:shaunchikerema28@gmail.com?subject=Ragify architecture question" style={{
               display: 'inline-flex', alignItems: 'center', gap: 6,
               padding: '9px 18px', borderRadius: 8, background: 'transparent',
               border: `1px solid ${G_BORD}`, color: G_DARK,

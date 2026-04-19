@@ -30,7 +30,35 @@ type Project = {
 
 /* ─── Data ─── */
 const PROJECTS: Project[] = [
-  // 1 — Most complex production app (anchors credibility)
+  // 1 — AI/RAG (leads with hottest skill)
+  {
+    id: 7,
+    title: 'Ragify',
+    slug: 'ragify',
+    type: 'AI Engineering · Python + React',
+    description: 'Full RAG pipeline built from scratch — scrape → chunk (2k chars, 200-char overlap) → embed (Gemini, 768-dim) → pgvector cosine search → grounded generation (Llama 3.3 70B). Tunable retrieval, multi-turn conversation, and inline citations tied to source URLs.',
+    url: 'https://ragify.vercel.app',
+    architectureUrl: 'https://ragify.vercel.app/architecture.html',
+    accent: '#3ECF8E',
+    bgFrom: '#0f172a',
+    bgTo: '#1e293b',
+    stack: ['Python', 'FastAPI', 'Gemini', 'Groq', 'pgvector', 'Supabase', 'React'],
+    features: [
+      'Scrape any HTML URL → clean text → overlapping chunks at word boundaries',
+      'Gemini gemini-embedding-001 — 768-dim vectors, batched 50 at a time with deduplication',
+      'pgvector cosine similarity via Supabase RPC — vector math stays in the DB, not Python',
+      'Llama 3.3 70B on Groq at ~800 tok/s — temperature 0.2 for grounded, natural answers',
+      'Configurable top-k and similarity threshold exposed in the UI settings tab',
+      'Full multi-turn conversation history passed on every query',
+    ],
+    screenshots: [
+      { src: '/screenshots/rag/mobile/rag-1.png', caption: 'Query tab — ask anything from your knowledge base', view: 'mobile' },
+      { src: '/screenshots/rag/mobile/rag-2.png', caption: 'RAG answer with inline citations from sources', view: 'mobile' },
+      { src: '/screenshots/rag/mobile/rag-3.png', caption: 'Ingest tab — scrape any URL into the vector DB', view: 'mobile' },
+      { src: '/screenshots/rag/mobile/rag-4.png', caption: 'Settings — tune retrieval and manage the database', view: 'mobile' },
+    ],
+  },
+  // 2 — Most complex production app (anchors credibility)
   {
     id: 1,
     title: 'Keyat',
@@ -62,34 +90,6 @@ const PROJECTS: Project[] = [
       { src: '/screenshots/keyat/mobile/keyat-m-8.png',  caption: 'My Properties — all 11 listings',           view: 'mobile' },
       { src: '/screenshots/keyat/mobile/keyat-m-9.png',  caption: 'Agent dashboard — listings & market',       view: 'mobile' },
       { src: '/screenshots/keyat/mobile/keyat-m-10.png', caption: 'Public browse — featured properties',       view: 'mobile' },
-    ],
-  },
-  // 2 — AI/RAG (hottest skill, lands while they're engaged)
-  {
-    id: 7,
-    title: 'Askragify',
-    slug: 'askragify',
-    type: 'AI Engineering · Python + React',
-    description: 'Full RAG pipeline built from scratch — scrape → chunk (2k chars, 200-char overlap) → embed (Gemini, 768-dim) → pgvector cosine search → grounded generation (Llama 3.3 70B). Tunable retrieval, multi-turn conversation, and inline citations tied to source URLs.',
-    url: 'https://askragify.vercel.app',
-    architectureUrl: 'https://askragify.vercel.app/architecture.html',
-    accent: '#3ECF8E',
-    bgFrom: '#0f172a',
-    bgTo: '#1e293b',
-    stack: ['Python', 'FastAPI', 'Gemini', 'Groq', 'pgvector', 'Supabase', 'React'],
-    features: [
-      'Scrape any HTML URL → clean text → overlapping chunks at word boundaries',
-      'Gemini gemini-embedding-001 — 768-dim vectors, batched 50 at a time with deduplication',
-      'pgvector cosine similarity via Supabase RPC — vector math stays in the DB, not Python',
-      'Llama 3.3 70B on Groq at ~800 tok/s — temperature 0.2 for grounded, natural answers',
-      'Configurable top-k and similarity threshold exposed in the UI settings tab',
-      'Full multi-turn conversation history passed on every query',
-    ],
-    screenshots: [
-      { src: '/screenshots/rag/mobile/rag-1.png', caption: 'Query tab — ask anything from your knowledge base', view: 'mobile' },
-      { src: '/screenshots/rag/mobile/rag-2.png', caption: 'RAG answer with inline citations from sources', view: 'mobile' },
-      { src: '/screenshots/rag/mobile/rag-3.png', caption: 'Ingest tab — scrape any URL into the vector DB', view: 'mobile' },
-      { src: '/screenshots/rag/mobile/rag-4.png', caption: 'Settings — tune retrieval and manage the database', view: 'mobile' },
     ],
   },
   // 3 — Enterprise SaaS (shows backend depth)
