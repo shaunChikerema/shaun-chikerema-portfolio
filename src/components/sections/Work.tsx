@@ -159,7 +159,37 @@ const PROJECTS: Project[] = [
       { src: '/screenshots/paragon/mobile/paragon-10.png', caption: 'Office location — map',      view: 'mobile' },
     ],
   },
-  // 5 — Studio (context/backstory)
+  // 5 — Client work (Alfa First)
+  {
+    id: 8,
+    title: 'Alfa First Projects',
+    slug: 'alfa-first',
+    type: 'Client Work · Insurance Agency Site',
+    description: 'Marketing site for a licensed NBFIRA independent insurance agency in Gaborone — WhatsApp quote flow, animated hero, service breakdowns, and a fully responsive mobile layout.',
+    url: 'https://alfafirstprojects.co.bw',
+    accent: '#cc1f1f',
+    bgFrom: '#1a1f5e',
+    bgTo: '#2a3080',
+    previewImage: '/screenshots/alfa-first/mobile/alfa-1.png',
+    previewPosition: '50% 20%',
+    stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Vercel'],
+    features: [
+      'WhatsApp quote request modal with service selection',
+      'Animated hero with NBFIRA licensed badge',
+      'Service cards — life, funeral, motor, home, business & medical',
+      'Floating WhatsApp button with pulse ring animation',
+      'Fully responsive — mobile-first layout',
+      'Top bar with phone, email and quick-quote CTA',
+    ],
+    screenshots: [
+      { src: '/screenshots/alfa-first/mobile/alfa-1.png',  caption: 'Hero — Your Insurance. Our Priority.',  view: 'mobile' },
+      { src: '/screenshots/alfa-first/mobile/alfa-2.png',  caption: 'Services overview',                    view: 'mobile' },
+      { src: '/screenshots/alfa-first/mobile/alfa-3.png',  caption: 'Why choose Alfa First',                view: 'mobile' },
+      { src: '/screenshots/alfa-first/mobile/alfa-4.png',  caption: 'Quote modal',                          view: 'mobile' },
+      { src: '/screenshots/alfa-first/mobile/alfa-5.png',  caption: 'Contact & footer',                     view: 'mobile' },
+    ],
+  },
+  // 6 — Studio (context/backstory)
   {
     id: 5,
     title: 'BITROOT',
