@@ -14,16 +14,14 @@ function WhatsAppIcon({ className, style }: { className?: string; style?: React.
   );
 }
 
-
-
 const WA_NUMBER = '26776051623';
 const WA_MESSAGE = encodeURIComponent("Hi Shaun, I'd like to discuss a project with you.");
 const WA_HREF = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
 
 const METHODS = [
-  { icon: Mail,          label: 'Email',     value: EMAIL,                note: 'Best for project discussions',     href: `mailto:${EMAIL}?subject=Project Inquiry`, isWA: false },
-  { icon: WhatsAppIcon,  label: 'WhatsApp',  value: '+267 76 051 623',    note: 'Direct messages & quick questions', href: WA_HREF,                                   isWA: true  },
-  { icon: MapPin,        label: 'Location',  value: 'Gaborone, Botswana', note: 'Remote work worldwide',            href: '#',                                         isWA: false },
+  { icon: Mail,         label: 'Email',     value: EMAIL,                note: 'Best for project discussions',      href: `mailto:${EMAIL}?subject=Project Inquiry`, isWA: false },
+  { icon: WhatsAppIcon, label: 'WhatsApp',  value: '+267 76 051 623',    note: 'Direct messages & quick questions', href: WA_HREF,                                   isWA: true  },
+  { icon: MapPin,       label: 'Location',  value: 'Gaborone, Botswana', note: 'Remote work worldwide',             href: '#',                                        isWA: false },
 ];
 
 const TYPES = [
@@ -63,7 +61,7 @@ export default function Contact() {
   const lbl = 'font-body block mb-1.5 font-semibold uppercase tracking-widest text-[10px]';
 
   return (
-    <section id="contact" style={{ background: '#ffffff' }}>
+    <section id="contact" style={{ background: 'var(--bg-section)' }}>
       <div className="divider" />
 
       <div className="max-w-6xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
@@ -120,7 +118,10 @@ export default function Contact() {
                     target={m.href.startsWith('http') ? '_blank' : undefined}
                     rel={m.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                     className="flex items-start gap-3.5 p-4 rounded-sm group transition-colors"
-                    style={{ background: '#f8fafc', border: '1px solid rgba(15,23,42,0.1)' }}
+                    style={{
+                      background: 'var(--bg-field)',
+                      border: '1px solid var(--border)',
+                    }}
                   >
                     <div
                       className="w-8 h-8 rounded-sm flex items-center justify-center flex-shrink-0"
@@ -145,9 +146,9 @@ export default function Contact() {
             >
               <div className="flex items-center gap-2 mb-0.5">
                 <span className="w-1.5 h-1.5 rounded-full dot-pulse" style={{ background: '#3ECF8E' }} />
-                <span className="font-body font-semibold text-xs" style={{ color: '#1a7a52' }}>24-hour response</span>
+                <span className="font-body font-semibold text-xs" style={{ color: '#2bb378' }}>24-hour response</span>
               </div>
-              <p className="font-body text-xs" style={{ color: '#1a7a52' }}>
+              <p className="font-body text-xs" style={{ color: '#2bb378' }}>
                 All project inquiries answered within one business day.
               </p>
             </div>
@@ -177,7 +178,7 @@ export default function Contact() {
                 <button
                   onClick={() => setStatus('idle')}
                   className="font-body text-sm font-medium underline underline-offset-4"
-                  style={{ color: '#3ECF8E' }}
+                  style={{ color: '#3ECF8E', background: 'none', border: 'none', cursor: 'pointer' }}
                 >
                   Send another message
                 </button>
@@ -242,7 +243,7 @@ export default function Contact() {
 
                   {status === 'error' && (
                     <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                      className="font-body text-xs text-center" style={{ color: '#B91C1C' }}>
+                      className="font-body text-xs text-center" style={{ color: '#e63946' }}>
                       Something went wrong. Email me directly at {EMAIL}
                     </motion.p>
                   )}

@@ -1,7 +1,8 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Download } from 'lucide-react';
+import { Menu, X, Download, Sun, Moon } from 'lucide-react';
+import { useTheme } from '@/context/ThemeContext';
 
 const NAV = [
   { label: 'Home',    href: '#home' },
@@ -15,6 +16,7 @@ export default function Header() {
   const [open,       setOpen]       = useState(false);
   const [active,     setActive]     = useState('home');
   const [navigating, setNavigating] = useState(false);
+  const { theme, toggle } = useTheme();
 
   const ids = NAV.map(n => n.href.replace('#', ''));
 
@@ -61,15 +63,21 @@ export default function Header() {
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
   };
 
+  const isDark = theme === 'dark';
+
+  const headerBgScrolled = isDark ? 'rgba(13,13,13,0.97)' : 'rgba(255,255,255,0.97)';
+  const headerBgTop      = isDark ? 'rgba(13,13,13,0.88)' : 'rgba(255,255,255,0.88)';
+  const headerShadow     = isDark ? '0 1px 16px rgba(0,0,0,0.3)' : '0 1px 16px rgba(22,18,16,0.055)';
+
   return (
     <>
       <header
         className="fixed top-0 inset-x-0 z-50 transition-all duration-300"
         style={{
-          background: scrolled ? 'rgba(255,255,255,0.97)' : 'rgba(255,255,255,0.88)',
+          background: scrolled ? headerBgScrolled : headerBgTop,
           backdropFilter: 'blur(12px)',
           borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
-          boxShadow: scrolled ? '0 1px 16px rgba(22,18,16,0.055)' : 'none',
+          boxShadow: scrolled ? headerShadow : 'none',
         }}
       >
         <div className="max-w-6xl mx-auto px-6 lg:px-10 flex items-center justify-between h-[68px]">
@@ -80,7 +88,6 @@ export default function Header() {
             className="flex items-center gap-2.5 group"
             aria-label="Home"
           >
-            {/* SC mark — matches favicon exactly */}
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
               <rect width="32" height="32" rx="6" fill="#3ECF8E"/>
               <text
@@ -124,19 +131,95 @@ export default function Header() {
             })}
           </nav>
 
-          {/* Desktop CTA */}
-          <div className="hidden md:flex">
-            <button onClick={downloadCV} className="btn text-xs px-4 py-2.5 gap-1.5 inline-flex items-center" style={{ background: '#3ECF8E', color: '#fff', border: 'none', borderRadius: 6, fontWeight: 700, cursor: 'pointer', transition: 'background 0.2s', boxShadow: '0 2px 12px rgba(62,207,142,0.3)' }} onMouseEnter={e => (e.currentTarget.style.background = '#1a7a52')} onMouseLeave={e => (e.currentTarget.style.background = '#3ECF8E')}>
+          {/* Desktop CTAs */}
+          <div className="hidden md:flex items-center gap-2">
+            {/* Theme toggle */}
+            <button
+              onClick={toggle}
+              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              className="flex items-center justify-center w-9 h-9 rounded-sm transition-all duration-200"
+              style={{
+                border: '1px solid var(--border-mid)',
+                color: 'var(--ink-muted)',
+                background: 'transparent',
+                cursor: 'pointer',
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(62,207,142,0.5)';
+                (e.currentTarget as HTMLButtonElement).style.color = '#3ECF8E';
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border-mid)';
+                (e.currentTarget as HTMLButtonElement).style.color = 'var(--ink-muted)';
+              }}
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={theme}
+                  initial={{ opacity: 0, rotate: -30, scale: 0.7 }}
+                  animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                  exit={{ opacity: 0, rotate: 30, scale: 0.7 }}
+                  transition={{ duration: 0.18 }}
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                >
+                  {isDark ? <Sun size={15} /> : <Moon size={15} />}
+                </motion.span>
+              </AnimatePresence>
+            </button>
+
+            {/* Resume */}
+            <button
+              onClick={downloadCV}
+              className="btn text-xs px-4 py-2.5 gap-1.5 inline-flex items-center"
+              style={{
+                background: '#3ECF8E', color: '#fff', border: 'none', borderRadius: 6,
+                fontWeight: 700, cursor: 'pointer', transition: 'background 0.2s',
+                boxShadow: '0 2px 12px rgba(62,207,142,0.3)',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.background = '#1a7a52')}
+              onMouseLeave={e => (e.currentTarget.style.background = '#3ECF8E')}
+            >
               <Download className="w-3.5 h-3.5" />
               Resume
             </button>
           </div>
 
-          {/* Mobile */}
+          {/* Mobile controls */}
           <div className="flex md:hidden items-center gap-2">
-            <button onClick={downloadCV} className="btn text-xs px-3 py-2 gap-1.5 inline-flex items-center" style={{ background: '#3ECF8E', color: '#fff', border: 'none', borderRadius: 6, fontWeight: 700, cursor: 'pointer' }}>
+            {/* Theme toggle */}
+            <button
+              onClick={toggle}
+              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              className="flex items-center justify-center w-8 h-8 rounded-sm"
+              style={{
+                border: '1px solid var(--border-mid)',
+                color: 'var(--ink-muted)',
+                background: 'transparent',
+                cursor: 'pointer',
+              }}
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={theme}
+                  initial={{ opacity: 0, scale: 0.7 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.7 }}
+                  transition={{ duration: 0.15 }}
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                >
+                  {isDark ? <Sun size={14} /> : <Moon size={14} />}
+                </motion.span>
+              </AnimatePresence>
+            </button>
+
+            <button
+              onClick={downloadCV}
+              className="btn text-xs px-3 py-2 gap-1.5 inline-flex items-center"
+              style={{ background: '#3ECF8E', color: '#fff', border: 'none', borderRadius: 6, fontWeight: 700, cursor: 'pointer' }}
+            >
               <Download className="w-3 h-3" /> Resume
             </button>
+
             <button
               onClick={() => setOpen(v => !v)}
               className="p-2 rounded-sm"
@@ -163,7 +246,7 @@ export default function Header() {
               initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 26, stiffness: 260 }}
               className="md:hidden fixed top-0 right-0 h-full w-60 z-[70] flex flex-col"
-              style={{ background: '#ffffff', borderLeft: '1px solid rgba(15,23,42,0.08)' }}
+              style={{ background: isDark ? '#161616' : '#ffffff', borderLeft: '1px solid var(--border)' }}
             >
               <div className="flex items-center justify-between px-5 h-[68px]" style={{ borderBottom: '1px solid var(--border)' }}>
                 <span className="font-display font-bold text-sm" style={{ color: 'var(--ink)' }}>Menu</span>
@@ -191,11 +274,30 @@ export default function Header() {
                   );
                 })}
               </nav>
-              <div className="p-4" style={{ borderTop: '1px solid var(--border)' }}>
-                <button onClick={downloadCV} className="btn w-full py-2.5 text-sm inline-flex items-center justify-center gap-2" style={{ background: '#3ECF8E', color: '#fff', border: 'none', borderRadius: 6, fontWeight: 700, cursor: 'pointer' }}>
+              <div className="p-4 flex flex-col gap-3" style={{ borderTop: '1px solid var(--border)' }}>
+                <button
+                  onClick={toggle}
+                  className="btn w-full py-2.5 text-sm inline-flex items-center justify-center gap-2"
+                  style={{
+                    background: 'transparent',
+                    color: 'var(--ink-mid)',
+                    border: '1px solid var(--border-mid)',
+                    borderRadius: 6,
+                    cursor: 'pointer',
+                    fontWeight: 600,
+                  }}
+                >
+                  {isDark ? <Sun size={14} /> : <Moon size={14} />}
+                  {isDark ? 'Light mode' : 'Dark mode'}
+                </button>
+                <button
+                  onClick={downloadCV}
+                  className="btn w-full py-2.5 text-sm inline-flex items-center justify-center gap-2"
+                  style={{ background: '#3ECF8E', color: '#fff', border: 'none', borderRadius: 6, fontWeight: 700, cursor: 'pointer' }}
+                >
                   <Download className="w-4 h-4" /> Download Resume
                 </button>
-                <p className="text-center mt-3 font-body text-[10px]" style={{ color: 'var(--ink-muted)' }}>
+                <p className="text-center font-body text-[10px]" style={{ color: 'var(--ink-muted)' }}>
                   Available for remote work
                 </p>
               </div>

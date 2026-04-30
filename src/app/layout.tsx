@@ -1,6 +1,7 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
 import WhatsAppFloat from '@/components/sections/WhatsAppFloat';
+import { ThemeProvider } from '@/context/ThemeContext';
 
 export const metadata: Metadata = {
   title: 'Shaun Chikerema – Software Engineer · Botswana',
@@ -45,8 +46,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="overflow-x-hidden">
       <body className="font-sans antialiased overflow-x-hidden">
-        {children}
-        <WhatsAppFloat />
+        <ThemeProvider>
+          {children}
+          <WhatsAppFloat />
+        </ThemeProvider>
       </body>
     </html>
   );

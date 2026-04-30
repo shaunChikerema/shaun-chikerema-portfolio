@@ -57,7 +57,7 @@ const APPROACHES = [
 
 export default function Skills() {
   return (
-    <section id="skills" style={{ background: '#ffffff' }}>
+    <section id="skills" style={{ background: 'var(--bg-section)' }}>
       <div className="divider" />
 
       <div className="max-w-6xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
@@ -89,7 +89,7 @@ export default function Skills() {
           </div>
         </motion.div>
 
-        {/* Skill cards — 2-col grid */}
+        {/* Skill cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-14">
           {SKILLS.map((s, i) => {
             const Icon = s.icon;
@@ -103,7 +103,6 @@ export default function Skills() {
                 className="card p-7"
                 style={{ borderTop: `2px solid ${s.accent}` }}
               >
-                {/* Icon + title */}
                 <div className="flex items-center gap-3 mb-3">
                   <div
                     className="w-8 h-8 rounded-sm flex items-center justify-center flex-shrink-0"
@@ -119,7 +118,6 @@ export default function Skills() {
                   </h3>
                 </div>
 
-                {/* Body */}
                 <p
                   className="font-body text-sm leading-relaxed mb-5"
                   style={{ color: 'var(--ink-muted)', lineHeight: 1.75 }}
@@ -127,7 +125,6 @@ export default function Skills() {
                   {s.body}
                 </p>
 
-                {/* Tech pills */}
                 <div className="flex flex-wrap gap-1.5">
                   {s.tech.map(t => (
                     <span
@@ -138,8 +135,8 @@ export default function Skills() {
                         fontSize: '0.68rem',
                         fontWeight: 600,
                         fontFamily: "'DM Sans', sans-serif",
-                        background: `${s.accent}10`,
-                        border: `1px solid ${s.accent}30`,
+                        background: `${s.accent}18`,
+                        border: `1px solid ${s.accent}40`,
                         color: s.accent,
                         letterSpacing: '0.01em',
                       }}
@@ -153,10 +150,9 @@ export default function Skills() {
           })}
         </div>
 
-        {/* Divider */}
         <div className="divider mb-14" />
 
-        {/* How I work — dark strip */}
+        {/* How I work — dark strip (always dark, intentional) */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -196,7 +192,7 @@ export default function Skills() {
                   <div>
                     <h4
                       className="font-display font-semibold text-base mb-1.5"
-                      style={{ color: 'var(--cream)', letterSpacing: '-0.01em' }}
+                      style={{ color: '#F6F1EA', letterSpacing: '-0.01em' }}
                     >
                       {a.title}
                     </h4>

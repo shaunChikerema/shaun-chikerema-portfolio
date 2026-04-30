@@ -538,7 +538,7 @@ export default function Work() {
 
   return (
     <>
-      <section id="work" style={{ background: '#ffffff' }}>
+      <section id="work" style={{ background: 'var(--bg-section)' }}>
         <div className="divider" />
 
         <div className="max-w-6xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
@@ -586,7 +586,7 @@ export default function Work() {
                   className="group"
                   style={{
                     borderRadius: 18,
-                    background: '#f8fafc',
+                    background: 'var(--bg-card)',
                     border: '1px solid var(--border)',
                     overflow: 'hidden',
                     transition: 'box-shadow 0.35s ease, border-color 0.35s ease, transform 0.35s ease',
@@ -704,7 +704,7 @@ export default function Work() {
                             <button type="button" onClick={() => setLightbox({ project: p, index: 0 })}
                               className="inline-flex items-center gap-2"
                               style={{ padding: '8px 16px', borderRadius: 10, background: 'transparent', border: '1px solid var(--border)', color: 'var(--ink)', fontSize: '0.72rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", cursor: 'pointer', transition: 'background 0.2s ease, border-color 0.2s ease' }}
-                              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = '#f1f5f9'; (e.currentTarget as HTMLButtonElement).style.borderColor = '#94a3b8'; }}
+                              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'var(--bg-field)'; (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border-mid)'; }}
                               onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'transparent'; (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border)'; }}
                             >
                               <Images size={12} /> Screenshots
@@ -714,7 +714,7 @@ export default function Work() {
                           <a href={`/projects/${p.slug}`}
                             className="inline-flex items-center gap-2"
                             style={{ padding: '8px 16px', borderRadius: 10, background: 'transparent', border: '1px solid var(--border)', color: 'var(--ink)', fontSize: '0.72rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', transition: 'background 0.2s ease, border-color 0.2s ease' }}
-                            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = '#f1f5f9'; (e.currentTarget as HTMLAnchorElement).style.borderColor = '#94a3b8'; }}
+                            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'var(--bg-field)'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--border-mid)'; }}
                             onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'transparent'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--border)'; }}
                           >
                             Case Study <ArrowRight size={12} />

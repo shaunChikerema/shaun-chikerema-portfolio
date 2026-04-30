@@ -38,8 +38,8 @@ export default function WhatsAppFloat() {
             exit={{ opacity: 0, x: 8, scale: 0.95 }}
             transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
             style={{
-              background: '#1a1a1a',
-              color: '#fff',
+              background: 'var(--ink)',
+              color: 'var(--bg-page)',
               fontSize: '0.72rem',
               fontWeight: 600,
               fontFamily: "'DM Sans', sans-serif",
@@ -49,6 +49,7 @@ export default function WhatsAppFloat() {
               pointerEvents: 'none',
               letterSpacing: '0.01em',
               boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
+              position: 'relative',
             }}
           >
             Chat on WhatsApp
@@ -62,7 +63,7 @@ export default function WhatsAppFloat() {
               height: 0,
               borderTop: '5px solid transparent',
               borderBottom: '5px solid transparent',
-              borderLeft: '5px solid #1a1a1a',
+              borderLeft: '5px solid var(--ink)',
             }} />
           </motion.div>
         )}
@@ -93,6 +94,7 @@ export default function WhatsAppFloat() {
           cursor: 'pointer',
           textDecoration: 'none',
           flexShrink: 0,
+          position: 'relative',
         }}
       >
         <WhatsAppIcon className="w-7 h-7" />
