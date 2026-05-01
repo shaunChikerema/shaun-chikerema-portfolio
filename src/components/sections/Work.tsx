@@ -37,7 +37,7 @@ const PROJECTS: Project[] = [
     slug: 'ragify',
     type: 'AI Engineering · Python + React',
     description: 'Full RAG pipeline built from scratch — scrape → chunk (2k chars, 200-char overlap) → embed (Gemini, 768-dim) → pgvector cosine search → grounded generation (Llama 3.3 70B). Tunable retrieval, multi-turn conversation, and inline citations tied to source URLs.',
-    url: 'https://ragify.vercel.app',
+    url: 'https://askragify.vercel.app',
     architectureUrl: 'https://ragify.vercel.app/architecture.html',
     accent: '#3ECF8E',
     bgFrom: '#0f172a',
