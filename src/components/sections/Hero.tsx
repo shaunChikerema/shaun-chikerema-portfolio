@@ -13,10 +13,6 @@ const STACK = ['Python', 'LangChain', 'Next.js', 'TypeScript', 'React Native', '
 
 const G      = '#3ECF8E';
 const G_DARK = '#2db87a';
-const BG     = '#000000';
-const WHITE  = '#ffffff';
-const MUTED  = '#a1a1aa';
-const BORDER = 'rgba(255,255,255,0.1)';
 
 const PLAYFAIR: React.CSSProperties = { fontFamily: "'Playfair Display', Georgia, serif" };
 const DM: React.CSSProperties       = { fontFamily: "'DM Sans', sans-serif" };
@@ -85,12 +81,12 @@ export default function Hero() {
         disabled={downloading}
         style={{
           padding: '11px 24px', borderRadius: 6, background: 'transparent',
-          color: WHITE, fontSize: '0.75rem', fontWeight: 600, ...DM,
-          border: `1px solid ${BORDER}`, cursor: 'pointer', transition: 'border-color 0.2s',
+          color: 'var(--ink)', fontSize: '0.75rem', fontWeight: 600, ...DM,
+          border: '1px solid var(--border-mid)', cursor: 'pointer', transition: 'border-color 0.2s, color 0.2s',
           display: 'inline-flex', alignItems: 'center', gap: 8,
         }}
-        onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255,255,255,0.35)'; }}
-        onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = BORDER; }}
+        onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(62,207,142,0.5)'; (e.currentTarget as HTMLButtonElement).style.color = G; }}
+        onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border-mid)'; (e.currentTarget as HTMLButtonElement).style.color = 'var(--ink)'; }}
       >
         <Download size={13} className={downloading ? 'animate-bounce' : ''} />
         {downloading ? 'Downloading...' : 'Resume'}
@@ -102,7 +98,7 @@ export default function Hero() {
     <section
       id="home"
       className="relative min-h-screen flex flex-col overflow-x-hidden"
-      style={{ background: BG }}
+      style={{ background: 'var(--bg-page)' }}
       itemScope itemType="https://schema.org/Person"
     >
       {/* Thin green top accent */}
@@ -112,7 +108,7 @@ export default function Hero() {
       <motion.div {...fade(0, 0)} className="relative z-20 flex items-center justify-between px-6 lg:px-14 pt-8">
         <div className="flex items-center gap-2">
           <span style={{ width: 7, height: 7, borderRadius: '50%', background: G, display: 'inline-block' }} />
-          <span style={{ fontSize: '0.62rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: MUTED, ...DM, fontWeight: 600 }}>
+          <span style={{ fontSize: '0.62rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-muted)', ...DM, fontWeight: 600 }}>
             Available for work
           </span>
         </div>
@@ -120,9 +116,9 @@ export default function Hero() {
           {SOCIALS.map(({ href, icon: Icon, label }) => (
             <a key={href} href={href} aria-label={label} target="_blank" rel="noopener noreferrer"
               className="flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200"
-              style={{ border: `1px solid ${BORDER}`, color: MUTED }}
-              onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = 'rgba(255,255,255,0.3)'; el.style.color = WHITE; }}
-              onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = BORDER; el.style.color = MUTED; }}
+              style={{ border: '1px solid var(--border-mid)', color: 'var(--ink-muted)' }}
+              onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = 'rgba(62,207,142,0.5)'; el.style.color = G; }}
+              onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = 'var(--border-mid)'; el.style.color = 'var(--ink-muted)'; }}
             >
               <Icon size={13} />
             </a>
@@ -147,7 +143,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: reduced ? 0 : 60 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-              style={{ ...PLAYFAIR, fontWeight: 700, fontSize: 'clamp(3.4rem, 8vw, 7rem)', letterSpacing: '-0.04em', lineHeight: 0.92, color: WHITE }}
+              style={{ ...PLAYFAIR, fontWeight: 700, fontSize: 'clamp(3.4rem, 8vw, 7rem)', letterSpacing: '-0.04em', lineHeight: 0.92, color: 'var(--ink)' }}
               itemProp="name"
             >
               Shaun
@@ -170,18 +166,15 @@ export default function Hero() {
             initial={{ scaleX: 0, opacity: 0 }}
             animate={{ scaleX: 1, opacity: 1 }}
             transition={{ duration: 0.7, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
-            style={{ height: 1, background: BORDER, marginBottom: '1.5rem', transformOrigin: 'left' }}
+            style={{ height: 1, background: 'var(--border)', marginBottom: '1.5rem', transformOrigin: 'left' }}
           />
 
           {/* Bio */}
-          <motion.p {...fade(0.34)} style={{ fontSize: 'clamp(0.88rem, 1.3vw, 1rem)', color: WHITE, lineHeight: 1.8, maxWidth: '42ch', ...DM, marginBottom: '1.6rem' }}>
+          <motion.p {...fade(0.34)} style={{ fontSize: 'clamp(0.88rem, 1.3vw, 1rem)', color: 'var(--ink)', lineHeight: 1.8, maxWidth: '42ch', ...DM, marginBottom: '1.6rem' }}>
             I build AI-powered products that ship — from LangChain pipelines to deployed React Native apps.
           </motion.p>
 
-          {/*
-            CTAs: on BOTH mobile and desktop, buttons appear right after bio.
-            No more separate mobile/desktop split — single block in the flow.
-          */}
+          {/* CTAs */}
           <motion.div {...fade(0.4)} style={{ marginBottom: '1.8rem' }}>
             <CTAButtons />
           </motion.div>
@@ -190,8 +183,8 @@ export default function Hero() {
           <motion.div {...fade(0.46)} className="flex items-center gap-6" style={{ marginBottom: '1.8rem' }}>
             {[['3+', 'years exp'], ['8', 'projects shipped'], ['Open', 'to remote']].map(([val, label]) => (
               <div key={label} className="flex flex-col">
-                <span style={{ fontSize: '1rem', fontWeight: 700, color: WHITE, ...DM, lineHeight: 1 }}>{val}</span>
-                <span style={{ fontSize: '0.62rem', color: MUTED, ...DM, letterSpacing: '0.04em', marginTop: 3 }}>{label}</span>
+                <span style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--ink)', ...DM, lineHeight: 1 }}>{val}</span>
+                <span style={{ fontSize: '0.62rem', color: 'var(--ink-muted)', ...DM, letterSpacing: '0.04em', marginTop: 3 }}>{label}</span>
               </div>
             ))}
           </motion.div>
@@ -204,8 +197,8 @@ export default function Hero() {
                   padding: '4px 11px', borderRadius: 4, fontSize: '0.63rem', fontWeight: 600,
                   ...DM, letterSpacing: '0.04em',
                   background: 'transparent',
-                  border: `1px solid ${BORDER}`,
-                  color: WHITE,
+                  border: '1px solid var(--border-mid)',
+                  color: 'var(--ink-mid)',
                 }}>
                   {t}
                 </span>
@@ -227,11 +220,11 @@ export default function Hero() {
             borderRadius: '50%',
             overflow: 'hidden',
             border: `2px solid rgba(62,207,142,0.35)`,
-            background: '#111',
+            background: 'var(--bg-field)',
             position: 'relative',
           }}>
             {!imgLoaded && (
-              <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#111' }}>
+              <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-field)' }}>
                 <div style={{ width: 22, height: 22, border: `2px solid rgba(62,207,142,0.2)`, borderTopColor: G, borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
               </div>
             )}
@@ -253,11 +246,11 @@ export default function Hero() {
       >
         <button
           onClick={scrollToWork}
-          style={{ color: MUTED, fontSize: '0.52rem', letterSpacing: '0.22em', textTransform: 'uppercase', ...DM, background: 'none', border: 'none', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}
+          style={{ color: 'var(--ink-muted)', fontSize: '0.52rem', letterSpacing: '0.22em', textTransform: 'uppercase', ...DM, background: 'none', border: 'none', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}
           aria-label="Scroll down"
         >
           scroll
-          <div style={{ width: 1, height: 20, background: `linear-gradient(to bottom, ${MUTED}, transparent)` }} />
+          <div style={{ width: 1, height: 20, background: `linear-gradient(to bottom, var(--ink-muted), transparent)` }} />
         </button>
       </motion.div>
 
