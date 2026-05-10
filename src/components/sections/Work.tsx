@@ -4,7 +4,7 @@ import {
   ExternalLink, ArrowRight, Calendar, Download,
   Smartphone, X, ChevronLeft, ChevronRight, Images, ArrowUpRight, ChevronDown,
 } from 'lucide-react';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 /* ─── Types ─── */
@@ -30,35 +30,7 @@ type Project = {
 
 /* ─── Data ─── */
 const PROJECTS: Project[] = [
-  // 1 — AI/RAG (leads with hottest skill)
-  {
-    id: 7,
-    title: 'Ragify',
-    slug: 'ragify',
-    type: 'AI Engineering · Python + React',
-    description: 'Full RAG pipeline built from scratch — scrape → chunk (2k chars, 200-char overlap) → embed (Gemini, 768-dim) → pgvector cosine search → grounded generation (Llama 3.3 70B). Tunable retrieval, multi-turn conversation, and inline citations tied to source URLs.',
-    url: 'https://askragify.vercel.app',
-    architectureUrl: 'https://ragify.vercel.app/architecture.html',
-    accent: '#3ECF8E',
-    bgFrom: '#0f172a',
-    bgTo: '#1e293b',
-    stack: ['Python', 'FastAPI', 'Gemini', 'Groq', 'pgvector', 'Supabase', 'React'],
-    features: [
-      'Scrape any HTML URL → clean text → overlapping chunks at word boundaries',
-      'Gemini gemini-embedding-001 — 768-dim vectors, batched 50 at a time with deduplication',
-      'pgvector cosine similarity via Supabase RPC — vector math stays in the DB, not Python',
-      'Llama 3.3 70B on Groq at ~800 tok/s — temperature 0.2 for grounded, natural answers',
-      'Configurable top-k and similarity threshold exposed in the UI settings tab',
-      'Full multi-turn conversation history passed on every query',
-    ],
-    screenshots: [
-      { src: '/screenshots/rag/mobile/rag-1.png', caption: 'Query tab — ask anything from your knowledge base', view: 'mobile' },
-      { src: '/screenshots/rag/mobile/rag-2.png', caption: 'RAG answer with inline citations from sources', view: 'mobile' },
-      { src: '/screenshots/rag/mobile/rag-3.png', caption: 'Ingest tab — scrape any URL into the vector DB', view: 'mobile' },
-      { src: '/screenshots/rag/mobile/rag-4.png', caption: 'Settings — tune retrieval and manage the database', view: 'mobile' },
-    ],
-  },
-  // 2 — Most complex production app (anchors credibility)
+  // 1 — Most complex production app (anchors credibility)
   {
     id: 1,
     title: 'Keyat',
@@ -90,6 +62,34 @@ const PROJECTS: Project[] = [
       { src: '/screenshots/keyat/mobile/keyat-m-8.png',  caption: 'My Properties — all 11 listings',           view: 'mobile' },
       { src: '/screenshots/keyat/mobile/keyat-m-9.png',  caption: 'Agent dashboard — listings & market',       view: 'mobile' },
       { src: '/screenshots/keyat/mobile/keyat-m-10.png', caption: 'Public browse — featured properties',       view: 'mobile' },
+    ],
+  },
+  // 2 — AI/RAG (impressive but backend currently down)
+  {
+    id: 7,
+    title: 'Ragify',
+    slug: 'ragify',
+    type: 'AI Engineering · Python + React',
+    description: 'Full RAG pipeline built from scratch — scrape → chunk (2k chars, 200-char overlap) → embed (Gemini, 768-dim) → pgvector cosine search → grounded generation (Llama 3.3 70B). Tunable retrieval, multi-turn conversation, and inline citations tied to source URLs.',
+    url: 'https://askragify.vercel.app',
+    architectureUrl: 'https://ragify.vercel.app/architecture.html',
+    accent: '#3ECF8E',
+    bgFrom: '#0f172a',
+    bgTo: '#1e293b',
+    stack: ['Python', 'FastAPI', 'Gemini', 'Groq', 'pgvector', 'Supabase', 'React'],
+    features: [
+      'Scrape any HTML URL → clean text → overlapping chunks at word boundaries',
+      'Gemini gemini-embedding-001 — 768-dim vectors, batched 50 at a time with deduplication',
+      'pgvector cosine similarity via Supabase RPC — vector math stays in the DB, not Python',
+      'Llama 3.3 70B on Groq at ~800 tok/s — temperature 0.2 for grounded, natural answers',
+      'Configurable top-k and similarity threshold exposed in the UI settings tab',
+      'Full multi-turn conversation history passed on every query',
+    ],
+    screenshots: [
+      { src: '/screenshots/rag/mobile/rag-1.png', caption: 'Query tab — ask anything from your knowledge base', view: 'mobile' },
+      { src: '/screenshots/rag/mobile/rag-2.png', caption: 'RAG answer with inline citations from sources', view: 'mobile' },
+      { src: '/screenshots/rag/mobile/rag-3.png', caption: 'Ingest tab — scrape any URL into the vector DB', view: 'mobile' },
+      { src: '/screenshots/rag/mobile/rag-4.png', caption: 'Settings — tune retrieval and manage the database', view: 'mobile' },
     ],
   },
   // 3 — Enterprise SaaS (shows backend depth)
@@ -424,9 +424,23 @@ function ProjectSlideshow({ project, onOpenLightbox }: { project: Project; onOpe
   const slides = pickSlides(project.screenshots);
   const [idx, setIdx] = useState(0);
   const [fading, setFading] = useState(false);
+  const [inView, setInView] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Only start playing when the card is scrolled into view
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.4 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
-    if (slides.length <= 1) return;
+    if (slides.length <= 1 || !inView) return;
     const t = setInterval(() => {
       setFading(true);
       setTimeout(() => {
@@ -435,7 +449,7 @@ function ProjectSlideshow({ project, onOpenLightbox }: { project: Project; onOpe
       }, 280);
     }, 3200);
     return () => clearInterval(t);
-  }, [slides.length]);
+  }, [slides.length, inView]);
 
   const goTo = (i: number) => {
     if (i === idx) return;
@@ -469,6 +483,7 @@ function ProjectSlideshow({ project, onOpenLightbox }: { project: Project; onOpe
 
   return (
     <div
+      ref={containerRef}
       className="absolute inset-0 overflow-hidden cursor-pointer group/panel"
       style={{ background: `linear-gradient(135deg, ${project.bgFrom}, ${project.bgTo})` }}
       onClick={onOpenLightbox}
