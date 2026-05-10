@@ -17,6 +17,7 @@ type Project = {
   description: string;
   url: string;
   architectureUrl?: string;
+  demoNote?: string;
   accent: string;
   bgFrom: string;
   bgTo: string;
@@ -64,66 +65,34 @@ const PROJECTS: Project[] = [
       { src: '/screenshots/keyat/mobile/keyat-m-10.png', caption: 'Public browse — featured properties',       view: 'mobile' },
     ],
   },
-  // 2 — AI/RAG (impressive but backend currently down)
+  // 5 — Client work (Alfa First)
   {
-    id: 7,
-    title: 'Ragify',
-    slug: 'ragify',
-    type: 'AI Engineering · Python + React',
-    description: 'Full RAG pipeline built from scratch — scrape → chunk (2k chars, 200-char overlap) → embed (Gemini, 768-dim) → pgvector cosine search → grounded generation (Llama 3.3 70B). Tunable retrieval, multi-turn conversation, and inline citations tied to source URLs.',
-    url: 'https://askragify.vercel.app',
-    architectureUrl: 'https://ragify.vercel.app/architecture.html',
-    accent: '#3ECF8E',
-    bgFrom: '#0f172a',
-    bgTo: '#1e293b',
-    stack: ['Python', 'FastAPI', 'Gemini', 'Groq', 'pgvector', 'Supabase', 'React'],
-    features: [
-      'Scrape any HTML URL → clean text → overlapping chunks at word boundaries',
-      'Gemini gemini-embedding-001 — 768-dim vectors, batched 50 at a time with deduplication',
-      'pgvector cosine similarity via Supabase RPC — vector math stays in the DB, not Python',
-      'Llama 3.3 70B on Groq at ~800 tok/s — temperature 0.2 for grounded, natural answers',
-      'Configurable top-k and similarity threshold exposed in the UI settings tab',
-      'Full multi-turn conversation history passed on every query',
-    ],
-    screenshots: [
-      { src: '/screenshots/rag/mobile/rag-1.png', caption: 'Query tab — ask anything from your knowledge base', view: 'mobile' },
-      { src: '/screenshots/rag/mobile/rag-2.png', caption: 'RAG answer with inline citations from sources', view: 'mobile' },
-      { src: '/screenshots/rag/mobile/rag-3.png', caption: 'Ingest tab — scrape any URL into the vector DB', view: 'mobile' },
-      { src: '/screenshots/rag/mobile/rag-4.png', caption: 'Settings — tune retrieval and manage the database', view: 'mobile' },
-    ],
-  },
-  // 3 — Enterprise SaaS (shows backend depth)
-  {
-    id: 2,
-    title: 'PolicyBridge',
-    slug: 'policybridge',
-    type: 'Insurance Automation SaaS',
-    description: 'Enterprise SaaS automating policy workflows, document generation, renewal tracking, and compliance logging for insurance brokers.',
-    url: 'https://policybridge.vercel.app',
-    accent: '#3ECF8E',
-    bgFrom: '#e8f5ee',
-    bgTo: '#d4efe2',
-    previewImage: '/screenshots/policybridge/mobile/policybridge-m-1.png',
+    id: 8,
+    title: 'Alfa First Projects',
+    slug: 'alfa-first',
+    type: 'Client Work · Insurance Agency Site',
+    description: 'Marketing site for a licensed NBFIRA independent insurance agency in Gaborone — WhatsApp quote flow, animated hero, service breakdowns, and a fully responsive mobile layout.',
+    url: 'https://alfa-first.vercel.app',
+    accent: '#cc1f1f',
+    bgFrom: '#1a1f5e',
+    bgTo: '#2a3080',
+    previewImage: '/screenshots/alfa-first/mobile/alfa-first-1.png',
     previewPosition: '50% 20%',
-    stack: ['Next.js 15', 'PostgreSQL', 'Node.js', 'Puppeteer', 'Redis'],
+    stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Vercel'],
     features: [
-      'Automated policy document generation',
-      'Renewal tracking & notifications',
-      'Audit trail & compliance logging',
-      'Client portal with dashboard',
-      'Bulk document processing',
+      'WhatsApp quote request modal with service selection',
+      'Animated hero with NBFIRA licensed badge',
+      'Service cards — life, funeral, motor, home, business & medical',
+      'Floating WhatsApp button with pulse ring animation',
+      'Fully responsive — mobile-first layout',
+      'Top bar with phone, email and quick-quote CTA',
     ],
     screenshots: [
-      { src: '/screenshots/policybridge/mobile/policybridge-m-1.png',  caption: 'Landing — the modern way to run your brokerage',  view: 'mobile' },
-      { src: '/screenshots/policybridge/mobile/policybridge-m-2.png',  caption: 'Hero — policy renewed notification',               view: 'mobile' },
-      { src: '/screenshots/policybridge/mobile/policybridge-m-3.png',  caption: 'What we do — client management',                  view: 'mobile' },
-      { src: '/screenshots/policybridge/mobile/policybridge-m-4.png',  caption: 'Policy tracking & payment receipts',              view: 'mobile' },
-      { src: '/screenshots/policybridge/mobile/policybridge-m-5.png',  caption: 'Payment receipts — how it works',                 view: 'mobile' },
-      { src: '/screenshots/policybridge/mobile/policybridge-m-6.png',  caption: 'How it works — steps 01, 02, 03',                 view: 'mobile' },
-      { src: '/screenshots/policybridge/mobile/policybridge-m-7.png',  caption: 'Generate receipts — built for brokers',           view: 'mobile' },
-      { src: '/screenshots/policybridge/mobile/policybridge-m-8.png',  caption: 'Ready to modernise your brokerage',               view: 'mobile' },
-      { src: '/screenshots/policybridge/mobile/policybridge-m-9.png',  caption: 'Sign in to your account',                        view: 'mobile' },
-      { src: '/screenshots/policybridge/mobile/policybridge-m-10.png', caption: 'Create your brokerage account',                  view: 'mobile' },
+      { src: '/screenshots/alfa-first/mobile/alfa-first-1.png', caption: 'Hero — Your Insurance. Our Priority.',         view: 'mobile' },
+      { src: '/screenshots/alfa-first/mobile/alfa-first-2.png', caption: 'About — Independent Agency Working for You',   view: 'mobile' },
+      { src: '/screenshots/alfa-first/mobile/alfa-first-3.png', caption: 'Footer — full services & quick links',         view: 'mobile' },
+      { src: '/screenshots/alfa-first/mobile/alfa-first-4.png', caption: 'Services — life, funeral, motor & more',       view: 'mobile' },
+      { src: '/screenshots/alfa-first/mobile/alfa-first-5.png', caption: 'Contact — We\'re Here to Help',                view: 'mobile' },
     ],
   },
   // 4 — Real client work (shows commercial delivery)
@@ -159,34 +128,67 @@ const PROJECTS: Project[] = [
       { src: '/screenshots/paragon/mobile/paragon-10.png', caption: 'Office location — map',      view: 'mobile' },
     ],
   },
-  // 5 — Client work (Alfa First)
+  // 2 — AI/RAG (impressive but backend currently down)
   {
-    id: 8,
-    title: 'Alfa First Projects',
-    slug: 'alfa-first',
-    type: 'Client Work · Insurance Agency Site',
-    description: 'Marketing site for a licensed NBFIRA independent insurance agency in Gaborone — WhatsApp quote flow, animated hero, service breakdowns, and a fully responsive mobile layout.',
-    url: 'https://alfa-first.vercel.app',
-    accent: '#cc1f1f',
-    bgFrom: '#1a1f5e',
-    bgTo: '#2a3080',
-    previewImage: '/screenshots/alfa-first/mobile/alfa-first-1.png',
-    previewPosition: '50% 20%',
-    stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Vercel'],
+    id: 7,
+    title: 'Ragify',
+    slug: 'ragify',
+    type: 'AI Engineering · Python + React',
+    description: 'Full RAG pipeline built from scratch — scrape → chunk (2k chars, 200-char overlap) → embed (Gemini, 768-dim) → pgvector cosine search → grounded generation (Llama 3.3 70B). Tunable retrieval, multi-turn conversation, and inline citations tied to source URLs.',
+    url: 'https://askragify.vercel.app',
+    architectureUrl: 'https://ragify.vercel.app/architecture.html',
+    accent: '#6366f1',
+    bgFrom: '#0f0f1a',
+    bgTo: '#1a1a35',
+    demoNote: 'Backend paused — demo available on request',
+    stack: ['Python', 'FastAPI', 'Gemini', 'Groq', 'pgvector', 'Supabase', 'React'],
     features: [
-      'WhatsApp quote request modal with service selection',
-      'Animated hero with NBFIRA licensed badge',
-      'Service cards — life, funeral, motor, home, business & medical',
-      'Floating WhatsApp button with pulse ring animation',
-      'Fully responsive — mobile-first layout',
-      'Top bar with phone, email and quick-quote CTA',
+      'Scrape any HTML URL → clean text → overlapping chunks at word boundaries',
+      'Gemini gemini-embedding-001 — 768-dim vectors, batched 50 at a time with deduplication',
+      'pgvector cosine similarity via Supabase RPC — vector math stays in the DB, not Python',
+      'Llama 3.3 70B on Groq at ~800 tok/s — temperature 0.2 for grounded, natural answers',
+      'Configurable top-k and similarity threshold exposed in the UI settings tab',
+      'Full multi-turn conversation history passed on every query',
     ],
     screenshots: [
-      { src: '/screenshots/alfa-first/mobile/alfa-first-1.png', caption: 'Hero — Your Insurance. Our Priority.',         view: 'mobile' },
-      { src: '/screenshots/alfa-first/mobile/alfa-first-2.png', caption: 'About — Independent Agency Working for You',   view: 'mobile' },
-      { src: '/screenshots/alfa-first/mobile/alfa-first-3.png', caption: 'Footer — full services & quick links',         view: 'mobile' },
-      { src: '/screenshots/alfa-first/mobile/alfa-first-4.png', caption: 'Services — life, funeral, motor & more',       view: 'mobile' },
-      { src: '/screenshots/alfa-first/mobile/alfa-first-5.png', caption: 'Contact — We\'re Here to Help',                view: 'mobile' },
+      { src: '/screenshots/rag/mobile/rag-1.png', caption: 'Query tab — ask anything from your knowledge base', view: 'mobile' },
+      { src: '/screenshots/rag/mobile/rag-2.png', caption: 'RAG answer with inline citations from sources', view: 'mobile' },
+      { src: '/screenshots/rag/mobile/rag-3.png', caption: 'Ingest tab — scrape any URL into the vector DB', view: 'mobile' },
+      { src: '/screenshots/rag/mobile/rag-4.png', caption: 'Settings — tune retrieval and manage the database', view: 'mobile' },
+    ],
+  },
+  // 3 — Enterprise SaaS (shows backend depth)
+  {
+    id: 2,
+    title: 'PolicyBridge',
+    slug: 'policybridge',
+    type: 'Insurance Automation SaaS',
+    description: 'Enterprise SaaS automating policy workflows, document generation, renewal tracking, and compliance logging for insurance brokers.',
+    url: 'https://policybridge.vercel.app',
+    accent: '#f59e0b',
+    bgFrom: '#1a1200',
+    bgTo: '#2a1e00',
+    previewImage: '/screenshots/policybridge/mobile/policybridge-m-1.png',
+    previewPosition: '50% 20%',
+    stack: ['Next.js 15', 'PostgreSQL', 'Node.js', 'Puppeteer', 'Redis'],
+    features: [
+      'Automated policy document generation',
+      'Renewal tracking & notifications',
+      'Audit trail & compliance logging',
+      'Client portal with dashboard',
+      'Bulk document processing',
+    ],
+    screenshots: [
+      { src: '/screenshots/policybridge/mobile/policybridge-m-1.png',  caption: 'Landing — the modern way to run your brokerage',  view: 'mobile' },
+      { src: '/screenshots/policybridge/mobile/policybridge-m-2.png',  caption: 'Hero — policy renewed notification',               view: 'mobile' },
+      { src: '/screenshots/policybridge/mobile/policybridge-m-3.png',  caption: 'What we do — client management',                  view: 'mobile' },
+      { src: '/screenshots/policybridge/mobile/policybridge-m-4.png',  caption: 'Policy tracking & payment receipts',              view: 'mobile' },
+      { src: '/screenshots/policybridge/mobile/policybridge-m-5.png',  caption: 'Payment receipts — how it works',                 view: 'mobile' },
+      { src: '/screenshots/policybridge/mobile/policybridge-m-6.png',  caption: 'How it works — steps 01, 02, 03',                 view: 'mobile' },
+      { src: '/screenshots/policybridge/mobile/policybridge-m-7.png',  caption: 'Generate receipts — built for brokers',           view: 'mobile' },
+      { src: '/screenshots/policybridge/mobile/policybridge-m-8.png',  caption: 'Ready to modernise your brokerage',               view: 'mobile' },
+      { src: '/screenshots/policybridge/mobile/policybridge-m-9.png',  caption: 'Sign in to your account',                        view: 'mobile' },
+      { src: '/screenshots/policybridge/mobile/policybridge-m-10.png', caption: 'Create your brokerage account',                  view: 'mobile' },
     ],
   },
   // 6 — Studio (context/backstory)
@@ -579,7 +581,7 @@ export default function Work() {
               </div>
               <div className="lg:col-span-5 lg:col-start-8">
                 <p className="font-body text-sm leading-relaxed" style={{ color: 'var(--ink-muted)' }}>
-                  Six production projects across web and mobile — architected, built, and shipped end-to-end.
+                  Seven production projects across web and mobile — from polished client work to AI pipelines and mobile apps.
                 </p>
               </div>
             </div>
@@ -618,7 +620,7 @@ export default function Work() {
                   {/* Two-column layout — alternating image side */}
                   <div className={`grid grid-cols-1 ${cardIdx % 2 === 0 ? 'lg:grid-cols-[1fr_380px]' : 'lg:grid-cols-[380px_1fr]'}`}>
 
-                    {/* ── Visual Panel (left on even cardIdx, right on odd) ── */}
+                    {/* ── Visual Panel (left on odd cardIdx) ── */}
                     {cardIdx % 2 !== 0 && (
                       <div
                         className="relative overflow-hidden order-last lg:order-first"
@@ -655,6 +657,11 @@ export default function Work() {
                             <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '2px 8px', borderRadius: 999, fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', background: '#16a34a14', color: '#16a34a' }}>
                               <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#16a34a', display: 'inline-block', animation: 'pulse 2s infinite' }} />
                               Live
+                            </span>
+                          )}
+                          {p.demoNote && (
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '2px 8px', borderRadius: 999, fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.06em', background: 'rgba(99,102,241,0.1)', color: '#6366f1', border: '1px solid rgba(99,102,241,0.25)' }}>
+                              {p.demoNote}
                             </span>
                           )}
                         </div>
