@@ -179,16 +179,6 @@ export default function Hero() {
             <CTAButtons />
           </motion.div>
 
-          {/* Stats */}
-          <motion.div {...fade(0.46)} className="flex items-center gap-6" style={{ marginBottom: '1.8rem' }}>
-            {[['3+', 'years exp'], ['8', 'projects shipped'], ['Open', 'to remote']].map(([val, label]) => (
-              <div key={label} className="flex flex-col">
-                <span style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--ink)', ...DM, lineHeight: 1 }}>{val}</span>
-                <span style={{ fontSize: '0.62rem', color: 'var(--ink-muted)', ...DM, letterSpacing: '0.04em', marginTop: 3 }}>{label}</span>
-              </div>
-            ))}
-          </motion.div>
-
           {/* Stack pills */}
           <motion.div {...fade(0.52)}>
             <div className="flex flex-wrap gap-1.5">
