@@ -1,7 +1,7 @@
 'use client';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Github, Linkedin, Mail, Download, ArrowRight } from 'lucide-react';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { MAILTO_HREF } from '@/lib/site-config';
 
 const SOCIALS = [
@@ -12,32 +12,22 @@ const SOCIALS = [
 
 const STACK = ['Python', 'LangChain', 'Next.js', 'TypeScript', 'React Native', 'Supabase'];
 
+const PROOF = [
+  { n: '7', label: 'projects shipped' },
+  { n: '2', label: 'client sites live' },
+  { n: '2', label: 'Android apps' },
+];
+
 const G      = '#3ECF8E';
 const G_DARK = '#2db87a';
-
-// Flip to true once a non-graduation profile photo is ready.
-// Until then, the hero shows an SC logo mark instead of a photo.
-const HAS_PROFILE_PHOTO = false;
 
 const PLAYFAIR: React.CSSProperties = { fontFamily: "'Playfair Display', Georgia, serif" };
 const DM: React.CSSProperties       = { fontFamily: "'DM Sans', sans-serif" };
 
 export default function Hero() {
-  const [imgLoaded,   setImgLoaded]   = useState(false);
   const [downloading, setDownloading] = useState(false);
-  const [imgSrc,      setImgSrc]      = useState('/images/shaun-profile-optimized.jpg');
   const linkRef = useRef<HTMLAnchorElement | null>(null);
   const reduced = useReducedMotion();
-
-  useEffect(() => {
-    const img = new Image();
-    img.src = imgSrc;
-    img.onload  = () => setImgLoaded(true);
-    img.onerror = () => {
-      setImgSrc('https://placehold.co/600x600/111111/3ECF8E?text=SC&font=playfair-display');
-      setImgLoaded(true);
-    };
-  }, []);
 
   const fade = (delay = 0, y = 16) => ({
     initial:    { opacity: 0, y: reduced ? 0 : y },
@@ -66,39 +56,6 @@ export default function Hero() {
     finally { setTimeout(() => setDownloading(false), 1500); }
   };
 
-  const CTAButtons = () => (
-    <div className="flex flex-wrap gap-3">
-      <button
-        onClick={scrollToWork}
-        style={{
-          padding: '11px 24px', borderRadius: 6, background: G, color: '#000',
-          fontSize: '0.75rem', fontWeight: 700, ...DM, letterSpacing: '0.02em',
-          border: 'none', cursor: 'pointer', transition: 'background 0.2s',
-          display: 'inline-flex', alignItems: 'center', gap: 8,
-        }}
-        onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = G_DARK; }}
-        onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = G; }}
-      >
-        View my work <ArrowRight size={14} />
-      </button>
-      <button
-        onClick={handleDownload}
-        disabled={downloading}
-        style={{
-          padding: '11px 24px', borderRadius: 6, background: 'transparent',
-          color: 'var(--ink)', fontSize: '0.75rem', fontWeight: 600, ...DM,
-          border: '1px solid var(--border-mid)', cursor: 'pointer', transition: 'border-color 0.2s, color 0.2s',
-          display: 'inline-flex', alignItems: 'center', gap: 8,
-        }}
-        onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(62,207,142,0.5)'; (e.currentTarget as HTMLButtonElement).style.color = G; }}
-        onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border-mid)'; (e.currentTarget as HTMLButtonElement).style.color = 'var(--ink)'; }}
-      >
-        <Download size={13} className={downloading ? 'animate-bounce' : ''} />
-        {downloading ? 'Downloading...' : 'Resume'}
-      </button>
-    </div>
-  );
-
   return (
     <section
       id="home"
@@ -106,7 +63,7 @@ export default function Hero() {
       style={{ background: 'var(--bg-page)' }}
       itemScope itemType="https://schema.org/Person"
     >
-      {/* Thin green top accent */}
+      {/* Green top accent */}
       <div aria-hidden style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: G, zIndex: 30 }} />
 
       {/* ── Top bar ── */}
@@ -131,65 +88,135 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      {/* ── Main grid ── */}
-      <div className="relative z-20 flex-1 grid grid-cols-1 lg:grid-cols-12 max-w-7xl mx-auto w-full px-6 lg:px-14 pb-12 items-center gap-8 lg:gap-0">
+      {/* ── Main content — full width, left-anchored ── */}
+      <div className="relative z-20 flex-1 flex flex-col justify-center max-w-5xl mx-auto w-full px-6 lg:px-14 py-16">
 
-        {/* Left: Text */}
-        <div className="lg:col-span-7 flex flex-col justify-center pt-10 lg:pt-0 order-2 lg:order-1">
+        {/* Eyebrow */}
+        <motion.p {...fade(0.1)} style={{
+          fontSize: '0.67rem', letterSpacing: '0.22em', textTransform: 'uppercase',
+          color: G, ...DM, fontWeight: 700, marginBottom: '1.6rem',
+        }}>
+          Software Engineer · Botswana
+        </motion.p>
 
-          {/* Eyebrow */}
-          <motion.p {...fade(0.1)} style={{ fontSize: '0.67rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: G, ...DM, fontWeight: 700, marginBottom: '1.4rem' }}>
-            Software Engineer · Botswana
-          </motion.p>
+        {/* Name — large, takes ownership of the page */}
+        <div style={{ overflow: 'hidden', marginBottom: '0.05rem' }}>
+          <motion.h1
+            initial={{ opacity: 0, y: reduced ? 0 : 70 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.85, delay: 0.14, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              ...PLAYFAIR, fontWeight: 700,
+              fontSize: 'clamp(4rem, 10vw, 8.5rem)',
+              letterSpacing: '-0.04em', lineHeight: 0.9,
+              color: 'var(--ink)',
+            }}
+            itemProp="name"
+          >
+            Shaun
+          </motion.h1>
+        </div>
 
-          {/* Name */}
-          <div style={{ overflow: 'hidden', marginBottom: '0.1rem' }}>
-            <motion.h1
-              initial={{ opacity: 0, y: reduced ? 0 : 60 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-              style={{ ...PLAYFAIR, fontWeight: 700, fontSize: 'clamp(3.4rem, 8vw, 7rem)', letterSpacing: '-0.04em', lineHeight: 0.92, color: 'var(--ink)' }}
-              itemProp="name"
-            >
-              Shaun
-            </motion.h1>
-          </div>
+        <div style={{ overflow: 'hidden', marginBottom: '2.4rem' }}>
+          <motion.h1
+            initial={{ opacity: 0, y: reduced ? 0 : 70 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.85, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              ...PLAYFAIR, fontWeight: 700, fontStyle: 'italic',
+              fontSize: 'clamp(4rem, 10vw, 8.5rem)',
+              letterSpacing: '-0.04em', lineHeight: 0.9,
+              color: G,
+            }}
+          >
+            Chikerema
+          </motion.h1>
+        </div>
 
-          <div style={{ overflow: 'hidden', marginBottom: '1.6rem' }}>
-            <motion.h1
-              initial={{ opacity: 0, y: reduced ? 0 : 60 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
-              style={{ ...PLAYFAIR, fontWeight: 700, fontStyle: 'italic', fontSize: 'clamp(3.4rem, 8vw, 7rem)', letterSpacing: '-0.04em', lineHeight: 0.92, color: G }}
-            >
-              Chikerema
-            </motion.h1>
-          </div>
+        {/* Divider */}
+        <motion.div
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={{ scaleX: 1, opacity: 1 }}
+          transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          style={{ height: 1, background: 'var(--border)', marginBottom: '2rem', transformOrigin: 'left', maxWidth: 560 }}
+        />
 
-          {/* Divider */}
-          <motion.div
-            initial={{ scaleX: 0, opacity: 0 }}
-            animate={{ scaleX: 1, opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
-            style={{ height: 1, background: 'var(--border)', marginBottom: '1.5rem', transformOrigin: 'left' }}
-          />
+        {/* Bio + proof in a two-col on desktop */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start" style={{ maxWidth: 860 }}>
 
           {/* Bio */}
-          <motion.p {...fade(0.34)} style={{ fontSize: 'clamp(0.88rem, 1.3vw, 1rem)', color: 'var(--ink)', lineHeight: 1.8, maxWidth: '42ch', ...DM, marginBottom: '1.6rem' }}>
-            I build AI-powered products that ship — from LangChain pipelines to deployed React Native apps.
-          </motion.p>
+          <motion.div {...fade(0.36)}>
+            <p style={{
+              fontSize: 'clamp(1rem, 1.5vw, 1.15rem)', color: 'var(--ink)',
+              lineHeight: 1.75, ...DM, marginBottom: '2rem',
+            }}>
+              From an AI/RAG pipeline to a multi-tenant real estate marketplace — I build and deploy full-stack products end to end.
+            </p>
 
-          {/* CTAs */}
-          <motion.div {...fade(0.4)} style={{ marginBottom: '1.8rem' }}>
-            <CTAButtons />
+            {/* CTAs */}
+            <div className="flex flex-wrap gap-3">
+              <button
+                onClick={scrollToWork}
+                style={{
+                  padding: '12px 26px', borderRadius: 6, background: G, color: '#000',
+                  fontSize: '0.75rem', fontWeight: 700, ...DM, letterSpacing: '0.02em',
+                  border: 'none', cursor: 'pointer', transition: 'background 0.2s',
+                  display: 'inline-flex', alignItems: 'center', gap: 8,
+                }}
+                onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = G_DARK; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = G; }}
+              >
+                View my work <ArrowRight size={14} />
+              </button>
+              <button
+                onClick={handleDownload}
+                disabled={downloading}
+                style={{
+                  padding: '12px 26px', borderRadius: 6, background: 'transparent',
+                  color: 'var(--ink)', fontSize: '0.75rem', fontWeight: 600, ...DM,
+                  border: '1px solid var(--border-mid)', cursor: 'pointer',
+                  transition: 'border-color 0.2s, color 0.2s',
+                  display: 'inline-flex', alignItems: 'center', gap: 8,
+                }}
+                onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(62,207,142,0.5)'; (e.currentTarget as HTMLButtonElement).style.color = G; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border-mid)'; (e.currentTarget as HTMLButtonElement).style.color = 'var(--ink)'; }}
+              >
+                <Download size={13} className={downloading ? 'animate-bounce' : ''} />
+                {downloading ? 'Downloading...' : 'Resume'}
+              </button>
+            </div>
           </motion.div>
 
-          {/* Stack pills */}
-          <motion.div {...fade(0.52)}>
+          {/* Right col — proof + stack */}
+          <motion.div {...fade(0.44)}>
+            {/* Proof numbers */}
+            <div
+              className="grid grid-cols-3 gap-4 mb-7 pb-7"
+              style={{ borderBottom: '1px solid var(--border)' }}
+            >
+              {PROOF.map(({ n, label }) => (
+                <div key={label}>
+                  <p style={{
+                    ...PLAYFAIR, fontWeight: 700, fontStyle: 'italic',
+                    fontSize: 'clamp(2rem, 3.5vw, 2.8rem)',
+                    color: G, lineHeight: 1, marginBottom: '0.35rem',
+                    letterSpacing: '-0.03em',
+                  }}>
+                    {n}
+                  </p>
+                  <p style={{ fontSize: '0.68rem', color: 'var(--ink-muted)', ...DM, lineHeight: 1.4 }}>
+                    {label}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Stack pills */}
             <div className="flex flex-wrap gap-1.5">
               {STACK.map(t => (
                 <span key={t} style={{
-                  padding: '4px 11px', borderRadius: 4, fontSize: '0.63rem', fontWeight: 600,
+                  padding: '4px 11px', borderRadius: 4,
+                  fontSize: '0.63rem', fontWeight: 600,
                   ...DM, letterSpacing: '0.04em',
                   background: 'transparent',
                   border: '1px solid var(--border-mid)',
@@ -200,92 +227,28 @@ export default function Hero() {
               ))}
             </div>
           </motion.div>
-        </div>
 
-        {/* Right: Circle Photo (or logo mark, if HAS_PROFILE_PHOTO is false) */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="lg:col-span-5 flex justify-center lg:justify-end items-center order-1 lg:order-2 pt-8 lg:pt-0"
-        >
-          {HAS_PROFILE_PHOTO ? (
-            <div style={{
-              width: 'clamp(200px, 26vw, 320px)',
-              aspectRatio: '1 / 1',
-              borderRadius: '50%',
-              overflow: 'hidden',
-              border: `2px solid rgba(62,207,142,0.35)`,
-              background: 'var(--bg-field)',
-              position: 'relative',
-            }}>
-              {!imgLoaded && (
-                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-field)' }}>
-                  <div style={{ width: 22, height: 22, border: `2px solid rgba(62,207,142,0.2)`, borderTopColor: G, borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
-                </div>
-              )}
-              <img
-                src={imgSrc}
-                alt="Shaun Chikerema"
-                style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 10%', opacity: imgLoaded ? 1 : 0, transition: 'opacity 0.5s ease' }}
-                onLoad={() => setImgLoaded(true)}
-                itemProp="image"
-              />
-            </div>
-          ) : (
-            /* Logo mark — temporary stand-in until a non-graduation photo is available.
-               Flip HAS_PROFILE_PHOTO back to true above once you have one; the photo
-               block (and its loading/error handling) is preserved untouched above. */
-            <div style={{
-              width: 'clamp(200px, 26vw, 320px)',
-              aspectRatio: '1 / 1',
-              borderRadius: '50%',
-              overflow: 'hidden',
-              border: `2px solid rgba(62,207,142,0.35)`,
-              background: 'var(--bg-field)',
-              position: 'relative',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundImage: `
-                linear-gradient(135deg, rgba(62,207,142,0.06) 25%, transparent 25%),
-                linear-gradient(225deg, rgba(62,207,142,0.06) 25%, transparent 25%),
-                linear-gradient(315deg, rgba(62,207,142,0.06) 25%, transparent 25%),
-                linear-gradient(45deg,  rgba(62,207,142,0.06) 25%, transparent 25%)
-              `,
-              backgroundSize: '26px 26px',
-              backgroundPosition: '0 0, 13px 0, 13px -13px, 0 13px',
-            }}>
-              <span style={{
-                ...PLAYFAIR, fontWeight: 700, fontStyle: 'italic',
-                fontSize: 'clamp(3.2rem, 7vw, 5.2rem)', color: G,
-                letterSpacing: '-0.02em', lineHeight: 1,
-              }}>
-                SC
-              </span>
-            </div>
-          )}
-        </motion.div>
+        </div>
       </div>
 
       {/* Scroll cue */}
       <motion.div
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1.5"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20"
       >
         <button
           onClick={scrollToWork}
-          style={{ color: 'var(--ink-muted)', fontSize: '0.52rem', letterSpacing: '0.22em', textTransform: 'uppercase', ...DM, background: 'none', border: 'none', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}
+          style={{
+            color: 'var(--ink-muted)', fontSize: '0.52rem', letterSpacing: '0.22em',
+            textTransform: 'uppercase', ...DM, background: 'none', border: 'none',
+            cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6,
+          }}
           aria-label="Scroll down"
         >
           scroll
-          <div style={{ width: 1, height: 20, background: `linear-gradient(to bottom, var(--ink-muted), transparent)` }} />
+          <div style={{ width: 1, height: 20, background: 'linear-gradient(to bottom, var(--ink-muted), transparent)' }} />
         </button>
       </motion.div>
-
-      <style>{`
-        @keyframes spin { to { transform: rotate(360deg); } }
-      `}</style>
     </section>
   );
 }
