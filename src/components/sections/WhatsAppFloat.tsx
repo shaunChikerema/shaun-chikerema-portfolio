@@ -1,10 +1,7 @@
 'use client';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-
-const WA_NUMBER = '26776051623';
-const WA_MESSAGE = encodeURIComponent("Hi Shaun, I'd like to discuss a project with you.");
-const WA_HREF = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
+import { WA_HREF } from '@/lib/site-config';
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (

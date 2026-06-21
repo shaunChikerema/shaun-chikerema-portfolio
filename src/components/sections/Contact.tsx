@@ -3,8 +3,7 @@ import { motion } from 'framer-motion';
 import { Mail, MapPin, Send } from 'lucide-react';
 import { useState } from 'react';
 import type React from 'react';
-
-const EMAIL = 'shaunchikerema28@gmail.com';
+import { EMAIL, MAILTO_HREF, PHONE_DISPLAY, WA_HREF } from '@/lib/site-config';
 
 function WhatsAppIcon({ className, style }: { className?: string; style?: React.CSSProperties }) {
   return (
@@ -14,14 +13,10 @@ function WhatsAppIcon({ className, style }: { className?: string; style?: React.
   );
 }
 
-const WA_NUMBER = '26776051623';
-const WA_MESSAGE = encodeURIComponent("Hi Shaun, I'd like to discuss a project with you.");
-const WA_HREF = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
-
 const METHODS = [
-  { icon: Mail,         label: 'Email',     value: EMAIL,                note: 'Best for project discussions',      href: `mailto:${EMAIL}?subject=Project Inquiry`, isWA: false },
-  { icon: WhatsAppIcon, label: 'WhatsApp',  value: '+267 76 051 623',    note: 'Direct messages & quick questions', href: WA_HREF,                                   isWA: true  },
-  { icon: MapPin,       label: 'Location',  value: 'Gaborone, Botswana', note: 'Remote work worldwide',             href: '#',                                        isWA: false },
+  { icon: Mail,         label: 'Email',     value: EMAIL,         note: 'Best for project discussions',      href: MAILTO_HREF, isWA: false },
+  { icon: WhatsAppIcon, label: 'WhatsApp',  value: PHONE_DISPLAY, note: 'Direct messages & quick questions', href: WA_HREF,      isWA: true  },
+  { icon: MapPin,       label: 'Location',  value: 'Gaborone, Botswana', note: 'Remote work worldwide',      href: '#',          isWA: false },
 ];
 
 const TYPES = [

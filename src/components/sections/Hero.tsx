@@ -2,17 +2,22 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { Github, Linkedin, Mail, Download, ArrowRight } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
+import { MAILTO_HREF } from '@/lib/site-config';
 
 const SOCIALS = [
   { href: 'https://github.com/shaunChikerema',      icon: Github,   label: 'GitHub' },
   { href: 'https://linkedin.com/in/shaunchikerema', icon: Linkedin, label: 'LinkedIn' },
-  { href: 'mailto:sschikerema@gmail.com',           icon: Mail,     label: 'Email' },
+  { href: MAILTO_HREF,                              icon: Mail,     label: 'Email' },
 ];
 
 const STACK = ['Python', 'LangChain', 'Next.js', 'TypeScript', 'React Native', 'Supabase'];
 
 const G      = '#3ECF8E';
 const G_DARK = '#2db87a';
+
+// Flip to true once a non-graduation profile photo is ready.
+// Until then, the hero shows an SC logo mark instead of a photo.
+const HAS_PROFILE_PHOTO = false;
 
 const PLAYFAIR: React.CSSProperties = { fontFamily: "'Playfair Display', Georgia, serif" };
 const DM: React.CSSProperties       = { fontFamily: "'DM Sans', sans-serif" };
@@ -197,35 +202,69 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Right: Circle Photo */}
+        {/* Right: Circle Photo (or logo mark, if HAS_PROFILE_PHOTO is false) */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="lg:col-span-5 flex justify-center lg:justify-end items-center order-1 lg:order-2 pt-8 lg:pt-0"
         >
-          <div style={{
-            width: 'clamp(200px, 26vw, 320px)',
-            aspectRatio: '1 / 1',
-            borderRadius: '50%',
-            overflow: 'hidden',
-            border: `2px solid rgba(62,207,142,0.35)`,
-            background: 'var(--bg-field)',
-            position: 'relative',
-          }}>
-            {!imgLoaded && (
-              <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-field)' }}>
-                <div style={{ width: 22, height: 22, border: `2px solid rgba(62,207,142,0.2)`, borderTopColor: G, borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
-              </div>
-            )}
-            <img
-              src={imgSrc}
-              alt="Shaun Chikerema"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 10%', opacity: imgLoaded ? 1 : 0, transition: 'opacity 0.5s ease' }}
-              onLoad={() => setImgLoaded(true)}
-              itemProp="image"
-            />
-          </div>
+          {HAS_PROFILE_PHOTO ? (
+            <div style={{
+              width: 'clamp(200px, 26vw, 320px)',
+              aspectRatio: '1 / 1',
+              borderRadius: '50%',
+              overflow: 'hidden',
+              border: `2px solid rgba(62,207,142,0.35)`,
+              background: 'var(--bg-field)',
+              position: 'relative',
+            }}>
+              {!imgLoaded && (
+                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-field)' }}>
+                  <div style={{ width: 22, height: 22, border: `2px solid rgba(62,207,142,0.2)`, borderTopColor: G, borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+                </div>
+              )}
+              <img
+                src={imgSrc}
+                alt="Shaun Chikerema"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 10%', opacity: imgLoaded ? 1 : 0, transition: 'opacity 0.5s ease' }}
+                onLoad={() => setImgLoaded(true)}
+                itemProp="image"
+              />
+            </div>
+          ) : (
+            /* Logo mark — temporary stand-in until a non-graduation photo is available.
+               Flip HAS_PROFILE_PHOTO back to true above once you have one; the photo
+               block (and its loading/error handling) is preserved untouched above. */
+            <div style={{
+              width: 'clamp(200px, 26vw, 320px)',
+              aspectRatio: '1 / 1',
+              borderRadius: '50%',
+              overflow: 'hidden',
+              border: `2px solid rgba(62,207,142,0.35)`,
+              background: 'var(--bg-field)',
+              position: 'relative',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundImage: `
+                linear-gradient(135deg, rgba(62,207,142,0.06) 25%, transparent 25%),
+                linear-gradient(225deg, rgba(62,207,142,0.06) 25%, transparent 25%),
+                linear-gradient(315deg, rgba(62,207,142,0.06) 25%, transparent 25%),
+                linear-gradient(45deg,  rgba(62,207,142,0.06) 25%, transparent 25%)
+              `,
+              backgroundSize: '26px 26px',
+              backgroundPosition: '0 0, 13px 0, 13px -13px, 0 13px',
+            }}>
+              <span style={{
+                ...PLAYFAIR, fontWeight: 700, fontStyle: 'italic',
+                fontSize: 'clamp(3.2rem, 7vw, 5.2rem)', color: G,
+                letterSpacing: '-0.02em', lineHeight: 1,
+              }}>
+                SC
+              </span>
+            </div>
+          )}
         </motion.div>
       </div>
 

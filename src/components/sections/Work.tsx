@@ -2,7 +2,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ExternalLink, ArrowRight, Calendar, Download,
-  Smartphone, X, ChevronLeft, ChevronRight, Images, ArrowUpRight, ChevronDown,
+  Smartphone, X, ChevronLeft, ChevronRight, Images, ArrowUpRight, ChevronDown, Play,
 } from 'lucide-react';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
@@ -18,6 +18,7 @@ type Project = {
   url: string;
   architectureUrl?: string;
   demoNote?: string;
+  videoUrl?: string; // short walkthrough clip — shown when the live demo isn't reliably available
   accent: string;
   bgFrom: string;
   bgTo: string;
@@ -104,6 +105,13 @@ const PROJECTS: Project[] = [
     description: 'Full RAG pipeline built from scratch — scrape → chunk (2k chars, 200-char overlap) → embed (Gemini, 768-dim) → pgvector cosine search → grounded generation (Llama 3.3 70B). Tunable retrieval, multi-turn conversation, and inline citations tied to source URLs.',
     url: 'https://askragify.vercel.app',
     architectureUrl: 'https://ragify.vercel.app/architecture.html',
+    // TODO: record a 30-60s screen capture of Ragify in action (query → cited
+    // answer → ingest tab) and host it somewhere public (e.g. /public/videos/
+    // ragify-demo.mp4, or a Supabase/S3 bucket), then paste the URL here. This is
+    // the single highest-leverage fix on this page — right now your best
+    // technical project asks visitors to email you for a demo instead of just
+    // showing them.
+    videoUrl: '', // e.g. '/videos/ragify-demo.mp4'
     accent: '#6366f1',
     bgFrom: '#0f0f1a',
     bgTo: '#1a1a35',
@@ -750,6 +758,17 @@ export default function Work() {
                               onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(62,207,142,0.06)'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(62,207,142,0.3)'; }}
                             >
                               Architecture <ArrowUpRight size={12} />
+                            </a>
+                          )}
+
+                          {p.videoUrl && (
+                            <a href={p.videoUrl} target="_blank" rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2"
+                              style={{ padding: '8px 16px', borderRadius: 10, background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.3)', color: '#6366f1', fontSize: '0.72rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', transition: 'background 0.2s ease, border-color 0.2s ease' }}
+                              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(99,102,241,0.16)'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(99,102,241,0.5)'; }}
+                              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(99,102,241,0.08)'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(99,102,241,0.3)'; }}
+                            >
+                              <Play size={12} /> Watch Demo
                             </a>
                           )}
 
