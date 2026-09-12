@@ -104,26 +104,25 @@ const PROJECTS: Project[] = [
       { src: '/screenshots/policybridge/mobile/policybridge-m-10.png', caption: 'Create your brokerage account',                  view: 'mobile' },
     ],
   },
-  // 3 — AI/RAG (impressive but backend currently down)
+  // 3 — AI/RAG (backend live on Render, no longer paused)
   {
     id: 7,
     title: 'Ragify',
     slug: 'ragify',
     type: 'AI Engineering · Python + React',
-    description: 'Full RAG pipeline built from scratch — scrape → chunk (2k chars, 200-char overlap) → embed (Gemini, 768-dim) → pgvector cosine search → grounded generation (Llama 3.3 70B). Tunable retrieval, multi-turn conversation, and inline citations tied to source URLs.',
+    description: 'Full RAG pipeline built from scratch — scrape → chunk (2k chars, 200-char overlap) → embed (Gemini, 768-dim) → pgvector cosine search → grounded generation (GPT-OSS 120B via Groq). Tunable retrieval, multi-turn conversation, and inline citations tied to source URLs.',
     url: 'https://askragify.vercel.app',
     architectureUrl: 'https://ragify.vercel.app/architecture.html',
     videoUrl: '', // e.g. '/videos/ragify-demo.mp4'
     accent: '#6366f1',
     bgFrom: '#0f0f1a',
     bgTo: '#1a1a35',
-    demoNote: 'Backend paused — demo available on request',
     stack: ['Python', 'FastAPI', 'Gemini', 'Groq', 'pgvector', 'Supabase', 'React'],
     features: [
       'Scrape any HTML URL → clean text → overlapping chunks at word boundaries',
       'Gemini gemini-embedding-001 — 768-dim vectors, batched 50 at a time with deduplication',
       'pgvector cosine similarity via Supabase RPC — vector math stays in the DB, not Python',
-      'Llama 3.3 70B on Groq at ~800 tok/s — temperature 0.2 for grounded, natural answers',
+      'GPT-OSS 120B on Groq — temperature 0.2 for grounded, natural answers',
       'Configurable top-k and similarity threshold exposed in the UI settings tab',
       'Full multi-turn conversation history passed on every query',
     ],
