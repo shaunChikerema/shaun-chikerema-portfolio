@@ -1,8 +1,8 @@
 'use client';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  ExternalLink, ArrowRight, Calendar, Download,
-  Smartphone, X, ChevronLeft, ChevronRight, Images, ArrowUpRight, ChevronDown, Play,
+  ExternalLink, Calendar, Download,
+  Smartphone, X, ChevronLeft, ChevronRight, Images, ArrowUpRight, Play,
 } from 'lucide-react';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
@@ -55,15 +55,19 @@ const PROJECTS: Project[] = [
     ],
     screenshots: [
       { src: '/screenshots/keyat/mobile/keyat-m-1.png',  caption: 'Homepage hero — find your dream home',     view: 'mobile' },
+      // NOTE: keyat-m-2.png is referenced but was not part of the screenshot
+      // batch delivered — this slide will currently be skipped (see the
+      // onError fallback below) until a real "apartment slide" screenshot is
+      // captured and dropped at this path. Remove this comment once fixed.
       { src: '/screenshots/keyat/mobile/keyat-m-2.png',  caption: 'Homepage hero — apartment slide',           view: 'mobile' },
-      { src: '/screenshots/keyat/mobile/keyat-m-3.png',  caption: 'Sign in — Google, Facebook or email',       view: 'mobile' },
-      { src: '/screenshots/keyat/mobile/keyat-m-4.png',  caption: 'Create account',                            view: 'mobile' },
+      { src: '/screenshots/keyat/mobile/keyat-m-3.png',  caption: 'Sign in — Google or email',                 view: 'mobile' },
+      { src: '/screenshots/keyat/mobile/keyat-m-4.png',  caption: 'Add Property — Step 1 of 3',                view: 'mobile' },
       { src: '/screenshots/keyat/mobile/keyat-m-5.png',  caption: 'Tenant dashboard — featured properties',    view: 'mobile' },
-      { src: '/screenshots/keyat/mobile/keyat-m-6.png',  caption: 'Latest listings feed',                      view: 'mobile' },
-      { src: '/screenshots/keyat/mobile/keyat-m-7.png',  caption: 'Landlord dashboard — my listings',          view: 'mobile' },
-      { src: '/screenshots/keyat/mobile/keyat-m-8.png',  caption: 'My Properties — all 11 listings',           view: 'mobile' },
+      { src: '/screenshots/keyat/mobile/keyat-m-6.png',  caption: 'Home feed — featured & latest listings',    view: 'mobile' },
+      { src: '/screenshots/keyat/mobile/keyat-m-7.png',  caption: 'Landlord dashboard — 11 listings',          view: 'mobile' },
+      { src: '/screenshots/keyat/mobile/keyat-m-8.png',  caption: 'Agent dashboard — 3 listings',              view: 'mobile' },
       { src: '/screenshots/keyat/mobile/keyat-m-9.png',  caption: 'Agent dashboard — listings & market',       view: 'mobile' },
-      { src: '/screenshots/keyat/mobile/keyat-m-10.png', caption: 'Public browse — featured properties',       view: 'mobile' },
+      { src: '/screenshots/keyat/mobile/keyat-m-10.png', caption: 'Search results — 18 properties found',      view: 'mobile' },
     ],
   },
   // 2 — Enterprise SaaS (shows backend depth)
@@ -109,12 +113,6 @@ const PROJECTS: Project[] = [
     description: 'Full RAG pipeline built from scratch — scrape → chunk (2k chars, 200-char overlap) → embed (Gemini, 768-dim) → pgvector cosine search → grounded generation (Llama 3.3 70B). Tunable retrieval, multi-turn conversation, and inline citations tied to source URLs.',
     url: 'https://askragify.vercel.app',
     architectureUrl: 'https://ragify.vercel.app/architecture.html',
-    // TODO: record a 30-60s screen capture of Ragify in action (query → cited
-    // answer → ingest tab) and host it somewhere public (e.g. /public/videos/
-    // ragify-demo.mp4, or a Supabase/S3 bucket), then paste the URL here. This is
-    // the single highest-leverage fix on this page — right now your best
-    // technical project asks visitors to email you for a demo instead of just
-    // showing them.
     videoUrl: '', // e.g. '/videos/ragify-demo.mp4'
     accent: '#6366f1',
     bgFrom: '#0f0f1a',
@@ -199,28 +197,7 @@ const PROJECTS: Project[] = [
       { src: '/screenshots/alfa-first/mobile/alfa-first-5.png', caption: 'Contact — We\'re Here to Help',                view: 'mobile' },
     ],
   },
-  // 6 — Studio (context/backstory)
-  {
-    id: 5,
-    title: 'BITROOT',
-    slug: 'bitroot',
-    type: 'Tech Startup · Agency & SaaS Studio',
-    description: 'My own software studio — building proprietary products and delivering client work across web and mobile.',
-    url: 'https://bitroot-dev.vercel.app',
-    accent: '#16a34a',
-    bgFrom: '#e8f5ee',
-    bgTo: '#c8e6d4',
-    stack: ['Next.js', 'TypeScript', 'React Native', 'Supabase', 'Vercel'],
-    features: [
-      'Founder-led product studio',
-      'Full-stack web & mobile development',
-      'Client work & proprietary SaaS products',
-      'End-to-end — design, build, deploy, maintain',
-      'Based in Botswana, building for the world',
-    ],
-    screenshots: [],
-  },
-  // 6 — Mobile (shows breadth)
+  // 5 — Mobile (shows breadth)
   {
     id: 4,
     title: 'BlackDice',
@@ -254,29 +231,6 @@ const PROJECTS: Project[] = [
       { src: '/screenshots/blackdice/mobile/blackdice-m-9.png',  caption: 'Scanning Library — 100% complete',         view: 'mobile' },
       { src: '/screenshots/blackdice/mobile/blackdice-m-10.png', caption: 'Library — continued scroll',               view: 'mobile' },
     ],
-  },
-  // 7 — Second mobile app
-  {
-    id: 6,
-    title: 'Yonder',
-    slug: 'yonder',
-    type: 'Mobile App · Audiobook Player',
-    description: 'Audiobook player streaming LibriVox recordings — chapter nav, sleep timer, bookmarks, amber-themed UI.',
-    url: '#',
-    accent: '#f5a623',
-    bgFrom: '#2a1f0a',
-    bgTo: '#3d2e0e',
-    isApp: true,
-    stack: ['React Native', 'Expo SDK 54', 'TypeScript', 'expo-av', 'AsyncStorage'],
-    features: [
-      '8 pre-loaded public domain audiobooks via LibriVox',
-      'Chapter navigation with persistent progress tracking',
-      'Playback speed control — 0.5× to 2×',
-      'Sleep timer with live countdown',
-      'Bookmarks with timestamps and notes',
-      'MiniPlayer persistent across all tabs',
-    ],
-    screenshots: [],
   },
 ];
 
@@ -430,12 +384,29 @@ function pickSlides(screenshots: Screenshot[], max = 5): Screenshot[] {
   return Array.from({ length: max }, (_, i) => screenshots[Math.round(i * step)]);
 }
 
-function ProjectSlideshow({ project, onOpenLightbox }: { project: Project; onOpenLightbox: () => void }) {
-  const slides = pickSlides(project.screenshots);
+function ProjectSlideshow({ project, onOpenLightbox, flagship = false }: { project: Project; onOpenLightbox: () => void; flagship?: boolean }) {
+  const allSlides = pickSlides(project.screenshots);
+
+  // FIX: track which slide src's have actually failed to load (e.g. a typo'd
+  // path or a screenshot that was never captured, like keyat-m-2.png right
+  // now). Previously a 404 just rendered a broken-image icon squashed into
+  // the phone frame — which is very likely what looked "squished/stretched"
+  // in the screenshot. Broken slides are filtered out of rotation entirely
+  // instead of ever being shown.
+  const [failedSrcs, setFailedSrcs] = useState<Set<string>>(new Set());
+  const slides = allSlides.filter(s => !failedSrcs.has(s.src));
+  const markFailed = (src: string) =>
+    setFailedSrcs(prev => (prev.has(src) ? prev : new Set(prev).add(src)));
+
   const [idx, setIdx] = useState(0);
   const [fading, setFading] = useState(false);
   const [inView, setInView] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Keep idx in range if the slide count shrinks after a load failure
+  useEffect(() => {
+    if (idx >= slides.length && slides.length > 0) setIdx(0);
+  }, [slides.length, idx]);
 
   // Only start playing when the card is scrolled into view
   useEffect(() => {
@@ -467,7 +438,7 @@ function ProjectSlideshow({ project, onOpenLightbox }: { project: Project; onOpe
     setTimeout(() => { setIdx(i); setFading(false); }, 280);
   };
 
-  // No screenshots — keep original placeholder
+  // No screenshots (or every screenshot failed to load) — keep original placeholder
   if (slides.length === 0) {
     return (
       <div
@@ -494,32 +465,69 @@ function ProjectSlideshow({ project, onOpenLightbox }: { project: Project; onOpe
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 overflow-hidden cursor-pointer group/panel"
-      style={{ background: `linear-gradient(135deg, ${project.bgFrom}, ${project.bgTo})` }}
+      className="absolute inset-0 overflow-hidden cursor-pointer group/panel flex flex-col items-center justify-center"
+      style={{ background: `linear-gradient(135deg, ${project.bgFrom}, ${project.bgTo})`, padding: '20px 20px 16px', gap: 14 }}
       onClick={onOpenLightbox}
     >
-      {/* Stacked slides — crossfade */}
-      {slides.map((shot, i) => (
-        <img
-          key={shot.src}
-          src={shot.src}
-          alt={shot.caption}
+      {/* Phone frame — screenshots are portrait, so we show them in a phone
+          mockup at their native aspect ratio instead of cropping them into
+          a landscape panel (which was cutting off most of each screen).
+          object-fit: cover here means the screenshot is scaled uniformly
+          (no distortion) and only cropped top/bottom to fill the frame —
+          it is never stretched. */}
+      <div
+        style={{
+          position: 'relative',
+          width: flagship ? 'clamp(170px, 38vw, 220px)' : 'clamp(140px, 32vw, 182px)',
+          // FIX: this was '9 / 19.5' (a tall notch-phone shape), but every
+          // screenshot in the Keyat set is a real 720x1280 capture — a 9:16
+          // ratio. That mismatch forced object-fit: cover to crop into the
+          // top and bottom of every slide to fill the taller frame, cutting
+          // off the header and footer content. Matching the frame ratio to
+          // the actual screenshot ratio means nothing needs to be cropped.
+          aspectRatio: '9 / 16',
+          flexShrink: 0,
+          borderRadius: 22,
+          background: '#0a0a0a',
+          padding: '10px 5px 5px',
+          boxShadow: '0 20px 44px rgba(0,0,0,0.28), 0 2px 10px rgba(0,0,0,0.18)',
+        }}
+      >
+        <div style={{ position: 'relative', width: '100%', height: '100%', borderRadius: 16, overflow: 'hidden', background: '#111' }}>
+          {slides.map((shot, i) => (
+            <img
+              key={shot.src}
+              src={shot.src}
+              alt={shot.caption}
+              onError={() => markFailed(shot.src)}
+              style={{
+                position: 'absolute', inset: 0, width: '100%', height: '100%',
+                // 'contain' is the safety net here: since the frame ratio now
+                // matches the screenshots, contain and cover render
+                // identically for on-ratio images, but contain guarantees no
+                // cropping even if a future screenshot comes in slightly off
+                // (e.g. a different phone's status bar height).
+                objectFit: 'contain', objectPosition: 'top center',
+                opacity: i === idx ? (fading ? 0 : 1) : 0,
+                transition: 'opacity 0.28s ease',
+              }}
+            />
+          ))}
+        </div>
+        {/* Notch */}
+        <div
+          aria-hidden
           style={{
-            position: 'absolute', inset: 0, width: '100%', height: '100%',
-            objectFit: 'cover', objectPosition: project.previewPosition ?? '50% 35%',
-            opacity: i === idx ? (fading ? 0 : 1) : 0,
-            transition: 'opacity 0.28s ease',
+            position: 'absolute', top: 3, left: '50%', transform: 'translateX(-50%)',
+            width: '26%', height: 5, background: '#000', borderRadius: 999, zIndex: 2,
           }}
         />
-      ))}
-
-      {/* Bottom gradient for dot legibility */}
-      <div style={{ position: 'absolute', inset: '60% 0 0 0', background: 'linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%)', pointerEvents: 'none' }} />
+      </div>
 
       {/* Hover overlay */}
       <div
         className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/panel:opacity-100 transition-opacity duration-300"
-        style={{ background: 'rgba(0,0,0,0.32)' }}
+        style={{ background: 'rgba(0,0,0,0.28)' }}
       >
         <div
           className="flex items-center gap-2.5 px-5 py-2.5 rounded-full text-white text-xs font-semibold"
@@ -529,11 +537,15 @@ function ProjectSlideshow({ project, onOpenLightbox }: { project: Project; onOpe
         </div>
       </div>
 
-      {/* Dots + label */}
+      {/* Caption + dots — on their own dark chip so they stay legible
+          whether the project's gradient (bgFrom/bgTo) is light or dark. */}
       {slides.length > 1 && (
-        <div style={{ position: 'absolute', bottom: 12, left: 0, right: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5, pointerEvents: 'none' }}>
-          <span style={{ fontSize: 9, fontWeight: 600, color: 'rgba(255,255,255,0.6)', letterSpacing: '0.18em', textTransform: 'uppercase' }}>
-            {slides[idx].caption.split('—')[0].trim()}
+        <div
+          className="flex flex-col items-center gap-2"
+          style={{ padding: '8px 14px', borderRadius: 12, background: 'rgba(0,0,0,0.38)', backdropFilter: 'blur(6px)', pointerEvents: 'none' }}
+        >
+          <span style={{ fontSize: 9, fontWeight: 600, color: 'rgba(255,255,255,0.75)', letterSpacing: '0.14em', textTransform: 'uppercase', textAlign: 'center', maxWidth: 220 }}>
+            {slides[idx]?.caption.split('—')[0].trim()}
           </span>
           <div style={{ display: 'flex', gap: 5, pointerEvents: 'auto' }}>
             {slides.map((_, i) => (
@@ -558,7 +570,6 @@ function ProjectSlideshow({ project, onOpenLightbox }: { project: Project; onOpe
 
 /* ─── Work Section ─── */
 export default function Work() {
-  const [expanded, setExpanded] = useState<number | null>(null);
   const [lightbox, setLightbox] = useState<{ project: Project; index: number } | null>(null);
 
   return (
@@ -589,7 +600,7 @@ export default function Work() {
               </div>
               <div className="lg:col-span-5 lg:col-start-8">
                 <p className="font-body text-sm leading-relaxed" style={{ color: 'var(--ink-muted)' }}>
-                  Seven production projects across web and mobile — from polished client work to AI pipelines and mobile apps.
+                  Six production projects across web and mobile — from polished client work to an AI pipeline and mobile apps.
                 </p>
               </div>
             </div>
@@ -598,7 +609,6 @@ export default function Work() {
           {/* ── Project Rows ── */}
           <div className="space-y-5 mb-14">
             {PROJECTS.map((p, cardIdx) => {
-              const isOpen = expanded === p.id;
               const hasLiveUrl = p.url !== '#';
 
               return (
@@ -625,15 +635,19 @@ export default function Work() {
                   {/* Accent top bar */}
                   <div style={{ height: 3, background: `linear-gradient(90deg, ${p.accent}, ${p.accent}55)` }} />
 
-                  {/* Two-column layout — alternating image side */}
-                  <div className={`grid grid-cols-1 ${cardIdx % 2 === 0 ? 'lg:grid-cols-[1fr_380px]' : 'lg:grid-cols-[380px_1fr]'}`}>
+                  {/* Two-column layout — alternating image side. The flagship
+                      project (cardIdx 0, Keyat) gets a wider image panel than
+                      the rest so it doesn't read as visually equal to every
+                      other card — it's the most complex piece of work here
+                      and should look like it. */}
+                  <div className={`grid grid-cols-1 ${cardIdx % 2 === 0 ? (cardIdx === 0 ? 'lg:grid-cols-[1fr_460px]' : 'lg:grid-cols-[1fr_380px]') : 'lg:grid-cols-[380px_1fr]'}`}>
 
                     {/* ── Visual Panel (left on odd cardIdx) ── */}
                     {cardIdx % 2 !== 0 && (
                       <div
                         className="relative overflow-hidden order-last lg:order-first"
                         style={{
-                          minHeight: 'clamp(260px, 50vw, 340px)',
+                          minHeight: 'clamp(340px, 55vw, 420px)',
                           borderBottom: '1px solid var(--border)',
                         }}
                       >
@@ -647,13 +661,20 @@ export default function Work() {
                     {/* ── Info ── */}
                     <div className="flex flex-col justify-between p-6 lg:p-9">
                       <div>
-                        {/* Number + type + badge row */}
-                        <div className="flex items-center gap-2.5 mb-4 flex-wrap">
-                          <span style={{ fontSize: '0.65rem', fontWeight: 700, fontFamily: 'monospace', color: p.accent, letterSpacing: '0.04em' }}>
-                            {String(cardIdx + 1).padStart(2, '0')}
-                          </span>
-                          <span style={{ width: 3, height: 3, borderRadius: '50%', background: 'var(--ink-muted)', opacity: 0.35, display: 'inline-block' }} />
-                          <span style={{ fontSize: '0.68rem', fontWeight: 600, letterSpacing: '0.09em', textTransform: 'uppercase', color: 'var(--ink-muted)', fontFamily: "'DM Sans', sans-serif" }}>
+                        {/* Type + status row — dropped the "01" index (this
+                            is a list, not a real sequence) and the tracked
+                            all-caps/middle-dot meta string. Category is now
+                            a small tinted label chip; status stays a
+                            separate dot+word badge. */}
+                        <div className="flex items-center gap-2 mb-4 flex-wrap">
+                          <span
+                            style={{
+                              padding: '3px 10px', borderRadius: 999,
+                              fontSize: '0.68rem', fontWeight: 600,
+                              fontFamily: "'DM Sans', sans-serif",
+                              background: `${p.accent}14`, color: p.accent,
+                            }}
+                          >
                             {p.type}
                           </span>
                           {p.isApp && (
@@ -663,7 +684,7 @@ export default function Work() {
                           )}
                           {!p.isApp && hasLiveUrl && (
                             <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '2px 8px', borderRadius: 999, fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', background: '#16a34a14', color: '#16a34a' }}>
-                              <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#16a34a', display: 'inline-block', animation: 'pulse 2s infinite' }} />
+                              <span className="dot-pulse" style={{ width: 5, height: 5, borderRadius: '50%', background: '#16a34a', display: 'inline-block' }} />
                               Live
                             </span>
                           )}
@@ -682,24 +703,42 @@ export default function Work() {
                           {p.title}
                         </h3>
 
-                        {/* Description — tighter, max 2 lines */}
-                        <p className="font-body text-sm mb-5" style={{ color: 'var(--ink-muted)', lineHeight: 1.7, maxWidth: '52ch' }}>
+                        {/* Description — enforced 2-line clamp so longer
+                            descriptions (e.g. Ragify's) don't inflate the card;
+                            the rest is one click away via Case Study. */}
+                        <p
+                          className="font-body text-sm mb-5"
+                          style={{
+                            color: 'var(--ink-muted)', lineHeight: 1.7, maxWidth: '52ch',
+                            display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden',
+                          }}
+                        >
                           {p.description}
                         </p>
 
-                        {/* Stack pills */}
+                        {/* Stack pills — neutral gray, capped at 3 for most
+                            cards so the row stays scannable. The flagship
+                            project (Keyat) shows its full stack instead of
+                            being capped like everything else, since it's the
+                            card meant to carry the most technical weight. */}
                         <div className="flex flex-wrap gap-1.5 mb-6">
-                          {p.stack.map(t => (
-                            <span key={t} style={{ padding: '3px 10px', borderRadius: 6, fontSize: '0.68rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", background: `${p.accent}10`, border: `1px solid ${p.accent}28`, color: p.accent, letterSpacing: '0.01em' }}>
+                          {p.stack.slice(0, cardIdx === 0 ? p.stack.length : 3).map(t => (
+                            <span key={t} style={{ padding: '3px 10px', borderRadius: 6, fontSize: '0.68rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", background: 'var(--bg-field)', border: '1px solid var(--border)', color: 'var(--ink-mid)', letterSpacing: '0.01em' }}>
                               {t}
                             </span>
                           ))}
+                          {cardIdx !== 0 && p.stack.length > 3 && (
+                            <span style={{ padding: '3px 10px', borderRadius: 6, fontSize: '0.68rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", background: 'var(--bg-field)', border: '1px solid var(--border)', color: 'var(--ink-muted)' }}>
+                              +{p.stack.length - 3}
+                            </span>
+                          )}
                         </div>
                       </div>
 
                       {/* ── Action buttons ── */}
-                      <div className="flex flex-col gap-2">
-                        {/* Primary CTA — full width on mobile */}
+                      <div className="flex flex-col gap-3">
+                        {/* Primary CTA — full width on mobile, the only solid button on the card */}
                         <div className="flex flex-wrap gap-2">
                           {p.isApp ? (
                             hasLiveUrl ? (
@@ -728,88 +767,45 @@ export default function Work() {
                           )}
                         </div>
 
-                        {/* Secondary row — Screenshots + Case Study + Features toggle */}
-                        <div className="flex flex-wrap gap-2 items-center">
-                          {p.screenshots.length > 0 && (
-                            <button type="button" onClick={() => setLightbox({ project: p, index: 0 })}
-                              className="inline-flex items-center gap-2"
-                              style={{ padding: '8px 16px', borderRadius: 10, background: 'transparent', border: '1px solid var(--border)', color: 'var(--ink)', fontSize: '0.72rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", cursor: 'pointer', transition: 'background 0.2s ease, border-color 0.2s ease' }}
-                              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'var(--bg-field)'; (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border-mid)'; }}
-                              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'transparent'; (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border)'; }}
-                            >
-                              <Images size={12} /> Screenshots
-                            </button>
-                          )}
-
+                        {/* Secondary row — just Case Study, plus Architecture/
+                            Watch Demo when a project actually has them.
+                            Case Study is now a plain underline-on-hover text
+                            link with no icon — the arrow glyph is reserved
+                            for the one primary action (Visit Site / Download),
+                            so the two don't compete for the same visual
+                            weight. */}
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                           <a href={`/projects/${p.slug}`}
-                            className="inline-flex items-center gap-2"
-                            style={{ padding: '8px 16px', borderRadius: 10, background: 'transparent', border: '1px solid var(--border)', color: 'var(--ink)', fontSize: '0.72rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', transition: 'background 0.2s ease, border-color 0.2s ease' }}
-                            onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'var(--bg-field)'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--border-mid)'; }}
-                            onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'transparent'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--border)'; }}
+                            style={{ color: 'var(--ink-mid)', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', borderBottom: '1px solid transparent', transition: 'color 0.2s ease, border-color 0.2s ease', paddingBottom: 1 }}
+                            onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.color = 'var(--ink)'; el.style.borderColor = 'var(--ink)'; }}
+                            onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.color = 'var(--ink-mid)'; el.style.borderColor = 'transparent'; }}
                           >
-                            Case Study <ArrowRight size={12} />
+                            Case Study
                           </a>
 
                           {p.architectureUrl && (
                             <a href={p.architectureUrl} target="_blank" rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2"
-                              style={{ padding: '8px 16px', borderRadius: 10, background: 'rgba(62,207,142,0.06)', border: '1px solid rgba(62,207,142,0.3)', color: '#1a7a52', fontSize: '0.72rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', transition: 'background 0.2s ease, border-color 0.2s ease' }}
-                              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(62,207,142,0.12)'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(62,207,142,0.5)'; }}
-                              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(62,207,142,0.06)'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(62,207,142,0.3)'; }}
+                              className="inline-flex items-center gap-1.5"
+                              style={{ color: '#1a7a52', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', transition: 'opacity 0.2s ease' }}
+                              onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '0.7')}
+                              onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '1')}
                             >
-                              Architecture <ArrowUpRight size={12} />
+                              Architecture <ArrowUpRight size={13} />
                             </a>
                           )}
 
                           {p.videoUrl && (
                             <a href={p.videoUrl} target="_blank" rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2"
-                              style={{ padding: '8px 16px', borderRadius: 10, background: 'rgba(99,102,241,0.08)', border: '1px solid rgba(99,102,241,0.3)', color: '#6366f1', fontSize: '0.72rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', transition: 'background 0.2s ease, border-color 0.2s ease' }}
-                              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(99,102,241,0.16)'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(99,102,241,0.5)'; }}
-                              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(99,102,241,0.08)'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(99,102,241,0.3)'; }}
+                              className="inline-flex items-center gap-1.5"
+                              style={{ color: '#6366f1', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', transition: 'opacity 0.2s ease' }}
+                              onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '0.7')}
+                              onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '1')}
                             >
-                              <Play size={12} /> Watch Demo
+                              <Play size={13} /> Watch Demo
                             </a>
                           )}
-
-                          <button type="button" onClick={() => setExpanded(isOpen ? null : p.id)}
-                            className="inline-flex items-center gap-1.5"
-                            style={{ padding: '8px 14px', borderRadius: 10, background: 'transparent', border: 'none', color: 'var(--ink-muted)', fontSize: '0.72rem', fontWeight: 500, fontFamily: "'DM Sans', sans-serif", cursor: 'pointer', transition: 'color 0.2s ease' }}
-                            onMouseEnter={e => ((e.currentTarget as HTMLButtonElement).style.color = 'var(--ink)')}
-                            onMouseLeave={e => ((e.currentTarget as HTMLButtonElement).style.color = 'var(--ink-muted)')}
-                          >
-                            Features
-                            <motion.span animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }} style={{ display: 'flex' }}>
-                              <ChevronDown size={13} />
-                            </motion.span>
-                          </button>
                         </div>
                       </div>
-
-                      {/* ── Expandable features ── */}
-                      <AnimatePresence initial={false}>
-                        {isOpen && (
-                          <motion.div
-                            key="features"
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                            style={{ overflow: 'hidden' }}
-                          >
-                            <div className="mt-5 pt-5" style={{ borderTop: '1px solid var(--border)' }}>
-                              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                {p.features.map((f, fi) => (
-                                  <li key={fi} className="flex items-start gap-2">
-                                    <div style={{ marginTop: 6, width: 5, height: 5, borderRadius: 2, flexShrink: 0, background: p.accent }} />
-                                    <span className="font-body text-sm" style={{ color: 'var(--ink-muted)', lineHeight: 1.65 }}>{f}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
                     </div>
 
                     {/* ── Visual Panel (right side — only on even cardIdx) ── */}
@@ -817,12 +813,13 @@ export default function Work() {
                     <div
                       className="relative overflow-hidden"
                       style={{
-                        minHeight: 'clamp(260px, 50vw, 340px)',
+                        minHeight: cardIdx === 0 ? 'clamp(380px, 58vw, 480px)' : 'clamp(340px, 55vw, 420px)',
                         borderTop: '1px solid var(--border)',
                       }}
                     >
                       <ProjectSlideshow
                         project={p}
+                        flagship={cardIdx === 0}
                         onOpenLightbox={() => p.screenshots.length > 0 && setLightbox({ project: p, index: 0 })}
                       />
                     </div>
@@ -866,8 +863,8 @@ export default function Work() {
               </div>
               <ul className="space-y-2.5">
                 {[
-                  'Architected and shipped seven production projects from scratch — including an AI/RAG pipeline',
-                  'Two Android apps built with React Native, Expo SDK, and EAS Build',
+                  'Architected and shipped six production projects from scratch — including an AI/RAG pipeline',
+                  'Android app built with React Native, Expo SDK, and EAS Build',
                   'Multi-tenant database design with complete tenant data isolation',
                   'CI/CD pipelines, Vercel deployments, performance monitoring',
                   'Secure authentication, role-based access, audit logging',
