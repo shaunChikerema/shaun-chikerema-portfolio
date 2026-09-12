@@ -1,7 +1,7 @@
 'use client';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Github, Linkedin, Mail, Download, ArrowRight } from 'lucide-react';
-import { useState, useRef } from 'react';
+import type React from 'react';
+import { Github, Linkedin, Mail, ArrowRight } from 'lucide-react';
 import { MAILTO_HREF } from '@/lib/site-config';
 
 const SOCIALS = [
@@ -10,23 +10,25 @@ const SOCIALS = [
   { href: MAILTO_HREF,                              icon: Mail,     label: 'Email' },
 ];
 
-const STACK = ['Python', 'LangChain', 'Next.js', 'TypeScript', 'React Native', 'Supabase'];
-
 const PROOF = [
   { n: '7', label: 'projects shipped' },
   { n: '2', label: 'client sites live' },
   { n: '2', label: 'Android apps' },
 ];
 
+// Bright green: large/decorative use (name, button fill, dot, pulse).
 const G      = '#3ECF8E';
 const G_DARK = '#2db87a';
+// Darker green: small text on light backgrounds, where G fails contrast.
+const G_TEXT = '#1FAE6E';
 
 const PLAYFAIR: React.CSSProperties = { fontFamily: "'Playfair Display', Georgia, serif" };
 const DM: React.CSSProperties       = { fontFamily: "'DM Sans', sans-serif" };
+const MONO: React.CSSProperties     = { fontFamily: "'JetBrains Mono', 'SF Mono', Consolas, monospace" };
+
+const FOCUS_RING = '0 0 0 3px rgba(62,207,142,0.45)';
 
 export default function Hero() {
-  const [downloading, setDownloading] = useState(false);
-  const linkRef = useRef<HTMLAnchorElement | null>(null);
   const reduced = useReducedMotion();
 
   const fade = (delay = 0, y = 16) => ({
@@ -38,23 +40,8 @@ export default function Hero() {
   const scrollToWork = () =>
     document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
 
-  const handleDownload = async () => {
-    setDownloading(true);
-    try {
-      const res = await fetch('/shaun-chikerema-resume.pdf', { method: 'HEAD' });
-      if (!res.ok) throw new Error();
-      if (!linkRef.current) {
-        const a = document.createElement('a');
-        a.href     = '/shaun-chikerema-resume.pdf';
-        a.download = 'Shaun_Chikerema_Resume.pdf';
-        a.style.display = 'none';
-        document.body.appendChild(a);
-        linkRef.current = a;
-      }
-      linkRef.current.click();
-    } catch { /* silent */ }
-    finally { setTimeout(() => setDownloading(false), 1500); }
-  };
+  const scrollToContact = () =>
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
 
   return (
     <section
@@ -67,20 +54,33 @@ export default function Hero() {
       <div aria-hidden style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: G, zIndex: 30 }} />
 
       {/* ── Top bar ── */}
-      <motion.div {...fade(0, 0)} className="relative z-20 flex items-center justify-between px-6 lg:px-14 pt-8">
+      {/* pt-24 clears the fixed Header (h-[68px]) plus a small buffer — this row was
+          previously rendering underneath the header and was invisible on load. */}
+      <motion.div {...fade(0, 0)} className="relative z-20 flex items-center justify-between px-6 lg:px-14 pt-24 lg:pt-28">
         <div className="flex items-center gap-2">
           <span style={{ width: 7, height: 7, borderRadius: '50%', background: G, display: 'inline-block' }} />
-          <span style={{ fontSize: '0.62rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-muted)', ...DM, fontWeight: 600 }}>
+          <span
+            style={{ fontSize: '0.68rem', letterSpacing: '0.04em', color: 'var(--ink-muted)', ...DM, fontWeight: 600 }}
+            itemProp="jobTitle"
+          >
             Available for work
           </span>
         </div>
         <div className="flex items-center gap-1.5">
           {SOCIALS.map(({ href, icon: Icon, label }) => (
-            <a key={href} href={href} aria-label={label} target="_blank" rel="noopener noreferrer"
+            <a
+              key={href}
+              href={href}
+              aria-label={label}
+              target="_blank"
+              rel="noopener noreferrer"
+              itemProp="sameAs"
               className="flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200"
-              style={{ border: '1px solid var(--border-mid)', color: 'var(--ink-muted)' }}
-              onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = 'rgba(62,207,142,0.5)'; el.style.color = G; }}
-              onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = 'var(--border-mid)'; el.style.color = 'var(--ink-muted)'; }}
+              style={{ border: '1px solid var(--border-mid)', color: 'var(--ink-mid)' }}
+              onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = 'rgba(62,207,142,0.5)'; el.style.color = G_TEXT; }}
+              onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = 'var(--border-mid)'; el.style.color = 'var(--ink-mid)'; }}
+              onFocus={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.boxShadow = FOCUS_RING; el.style.borderColor = 'rgba(62,207,142,0.6)'; }}
+              onBlur={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.boxShadow = 'none'; el.style.borderColor = 'var(--border-mid)'; }}
             >
               <Icon size={13} />
             </a>
@@ -89,49 +89,53 @@ export default function Hero() {
       </motion.div>
 
       {/* ── Main content — full width, left-anchored ── */}
-      <div className="relative z-20 flex-1 flex flex-col justify-center max-w-5xl mx-auto w-full px-6 lg:px-14 py-16">
+      {/* justify-start + pt-12 on mobile anchors content near the top instead of vertically
+          centering into dead space; lg breakpoint restores the centered desktop layout */}
+      <div className="relative z-20 flex-1 flex flex-col justify-start lg:justify-center max-w-5xl mx-auto w-full px-6 lg:px-14 pt-12 lg:py-16 pb-32 lg:pb-16">
 
         {/* Eyebrow */}
         <motion.p {...fade(0.1)} style={{
-          fontSize: '0.67rem', letterSpacing: '0.22em', textTransform: 'uppercase',
-          color: G, ...DM, fontWeight: 700, marginBottom: '1.6rem',
+          fontSize: '0.68rem', letterSpacing: '0.04em',
+          color: G_TEXT, ...DM, fontWeight: 700, marginBottom: '1.6rem',
         }}>
-          Software Engineer · Botswana
+          Software Engineer, Botswana
         </motion.p>
 
-        {/* Name — large, takes ownership of the page */}
-        <div style={{ overflow: 'hidden', marginBottom: '0.05rem' }}>
-          <motion.h1
-            initial={{ opacity: 0, y: reduced ? 0 : 70 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.85, delay: 0.14, ease: [0.16, 1, 0.3, 1] }}
-            style={{
-              ...PLAYFAIR, fontWeight: 700,
-              fontSize: 'clamp(4rem, 10vw, 8.5rem)',
-              letterSpacing: '-0.04em', lineHeight: 0.9,
-              color: 'var(--ink)',
-            }}
-            itemProp="name"
-          >
-            Shaun
-          </motion.h1>
-        </div>
-
-        <div style={{ overflow: 'hidden', marginBottom: '2.4rem' }}>
-          <motion.h1
-            initial={{ opacity: 0, y: reduced ? 0 : 70 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.85, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
-            style={{
-              ...PLAYFAIR, fontWeight: 700, fontStyle: 'italic',
-              fontSize: 'clamp(4rem, 10vw, 8.5rem)',
-              letterSpacing: '-0.04em', lineHeight: 0.9,
-              color: G,
-            }}
-          >
-            Chikerema
-          </motion.h1>
-        </div>
+        {/* Name — single h1, two lines, takes ownership of the page */}
+        <h1 style={{ margin: 0, marginBottom: '2.4rem' }} itemProp="name">
+          <div style={{ overflow: 'hidden', marginBottom: '0.05rem' }}>
+            <motion.span
+              initial={{ opacity: 0, y: reduced ? 0 : 70 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.85, delay: 0.14, ease: [0.16, 1, 0.3, 1] }}
+              style={{
+                display: 'block',
+                ...PLAYFAIR, fontWeight: 700,
+                fontSize: 'clamp(3.2rem, 10vw, 8.5rem)',
+                letterSpacing: '-0.04em', lineHeight: 0.9,
+                color: 'var(--ink)',
+              }}
+            >
+              Shaun
+            </motion.span>
+          </div>
+          <div style={{ overflow: 'hidden' }}>
+            <motion.span
+              initial={{ opacity: 0, y: reduced ? 0 : 70 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.85, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+              style={{
+                display: 'block',
+                ...PLAYFAIR, fontWeight: 700, fontStyle: 'italic',
+                fontSize: 'clamp(3.2rem, 10vw, 8.5rem)',
+                letterSpacing: '-0.04em', lineHeight: 0.9,
+                color: G,
+              }}
+            >
+              Chikerema
+            </motion.span>
+          </div>
+        </h1>
 
         {/* Divider */}
         <motion.div
@@ -141,94 +145,90 @@ export default function Hero() {
           style={{ height: 1, background: 'var(--border)', marginBottom: '2rem', transformOrigin: 'left', maxWidth: 560 }}
         />
 
-        {/* Bio + proof in a two-col on desktop */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start" style={{ maxWidth: 860 }}>
+        {/* Bio, proof, CTA — single column now that the tech-stack list (duplicated
+            in Skills.tsx anyway) has been removed, along with the empty second
+            column and the WhatsApp-corner collision it kept causing. */}
+        <motion.div {...fade(0.36)} style={{ maxWidth: 480 }}>
+          <p style={{
+            fontSize: 'clamp(1rem, 1.5vw, 1.15rem)', color: 'var(--ink)',
+            lineHeight: 1.75, ...DM, marginBottom: '1.75rem', maxWidth: '38ch',
+          }}>
+            I build web and mobile products for founders and small teams
+            who need something live.
+          </p>
 
-          {/* Bio */}
-          <motion.div {...fade(0.36)}>
-            <p style={{
-              fontSize: 'clamp(1rem, 1.5vw, 1.15rem)', color: 'var(--ink)',
-              lineHeight: 1.75, ...DM, marginBottom: '2rem',
-            }}>
-              From an AI/RAG pipeline to a multi-tenant real estate marketplace — I build and deploy full-stack products end to end.
-            </p>
-
-            {/* CTAs */}
-            <div className="flex flex-wrap gap-3">
-              <button
-                onClick={scrollToWork}
-                style={{
-                  padding: '12px 26px', borderRadius: 6, background: G, color: '#000',
-                  fontSize: '0.75rem', fontWeight: 700, ...DM, letterSpacing: '0.02em',
-                  border: 'none', cursor: 'pointer', transition: 'background 0.2s',
-                  display: 'inline-flex', alignItems: 'center', gap: 8,
-                }}
-                onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = G_DARK; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = G; }}
-              >
-                View my work <ArrowRight size={14} />
-              </button>
-              <button
-                onClick={handleDownload}
-                disabled={downloading}
-                style={{
-                  padding: '12px 26px', borderRadius: 6, background: 'transparent',
-                  color: 'var(--ink)', fontSize: '0.75rem', fontWeight: 600, ...DM,
-                  border: '1px solid var(--border-mid)', cursor: 'pointer',
-                  transition: 'border-color 0.2s, color 0.2s',
-                  display: 'inline-flex', alignItems: 'center', gap: 8,
-                }}
-                onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(62,207,142,0.5)'; (e.currentTarget as HTMLButtonElement).style.color = G; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--border-mid)'; (e.currentTarget as HTMLButtonElement).style.color = 'var(--ink)'; }}
-              >
-                <Download size={13} className={downloading ? 'animate-bounce' : ''} />
-                {downloading ? 'Downloading...' : 'Resume'}
-              </button>
-            </div>
-          </motion.div>
-
-          {/* Right col — proof + stack */}
-          <motion.div {...fade(0.44)}>
-            {/* Proof numbers */}
-            <div
-              className="grid grid-cols-3 gap-4 mb-7 pb-7"
-              style={{ borderBottom: '1px solid var(--border)' }}
-            >
-              {PROOF.map(({ n, label }) => (
-                <div key={label}>
-                  <p style={{
-                    ...PLAYFAIR, fontWeight: 700, fontStyle: 'italic',
-                    fontSize: 'clamp(2rem, 3.5vw, 2.8rem)',
-                    color: G, lineHeight: 1, marginBottom: '0.35rem',
-                    letterSpacing: '-0.03em',
-                  }}>
-                    {n}
-                  </p>
-                  <p style={{ fontSize: '0.68rem', color: 'var(--ink-muted)', ...DM, lineHeight: 1.4 }}>
-                    {label}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            {/* Stack pills */}
-            <div className="flex flex-wrap gap-1.5">
-              {STACK.map(t => (
-                <span key={t} style={{
-                  padding: '4px 11px', borderRadius: 4,
-                  fontSize: '0.63rem', fontWeight: 600,
-                  ...DM, letterSpacing: '0.04em',
-                  background: 'transparent',
-                  border: '1px solid var(--border-mid)',
-                  color: 'var(--ink-mid)',
+          {/* Proof numbers — set in monospace as a "readout" rather than reusing the
+              name's italic serif, so they read as a technical/precise counterpoint
+              to the display type instead of a smaller echo of it. */}
+          <div
+            className="grid grid-cols-3 gap-3 mb-7 pb-7"
+            style={{ borderBottom: '1px solid var(--border)' }}
+          >
+            {PROOF.map(({ n, label }) => (
+              <div key={label}>
+                <p style={{
+                  ...MONO, fontWeight: 700,
+                  fontSize: 'clamp(1.5rem, 2.8vw, 2.1rem)',
+                  color: G, lineHeight: 1, marginBottom: '0.4rem',
+                  letterSpacing: '-0.02em', fontVariantNumeric: 'tabular-nums',
                 }}>
-                  {t}
-                </span>
-              ))}
-            </div>
-          </motion.div>
+                  {n.padStart(2, '0')}
+                </p>
+                <p style={{
+                  fontSize: '0.63rem', color: 'var(--ink-muted)', ...MONO, lineHeight: 1.35,
+                  fontWeight: 500, letterSpacing: '0.02em',
+                  textTransform: 'uppercase', whiteSpace: 'normal', wordBreak: 'break-word',
+                }}>
+                  {label}
+                </p>
+              </div>
+            ))}
+          </div>
 
-        </div>
+          {/* CTAs — Resume lives in the Header only, not duplicated here.
+              Stacked full-width on mobile (instead of flex-wrap) so "Get in
+              touch" doesn't get orphaned onto its own line at an odd width;
+              this also removes the need for the old pr-16 WhatsApp-dodge
+              padding, since there's nothing left for the float button to
+              collide with. */}
+          <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3">
+            <button
+              onClick={scrollToWork}
+              className="justify-center sm:justify-start"
+              style={{
+                padding: '12px 26px', borderRadius: 6, background: G, color: '#000',
+                fontSize: '0.75rem', fontWeight: 700, ...DM, letterSpacing: '0.02em',
+                border: 'none', cursor: 'pointer', transition: 'background 0.2s, box-shadow 0.2s',
+                display: 'inline-flex', alignItems: 'center', gap: 8,
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = G_DARK; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = G; }}
+              onFocus={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = FOCUS_RING; }}
+              onBlur={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = 'none'; }}
+            >
+              View my work <ArrowRight size={14} />
+            </button>
+
+            <button
+              onClick={scrollToContact}
+              className="justify-center sm:justify-start"
+              style={{
+                padding: '12px 22px', borderRadius: 6, background: 'transparent',
+                color: 'var(--ink)', fontSize: '0.75rem', fontWeight: 600, ...DM,
+                letterSpacing: '0.02em',
+                border: '1.5px solid var(--border-mid)', cursor: 'pointer',
+                transition: 'border-color 0.2s, color 0.2s',
+                display: 'inline-flex', alignItems: 'center',
+              }}
+              onMouseEnter={e => { const el = e.currentTarget as HTMLButtonElement; el.style.borderColor = 'rgba(62,207,142,0.6)'; el.style.color = G_TEXT; }}
+              onMouseLeave={e => { const el = e.currentTarget as HTMLButtonElement; el.style.borderColor = 'var(--border-mid)'; el.style.color = 'var(--ink)'; }}
+              onFocus={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = FOCUS_RING; }}
+              onBlur={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = 'none'; }}
+            >
+              Get in touch
+            </button>
+          </div>
+        </motion.div>
       </div>
 
       {/* Scroll cue */}
@@ -239,10 +239,13 @@ export default function Hero() {
         <button
           onClick={scrollToWork}
           style={{
-            color: 'var(--ink-muted)', fontSize: '0.52rem', letterSpacing: '0.22em',
-            textTransform: 'uppercase', ...DM, background: 'none', border: 'none',
+            color: 'var(--ink-muted)', fontSize: '0.6rem', letterSpacing: '0.1em',
+            ...DM, background: 'none', border: 'none',
             cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6,
+            padding: 4, borderRadius: 4,
           }}
+          onFocus={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = FOCUS_RING; }}
+          onBlur={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = 'none'; }}
           aria-label="Scroll down"
         >
           scroll

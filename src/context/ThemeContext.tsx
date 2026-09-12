@@ -14,9 +14,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>('light');
 
   useEffect(() => {
+    // Always default to light unless the user has explicitly chosen dark
+    // before on this device. We deliberately ignore prefers-color-scheme —
+    // the site should look the same regardless of OS/browser theme.
     const stored = localStorage.getItem('theme') as Theme | null;
-    const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    const initial = stored ?? preferred;
+    const initial = stored ?? 'light';
     setTheme(initial);
     document.documentElement.setAttribute('data-theme', initial);
   }, []);
