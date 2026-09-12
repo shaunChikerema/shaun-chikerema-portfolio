@@ -113,7 +113,7 @@ const PROJECTS: Project[] = [
     description: 'Full RAG pipeline built from scratch — scrape → chunk (2k chars, 200-char overlap) → embed (Gemini, 768-dim) → pgvector cosine search → grounded generation (GPT-OSS 120B via Groq). Tunable retrieval, multi-turn conversation, and inline citations tied to source URLs.',
     url: 'https://askragify.vercel.app',
     architectureUrl: 'https://ragify.vercel.app/architecture.html',
-    videoUrl: '', // e.g. '/videos/ragify-demo.mp4'
+    videoUrl: '/videos/ragify-demo.mp4',
     accent: '#6366f1',
     bgFrom: '#0f0f1a',
     bgTo: '#1a1a35',
