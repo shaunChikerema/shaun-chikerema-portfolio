@@ -11,9 +11,9 @@ const SOCIALS = [
 ];
 
 const PROOF = [
-  { n: '7', label: 'projects shipped' },
+  { n: '6', label: 'projects shipped' },
   { n: '2', label: 'client sites live' },
-  { n: '2', label: 'Android apps' },
+  { n: '1', label: 'Android app' },
 ];
 
 // Bright green: large/decorative use (name, button fill, dot, pulse).

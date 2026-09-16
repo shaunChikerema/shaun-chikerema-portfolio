@@ -66,8 +66,21 @@ export default function Testimonials() {
           </div>
         </motion.div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        {/* Cards — column count adapts to how many testimonials actually
+            exist, instead of a hard-coded 3-up grid. A 2-card grid at
+            lg:grid-cols-3 leaves a visible empty gap on desktop; capping the
+            column count at the item count (max 3) and centering the row
+            when it's short avoids that regardless of whether you're running
+            2 or 3 quotes at any given time. */}
+        <div
+          className={`grid grid-cols-1 gap-4 ${
+            TESTIMONIALS.length === 1
+              ? 'lg:max-w-md lg:mx-auto'
+              : TESTIMONIALS.length === 2
+              ? 'lg:grid-cols-2 lg:max-w-3xl lg:mx-auto'
+              : 'lg:grid-cols-3'
+          }`}
+        >
           {TESTIMONIALS.map((t, i) => (
             <motion.div
               key={t.name + i}

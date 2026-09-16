@@ -8,13 +8,13 @@ const SKILLS = [
     accent: '#6366f1',
     title: 'AI & RAG Engineering',
     body: 'Built a full Retrieval-Augmented Generation pipeline in Python — scraping, chunking, embedding with pgvector, and grounded LLM responses with source citations.',
-    tech: ['Python', 'FastAPI', 'LangChain', 'pgvector', 'OpenAI', 'BeautifulSoup'],
+    tech: ['Python', 'FastAPI', 'Gemini', 'Groq', 'pgvector', 'BeautifulSoup'],
   },
   {
     icon: Cpu,
     accent: '#3ECF8E',
     title: 'Full-Stack Web',
-    body: 'Built three production web apps — a multi-tenant real estate marketplace, an insurance SaaS, and a client marketing site. Comfortable owning the entire stack.',
+    body: 'Built four production web apps — a multi-tenant real estate marketplace, an insurance SaaS, and two client marketing sites. Comfortable owning the entire stack.',
     tech: ['Next.js 15', 'TypeScript', 'PostgreSQL', 'Supabase', 'Node.js', 'Tailwind CSS'],
   },
   {
@@ -35,7 +35,7 @@ const SKILLS = [
     icon: Smartphone,
     accent: '#e63946',
     title: 'Mobile (Android)',
-    body: 'Two Android apps shipped via EAS Build. Native device APIs for audio playback, media library scanning, background tasks, and offline-first storage.',
+    body: 'One Android app shipped via EAS Build. Native device APIs for audio playback, media library scanning, background tasks, and offline-first storage.',
     tech: ['React Native', 'Expo SDK 54', 'expo-av', 'expo-media-library', 'AsyncStorage', 'expo-router'],
   },
 ];
@@ -89,10 +89,14 @@ export default function Skills() {
           </div>
         </motion.div>
 
-        {/* Skill cards */}
+        {/* Skill cards — with an odd number of cards (5 today), the last one
+            would otherwise sit alone in its row with an empty gap beside it,
+            same issue the Testimonials grid had. Spanning it across both
+            columns when it's the odd one out keeps every row full instead. */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-14">
           {SKILLS.map((s, i) => {
             const Icon = s.icon;
+            const isLastOdd = SKILLS.length % 2 === 1 && i === SKILLS.length - 1;
             return (
               <motion.div
                 key={s.title}
@@ -100,7 +104,7 @@ export default function Skills() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.45, delay: i * 0.07 }}
-                className="card p-7"
+                className={`card p-7 ${isLastOdd ? 'lg:col-span-2' : ''}`}
                 style={{ borderTop: `2px solid ${s.accent}` }}
               >
                 <div className="flex items-center gap-3 mb-3">
@@ -119,7 +123,7 @@ export default function Skills() {
                 </div>
 
                 <p
-                  className="font-body text-sm leading-relaxed mb-5"
+                  className={`font-body text-sm leading-relaxed mb-5 ${isLastOdd ? 'lg:max-w-xl' : ''}`}
                   style={{ color: 'var(--ink-muted)', lineHeight: 1.75 }}
                 >
                   {s.body}

@@ -16,8 +16,12 @@ function WhatsAppIcon({ className, style }: { className?: string; style?: React.
 const METHODS = [
   { icon: Mail,         label: 'Email',     value: EMAIL,         note: 'Best for project discussions',      href: MAILTO_HREF, isWA: false },
   { icon: WhatsAppIcon, label: 'WhatsApp',  value: PHONE_DISPLAY, note: 'Direct messages & quick questions', href: WA_HREF,      isWA: true  },
-  { icon: MapPin,       label: 'Location',  value: 'Gaborone, Botswana', note: 'Remote work worldwide',      href: '#',          isWA: false },
 ];
+
+// Rendered as a plain block, not a link — there's no real destination for
+// this one (it isn't a maps link), so it shouldn't share the hover/tap
+// affordance of the two methods above that actually go somewhere.
+const LOCATION = { icon: MapPin, label: 'Location', value: 'Gaborone, Botswana', note: 'Remote work worldwide' };
 
 const TYPES = [
   'Full-Stack Web App', 'SaaS Platform', 'Real Estate Tech',
@@ -82,7 +86,7 @@ export default function Contact() {
             </div>
             <div className="lg:col-span-5 lg:col-start-8">
               <p className="font-body text-sm leading-relaxed" style={{ color: 'var(--ink-muted)' }}>
-                Based in Gaborone, working with clients globally. I respond to all inquiries within one business day.
+                Based in Gaborone, working with clients globally.
               </p>
             </div>
           </div>
@@ -132,6 +136,24 @@ export default function Contact() {
                   </a>
                 );
               })}
+
+              {/* Location — informational only, so no link wrapper/hover state */}
+              <div
+                className="flex items-start gap-3.5 p-4 rounded-sm"
+                style={{ background: 'var(--bg-field)', border: '1px solid var(--border)' }}
+              >
+                <div
+                  className="w-8 h-8 rounded-sm flex items-center justify-center flex-shrink-0"
+                  style={{ background: 'rgba(62,207,142,0.1)' }}
+                >
+                  <LOCATION.icon className="w-3.5 h-3.5" style={{ color: '#3ECF8E' }} />
+                </div>
+                <div>
+                  <p className="font-body font-semibold text-xs mb-0.5" style={{ color: 'var(--ink)' }}>{LOCATION.label}</p>
+                  <p className="font-body text-sm mb-0.5" style={{ color: 'var(--ink-mid)' }}>{LOCATION.value}</p>
+                  <p className="font-body text-xs" style={{ color: 'var(--ink-muted)' }}>{LOCATION.note}</p>
+                </div>
+              </div>
             </div>
 
             {/* Response note */}
