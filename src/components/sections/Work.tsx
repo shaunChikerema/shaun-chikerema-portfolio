@@ -741,20 +741,36 @@ export default function Work() {
                         {/* Primary CTA — full width on mobile, the only solid button on the card */}
                         <div className="flex flex-wrap gap-2">
                           {p.isApp ? (
-                            hasLiveUrl ? (
-                              <a href={p.url} download
-                                className="inline-flex items-center justify-center gap-2 flex-1 lg:flex-none"
-                                style={{ padding: '10px 20px', borderRadius: 10, background: p.accent, color: '#fff', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', letterSpacing: '0.01em', transition: 'opacity 0.2s ease' }}
-                                onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '0.85')}
-                                onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '1')}
-                              >
-                                <Download size={13} /> Download APK
-                              </a>
-                            ) : (
-                              <span className="inline-flex items-center justify-center gap-2 flex-1 lg:flex-none" style={{ padding: '10px 20px', borderRadius: 10, background: p.accent, color: '#fff', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", opacity: 0.35, cursor: 'not-allowed' }}>
-                                <Download size={13} /> Coming Soon
-                              </span>
-                            )
+                            <>
+                              {hasLiveUrl ? (
+                                <a href={p.url} download
+                                  className="inline-flex items-center justify-center gap-2 flex-1 lg:flex-none"
+                                  style={{ padding: '10px 20px', borderRadius: 10, background: p.accent, color: '#fff', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', letterSpacing: '0.01em', transition: 'opacity 0.2s ease' }}
+                                  onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '0.85')}
+                                  onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '1')}
+                                >
+                                  <Download size={13} /> Download APK
+                                </a>
+                              ) : (
+                                <span className="inline-flex items-center justify-center gap-2 flex-1 lg:flex-none" style={{ padding: '10px 20px', borderRadius: 10, background: p.accent, color: '#fff', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", opacity: 0.35, cursor: 'not-allowed' }}>
+                                  <Download size={13} /> Coming Soon
+                                </span>
+                              )}
+                              {/* Watch Demo gets promoted to a real (outlined) button here,
+                                  not a plain text link, because for an APK-only app most
+                                  desktop visitors will never actually download & sideload it —
+                                  the video IS the demo for most people who land on this card. */}
+                              {p.videoUrl && (
+                                <a href={p.videoUrl} target="_blank" rel="noopener noreferrer"
+                                  className="inline-flex items-center justify-center gap-2 flex-1 lg:flex-none"
+                                  style={{ padding: '10px 20px', borderRadius: 10, background: 'transparent', border: `1.5px solid ${p.accent}`, color: p.accent, fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', letterSpacing: '0.01em', transition: 'background-color 0.2s ease, color 0.2s ease' }}
+                                  onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background = p.accent; el.style.color = '#fff'; }}
+                                  onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background = 'transparent'; el.style.color = p.accent; }}
+                                >
+                                  <Play size={13} /> Watch Demo
+                                </a>
+                              )}
+                            </>
                           ) : (
                             <a href={p.url} target="_blank" rel="noopener noreferrer"
                               className="inline-flex items-center justify-center gap-2 flex-1 lg:flex-none"
@@ -794,7 +810,9 @@ export default function Work() {
                             </a>
                           )}
 
-                          {p.videoUrl && (
+                          {/* isApp projects show Watch Demo as a button above, next to
+                              Download APK, instead of here — see the primary CTA row. */}
+                          {p.videoUrl && !p.isApp && (
                             <a href={p.videoUrl} target="_blank" rel="noopener noreferrer"
                               className="inline-flex items-center gap-1.5"
                               style={{ color: '#6366f1', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', transition: 'opacity 0.2s ease' }}
