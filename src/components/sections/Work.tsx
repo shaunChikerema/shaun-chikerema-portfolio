@@ -745,7 +745,7 @@ export default function Work() {
                             <>
                               {hasLiveUrl ? (
                                 <a href={p.url} download
-                                  className="inline-flex items-center justify-center gap-2 flex-1 lg:flex-none"
+                                  className="inline-flex items-center justify-center gap-2 flex-1"
                                   style={{ padding: '10px 20px', borderRadius: 10, background: p.accent, color: '#fff', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', letterSpacing: '0.01em', whiteSpace: 'nowrap', transition: 'opacity 0.2s ease' }}
                                   onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '0.85')}
                                   onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '1')}
@@ -753,13 +753,13 @@ export default function Work() {
                                   <Download size={13} /> Download APK
                                 </a>
                               ) : (
-                                <span className="inline-flex items-center justify-center gap-2 flex-1 lg:flex-none" style={{ padding: '10px 20px', borderRadius: 10, background: p.accent, color: '#fff', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", opacity: 0.35, cursor: 'not-allowed' }}>
+                                <span className="inline-flex items-center justify-center gap-2 flex-1" style={{ padding: '10px 20px', borderRadius: 10, background: p.accent, color: '#fff', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", opacity: 0.35, cursor: 'not-allowed' }}>
                                   <Download size={13} /> Coming Soon
                                 </span>
                               )}
                               {p.videoUrl && (
                                 <a href={p.videoUrl} target="_blank" rel="noopener noreferrer"
-                                  className="inline-flex items-center justify-center gap-2 flex-1 lg:flex-none"
+                                  className="inline-flex items-center justify-center gap-2 flex-1"
                                   style={{ padding: '10px 20px', borderRadius: 10, background: 'transparent', border: `1.5px solid ${p.accent}`, color: p.accent, fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', letterSpacing: '0.01em', whiteSpace: 'nowrap', transition: 'background-color 0.2s ease, color 0.2s ease' }}
                                   onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background = p.accent; el.style.color = '#fff'; }}
                                   onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background = 'transparent'; el.style.color = p.accent; }}
@@ -771,7 +771,7 @@ export default function Work() {
                           ) : (
                             <>
                               <a href={p.url} target="_blank" rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center gap-2 flex-1 lg:flex-none"
+                                className="inline-flex items-center justify-center gap-2 flex-1"
                                 style={{ padding: '10px 20px', borderRadius: 10, background: p.accent, color: '#fff', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', letterSpacing: '0.01em', whiteSpace: 'nowrap', transition: 'opacity 0.2s ease' }}
                                 onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '0.85')}
                                 onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '1')}
@@ -785,7 +785,7 @@ export default function Work() {
                                   they're optional deep-dives, not primary content. */}
                               {p.videoUrl && (
                                 <a href={p.videoUrl} target="_blank" rel="noopener noreferrer"
-                                  className="inline-flex items-center justify-center gap-2 flex-1 lg:flex-none"
+                                  className="inline-flex items-center justify-center gap-2 flex-1"
                                   style={{ padding: '10px 20px', borderRadius: 10, background: 'transparent', border: `1.5px solid ${p.accent}`, color: p.accent, fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', letterSpacing: '0.01em', whiteSpace: 'nowrap', transition: 'background-color 0.2s ease, color 0.2s ease' }}
                                   onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background = p.accent; el.style.color = '#fff'; }}
                                   onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background = 'transparent'; el.style.color = p.accent; }}
