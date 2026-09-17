@@ -756,10 +756,6 @@ export default function Work() {
                                   <Download size={13} /> Coming Soon
                                 </span>
                               )}
-                              {/* Watch Demo gets promoted to a real (outlined) button here,
-                                  not a plain text link, because for an APK-only app most
-                                  desktop visitors will never actually download & sideload it —
-                                  the video IS the demo for most people who land on this card. */}
                               {p.videoUrl && (
                                 <a href={p.videoUrl} target="_blank" rel="noopener noreferrer"
                                   className="inline-flex items-center justify-center gap-2 flex-1 lg:flex-none"
@@ -772,24 +768,41 @@ export default function Work() {
                               )}
                             </>
                           ) : (
-                            <a href={p.url} target="_blank" rel="noopener noreferrer"
-                              className="inline-flex items-center justify-center gap-2 flex-1 lg:flex-none"
-                              style={{ padding: '10px 20px', borderRadius: 10, background: p.accent, color: '#fff', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', letterSpacing: '0.01em', transition: 'opacity 0.2s ease' }}
-                              onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '0.85')}
-                              onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '1')}
-                            >
-                              <ArrowUpRight size={13} /> Visit Site
-                            </a>
+                            <>
+                              <a href={p.url} target="_blank" rel="noopener noreferrer"
+                                className="inline-flex items-center justify-center gap-2 flex-1 lg:flex-none"
+                                style={{ padding: '10px 20px', borderRadius: 10, background: p.accent, color: '#fff', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', letterSpacing: '0.01em', transition: 'opacity 0.2s ease' }}
+                                onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '0.85')}
+                                onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '1')}
+                              >
+                                <ArrowUpRight size={13} /> Visit Site
+                              </a>
+                              {/* Watch Demo is a real (outlined) button everywhere, not a
+                                  text link — a plain link next to a solid Visit Site button
+                                  reads as "less important" or gets skipped as non-clickable.
+                                  Case Study / Architecture stay as text links below since
+                                  they're optional deep-dives, not primary content. */}
+                              {p.videoUrl && (
+                                <a href={p.videoUrl} target="_blank" rel="noopener noreferrer"
+                                  className="inline-flex items-center justify-center gap-2 flex-1 lg:flex-none"
+                                  style={{ padding: '10px 20px', borderRadius: 10, background: 'transparent', border: `1.5px solid ${p.accent}`, color: p.accent, fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', letterSpacing: '0.01em', transition: 'background-color 0.2s ease, color 0.2s ease' }}
+                                  onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background = p.accent; el.style.color = '#fff'; }}
+                                  onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background = 'transparent'; el.style.color = p.accent; }}
+                                >
+                                  <Play size={13} /> Watch Demo
+                                </a>
+                              )}
+                            </>
                           )}
                         </div>
 
-                        {/* Secondary row — just Case Study, plus Architecture/
-                            Watch Demo when a project actually has them.
-                            Case Study is now a plain underline-on-hover text
-                            link with no icon — the arrow glyph is reserved
-                            for the one primary action (Visit Site / Download),
-                            so the two don't compete for the same visual
-                            weight. */}
+                        {/* Secondary row — just Case Study, plus Architecture
+                            when a project has one. Watch Demo now lives above,
+                            as a real button next to Visit Site / Download,
+                            since a text link there was easy to miss or mistake
+                            for non-clickable — this row is for optional
+                            deep-dives only, so a quiet text-link treatment
+                            still fits. */}
                         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                           <a href={`/projects/${p.slug}`}
                             style={{ color: 'var(--ink-mid)', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', borderBottom: '1px solid transparent', transition: 'color 0.2s ease, border-color 0.2s ease', paddingBottom: 1 }}
@@ -807,19 +820,6 @@ export default function Work() {
                               onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '1')}
                             >
                               Architecture <ArrowUpRight size={13} />
-                            </a>
-                          )}
-
-                          {/* isApp projects show Watch Demo as a button above, next to
-                              Download APK, instead of here — see the primary CTA row. */}
-                          {p.videoUrl && !p.isApp && (
-                            <a href={p.videoUrl} target="_blank" rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1.5"
-                              style={{ color: '#6366f1', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', transition: 'opacity 0.2s ease' }}
-                              onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '0.7')}
-                              onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '1')}
-                            >
-                              <Play size={13} /> Watch Demo
                             </a>
                           )}
                         </div>
