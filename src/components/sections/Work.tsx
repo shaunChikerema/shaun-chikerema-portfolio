@@ -40,6 +40,7 @@ const PROJECTS: Project[] = [
     type: 'Real Estate Platform',
     description: 'Property marketplace for buyers, sellers, and agents — multi-tenant, role-based access, real-time search.',
     url: 'https://keyat.vercel.app',
+    videoUrl: '/videos/keyat-demo.mp4',
     accent: '#3ECF8E',
     bgFrom: '#e8f5ee',
     bgTo: '#d4efe2',
