@@ -142,6 +142,7 @@ const PROJECTS: Project[] = [
     type: 'Client Work · Marketing Site',
     description: 'Marketing site for a licensed NBFIRA broker — WhatsApp quote flow, provider showcase, and scroll animations.',
     url: 'https://paragoninsurancebrokers.co.bw',
+    videoUrl: '/videos/paragon-demo.mp4',
     accent: '#3ECF8E',
     bgFrom: '#e8f5ee',
     bgTo: '#c8e6d4',
