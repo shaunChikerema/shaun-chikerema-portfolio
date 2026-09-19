@@ -108,6 +108,7 @@ const PROJECTS: Project[] = [
     type: 'Insurance Automation SaaS',
     description: 'Enterprise SaaS automating policy workflows, document generation, renewal tracking, and compliance logging for insurance brokers.',
     url: 'https://policybridge.vercel.app',
+    videoUrl: '/videos/policybridge-demo.mp4',
     accent: '#f59e0b',
     bgFrom: '#1a1200',
     bgTo: '#2a1e00',
