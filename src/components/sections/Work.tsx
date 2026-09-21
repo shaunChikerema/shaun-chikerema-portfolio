@@ -56,10 +56,6 @@ const PROJECTS: Project[] = [
     ],
     screenshots: [
       { src: '/screenshots/keyat/mobile/keyat-m-1.png',  caption: 'Homepage hero — find your dream home',     view: 'mobile' },
-      // NOTE: keyat-m-2.png is referenced but was not part of the screenshot
-      // batch delivered — this slide will currently be skipped (see the
-      // onError fallback below) until a real "apartment slide" screenshot is
-      // captured and dropped at this path. Remove this comment once fixed.
       { src: '/screenshots/keyat/mobile/keyat-m-2.png',  caption: 'Homepage hero — apartment slide',           view: 'mobile' },
       { src: '/screenshots/keyat/mobile/keyat-m-3.png',  caption: 'Sign in — Google or email',                 view: 'mobile' },
       { src: '/screenshots/keyat/mobile/keyat-m-4.png',  caption: 'Add Property — Step 1 of 3',                view: 'mobile' },
@@ -237,7 +233,7 @@ const PROJECTS: Project[] = [
   },
 ];
 
-/* ─── Lightbox ─── */
+/* ─── Lightbox (screenshots) ─── */
 function Lightbox({ project, startIndex, onClose }: { project: Project; startIndex: number; onClose: () => void }) {
   const allShots = project.screenshots;
   const hasViews = allShots.some(s => s.view === 'desktop') && allShots.some(s => s.view === 'mobile');
@@ -377,6 +373,98 @@ function Lightbox({ project, startIndex, onClose }: { project: Project; startInd
   return typeof document !== 'undefined' ? createPortal(overlay, document.body) : null;
 }
 
+/* ─── Video Lightbox ───
+   Previously "Watch Demo" was a plain <a href={videoUrl} target="_blank">
+   pointing straight at the raw .mp4 file. With no <video> element in the
+   picture, playback was entirely up to browser/OS defaults — which is why
+   behavior differed: some desktop browsers default to downloading a
+   directly-linked video file, while most mobile browsers default to
+   playing it. Rendering an actual <video controls> element inside a modal
+   (same portal + overlay pattern as the screenshot Lightbox above) removes
+   that guesswork — playback is now always inline, on every platform. */
+function VideoLightbox({ project, onClose }: { project: Project; onClose: () => void }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
+
+  useEffect(() => {
+    const saved = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = saved; };
+  }, []);
+
+  // Autoplay once the element is mounted — catch() swallows the occasional
+  // browser autoplay-block; the visible native controls make manual play
+  // an easy fallback either way.
+  useEffect(() => {
+    videoRef.current?.play?.().catch(() => {});
+  }, []);
+
+  const HEADER = 56;
+
+  const overlay = (
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed', inset: 0, width: '100vw', height: '100dvh',
+        zIndex: 2147483647, background: 'rgba(8,6,4,0.97)',
+        display: 'flex', flexDirection: 'column', overflow: 'hidden',
+      }}
+    >
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{
+          flexShrink: 0, height: HEADER, display: 'flex',
+          alignItems: 'center', justifyContent: 'space-between',
+          padding: '0 20px', borderBottom: '1px solid rgba(246,241,234,0.08)',
+        }}
+      >
+        <p style={{ fontFamily: 'serif', fontWeight: 700, fontSize: 14, color: '#F6F1EA', margin: 0 }}>
+          {project.title} — Demo
+        </p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          {project.url && project.url !== '#' && (
+            <a href={project.url} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}
+              style={{
+                display: 'flex', alignItems: 'center', gap: 6, padding: '0 14px', height: 36,
+                borderRadius: 6, background: 'rgba(246,241,234,0.08)', border: '1px solid rgba(246,241,234,0.15)',
+                color: '#F6F1EA', fontSize: 12, fontWeight: 600, textDecoration: 'none', whiteSpace: 'nowrap',
+              }}
+            >Visit Site <ExternalLink size={12} /></a>
+          )}
+          <button type="button" onClick={onClose}
+            style={{ width: 36, height: 36, borderRadius: 6, background: 'rgba(246,241,234,0.08)', border: '1px solid rgba(246,241,234,0.15)', color: '#F6F1EA', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
+          ><X size={16} /></button>
+        </div>
+      </div>
+
+      <div
+        style={{ flex: 1, minHeight: 0, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px 24px', overflow: 'hidden' }}
+        onClick={e => e.stopPropagation()}
+      >
+        <video
+          ref={videoRef}
+          src={project.videoUrl}
+          controls
+          playsInline
+          preload="metadata"
+          style={{
+            display: 'block', maxWidth: '100%', maxHeight: '100%',
+            borderRadius: 8, background: '#000',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+          }}
+        />
+      </div>
+    </div>
+  );
+
+  return typeof document !== 'undefined' ? createPortal(overlay, document.body) : null;
+}
+
 /* ─── Visual Panel ─── */
 
 // Pick up to 5 screenshots evenly spaced from the full set
@@ -390,12 +478,6 @@ function pickSlides(screenshots: Screenshot[], max = 5): Screenshot[] {
 function ProjectSlideshow({ project, onOpenLightbox, flagship = false }: { project: Project; onOpenLightbox: () => void; flagship?: boolean }) {
   const allSlides = pickSlides(project.screenshots);
 
-  // FIX: track which slide src's have actually failed to load (e.g. a typo'd
-  // path or a screenshot that was never captured, like keyat-m-2.png right
-  // now). Previously a 404 just rendered a broken-image icon squashed into
-  // the phone frame — which is very likely what looked "squished/stretched"
-  // in the screenshot. Broken slides are filtered out of rotation entirely
-  // instead of ever being shown.
   const [failedSrcs, setFailedSrcs] = useState<Set<string>>(new Set());
   const slides = allSlides.filter(s => !failedSrcs.has(s.src));
   const markFailed = (src: string) =>
@@ -406,12 +488,10 @@ function ProjectSlideshow({ project, onOpenLightbox, flagship = false }: { proje
   const [inView, setInView] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Keep idx in range if the slide count shrinks after a load failure
   useEffect(() => {
     if (idx >= slides.length && slides.length > 0) setIdx(0);
   }, [slides.length, idx]);
 
-  // Only start playing when the card is scrolled into view
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -441,7 +521,6 @@ function ProjectSlideshow({ project, onOpenLightbox, flagship = false }: { proje
     setTimeout(() => { setIdx(i); setFading(false); }, 280);
   };
 
-  // No screenshots (or every screenshot failed to load) — keep original placeholder
   if (slides.length === 0) {
     return (
       <div
@@ -472,22 +551,10 @@ function ProjectSlideshow({ project, onOpenLightbox, flagship = false }: { proje
       style={{ background: `linear-gradient(135deg, ${project.bgFrom}, ${project.bgTo})`, padding: '20px 20px 16px', gap: 14 }}
       onClick={onOpenLightbox}
     >
-      {/* Phone frame — screenshots are portrait, so we show them in a phone
-          mockup at their native aspect ratio instead of cropping them into
-          a landscape panel (which was cutting off most of each screen).
-          object-fit: cover here means the screenshot is scaled uniformly
-          (no distortion) and only cropped top/bottom to fill the frame —
-          it is never stretched. */}
       <div
         style={{
           position: 'relative',
           width: flagship ? 'clamp(170px, 38vw, 220px)' : 'clamp(140px, 32vw, 182px)',
-          // FIX: this was '9 / 19.5' (a tall notch-phone shape), but every
-          // screenshot in the Keyat set is a real 720x1280 capture — a 9:16
-          // ratio. That mismatch forced object-fit: cover to crop into the
-          // top and bottom of every slide to fill the taller frame, cutting
-          // off the header and footer content. Matching the frame ratio to
-          // the actual screenshot ratio means nothing needs to be cropped.
           aspectRatio: '9 / 16',
           flexShrink: 0,
           borderRadius: 22,
@@ -505,11 +572,6 @@ function ProjectSlideshow({ project, onOpenLightbox, flagship = false }: { proje
               onError={() => markFailed(shot.src)}
               style={{
                 position: 'absolute', inset: 0, width: '100%', height: '100%',
-                // 'contain' is the safety net here: since the frame ratio now
-                // matches the screenshots, contain and cover render
-                // identically for on-ratio images, but contain guarantees no
-                // cropping even if a future screenshot comes in slightly off
-                // (e.g. a different phone's status bar height).
                 objectFit: 'contain', objectPosition: 'top center',
                 opacity: i === idx ? (fading ? 0 : 1) : 0,
                 transition: 'opacity 0.28s ease',
@@ -517,7 +579,6 @@ function ProjectSlideshow({ project, onOpenLightbox, flagship = false }: { proje
             />
           ))}
         </div>
-        {/* Notch */}
         <div
           aria-hidden
           style={{
@@ -527,7 +588,6 @@ function ProjectSlideshow({ project, onOpenLightbox, flagship = false }: { proje
         />
       </div>
 
-      {/* Hover overlay */}
       <div
         className="absolute inset-0 flex items-center justify-center opacity-0 group-hover/panel:opacity-100 transition-opacity duration-300"
         style={{ background: 'rgba(0,0,0,0.28)' }}
@@ -540,8 +600,6 @@ function ProjectSlideshow({ project, onOpenLightbox, flagship = false }: { proje
         </div>
       </div>
 
-      {/* Caption + dots — on their own dark chip so they stay legible
-          whether the project's gradient (bgFrom/bgTo) is light or dark. */}
       {slides.length > 1 && (
         <div
           className="flex flex-col items-center gap-2"
@@ -574,6 +632,7 @@ function ProjectSlideshow({ project, onOpenLightbox, flagship = false }: { proje
 /* ─── Work Section ─── */
 export default function Work() {
   const [lightbox, setLightbox] = useState<{ project: Project; index: number } | null>(null);
+  const [videoLightbox, setVideoLightbox] = useState<Project | null>(null);
 
   return (
     <>
@@ -582,7 +641,6 @@ export default function Work() {
 
         <div className="max-w-6xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
 
-          {/* ── Header ── */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -609,7 +667,6 @@ export default function Work() {
             </div>
           </motion.div>
 
-          {/* ── Project Rows ── */}
           <div className="space-y-5 mb-14">
             {PROJECTS.map((p, cardIdx) => {
               const hasLiveUrl = p.url !== '#';
@@ -635,17 +692,10 @@ export default function Work() {
                     borderColor: p.accent + '50',
                   }}
                 >
-                  {/* Accent top bar */}
                   <div style={{ height: 3, background: `linear-gradient(90deg, ${p.accent}, ${p.accent}55)` }} />
 
-                  {/* Two-column layout — alternating image side. The flagship
-                      project (cardIdx 0, Keyat) gets a wider image panel than
-                      the rest so it doesn't read as visually equal to every
-                      other card — it's the most complex piece of work here
-                      and should look like it. */}
                   <div className={`grid grid-cols-1 ${cardIdx % 2 === 0 ? (cardIdx === 0 ? 'lg:grid-cols-[1fr_460px]' : 'lg:grid-cols-[1fr_380px]') : 'lg:grid-cols-[380px_1fr]'}`}>
 
-                    {/* ── Visual Panel (left on odd cardIdx) ── */}
                     {cardIdx % 2 !== 0 && (
                       <div
                         className="relative overflow-hidden order-last lg:order-first"
@@ -661,14 +711,8 @@ export default function Work() {
                       </div>
                     )}
 
-                    {/* ── Info ── */}
                     <div className="flex flex-col justify-between p-6 lg:p-9">
                       <div>
-                        {/* Type + status row — dropped the "01" index (this
-                            is a list, not a real sequence) and the tracked
-                            all-caps/middle-dot meta string. Category is now
-                            a small tinted label chip; status stays a
-                            separate dot+word badge. */}
                         <div className="flex items-center gap-2 mb-4 flex-wrap">
                           <span
                             style={{
@@ -698,7 +742,6 @@ export default function Work() {
                           )}
                         </div>
 
-                        {/* Title */}
                         <h3
                           className="font-display font-bold mb-2"
                           style={{ fontSize: 'clamp(1.3rem,2.5vw,1.65rem)', color: 'var(--ink)', letterSpacing: '-0.025em', lineHeight: 1.15 }}
@@ -706,9 +749,6 @@ export default function Work() {
                           {p.title}
                         </h3>
 
-                        {/* Description — enforced 2-line clamp so longer
-                            descriptions (e.g. Ragify's) don't inflate the card;
-                            the rest is one click away via Case Study. */}
                         <p
                           className="font-body text-sm mb-5"
                           style={{
@@ -720,11 +760,6 @@ export default function Work() {
                           {p.description}
                         </p>
 
-                        {/* Stack pills — neutral gray, capped at 3 for most
-                            cards so the row stays scannable. The flagship
-                            project (Keyat) shows its full stack instead of
-                            being capped like everything else, since it's the
-                            card meant to carry the most technical weight. */}
                         <div className="flex flex-wrap gap-1.5 mb-6">
                           {p.stack.slice(0, cardIdx === 0 ? p.stack.length : 3).map(t => (
                             <span key={t} style={{ padding: '3px 10px', borderRadius: 6, fontSize: '0.68rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", background: 'var(--bg-field)', border: '1px solid var(--border)', color: 'var(--ink-mid)', letterSpacing: '0.01em' }}>
@@ -739,9 +774,7 @@ export default function Work() {
                         </div>
                       </div>
 
-                      {/* ── Action buttons ── */}
                       <div className="flex flex-col gap-3">
-                        {/* Primary CTA — full width on mobile, the only solid button on the card */}
                         <div className="flex flex-col sm:flex-row gap-2">
                           {p.isApp ? (
                             <>
@@ -760,14 +793,16 @@ export default function Work() {
                                 </span>
                               )}
                               {p.videoUrl && (
-                                <a href={p.videoUrl} target="_blank" rel="noopener noreferrer"
+                                <button
+                                  type="button"
+                                  onClick={() => setVideoLightbox(p)}
                                   className="inline-flex items-center justify-center gap-2 flex-1"
-                                  style={{ padding: '10px 20px', borderRadius: 10, background: 'transparent', border: `1.5px solid ${p.accent}`, color: p.accent, fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', letterSpacing: '0.01em', whiteSpace: 'nowrap', transition: 'background-color 0.2s ease, color 0.2s ease' }}
-                                  onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background = p.accent; el.style.color = '#fff'; }}
-                                  onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background = 'transparent'; el.style.color = p.accent; }}
+                                  style={{ padding: '10px 20px', borderRadius: 10, background: 'transparent', border: `1.5px solid ${p.accent}`, color: p.accent, fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", letterSpacing: '0.01em', whiteSpace: 'nowrap', cursor: 'pointer', transition: 'background-color 0.2s ease, color 0.2s ease' }}
+                                  onMouseEnter={e => { const el = e.currentTarget as HTMLButtonElement; el.style.background = p.accent; el.style.color = '#fff'; }}
+                                  onMouseLeave={e => { const el = e.currentTarget as HTMLButtonElement; el.style.background = 'transparent'; el.style.color = p.accent; }}
                                 >
                                   <Play size={13} /> Watch Demo
-                                </a>
+                                </button>
                               )}
                             </>
                           ) : (
@@ -780,32 +815,22 @@ export default function Work() {
                               >
                                 <ArrowUpRight size={13} /> Visit Site
                               </a>
-                              {/* Watch Demo is a real (outlined) button everywhere, not a
-                                  text link — a plain link next to a solid Visit Site button
-                                  reads as "less important" or gets skipped as non-clickable.
-                                  Case Study / Architecture stay as text links below since
-                                  they're optional deep-dives, not primary content. */}
                               {p.videoUrl && (
-                                <a href={p.videoUrl} target="_blank" rel="noopener noreferrer"
+                                <button
+                                  type="button"
+                                  onClick={() => setVideoLightbox(p)}
                                   className="inline-flex items-center justify-center gap-2 flex-1"
-                                  style={{ padding: '10px 20px', borderRadius: 10, background: 'transparent', border: `1.5px solid ${p.accent}`, color: p.accent, fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', letterSpacing: '0.01em', whiteSpace: 'nowrap', transition: 'background-color 0.2s ease, color 0.2s ease' }}
-                                  onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background = p.accent; el.style.color = '#fff'; }}
-                                  onMouseLeave={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.background = 'transparent'; el.style.color = p.accent; }}
+                                  style={{ padding: '10px 20px', borderRadius: 10, background: 'transparent', border: `1.5px solid ${p.accent}`, color: p.accent, fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", letterSpacing: '0.01em', whiteSpace: 'nowrap', cursor: 'pointer', transition: 'background-color 0.2s ease, color 0.2s ease' }}
+                                  onMouseEnter={e => { const el = e.currentTarget as HTMLButtonElement; el.style.background = p.accent; el.style.color = '#fff'; }}
+                                  onMouseLeave={e => { const el = e.currentTarget as HTMLButtonElement; el.style.background = 'transparent'; el.style.color = p.accent; }}
                                 >
                                   <Play size={13} /> Watch Demo
-                                </a>
+                                </button>
                               )}
                             </>
                           )}
                         </div>
 
-                        {/* Secondary row — just Case Study, plus Architecture
-                            when a project has one. Watch Demo now lives above,
-                            as a real button next to Visit Site / Download,
-                            since a text link there was easy to miss or mistake
-                            for non-clickable — this row is for optional
-                            deep-dives only, so a quiet text-link treatment
-                            still fits. */}
                         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                           <a href={`/projects/${p.slug}`}
                             style={{ color: 'var(--ink-mid)', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', borderBottom: '1px solid transparent', transition: 'color 0.2s ease, border-color 0.2s ease', paddingBottom: 1 }}
@@ -829,7 +854,6 @@ export default function Work() {
                       </div>
                     </div>
 
-                    {/* ── Visual Panel (right side — only on even cardIdx) ── */}
                     {cardIdx % 2 === 0 && (
                     <div
                       className="relative overflow-hidden"
@@ -853,7 +877,6 @@ export default function Work() {
 
           <div className="divider mb-16" />
 
-          {/* ── Background ── */}
           <motion.p
             className="eyebrow mb-8"
             initial={{ opacity: 0, y: 16 }}
@@ -933,6 +956,13 @@ export default function Work() {
           project={lightbox.project}
           startIndex={lightbox.index}
           onClose={() => setLightbox(null)}
+        />
+      )}
+
+      {videoLightbox && (
+        <VideoLightbox
+          project={videoLightbox}
+          onClose={() => setVideoLightbox(null)}
         />
       )}
     </>

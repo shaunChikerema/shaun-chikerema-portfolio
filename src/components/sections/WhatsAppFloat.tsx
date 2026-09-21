@@ -20,7 +20,12 @@ export default function WhatsAppFloat() {
         position: 'fixed',
         bottom: 28,
         right: 28,
-        zIndex: 9999,
+        // FIX: was 9999, which sat above the mobile nav drawer's overlay
+        // (z-[60]) and panel (z-[70]) in Header.tsx — opening the mobile
+        // menu left this button floating on top of the drawer instead of
+        // being covered by it, and it could intercept taps meant for the
+        // menu. 40 keeps it above normal page content but below the drawer.
+        zIndex: 40,
         display: 'flex',
         alignItems: 'center',
         gap: 10,

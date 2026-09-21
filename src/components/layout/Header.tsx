@@ -10,6 +10,14 @@ const NAV = [
   { label: 'Contact', href: '#contact' },
 ];
 
+// Same focus-ring treatment used in Hero.tsx — pulled out here so both
+// files stay visually consistent. Previously only Hero's interactive
+// elements had onFocus/onBlur handlers; the desktop nav links and the
+// Resume buttons here had hover states but nothing for keyboard focus,
+// so tabbing through the header gave no visible indication of where
+// focus was.
+const FOCUS_RING = '0 0 0 3px rgba(62,207,142,0.45)';
+
 export default function Header() {
   const [scrolled,   setScrolled]   = useState(false);
   const [open,       setOpen]       = useState(false);
@@ -79,6 +87,8 @@ export default function Header() {
             onClick={() => navigate('#home')}
             className="flex items-center gap-2.5 group"
             aria-label="Home"
+            onFocus={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = FOCUS_RING; (e.currentTarget as HTMLButtonElement).style.borderRadius = '6px'; }}
+            onBlur={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = 'none'; }}
           >
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
               <rect width="32" height="32" rx="6" fill="#3ECF8E"/>
@@ -108,6 +118,8 @@ export default function Header() {
                   onClick={e => { e.preventDefault(); navigate(href); }}
                   className="relative px-4 py-2 font-body text-sm font-medium rounded-sm transition-colors"
                   style={{ color: isActive ? '#3ECF8E' : 'var(--ink-muted)' }}
+                  onFocus={e => { (e.currentTarget as HTMLAnchorElement).style.boxShadow = FOCUS_RING; }}
+                  onBlur={e => { (e.currentTarget as HTMLAnchorElement).style.boxShadow = 'none'; }}
                 >
                   {label}
                   {isActive && (
@@ -136,6 +148,8 @@ export default function Header() {
               }}
               onMouseEnter={e => (e.currentTarget.style.background = '#1a7a52')}
               onMouseLeave={e => (e.currentTarget.style.background = '#3ECF8E')}
+              onFocus={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = `${FOCUS_RING}, 0 2px 12px rgba(62,207,142,0.3)`; }}
+              onBlur={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 2px 12px rgba(62,207,142,0.3)'; }}
             >
               <Download className="w-3.5 h-3.5" />
               Resume
@@ -148,6 +162,8 @@ export default function Header() {
               onClick={downloadCV}
               className="btn text-xs px-3 py-2 gap-1.5 inline-flex items-center"
               style={{ background: '#3ECF8E', color: '#fff', border: 'none', borderRadius: 6, fontWeight: 700, cursor: 'pointer' }}
+              onFocus={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = FOCUS_RING; }}
+              onBlur={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = 'none'; }}
             >
               <Download className="w-3 h-3" /> Resume
             </button>
@@ -157,6 +173,8 @@ export default function Header() {
               className="p-2 rounded-sm"
               style={{ color: 'var(--ink-muted)' }}
               aria-label="Menu"
+              onFocus={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = FOCUS_RING; }}
+              onBlur={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = 'none'; }}
             >
               {open ? <X size={18} /> : <Menu size={18} />}
             </button>
@@ -182,7 +200,12 @@ export default function Header() {
             >
               <div className="flex items-center justify-between px-5 h-[68px]" style={{ borderBottom: '1px solid var(--border)' }}>
                 <span className="font-display font-bold text-sm" style={{ color: 'var(--ink)' }}>Menu</span>
-                <button onClick={() => setOpen(false)} style={{ color: 'var(--ink-muted)' }}><X size={16} /></button>
+                <button
+                  onClick={() => setOpen(false)}
+                  style={{ color: 'var(--ink-muted)' }}
+                  onFocus={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = FOCUS_RING; }}
+                  onBlur={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = 'none'; }}
+                ><X size={16} /></button>
               </div>
               <nav className="flex-1 p-4 flex flex-col gap-0.5">
                 {NAV.map(({ label, href }, i) => {
@@ -199,6 +222,8 @@ export default function Header() {
                         background: isActive ? 'rgba(62,207,142,0.08)' : 'transparent',
                         color: isActive ? '#1a7a52' : 'var(--ink-mid)',
                       }}
+                      onFocus={e => { (e.currentTarget as HTMLAnchorElement).style.boxShadow = FOCUS_RING; }}
+                      onBlur={e => { (e.currentTarget as HTMLAnchorElement).style.boxShadow = 'none'; }}
                     >
                       {label}
                       {isActive && <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#3ECF8E' }} />}
@@ -211,6 +236,8 @@ export default function Header() {
                   onClick={downloadCV}
                   className="btn w-full py-2.5 text-sm inline-flex items-center justify-center gap-2"
                   style={{ background: '#3ECF8E', color: '#fff', border: 'none', borderRadius: 6, fontWeight: 700, cursor: 'pointer' }}
+                  onFocus={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = FOCUS_RING; }}
+                  onBlur={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = 'none'; }}
                 >
                   <Download className="w-4 h-4" /> Download Resume
                 </button>
