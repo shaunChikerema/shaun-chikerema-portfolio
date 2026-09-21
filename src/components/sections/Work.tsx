@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { onAccent, textOnLight } from '@/lib/color';
 
 /* ─── Types ─── */
 type Screenshot = { src: string; caption: string; view?: 'desktop' | 'mobile' };
@@ -661,7 +662,7 @@ export default function Work() {
               </div>
               <div className="lg:col-span-5 lg:col-start-8">
                 <p className="font-body text-sm leading-relaxed" style={{ color: 'var(--ink-muted)' }}>
-                  Six production projects across web and mobile — from polished client work to an AI pipeline and mobile apps.
+                  Six production projects across web and mobile — from polished client work to an AI pipeline and an Android app.
                 </p>
               </div>
             </div>
@@ -719,24 +720,24 @@ export default function Work() {
                               padding: '3px 10px', borderRadius: 999,
                               fontSize: '0.68rem', fontWeight: 600,
                               fontFamily: "'DM Sans', sans-serif",
-                              background: `${p.accent}14`, color: p.accent,
+                              background: `${p.accent}14`, color: textOnLight(p.accent),
                             }}
                           >
                             {p.type}
                           </span>
                           {p.isApp && (
-                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, padding: '2px 8px', borderRadius: 999, fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', background: `${p.accent}15`, color: p.accent }}>
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, padding: '2px 8px', borderRadius: 999, fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', background: `${p.accent}15`, color: textOnLight(p.accent) }}>
                               <Smartphone size={9} /> Android
                             </span>
                           )}
                           {!p.isApp && hasLiveUrl && (
-                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '2px 8px', borderRadius: 999, fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', background: '#16a34a14', color: '#16a34a' }}>
-                              <span className="dot-pulse" style={{ width: 5, height: 5, borderRadius: '50%', background: '#16a34a', display: 'inline-block' }} />
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '2px 8px', borderRadius: 999, fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', background: '#16a34a14', color: '#15803d' }}>
+                              <span className="dot-pulse" style={{ width: 5, height: 5, borderRadius: '50%', background: '#15803d', display: 'inline-block' }} />
                               Live
                             </span>
                           )}
                           {p.demoNote && (
-                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '2px 8px', borderRadius: 999, fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.06em', background: 'rgba(99,102,241,0.1)', color: '#6366f1', border: '1px solid rgba(99,102,241,0.25)' }}>
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '2px 8px', borderRadius: 999, fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.06em', background: 'rgba(99,102,241,0.1)', color: '#4f46e5', border: '1px solid rgba(99,102,241,0.25)' }}>
                               {p.demoNote}
                             </span>
                           )}
@@ -781,14 +782,14 @@ export default function Work() {
                               {hasLiveUrl ? (
                                 <a href={p.url} download
                                   className="inline-flex items-center justify-center gap-2 flex-1"
-                                  style={{ padding: '10px 20px', borderRadius: 10, background: p.accent, color: '#fff', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', letterSpacing: '0.01em', whiteSpace: 'nowrap', transition: 'opacity 0.2s ease' }}
+                                  style={{ padding: '10px 20px', borderRadius: 10, background: p.accent, color: onAccent(p.accent), fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', letterSpacing: '0.01em', whiteSpace: 'nowrap', transition: 'opacity 0.2s ease' }}
                                   onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '0.85')}
                                   onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '1')}
                                 >
                                   <Download size={13} /> Download APK
                                 </a>
                               ) : (
-                                <span className="inline-flex items-center justify-center gap-2 flex-1" style={{ padding: '10px 20px', borderRadius: 10, background: p.accent, color: '#fff', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", opacity: 0.35, cursor: 'not-allowed' }}>
+                                <span className="inline-flex items-center justify-center gap-2 flex-1" style={{ padding: '10px 20px', borderRadius: 10, background: p.accent, color: onAccent(p.accent), fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", opacity: 0.35, cursor: 'not-allowed' }}>
                                   <Download size={13} /> Coming Soon
                                 </span>
                               )}
@@ -797,9 +798,9 @@ export default function Work() {
                                   type="button"
                                   onClick={() => setVideoLightbox(p)}
                                   className="inline-flex items-center justify-center gap-2 flex-1"
-                                  style={{ padding: '10px 20px', borderRadius: 10, background: 'transparent', border: `1.5px solid ${p.accent}`, color: p.accent, fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", letterSpacing: '0.01em', whiteSpace: 'nowrap', cursor: 'pointer', transition: 'background-color 0.2s ease, color 0.2s ease' }}
-                                  onMouseEnter={e => { const el = e.currentTarget as HTMLButtonElement; el.style.background = p.accent; el.style.color = '#fff'; }}
-                                  onMouseLeave={e => { const el = e.currentTarget as HTMLButtonElement; el.style.background = 'transparent'; el.style.color = p.accent; }}
+                                  style={{ padding: '10px 20px', borderRadius: 10, background: 'transparent', border: `1.5px solid ${p.accent}`, color: textOnLight(p.accent), fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", letterSpacing: '0.01em', whiteSpace: 'nowrap', cursor: 'pointer', transition: 'background-color 0.2s ease, color 0.2s ease' }}
+                                  onMouseEnter={e => { const el = e.currentTarget as HTMLButtonElement; el.style.background = p.accent; el.style.color = onAccent(p.accent); }}
+                                  onMouseLeave={e => { const el = e.currentTarget as HTMLButtonElement; el.style.background = 'transparent'; el.style.color = textOnLight(p.accent); }}
                                 >
                                   <Play size={13} /> Watch Demo
                                 </button>
@@ -809,7 +810,7 @@ export default function Work() {
                             <>
                               <a href={p.url} target="_blank" rel="noopener noreferrer"
                                 className="inline-flex items-center justify-center gap-2 flex-1"
-                                style={{ padding: '10px 20px', borderRadius: 10, background: p.accent, color: '#fff', fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', letterSpacing: '0.01em', whiteSpace: 'nowrap', transition: 'opacity 0.2s ease' }}
+                                style={{ padding: '10px 20px', borderRadius: 10, background: p.accent, color: onAccent(p.accent), fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", textDecoration: 'none', letterSpacing: '0.01em', whiteSpace: 'nowrap', transition: 'opacity 0.2s ease' }}
                                 onMouseEnter={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '0.85')}
                                 onMouseLeave={e => ((e.currentTarget as HTMLAnchorElement).style.opacity = '1')}
                               >
@@ -820,9 +821,9 @@ export default function Work() {
                                   type="button"
                                   onClick={() => setVideoLightbox(p)}
                                   className="inline-flex items-center justify-center gap-2 flex-1"
-                                  style={{ padding: '10px 20px', borderRadius: 10, background: 'transparent', border: `1.5px solid ${p.accent}`, color: p.accent, fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", letterSpacing: '0.01em', whiteSpace: 'nowrap', cursor: 'pointer', transition: 'background-color 0.2s ease, color 0.2s ease' }}
-                                  onMouseEnter={e => { const el = e.currentTarget as HTMLButtonElement; el.style.background = p.accent; el.style.color = '#fff'; }}
-                                  onMouseLeave={e => { const el = e.currentTarget as HTMLButtonElement; el.style.background = 'transparent'; el.style.color = p.accent; }}
+                                  style={{ padding: '10px 20px', borderRadius: 10, background: 'transparent', border: `1.5px solid ${p.accent}`, color: textOnLight(p.accent), fontSize: '0.75rem', fontWeight: 600, fontFamily: "'DM Sans', sans-serif", letterSpacing: '0.01em', whiteSpace: 'nowrap', cursor: 'pointer', transition: 'background-color 0.2s ease, color 0.2s ease' }}
+                                  onMouseEnter={e => { const el = e.currentTarget as HTMLButtonElement; el.style.background = p.accent; el.style.color = onAccent(p.accent); }}
+                                  onMouseLeave={e => { const el = e.currentTarget as HTMLButtonElement; el.style.background = 'transparent'; el.style.color = textOnLight(p.accent); }}
                                 >
                                   <Play size={13} /> Watch Demo
                                 </button>

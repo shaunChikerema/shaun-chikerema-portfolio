@@ -9,10 +9,10 @@
  */
 
 export const EMAIL = 'shaunchikerema28@gmail.com';
-export const MAILTO_HREF = `mailto:${EMAIL}?subject=Project Inquiry`;
+export const MAILTO_HREF = `mailto:${EMAIL}?subject=${encodeURIComponent('Project Inquiry')}`;
 
-export const PHONE_DISPLAY = '+267 76 051 623';
-export const WA_NUMBER = '26776051623';
+export const PHONE_DISPLAY = '+267 78 833 670';
+export const WA_NUMBER = '26778833670';
 export const WA_MESSAGE = encodeURIComponent(
   "Hi Shaun, I'd like to discuss a project with you."
 );

@@ -1,5 +1,7 @@
 'use client';
 import { Github, Linkedin, Mail } from 'lucide-react';
+import { EMAIL, MAILTO_HREF } from '@/lib/site-config';
+import { scrollToId } from '@/lib/scroll';
 
 const LINKS = [
   { label: 'Work',    href: '#work' },
@@ -9,13 +11,11 @@ const LINKS = [
 const SOCIALS = [
   { icon: Github,   href: 'https://github.com/shaunChikerema',      label: 'GitHub' },
   { icon: Linkedin, href: 'https://linkedin.com/in/shaunchikerema', label: 'LinkedIn' },
-  { icon: Mail,     href: 'mailto:sschikerema@gmail.com',           label: 'Email' },
+  { icon: Mail,     href: MAILTO_HREF,                              label: 'Email' },
 ];
 
 export default function Footer() {
-  const scroll = (href: string) => {
-    document.getElementById(href.replace('#', ''))?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const scroll = (href: string) => scrollToId(href.replace('#', ''));
 
   return (
     <footer style={{ background: '#0a0f0d', position: 'relative', overflow: 'hidden', borderTop: '1px solid rgba(62,207,142,0.2)' }}>
@@ -63,7 +63,7 @@ export default function Footer() {
               <p className="font-display font-bold text-sm" style={{ color: 'var(--cream)' }}>
                 Shaun <span style={{ fontStyle: 'italic', color: '#3ECF8E' }}>Chikerema</span>
               </p>
-              <p className="font-body text-[10px]" style={{ color: 'rgba(246,241,234,0.38)' }}>Software Engineer · Available for remote</p>
+              <p className="font-body text-[10px]" style={{ color: 'rgba(246,241,234,0.58)' }}>Software Engineer · Available for remote</p>
             </div>
           </div>
 
@@ -75,9 +75,9 @@ export default function Footer() {
                 href={l.href}
                 onClick={e => { e.preventDefault(); scroll(l.href); }}
                 className="font-body text-sm transition-colors"
-                style={{ color: 'rgba(246,241,234,0.45)' }}
+                style={{ color: 'rgba(246,241,234,0.62)' }}
                 onMouseEnter={e => (e.currentTarget.style.color = 'var(--cream)')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(246,241,234,0.45)')}
+                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(246,241,234,0.62)')}
               >
                 {l.label}
               </a>
@@ -90,17 +90,17 @@ export default function Footer() {
               <a
                 key={href}
                 href={href}
-                target="_blank"
-                rel="noopener noreferrer"
+                target={href.startsWith('http') ? '_blank' : undefined}
+                rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 aria-label={label}
                 className="p-2 rounded-sm transition-all"
-                style={{ color: 'rgba(246,241,234,0.38)', border: '1px solid rgba(246,241,234,0.08)' }}
+                style={{ color: 'rgba(246,241,234,0.58)', border: '1px solid rgba(246,241,234,0.08)' }}
                 onMouseEnter={e => {
                   e.currentTarget.style.color = 'var(--cream)';
                   e.currentTarget.style.borderColor = 'rgba(246,241,234,0.2)';
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.color = 'rgba(246,241,234,0.38)';
+                  e.currentTarget.style.color = 'rgba(246,241,234,0.58)';
                   e.currentTarget.style.borderColor = 'rgba(246,241,234,0.08)';
                 }}
               >
@@ -112,11 +112,11 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 py-4">
-          <p className="font-body text-xs" style={{ color: 'rgba(246,241,234,0.25)' }}>
+          <p className="font-body text-xs" style={{ color: 'rgba(246,241,234,0.52)' }}>
             © {new Date().getFullYear()} Shaun Chikerema. All rights reserved.
           </p>
-          <p className="font-body text-xs" style={{ color: 'rgba(246,241,234,0.25)' }}>
-            sschikerema@gmail.com
+          <p className="font-body text-xs" style={{ color: 'rgba(246,241,234,0.52)' }}>
+            {EMAIL}
           </p>
         </div>
       </div>

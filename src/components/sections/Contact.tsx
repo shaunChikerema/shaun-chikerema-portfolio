@@ -1,7 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
 import { Mail, MapPin, Send } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type React from 'react';
 import { EMAIL, MAILTO_HREF, PHONE_DISPLAY, WA_HREF } from '@/lib/site-config';
 
@@ -31,29 +31,50 @@ const TYPES = [
 
 type Status = 'idle' | 'success' | 'error';
 
+// `website` is a honeypot: hidden from people, tempting to bots.
+const EMPTY_FORM = { name: '', email: '', company: '', projectType: '', message: '', website: '' };
+
 export default function Contact() {
-  const [form, setForm] = useState({ name: '', email: '', company: '', projectType: '', message: '' });
+  const [form, setForm] = useState(EMPTY_FORM);
   const [busy, setBusy]     = useState(false);
   const [status, setStatus] = useState<Status>('idle');
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     setForm(f => ({ ...f, [e.target.id]: e.target.value }));
 
-  const onSubmit = async () => {
+  const successRef = useRef<HTMLDivElement>(null);
+
+  // Errors clear themselves; the confirmation stays until the visitor dismisses
+  // it, so it's never yanked away mid-read (it used to vanish after 5s).
+  useEffect(() => {
+    if (status !== 'error') return;
+    const t = setTimeout(() => setStatus('idle'), 8000);
+    return () => clearTimeout(t);
+  }, [status]);
+
+  // Move focus to the confirmation so keyboard and screen-reader users know it sent.
+  useEffect(() => {
+    if (status === 'success') successRef.current?.focus();
+  }, [status]);
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // native validation (required / type=email) has already run
+    const { website, ...payload } = form;
+    if (website) { setStatus('success'); setForm(EMPTY_FORM); return; } // honeypot tripped: drop silently
     setBusy(true);
+    setStatus('idle');
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify(payload),
       });
       setStatus(res.ok ? 'success' : 'error');
-      if (res.ok) setForm({ name: '', email: '', company: '', projectType: '', message: '' });
+      if (res.ok) setForm(EMPTY_FORM);
     } catch {
       setStatus('error');
     } finally {
       setBusy(false);
-      setTimeout(() => setStatus('idle'), 5000);
     }
   };
 
@@ -163,9 +184,9 @@ export default function Contact() {
             >
               <div className="flex items-center gap-2 mb-0.5">
                 <span className="w-1.5 h-1.5 rounded-full dot-pulse" style={{ background: '#3ECF8E' }} />
-                <span className="font-body font-semibold text-xs" style={{ color: '#2bb378' }}>24-hour response</span>
+                <span className="font-body font-semibold text-xs" style={{ color: '#1a7a52' }}>24-hour response</span>
               </div>
-              <p className="font-body text-xs" style={{ color: '#2bb378' }}>
+              <p className="font-body text-xs" style={{ color: '#1a7a52' }}>
                 All project inquiries answered within one business day.
               </p>
             </div>
@@ -181,9 +202,12 @@ export default function Contact() {
           >
             {status === 'success' ? (
               <motion.div
+                ref={successRef}
+                tabIndex={-1}
+                role="status"
                 initial={{ opacity: 0, scale: 0.96 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="h-full flex flex-col items-center justify-center text-center py-12"
+                className="h-full flex flex-col items-center justify-center text-center py-12 outline-none"
               >
                 <div className="w-11 h-11 rounded-sm flex items-center justify-center mb-5" style={{ background: 'rgba(62,207,142,0.1)' }}>
                   <Send className="w-5 h-5" style={{ color: '#3ECF8E' }} />
@@ -195,7 +219,7 @@ export default function Contact() {
                 <button
                   onClick={() => setStatus('idle')}
                   className="font-body text-sm font-medium underline underline-offset-4"
-                  style={{ color: '#3ECF8E', background: 'none', border: 'none', cursor: 'pointer' }}
+                  style={{ color: '#1a7a52', background: 'none', border: 'none', cursor: 'pointer' }}
                 >
                   Send another message
                 </button>
@@ -204,7 +228,7 @@ export default function Contact() {
               <>
                 <div className="flex items-center gap-3 mb-7">
                   <div className="w-8 h-8 rounded-sm flex items-center justify-center" style={{ background: '#3ECF8E' }}>
-                    <Send className="w-3.5 h-3.5" style={{ color: '#ffffff' }} />
+                    <Send className="w-3.5 h-3.5" style={{ color: '#0a0f0d' }} />
                   </div>
                   <div>
                     <h3 className="font-display font-bold text-lg" style={{ color: 'var(--ink)', letterSpacing: '-0.015em' }}>Project Inquiry</h3>
@@ -212,7 +236,7 @@ export default function Contact() {
                   </div>
                 </div>
 
-                <div className="space-y-4">
+                <form onSubmit={onSubmit} className="space-y-4">
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label htmlFor="name" className={lbl} style={{ color: 'var(--ink-muted)' }}>Name *</label>
@@ -251,20 +275,26 @@ export default function Contact() {
                   </div>
 
                   <button
-                    type="button" onClick={onSubmit} disabled={busy}
+                    type="submit" disabled={busy} aria-busy={busy}
                     className="btn btn-dark w-full py-3 text-sm disabled:opacity-50"
                   >
                     <Send className="w-3.5 h-3.5" />
                     {busy ? 'Sending...' : 'Send Message'}
                   </button>
 
+                  {/* Honeypot: off-screen, skipped by keyboard and screen readers */}
+                  <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }}>
+                    <label htmlFor="website">Website</label>
+                    <input id="website" type="text" tabIndex={-1} autoComplete="off" value={form.website} onChange={onChange} />
+                  </div>
+
                   {status === 'error' && (
-                    <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                      className="font-body text-xs text-center" style={{ color: '#e63946' }}>
-                      Something went wrong. Email me directly at {EMAIL}
+                    <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} role="alert"
+                      className="font-body text-xs text-center" style={{ color: '#c81d2b' }}>
+                      Message not sent. Try again, or email me directly at {EMAIL}.
                     </motion.p>
                   )}
-                </div>
+                </form>
               </>
             )}
           </motion.div>

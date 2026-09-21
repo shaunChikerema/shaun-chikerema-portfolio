@@ -1,6 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
-import { Cpu, Smartphone, Server, Cloud } from 'lucide-react';
+import { Cpu, Layers, Smartphone, Server, Cloud } from 'lucide-react';
+import { textOnLight } from '@/lib/color';
 
 const SKILLS = [
   {
@@ -11,7 +12,7 @@ const SKILLS = [
     tech: ['Python', 'FastAPI', 'Gemini', 'Groq', 'pgvector', 'BeautifulSoup'],
   },
   {
-    icon: Cpu,
+    icon: Layers,
     accent: '#3ECF8E',
     title: 'Full-Stack Web',
     body: 'Built four production web apps — a multi-tenant real estate marketplace, an insurance SaaS, and two client marketing sites. Comfortable owning the entire stack.',
@@ -141,7 +142,7 @@ export default function Skills() {
                         fontFamily: "'DM Sans', sans-serif",
                         background: `${s.accent}18`,
                         border: `1px solid ${s.accent}40`,
-                        color: s.accent,
+                        color: textOnLight(s.accent, '#ffffff', 5.2), // accent stays on borders/icons; text is darkened to pass contrast
                         letterSpacing: '0.01em',
                       }}
                     >

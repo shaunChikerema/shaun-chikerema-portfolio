@@ -2,6 +2,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Download } from 'lucide-react';
+import { scrollToId } from '@/lib/scroll';
 
 const NAV = [
   { label: 'Home',    href: '#home' },
@@ -9,6 +10,10 @@ const NAV = [
   { label: 'Skills',  href: '#skills' },
   { label: 'Contact', href: '#contact' },
 ];
+
+// Module-level so the scroll handler's identity is stable (it used to be rebuilt
+// every render, which re-subscribed the scroll listener every render).
+const IDS = NAV.map(n => n.href.replace('#', ''));
 
 // Same focus-ring treatment used in Hero.tsx — pulled out here so both
 // files stay visually consistent. Previously only Hero's interactive
@@ -24,19 +29,18 @@ export default function Header() {
   const [active,     setActive]     = useState('home');
   const [navigating, setNavigating] = useState(false);
 
-  const ids = NAV.map(n => n.href.replace('#', ''));
 
   const onScroll = useCallback(() => {
     setScrolled(window.scrollY > 24);
     if (navigating) return;
     const pos = window.scrollY + 110;
-    let cur = ids[0];
-    for (let i = ids.length - 1; i >= 0; i--) {
-      const el = document.getElementById(ids[i]);
-      if (el && el.offsetTop <= pos) { cur = ids[i]; break; }
+    let cur = IDS[0];
+    for (let i = IDS.length - 1; i >= 0; i--) {
+      const el = document.getElementById(IDS[i]);
+      if (el && el.offsetTop <= pos) { cur = IDS[i]; break; }
     }
     setActive(cur);
-  }, [navigating, ids]);
+  }, [navigating]);
 
   useEffect(() => {
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -56,8 +60,7 @@ export default function Header() {
     setOpen(false);
     history.pushState(null, '', href);
     setTimeout(() => {
-      const el = document.getElementById(id);
-      if (el) window.scrollTo({ top: el.offsetTop - 72, behavior: 'smooth' });
+      scrollToId(id);
       setTimeout(() => setNavigating(false), 900);
     }, 60);
   };
@@ -95,13 +98,13 @@ export default function Header() {
               <text
                 x="16" y="22" textAnchor="middle"
                 fontFamily="Georgia, 'Times New Roman', serif"
-                fontSize="16" fontWeight="700" fill="#ffffff"
+                fontSize="16" fontWeight="700" fill="#0a0f0d"
                 letterSpacing="-0.5"
               >SC</text>
             </svg>
             <div className="hidden sm:block leading-tight text-left">
               <p className="font-display font-bold text-sm" style={{ color: 'var(--ink)' }}>
-                Shaun <span style={{ fontStyle: 'italic', color: '#3ECF8E' }}>Chikerema</span>
+                Shaun <span style={{ fontStyle: 'italic', color: '#1a7a52' }}>Chikerema</span>
               </p>
               <p className="font-body text-[10px] tracking-widest uppercase" style={{ color: 'var(--ink-muted)' }}>Software Engineer</p>
             </div>
@@ -117,7 +120,7 @@ export default function Header() {
                   href={href}
                   onClick={e => { e.preventDefault(); navigate(href); }}
                   className="relative px-4 py-2 font-body text-sm font-medium rounded-sm transition-colors"
-                  style={{ color: isActive ? '#3ECF8E' : 'var(--ink-muted)' }}
+                  style={{ color: isActive ? '#1a7a52' : 'var(--ink-muted)' }}
                   onFocus={e => { (e.currentTarget as HTMLAnchorElement).style.boxShadow = FOCUS_RING; }}
                   onBlur={e => { (e.currentTarget as HTMLAnchorElement).style.boxShadow = 'none'; }}
                 >
@@ -126,7 +129,7 @@ export default function Header() {
                     <motion.div
                       layoutId="nav-line"
                       className="absolute bottom-1 left-4 right-4 h-px"
-                      style={{ background: 'var(--terra)' }}
+                      style={{ background: '#3ECF8E' }}
                       transition={{ type: 'spring', stiffness: 420, damping: 36 }}
                     />
                   )}
@@ -142,11 +145,11 @@ export default function Header() {
               onClick={downloadCV}
               className="btn text-xs px-4 py-2.5 gap-1.5 inline-flex items-center"
               style={{
-                background: '#3ECF8E', color: '#fff', border: 'none', borderRadius: 6,
+                background: '#3ECF8E', color: '#0a0f0d', border: 'none', borderRadius: 6,
                 fontWeight: 700, cursor: 'pointer', transition: 'background 0.2s',
                 boxShadow: '0 2px 12px rgba(62,207,142,0.3)',
               }}
-              onMouseEnter={e => (e.currentTarget.style.background = '#1a7a52')}
+              onMouseEnter={e => (e.currentTarget.style.background = '#2db87a')}
               onMouseLeave={e => (e.currentTarget.style.background = '#3ECF8E')}
               onFocus={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = `${FOCUS_RING}, 0 2px 12px rgba(62,207,142,0.3)`; }}
               onBlur={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 2px 12px rgba(62,207,142,0.3)'; }}
@@ -161,7 +164,7 @@ export default function Header() {
             <button
               onClick={downloadCV}
               className="btn text-xs px-3 py-2 gap-1.5 inline-flex items-center"
-              style={{ background: '#3ECF8E', color: '#fff', border: 'none', borderRadius: 6, fontWeight: 700, cursor: 'pointer' }}
+              style={{ background: '#3ECF8E', color: '#0a0f0d', border: 'none', borderRadius: 6, fontWeight: 700, cursor: 'pointer' }}
               onFocus={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = FOCUS_RING; }}
               onBlur={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = 'none'; }}
             >
@@ -235,7 +238,7 @@ export default function Header() {
                 <button
                   onClick={downloadCV}
                   className="btn w-full py-2.5 text-sm inline-flex items-center justify-center gap-2"
-                  style={{ background: '#3ECF8E', color: '#fff', border: 'none', borderRadius: 6, fontWeight: 700, cursor: 'pointer' }}
+                  style={{ background: '#3ECF8E', color: '#0a0f0d', border: 'none', borderRadius: 6, fontWeight: 700, cursor: 'pointer' }}
                   onFocus={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = FOCUS_RING; }}
                   onBlur={e => { (e.currentTarget as HTMLButtonElement).style.boxShadow = 'none'; }}
                 >

@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import type React from 'react';
 import { Github, Linkedin, Mail, ArrowRight } from 'lucide-react';
 import { MAILTO_HREF } from '@/lib/site-config';
+import { scrollToId } from '@/lib/scroll';
 
 const SOCIALS = [
   { href: 'https://github.com/shaunChikerema',      icon: Github,   label: 'GitHub' },
@@ -19,8 +20,10 @@ const PROOF = [
 // Bright green: large/decorative use (name, button fill, dot, pulse).
 const G      = '#3ECF8E';
 const G_DARK = '#2db87a';
-// Darker green: small text on light backgrounds, where G fails contrast.
-const G_TEXT = '#1FAE6E';
+// Darker green for small text on light backgrounds. Bright G is ~1.9:1 on white;
+// this is ~5.3:1, which clears WCAG AA (4.5:1) at body size. (The previous
+// #1FAE6E only reached ~2.9:1.)
+const G_TEXT = '#1a7a52';
 
 const PLAYFAIR: React.CSSProperties = { fontFamily: "'Playfair Display', Georgia, serif" };
 const DM: React.CSSProperties       = { fontFamily: "'DM Sans', sans-serif" };
@@ -37,11 +40,9 @@ export default function Hero() {
     transition: { duration: reduced ? 0 : 0.6, delay: reduced ? 0 : delay, ease: [0.16, 1, 0.3, 1] },
   });
 
-  const scrollToWork = () =>
-    document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
-
-  const scrollToContact = () =>
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  // Shared helper accounts for the fixed header, so sections don't land under it.
+  const scrollToWork    = () => scrollToId('work');
+  const scrollToContact = () => scrollToId('contact');
 
   return (
     <section
@@ -61,7 +62,6 @@ export default function Hero() {
           <span style={{ width: 7, height: 7, borderRadius: '50%', background: G, display: 'inline-block' }} />
           <span
             style={{ fontSize: '0.68rem', letterSpacing: '0.04em', color: 'var(--ink-muted)', ...DM, fontWeight: 600 }}
-            itemProp="jobTitle"
           >
             Available for work
           </span>
@@ -72,9 +72,9 @@ export default function Hero() {
               key={href}
               href={href}
               aria-label={label}
-              target="_blank"
-              rel="noopener noreferrer"
-              itemProp="sameAs"
+              target={href.startsWith('http') ? '_blank' : undefined}
+              rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              itemProp={href.startsWith('http') ? 'sameAs' : undefined}
               className="flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200"
               style={{ border: '1px solid var(--border-mid)', color: 'var(--ink-mid)' }}
               onMouseEnter={e => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = 'rgba(62,207,142,0.5)'; el.style.color = G_TEXT; }}
@@ -98,12 +98,12 @@ export default function Hero() {
           fontSize: '0.68rem', letterSpacing: '0.04em',
           color: G_TEXT, ...DM, fontWeight: 700, marginBottom: '1.6rem',
         }}>
-          Software Engineer, Botswana
+          <span itemProp="jobTitle">Software Engineer</span>, Botswana
         </motion.p>
 
         {/* Name — single h1, two lines, takes ownership of the page */}
         <h1 style={{ margin: 0, marginBottom: '2.4rem' }} itemProp="name">
-          <div style={{ overflow: 'hidden', marginBottom: '0.05rem' }}>
+          <span style={{ display: 'block', overflow: 'hidden', marginBottom: '0.05rem' }}>
             <motion.span
               initial={{ opacity: 0, y: reduced ? 0 : 70 }}
               animate={{ opacity: 1, y: 0 }}
@@ -118,8 +118,8 @@ export default function Hero() {
             >
               Shaun
             </motion.span>
-          </div>
-          <div style={{ overflow: 'hidden' }}>
+          </span>
+          <span style={{ display: 'block', overflow: 'hidden' }}>
             <motion.span
               initial={{ opacity: 0, y: reduced ? 0 : 70 }}
               animate={{ opacity: 1, y: 0 }}
@@ -134,7 +134,7 @@ export default function Hero() {
             >
               Chikerema
             </motion.span>
-          </div>
+          </span>
         </h1>
 
         {/* Divider */}

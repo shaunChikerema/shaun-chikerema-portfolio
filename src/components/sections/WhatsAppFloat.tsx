@@ -1,5 +1,5 @@
 'use client';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { useState } from 'react';
 import { WA_HREF } from '@/lib/site-config';
 
@@ -13,6 +13,7 @@ function WhatsAppIcon({ className }: { className?: string }) {
 
 export default function WhatsAppFloat() {
   const [hovered, setHovered] = useState(false);
+  const reduced = useReducedMotion();
 
   return (
     <div
@@ -79,6 +80,8 @@ export default function WhatsAppFloat() {
         aria-label="Chat on WhatsApp"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
+        onFocus={() => setHovered(true)}
+        onBlur={() => setHovered(false)}
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 2, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
@@ -89,6 +92,7 @@ export default function WhatsAppFloat() {
           height: 56,
           borderRadius: '50%',
           background: '#25D366',
+          color: '#ffffff', // icon uses currentColor; without this it inherited the page ink colour
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -99,21 +103,25 @@ export default function WhatsAppFloat() {
           position: 'relative',
         }}
       >
-        <WhatsAppIcon className="w-7 h-7" />
-
-        {/* Pulse ring */}
-        <motion.div
-          animate={{ scale: [1, 1.5], opacity: [0.4, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'easeOut' }}
-          style={{
-            position: 'absolute',
-            width: 56,
-            height: 56,
-            borderRadius: '50%',
-            background: '#25D366',
-            pointerEvents: 'none',
-          }}
-        />
+        {/* Pulse ring sits behind the icon (it used to paint over it and tint it). Skipped for reduced motion. */}
+        {!reduced && (
+          <motion.div
+            aria-hidden
+            animate={{ scale: [1, 1.5], opacity: [0.4, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeOut' }}
+            style={{
+              position: 'absolute',
+              width: 56,
+              height: 56,
+              borderRadius: '50%',
+              background: '#25D366',
+              pointerEvents: 'none',
+            }}
+          />
+        )}
+        <span style={{ position: 'relative', display: 'flex' }}>
+          <WhatsAppIcon className="w-7 h-7" />
+        </span>
       </motion.a>
     </div>
   );
