@@ -23,10 +23,12 @@ module.exports = {
           muted:   '#94a3b8',
         },
       },
+      // Font variables are defined by next/font in src/app/layout.tsx.
       fontFamily: {
-        sans:    ["'DM Sans'",          'system-ui', 'sans-serif'],
-        display: ["'Playfair Display'", 'Georgia',   'serif'],
-        body:    ["'DM Sans'",          'system-ui', 'sans-serif'],
+        sans:    ['var(--font-dm)',       'system-ui', 'sans-serif'],
+        display: ['var(--font-playfair)', 'Georgia',   'serif'],
+        body:    ['var(--font-dm)',       'system-ui', 'sans-serif'],
+        mono:    ['var(--font-mono)',     'SF Mono', 'Consolas', 'monospace'],
       },
       animation: {
         float: 'float 6s ease-in-out infinite',

@@ -1,7 +1,34 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
+import { Playfair_Display, DM_Sans, JetBrains_Mono } from 'next/font/google';
 import WhatsAppFloat from '@/components/sections/WhatsAppFloat';
 import { ThemeProvider } from '@/context/ThemeContext';
+
+// Self-hosted at build time and preloaded, so there's no render-blocking
+// request to Google and no late font swap after the hero entrance.
+// Each font exposes a CSS variable that globals.css and tailwind.config.js use.
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+  variable: '--font-playfair',
+});
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  axes: ['opsz'],
+  display: 'swap',
+  variable: '--font-dm',
+});
+
+// No longer used in the hero. preload: false keeps it off the critical path;
+// it still loads on demand for any component that uses .font-mono.
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  preload: false,
+  variable: '--font-mono',
+});
 
 export const metadata: Metadata = {
   title: 'Shaun Chikerema – Software Engineer · Botswana',
@@ -44,7 +71,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="overflow-x-hidden">
+    <html
+      lang="en"
+      className={`${playfair.variable} ${dmSans.variable} ${jetbrainsMono.variable} overflow-x-hidden`}
+    >
       <body className="font-sans antialiased overflow-x-hidden">
         <ThemeProvider>
           {children}
